@@ -1,7 +1,12 @@
 #include <stdint.h>
 
+// FUNCTION DECLARATIONS
+static void setupRegisters(void);
+
 // Address: $09c0
 uint16_t battleCount = 0;
+
+// FUNCTION DEFINITIONS
 
 // Execute Battle
 void execBattle(void) {
