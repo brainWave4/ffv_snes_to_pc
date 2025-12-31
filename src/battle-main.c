@@ -1,5 +1,7 @@
+#include <stdint.h>
+
 // Address: $09c0
-unsigned long int battleCount = 0;
+uint16_t battleCount = 0;
 
 // Execute Battle
 void execBattle(void) {
