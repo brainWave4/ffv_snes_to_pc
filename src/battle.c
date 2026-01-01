@@ -1,5 +1,8 @@
 #include <stdint.h>
 
+//#include "btlgfx.h"
+//#include "sound.h"
+
 // FUNCTION DECLARATIONS
 static void setupRegisters(void);
 static uint8_t getRandBetween(uint8_t min, uint8_t max);
