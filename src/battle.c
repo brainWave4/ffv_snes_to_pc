@@ -19,6 +19,7 @@ static void nextMessageBoxSet(void);
 static void getItemsUsableY(void);
 static void setupInventoryInfo(void);
 static void applyPercentage(void);
+
 static void noActionAbility(void);
 static void commandTable00(void);
 static void itemCommand(void);
@@ -69,6 +70,24 @@ static void commandTable31(void);
 static void commandTable32(void);
 static void commandTable33(void);
 static void commandTable34(void);
+
+static void copyAbilityInfo(void);
+static void gfXCmdAbilityAnim(void);
+static void gfxCmdAttackNameA(void);
+static void magicAtkTypeSingleTarget(void);
+static void magicAtkTypeMultiTarget(void);
+static void finishCommand(void);
+static void finishCommandNullTargets(void);
+static void getTargets(void);
+static void handleAtbMenu(void);
+static void checkControlTargetActive(void);
+static void processMenuCommandData(void);
+static void consumeItem(void);
+static void setupCreditsDemo(void);
+static void checkDisablingStatus(void);
+static void applyBerserkStatus(void);
+static void disableCommandsMagic(void);
+static void handleUncontrolledParty(void);
 
 // Address: $09c0
 uint16_t battleCount = 0;
@@ -1908,7 +1927,7 @@ static void commandTable16(void) {
 }
 
 // Address: _0DA2
-// Command $19 (Observe)
+// Command $19 (Observe/Check)
 static void commandTable18(void) {
     // lda #$19		;observe ability
     // jsr CopyAbilityInfo
@@ -1925,7 +1944,7 @@ static void commandTable18(void) {
 }
 
 // Address: _0DC3
-// Command $1A (Analyze)
+// Command $1A (Analyze/Scan)
 static void commandTable19(void) {
     // lda #$1A		;observe ability
     // jsr CopyAbilityInfo
@@ -3069,4 +3088,956 @@ static void commandTable34(void) {
     // lda #$4A	;earthquake
     // sta TempEffect
     // jmp CommandTable31::WeaponEffectCommand
+}
+
+// Address: _16AA
+static void copyAbilityInfo(void) {
+//         pha
+//         jsr SelectCurrentProcSequence
+//         pla
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         stz $0A
+// :	lda f:BattleCmdProp,X
+//         sta AttackInfo,Y
+//         inx
+//         iny
+//         inc $0A
+//         lda $0A
+//         cmp #$05     ;copy first 5 bytes
+//         bne :-
+//         iny          ;skip 4 on destination
+//         iny
+//         iny
+//         iny
+// :	lda f:BattleCmdProp,X
+//         sta AttackInfo,Y
+//         inx
+//         iny
+//         inc $0A
+//         lda $0A
+//         cmp #$08      ;copy remaining 3 bytes
+//         bne :-
+//         rts
+}
+
+// Address: _16E1
+// Displays an ability or command animation
+// creates Action $00,FC,01,<A>,00
+static void gfXCmdAbilityAnim(void) {
+    // pha
+    // jsr FindOpenGFXQueueSlot
+    // stz GFXQueue::Flag,X
+    // lda #$FC	;exec graphics command
+    // sta GFXQueue::Cmd,X
+    // lda #$01	;ability/command anim
+    // sta GFXQueue::Type,X
+    // pla
+    // sta GFXQueue::Data1,X
+    // stz GFXQueue::Data2,X
+    // rts
+}
+
+// Address: _16FA
+// Displays an Attack name from String Table 1
+// creates Action $00,FC,04,01,<A>
+static void gfxCmdAttackNameA(void) {
+    // sta Temp+1
+    // lda #$01
+    // sta Temp
+    // jmp GFXCmdAttackNameFromTemp
+}
+
+// Address: _1705
+static void magicAtkTypeSingleTarget(void) {
+    // lda ProcSequence
+    // tax
+    // ldy $0C
+    // lda AttackInfo::MagicAtkType,Y
+    // and #$7F
+    // sta AtkType,X
+    // stz MultiTarget,X
+    // stz TargetType,X
+    // rts
+}
+
+// Address: _171A
+static void magicAtkTypeMultiTarget(void) {
+    // lda ProcSequence
+    // tax
+    // ldy $0C
+    // lda AttackInfo::MagicAtkType,Y
+    // and #$7F
+    // sta AtkType,X
+    // lda TempTargetting
+    // inc 	;unconditional, so always considered multitarget
+    // sta MultiTarget,X
+    // lda #$80	;multi target
+    // sta TargetType,X
+    // rts
+}
+
+// Address: _1735
+// Copies command targetting to final locations and
+// advances ProcSequence
+static void finishCommand(void) {
+    // lda ProcSequence
+    // asl
+    // tax
+    // lda TempTargetBitmask
+    // sta CommandTargetBitmask,X
+    // sta TargetBitmask,X
+    // lda TempTargetBitmask+1
+    // sta CommandTargetBitmask+1,X
+    // sta TargetBitmask+1,X
+    // inc ProcSequence
+    // rts
+}
+
+// Address: _1750
+// wipes command targetting and advances ProcSequence
+static void finishCommandNullTargets(void) {
+    // lda ProcSequence
+    // asl
+    // tax
+    // stz CommandTargetBitmask,X
+    // stz CommandTargetBitmask+1,X
+    // inc ProcSequence
+    // rts
+}
+
+// Address: _175F
+static void getTargets(void) {
+    // ldx AttackerOffset
+    // lda CharStruct::PartyTargets,X
+    // sta PartyTargets
+    // lda CharStruct::MonsterTargets,X
+    // sta MonsterTargets
+    // rts
+}
+
+// Address: _176C
+static void handleAtbMenu(void) {
+//         lda MenuData::MenuOpen
+//         bne MenuOpen
+//         jmp MenuClosed
+// MenuOpen:	;checks if current display info for status/mp matches what's in CharStruct
+//         lda DisplayInfo::CurrentChar
+//         sta CurrentChar
+//         jsr CalculateCharOffset
+//         longa
+//         lda CharStruct::Status1,X	;includes status 2
+//         cmp DisplayInfo::Status1
+//         bne Differs
+//         lda CharStruct::Status3,X	;includes status 4
+//         cmp DisplayInfo::Status3
+//         bne Differs
+//         lda CharStruct::CurMP,X
+//         cmp DisplayInfo::CurMP
+//         bne Differs
+//         shorta0
+//         bra Matches
+// Differs:	;disable commands as needed, and update displayinfo for menu
+//         shorta0
+//         jsr CheckDisablingStatus
+//         bne Disabled
+//         jsr DisableCommandsMagic
+//         jsr ApplyBerserkStatus
+//         bne Disabled
+//         lda #$05		;C1 routine
+//         jsr CallC1
+//         lda #$06		;C1 routine
+//         jsr CallC1
+//         longa
+//         ldx AttackerOffset
+//         lda CharStruct::Status1,X
+//         sta DisplayInfo::Status1
+//         lda CharStruct::Status3,X
+//         sta DisplayInfo::Status3
+//         lda CharStruct::CurMP,X
+//         sta DisplayInfo::CurMP
+//         shorta0
+//         bra Matches
+// Disabled:	;if character has become disabled while their menu is open, close the menu
+//         lda DisplayInfo::CurrentChar
+//         sta MenuCurrentChar
+//         lda GearChanged
+//         beq :+
+//         stz GearChanged
+//         jsr ReplaceHands
+//         jsr ApplyGear
+// :	lda DisplayInfo::CurrentChar
+//         sta MenuCurrentChar
+//         lda MenuDataC1::MenuOpen
+//         beq WaitMenu
+//         lda #$01	;C1 routine: close menu
+//         jsr CallC1
+// WaitMenu:
+//         lda MenuDataC1::MenuOpen
+//         bne WaitMenu	;ends up 0 eventually? via interrupts?
+//         lda #$FF
+//         sta DisplayInfo::CurrentChar
+//         rts
+// Matches:	;data either already matched or has been updated
+//         lda ControllingA
+//         beq Ret
+//         lda DisplayInfo::CurrentChar
+//         tax
+//         lda ControlTarget,X
+//         beq :+
+//         tax
+//         lda ActiveParticipants,X
+//         bne Ret
+// :	lda DisplayInfo::CurrentChar
+//         sta MenuCurrentChar
+//         lda MenuDataC1::MenuOpen
+//         beq WaitMenu2
+//         lda #$01	;C1 routine: close menu
+//         jsr CallC1
+// WaitMenu2:
+//         lda MenuDataC1::MenuOpen
+//         bne WaitMenu2	;ends up 0 eventually? via interrupts?
+//         lda #$80
+//         sta MenuData::ActionFlag
+//         stz MenuData::Command
+//         stz MenuData::MonsterTargets
+//         stz MenuData::PartyTargets
+//         stz MenuData::SelectedItem
+//         stz MenuData::SecondActionFlag
+//         stz MenuData::SecondCommand
+//         stz MenuData::SecondMonsterTargets
+//         stz MenuData::SecondPartyTargets
+//         stz MenuData::SecondSelectedItem
+//         bra MenuClosed
+// Ret:	rts
+// MenuClosed:								;
+//         lda DisplayInfo::CurrentChar
+//         cmp #$FF
+//         beq NoCurrentChar
+//         jmp ProcessMenuCommand
+// NoCurrentChar:
+//         lda ATBReadyQueue
+//         cmp #$FF
+//         bne NextReadyATB
+//         rts		;no one else in queue either
+// NextReadyATB:	;there's a character in the queue with ATB ready
+//         pha
+//         tdc
+//         tax
+// AdvanceQueue:	;advances all the queue elements up by one, there's a terminator $FF in the 5th slot
+//         lda ATBReadyQueue+1,X
+//         sta ATBReadyQueue,X
+//         inx
+//         cpx #$0004
+//         bne AdvanceQueue
+//         dec ATBReadyCount
+//         pla
+//         sta MenuCurrentChar
+//         sta DisplayInfo::CurrentChar
+//         jsr CalculateCharOffset
+//         lda QuickTurns
+//         beq DontStopTime
+//         lda DisplayInfo::CurrentChar
+//         cmp QuickCharIndex
+//         beq DontStopTime
+//         jsr GetTimerOffset  	;sets Y to Timer offset
+//         lda CurrentTimer::ATB,Y
+//         bne FinishEarly	;check if frozen char's ATB is ready
+//         lda #$01		;increase ATB to 1 (no longer ready)
+//         sta CurrentTimer::ATB,Y
+//         sta EnableTimer::ATB,Y
+//         bra FinishEarly
+// DontStopTime:
+//         jsr CheckDisablingStatus
+//         beq NotDisabled
+// FinishEarly:
+//         lda #$FF
+//         sta DisplayInfo::CurrentChar
+//         rts
+// NotDisabled:	;character's turn has just come up
+//         stz MenuCurrentChar+1
+//         jsr ApplyBerserkStatus
+//         bne FinishEarly
+//         jsr DisableCommandsMagic
+//         lda #$01
+//         sta ATBWaiting
+//         lda ATBWaitTime
+//         sta ATBWaitLeft
+//         longa
+//         ldx AttackerOffset
+//         lda CharStruct::Status1,X	;includes 2
+//         sta DisplayInfo::Status1
+//         lda CharStruct::Status3,X	;includes 4
+//         sta DisplayInfo::Status3
+//         lda CharStruct::CurMP,X
+//         sta DisplayInfo::CurMP
+//         stz CharStruct::CmdStatus,X	;also damagemod
+//         shorta0
+//         jsr CheckControlTargetActive
+//         lda #$01
+//         sta FleeTickerActive	;can't start running until first atb
+//         lda EncounterInfo::IntroFX
+//         bpl NoCredits
+//         stz MenuData::MenuOpen
+//         rts
+// NoCredits:
+//         lda DisplayInfo::CurrentChar
+//         jsr GetTimerOffset	;Y = Timer offset
+//         lda EnableTimer::ATB,Y
+//         beq TimerOff
+//         lda #$FF
+//         sta DisplayInfo::CurrentChar
+//         jmp NoCurrentChar
+// TimerOff:
+//         tdc
+//         jsr CallC1 	;C1 routine $00: open menu
+// WaitMenu3:
+//         lda MenuDataC1::MenuOpen
+//         beq WaitMenu3
+//         rts
+// ProcessMenuCommand:
+//         stz ATBWaiting
+//         jsr ProcessMenuCommandData
+//         lda #$FF	;no current char
+//         sta DisplayInfo::CurrentChar
+//         rts
+}
+
+// Address: _190B
+// Sets ControllingA and B variables to 1
+// if control target is valid and active, 0 otherwise
+// Logic is a bit strange but doesn't seem like
+// they can ever be set to different values
+static void checkControlTargetActive(void) {
+//     stz ControllingA
+//         lda DisplayInfo::CurrentChar
+//         tax
+//         lda ControlTarget,X
+//         beq Finish
+//         tay
+//         lda ActiveParticipants,Y
+//         beq Finish
+//         lda #$01
+//         sta ControllingA
+// Finish:	sta ControllingB
+//         rts
+}
+
+// Address: _1926
+// copies command data from MenuData struct into CharStruct,
+// and performs any other necessary processing
+// Also handles gear changes, removing control when needed,
+// consuming items when used, and action delays
+static void processMenuCommandData(void) {
+//         lda EncounterInfo::IntroFX
+//         bpl :+		;check for credits demo
+//         jsr SetupCreditsDemo
+// :	lda DisplayInfo::CurrentChar
+//         sta CurrentChar
+//         lda GearChanged
+//         beq :+
+//         stz GearChanged
+//         jsr ReplaceHands
+//         jsr ApplyGear
+// :	lda DisplayInfo::CurrentChar
+//         jsr CalculateCharOffset
+//         lda CharStruct::Status1,X
+//         and #$C0	;dead/stone
+//         bne ClearControl
+//         lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$78	;sleep/para/charm/berserk
+//         bne ClearControl
+//         lda CharStruct::Status3,X
+//         and #$10	;stop
+//         bne ClearControl
+//         lda CharStruct::Status4,X
+//         and #$80	;erased
+//         beq :+
+// ClearControl:
+//         lda DisplayInfo::CurrentChar
+//         tax
+//         stz ControlTarget,X
+//         bra ClearMenuData
+// :	lda DisplayInfo::CurrentChar
+//         cmp MenuData::CurrentChar
+//         beq :+
+//         lda EncounterInfo::IntroFX
+//         bmi :+		;branch if credits fight
+//         lda #$0D	;C1 Routine
+//         jsr CallC1
+// WaitForever:
+//         bra WaitForever	;infinite loop?
+// :	lda DisplayInfo::CurrentChar
+//         tax
+//         lda ControlTarget,X
+//         beq NoControlTarget
+//         tay
+//         lda ActiveParticipants,Y
+//         beq ClearMenuData
+//         inc ControlCommand,X
+//         sec
+//         lda ControlTarget,X
+//         sbc #$04
+//         sta $0E		;monster index of control target
+//         tay
+//         lda DisplayInfo::CurrentChar
+//         tax
+//         clc
+//         lda f:_d0eedb,X	;size of CharControl struct
+//         adc MenuData::SelectedItem	;action 0-3
+//         tax
+//         lda CharControl::Actions,X
+//         sta MonsterControlActions,Y
+//         sec
+//         lda $0E
+//         asl
+//         tax
+//         lda MenuData::PartyTargets
+//         sta ForcedTarget::Party,X
+//         lda MenuData::MonsterTargets
+//         sta ForcedTarget::Monster,X
+// ClearMenuData:
+//         lda #$80
+//         sta MenuData::ActionFlag
+//         stz MenuData::Command
+//         stz MenuData::MonsterTargets
+//         stz MenuData::PartyTargets
+//         stz MenuData::SelectedItem
+//         stz MenuData::SecondActionFlag
+//         stz MenuData::SecondCommand
+//         stz MenuData::SecondMonsterTargets
+//         stz MenuData::SecondPartyTargets
+//         stz MenuData::SecondSelectedItem
+//         bra CopyCommands
+// NoControlTarget:
+//         lda ControllingB
+//         bne ClearMenuData	;controlling with no target
+// CopyCommands:
+//         lda DisplayInfo::CurrentChar
+//         tax
+//         stx $2A
+//         ldx #$028A   	;650, size of CharSpells struct
+//         stx $2C
+//         jsr Multiply_16bit	;not using the rom *650 table?
+//         longa
+//         clc
+//         lda $2E		;CurrentChar * 650
+//         adc #$2D34   	;CharSpells struct location
+//         sta TempSpellOffset
+//         shorta0
+//         ldx AttackerOffset
+//         lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$18	;charm/berserk
+//         bne CheckCommand
+//         lda MenuData::Command
+//         sta CharStruct::Command,X
+//         lda MenuData::MonsterTargets
+//         sta CharStruct::MonsterTargets,X
+//         lda MenuData::PartyTargets
+//         sta CharStruct::PartyTargets,X
+//         lda MenuData::SelectedItem
+//         sta CharStruct::SelectedItem,X
+//         lda MenuData::ActionFlag
+//         sta CharStruct::ActionFlag,X
+//         and #$20	;magic
+//         beq NotXMagic
+//         lda MenuData::SelectedItem
+//         tay
+//         lda (TempSpellOffset),Y
+//         sta CharStruct::SelectedItem,X
+//         lda MenuData::ActionFlag
+//         and #$08	;x-magic
+//         beq NotXMagic
+//         lda MenuData::SecondCommand
+//         sta CharStruct::SecondCommand,X
+//         lda MenuData::SecondMonsterTargets
+//         sta CharStruct::SecondMonsterTargets,X
+//         lda MenuData::SecondPartyTargets
+//         sta CharStruct::SecondPartyTargets,X
+//         lda MenuData::SecondSelectedItem
+//         tay
+//         lda (TempSpellOffset),Y
+//         sta CharStruct::SecondSelectedItem,X
+//         lda MenuData::SecondActionFlag
+//         sta CharStruct::SecondActionFlag,X
+//         bra CheckCommand
+// NotXMagic:
+//         stz CharStruct::SecondCommand,X
+//         stz CharStruct::SecondMonsterTargets,X
+//         stz CharStruct::SecondMonsterTargets,X	;**bug: PartyTargets
+//         stz CharStruct::SecondSelectedItem,X
+//         stz CharStruct::SecondActionFlag,X
+// CheckCommand:
+//         lda MenuData::Command
+//         sta $24
+//         lda #$08
+//         sta $25
+//         jsr Multiply_8bit
+//         ldx $26		;command * 8
+//         ldy AttackerOffset
+//         lda f:BattleCmdProp+2,X
+//         sta CharStruct::CmdStatus,Y
+//         lda f:BattleCmdProp+3,X
+//         sta CharStruct::DamageMod,Y
+//         lda MenuData::Command
+//         cmp #$2C	;first magic command
+//         bcc NotMagicCommand
+//         cmp #$4E	;after last magic command
+//         bcs NotMagicCommand
+//         lda CharStruct::ActionFlag,Y
+//         ora #$01     	;costs MP
+//         sta CharStruct::ActionFlag,Y
+// NotMagicCommand:
+//         lda MenuData::Command
+//         tax
+//         lda f:BattleCmdDelay,X
+//         bmi CalculateDelay
+//         pha
+//         lda MenuData::Command
+//         cmp #$11	;throw
+//         beq Item
+//         cmp #$20	;drink
+//         beq Item
+//         cmp #$1F	;mix
+//         bne NotItem
+// Mix:
+//         lda MenuData::SecondSelectedItem
+//         pha
+//         tax
+//         lda InventoryItems,X
+//         ldx AttackerOffset
+//         sta CharStruct::SecondSelectedItem,X
+//         pla
+//         jsr ConsumeItem
+// Item:
+//         lda MenuData::SelectedItem
+//         pha
+//         tax
+//         lda InventoryItems,X
+//         ldx AttackerOffset
+//         sta CharStruct::SelectedItem,X
+//         pla
+//         jsr ConsumeItem
+// NotItem:
+//         pla
+//         jmp Finish
+// CalculateDelay:
+//         lda MenuData::ActionFlag
+//         and #$08	;XMagic
+//         beq :+
+//         jmp MagicDelay
+// :	lda MenuData::ActionFlag
+//         and #$40	;Item
+//         bne ItemDelay
+//         lda MenuData::ActionFlag
+//         and #$20	;Magic
+//         beq :+
+//         jmp MagicDelay
+// :	lda MenuData::ActionFlag
+//         and #$10	;Weapon used as item
+//         beq WeaponAttackDelay
+//         jmp WeaponUseDelay
+// WeaponAttackDelay:	;despite the calculation, I don't think any weapons have delay values
+//         stz $0E
+//         lda DisplayInfo::CurrentChar
+//         sta $24
+//         lda #$54     ;84, size of GearStats struct
+//         sta $25
+//         jsr Multiply_8bit
+//         ldy $26
+//         ldx AttackerOffset
+//         lda CharStruct::RHWeapon,X
+//         beq :+
+//         lda RHWeapon::Targetting,Y
+//         and #$03	;delay bits (delay/10)
+//         tax
+//         lda f:AttackDelayTbl,X
+//         sta $0E		;attack delay
+// :       ldx AttackerOffset
+//         lda CharStruct::LHWeapon,X
+//         beq :+
+//         lda LHWeapon,Y
+//         and #$03	;delay bits (delay/10)
+//         tax
+//         clc
+//         lda f:AttackDelayTbl,X
+//         adc $0E		;add other weapon's delay
+//         sta $0E
+// :	lda $0E		;attack delay
+//         jmp Finish
+// ItemDelay:
+//         lda MenuData::SelectedItem
+//         tax
+//         lda InventoryItems,X
+//         ldx AttackerOffset
+//         sta CharStruct::SelectedItem,X
+//         sec
+//         sbc #$E0	;consumable item offset
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         lda f:ConsumableItemProp+2,X
+//         and #$08
+//         bne :+
+//         lda MenuData::SelectedItem
+//         jsr ConsumeItem
+// :	lda f:ConsumableItemProp,X
+//         and #$03	;delay bits (delay/10)
+//         tax
+//         lda f:AttackDelayTbl,X
+//         bra Finish
+// MagicDelay:
+//         stz $0E
+//         lda MenuData::SelectedItem
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         lda f:AttackProp,X
+//         and #$03	;delay bits (delay/10)
+//         tax
+//         lda f:AttackDelayTbl,X
+//         sta $0E		;attack delay
+//         lda MenuData::ActionFlag
+//         and #$08	;X-Magic
+//         beq FinishMagic
+//         lda MenuData::SecondSelectedItem
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         lda f:AttackProp,X
+//         and #$03	;delay bits (delay/10)
+//         tax
+//         clc
+//         lda f:AttackDelayTbl,X
+//         adc $0E		;add other spell's delay
+//         sta $0E
+// FinishMagic:
+//         lda $0E		;attack delay
+//         bra Finish
+// WeaponUseDelay:
+//         lda DisplayInfo::CurrentChar
+//         sta $24
+//         lda #$54     	;84, size of GearStats struct
+//         sta $25
+//         jsr Multiply_8bit
+//         ldy $26
+//         lda MenuData::SelectedItem
+//         beq :+
+//         longa
+//         tya
+//         clc
+//         adc #$000C	;shifts offset from RHWeapon to LHWeapon
+//         tay
+//         shorta0
+// :	lda RHWeapon::ItemMagic,Y	;could be LHWeapon
+//         and #$7F	;weapon magic to cast
+//         beq Finish
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         lda f:AttackProp,X
+//         and #$03	;delay bits (delay/10)
+//         tax
+//         lda f:AttackDelayTbl,X
+// Finish:
+//         pha
+//         lda DisplayInfo::CurrentChar
+//         jsr GetTimerOffset	;Y and $36 = timer offset
+//         ldx AttackerOffset
+//         pla
+//         jsr HasteSlowMod	;adjusts delay
+//         sta CurrentTimer::ATB,Y	;time until action fires
+//         lda #$41		;flag indicating a queued action
+//         sta EnableTimer::ATB,Y
+//         lda #$80		;physical/other
+//         sta MenuData::ActionFlag
+//         stz MenuData::Command
+//         stz MenuData::CurrentChar
+//         stz MenuData::MonsterTargets
+//         stz MenuData::PartyTargets
+//         stz MenuData::SelectedItem
+//         stz MenuData+7
+//         stz MenuData::SecondActionFlag
+//         stz MenuData::SecondCommand
+//         stz MenuData+10
+//         stz MenuData::SecondMonsterTargets
+//         stz MenuData::SecondPartyTargets
+//         stz MenuData::SecondSelectedItem
+//         rts
+}
+
+// Address: _1C36
+// subtracts 1 from item quantity of item in A
+// blanks out inventory slot if qty is now 0
+static void consumeItem(void) {
+    // tax
+    // lda InventoryQuantities,X
+    // dec
+    // sta InventoryQuantities,X
+    // bne Ret
+    // stz InventoryItems,X
+    // stz InventoryTargetting,X
+    // lda #$5A
+    // sta InventoryFlags,X
+    // lda #$AA
+    // sta InventoryUsable,X
+    // rts
+}
+
+// Address: _1C51
+// Initializes some values when a
+// battle during the credits happens
+// This range is used by C1 graphics code but
+// unsure what it does
+static void setupCreditsDemo(void) {
+    // lda #$80	;physical/other
+    // sta MenuData::ActionFlag
+    // sta MenuData::MonsterTargets
+    // lda #$54	;job-specific animation (credits)
+    // sta MenuData::Command
+    // stz MenuData::PartyTargets
+    // stz MenuData::SelectedItem
+    // stz MenuData::SecondActionFlag
+    // stz MenuData::SecondCommand
+    // stz MenuData::SecondMonsterTargets
+    // stz MenuData::SecondPartyTargets
+    // stz MenuData::SecondSelectedItem
+    // rts
+}
+
+// Address: _1C74
+// Returns >0 if
+// character has a status that
+// prevents them from taking Action
+static void checkDisablingStatus(void) (
+    // ldx AttackerOffset
+    // lda CharStruct::Status1,X
+    // ora CharStruct::AlwaysStatus1,X
+    // and #$C2   	;dead/stone/zombie
+    // bne Ret
+    // lda CharStruct::Status2,X
+    // ora CharStruct::AlwaysStatus2,X
+    // and #$78   	;sleep/para/Charm/Berserk
+    // bne Ret
+    // lda CharStruct::Status3,X
+    // and #$10   	;stop
+    // bne Ret
+    // lda CharStruct::Status4,X
+    // and #$84   	;erased/singing
+    // bne Ret
+    // tdc
+    // rts
+)
+
+// Address: _1C9A
+// Make Berserk ability have Berserk Status
+static void applyBerserkStatus(void) {
+//         ldx AttackerOffset
+//         lda CharStruct::Passives2,X
+//         and #$08   	;berserk
+//         beq Finish
+//         lda EncounterInfo::IntroFX
+//         bpl NotCredits
+// Finish:	tdc
+//         rts
+//         								;
+// NotCredits:
+//         lda CharStruct::AlwaysStatus2,X
+//         ora #$08   	;berserk
+//         sta CharStruct::AlwaysStatus2,X
+//         rts
+}
+
+// Address: _1CB3
+// Disables Magic and Commands when
+// Status or MP prevents their use
+static void disableCommandsMagic(void) {
+//         tdc
+//         tax
+//         stx $16
+//         lda Void
+//         and #$40     	;void
+//         beq :+
+//         ldx #$0080
+//         stx $16		;disables magic
+// :	lda DisplayInfo::CurrentChar
+//         jsr CalculateSpellOffset	;sets Y
+//         longa
+//         tdc
+//         sta $12
+//         sta $14
+//         ldx AttackerOffset
+//         lda CharStruct::CurMP,X
+//         sta $0E		;current mp
+//         lda CharStruct::Status3,X
+//         ora CharStruct::AlwaysStatus3,X
+//         sta $22		;status 3/4
+//         lda CharStruct::Status1,X
+//         ora CharStruct::AlwaysStatus1,X
+//         sta $10		;status 1/2
+//         and #$0400	;mute
+//         beq :+
+//         lda #$0080
+//         sta $12		;disables magic
+// :	lda CharStruct::Status1,X
+//         ora CharStruct::AlwaysStatus1,X
+//         and #$0020	;toad
+//         beq :+
+//         lda #$0080
+//         sta $14		;disables magic
+// :	tdc
+//         tax
+// DisableSpells:
+//         lda CharSpells::Flags,Y
+//         and #$0001	;skip mp/status checks
+//         bne NextSpell
+//         lda CharSpells::MP,Y
+//         and #$00FF	;clear high part since it's an 8 bit field
+//         cmp $0E		;current mp
+//         beq CheckStatus
+//         bcc CheckStatus
+//         lda CharSpells::Flags,Y
+//         ora #$0080
+//         sta CharSpells::Flags,Y
+//         bra NextSpell
+// CheckStatus:
+//         lda CharSpells::Flags,Y
+//         and #$FF7F	;clear bit 80h in flags, disabled bit?
+//         sta CharSpells::Flags,Y
+//         lda CharSpells::ID,Y
+//         and #$00FF
+//         cmp #$0080	;blue magic
+//         bcs NextSpell
+//         lda CharSpells::Flags,Y
+//         ora $12		;from mute
+//         ora $14		;from toad
+//         ora $16		;from void
+//         sta CharSpells::Flags,Y
+//         lda $16
+//         bne NextSpell
+//         lda $12
+//         bne NextSpell
+//         lda $14
+//         beq NextSpell
+//         lda CharSpells::ID,Y
+//         and #$00FF
+//         cmp #$0029	;toad spell
+//         bne NextSpell
+//         lda CharSpells::Flags,Y
+//         and #$FF7F	;re-enable toad spell if toad status
+//         sta CharSpells::Flags,Y
+// NextSpell:
+//         iny
+//         inx
+//         cpx #$0082	;130 spell slots
+//         bne DisableSpells
+//         shorta0
+//         lda DisplayInfo::CurrentChar
+//         sta $24
+//         lda #$14	;20, size of CharCommands struct
+//         sta $25
+//         jsr Multiply_8bit
+//         tdc
+//         tax
+//         stx $0E
+//         ldy $26
+//         longa
+// DisableCommands:
+//         lda CharCommands::ID,Y
+//         and #$00FF
+//         sta $12		;command id
+//         beq DisableCommand
+//         asl
+//         tax
+//         lda f:BattleCmdDisableStatus,X
+//         and $10		;status 1/2
+//         bne DisableCommand
+//         lda $12		;command id
+//         cmp #$0026	;show command
+//         beq EnableCommand
+//         lda $22		;status 3/4
+//         and #$0100	;hidden
+//         beq EnableCommand
+// DisableCommand:
+//         lda CharCommands::Flags,Y
+//         ora #$0080	;disabled
+//         sta CharCommands::Flags,Y
+//         bra NextCommand
+// EnableCommand:
+//         lda CharCommands::Flags,Y
+//         and #$FF7F	;enabled
+//         sta CharCommands::Flags,Y
+// NextCommand:
+//         iny
+//         inc $0E		;character index
+//         lda $0E
+//         cmp #$0004	;4 commands per character
+//         bne DisableCommands
+//         shorta0
+//         rts
+}
+
+// Address: _1DC4
+// Manage the ATB timer used for
+// zombie/charm/berserk party members
+// and set up their action when it is ready
+//  ** bug: should probably check for death too (this is why berserkers always attack when they get up)
+static void handleUncontrolledParty(void) {
+//         tdc
+//         tax
+//         stx $3D		;char index, used in subroutines also
+//         stx $3F		;char offset
+// Loop:
+//         ldx $3D
+//         lda UncontrolledATB,X
+//         beq ActionReady
+//         ldx $3F
+//         lda CharStruct::Status3,X
+//         and #$10	;stop
+//         bne Next
+//         lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$60	;sleep/paralyze
+//         bne Next
+//         ldx $3D
+//         dec UncontrolledATB,X
+//         bra Next
+// ActionReady:
+//         ldx $3F		;char offset
+//         lda #$01
+//         sta CharStruct::CmdCancelled,X
+//         lda CharStruct::Status1,X
+//         ora CharStruct::AlwaysStatus1,X
+//         and #$02	;zombie
+//         beq :+
+//         jsr ZombieAction
+//         bra Next
+// :	lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$10	;charm
+//         beq :+
+//         jsr CharmAction
+//         bra Next
+// :	lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$08	;berserk
+//         beq Next
+//         jsr BerserkAction
+// Next:
+//         ldx $3F		;char offset
+//         jsr NextCharOffset
+//         stx $3F
+//         inc a:$003D	;char index ; TODO: dont know why this is being done?
+//         lda a:$003D
+//         cmp #$04	;4 characters
+//         bne Loop
+//         rts
 }
