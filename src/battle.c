@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 //#include "btlgfx.h"
-//#include "sound.h"
+#include "sound.h"
 
 // FUNCTION DECLARATIONS
 void execBattle(void);
