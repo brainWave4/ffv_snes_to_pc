@@ -4,6 +4,7 @@
 //#include "sound.h"
 
 // FUNCTION DECLARATIONS
+void execBattle(void);
 static void setupRegisters(void);
 static uint8_t getRandBetween(uint8_t min, uint8_t max);
 static void wipeDisplayStructures(void);
@@ -88,6 +89,60 @@ static void checkDisablingStatus(void);
 static void applyBerserkStatus(void);
 static void disableCommandsMagic(void);
 static void handleUncontrolledParty(void);
+static void zombieAction(void);
+static void charmAction(void);
+static void berserkAction(void);
+static void queueUncontrolledAction(void);
+static void randomizeOrder(void);
+
+static void updateTimers(void);
+static void updateTimer(void);
+static void globalTimers(void);
+static void findEndedTimers(void);
+static void applyTimerEffects(void);
+static void dispatchTimerEffect(void);
+static void timerEffectStop(void);
+static void timerEffectPoison(void);
+static void timerEffectReflect(void);
+static void timerEffectCountdown(void);
+static void timerEffectMute(void);
+static void timerEffectHPLeak(void);
+static void timerEffectOld(void);
+static void timerEffectRegen(void);
+static void timerEffectSing(void);
+static void timerEffectParalyze(void);
+static void timerEffectATB(void);
+static void performAction(void);
+static void atbWait(void);
+static void resetAtbAll(void);
+static void resetAtb(void);
+static void clearQuick(void);
+static void stopTimer(void);
+static void startTimer(void);
+static void getTimerDuration(void);
+static void addTimerOffsetY(void);
+static void durSpell(void);
+static void dur120a(void);
+static void durVit(void);
+static void dur180mod(void);
+static void dur110mod(void);
+static void durSpellMod(void);
+static void dur120mod(void);
+static void monsterAtb(void);
+
+static void CheckAICondition(void);
+static void aiCondition00(void);
+static void aiCondition01(void);
+static void aiCondition02(void);
+static void aiCondition03(void);
+static void aiCondition04(void);
+static void aiCondition05(void);
+static void aiCondition06(void);
+static void aiCondition07(void);
+static void aiCondition08(void);
+static void aiCondition09(void);
+static void aiCondition0A(void);
+static void aiCondition0B(void);
 
 // Address: $09c0
 uint16_t battleCount = 0;
@@ -4040,4 +4095,1923 @@ static void handleUncontrolledParty(void) {
 //         cmp #$04	;4 characters
 //         bne Loop
 //         rts
+}
+
+// Address: _1E2F
+// Params
+//  - X = Char Offset
+//  - $3D = Char index
+// Sets up a fight command targetting
+// a Random party member
+static void zombieAction(void) {
+    // lda #$80
+    // sta CharStruct::ActionFlag,X
+    // lda #$05	;fight
+    // sta CharStruct::Command,X
+    // stz CharStruct::MonsterTargets,X
+    // stz CharStruct::SelectedItem,X
+    // stz CharStruct::SecondActionFlag,X
+    // stz CharStruct::SecondCommand,X
+    // stz CharStruct::SecondMonsterTargets,X
+    // stz CharStruct::SecondPartyTargets,X
+    // stz CharStruct::SecondSelectedItem,X
+    // phx
+    // tdc
+    // tax
+    // lda #$03
+    // jsr Random_X_A  ;0..3
+    // tax
+    // tdc
+    // jsr SetBit_X
+    // plx
+    // sta CharStruct::PartyTargets,X	;fight random party member
+    // jmp QueueUncontrolledAction
+}
+
+// Addres: _1E62
+// Params:
+//  - X = Char Offset
+//  - $3D = Char index
+//  - $3F = Char Offset
+// 50% chance:
+//  - sets up a fight command targetting a
+//    random party member
+//	- picks a random known white/black/time spell and
+//    casts with inverted targetting
+static void charmAction(void) {
+//         lda CharStruct::EnableSpells,X
+//         and #$0F			;white magic
+//         ora CharStruct::EnableSpells+1,X	;black and time magic
+//         beq Fight
+//         jsr Random_0_99
+//         cmp #$32	;50% chance of spell
+//         bcc Magic
+// Fight:
+//         ldx $3F		;char offset
+//         lda #$80
+//         sta CharStruct::ActionFlag,X
+//         lda #$05	;fight
+//         sta CharStruct::Command,X
+//         stz CharStruct::MonsterTargets,X
+//         stz CharStruct::SelectedItem,X
+//         stz CharStruct::SecondActionFlag,X
+//         stz CharStruct::SecondCommand,X
+//         stz CharStruct::SecondMonsterTargets,X
+//         stz CharStruct::SecondPartyTargets,X
+//         stz CharStruct::SecondSelectedItem,X
+//         phx
+//         tdc
+//         tax
+//         lda #$03
+//         jsr Random_X_A    ;0..3
+//         tax
+//         tdc
+//         jsr SetBit_X
+//         plx
+//         sta CharStruct::PartyTargets,X	;fight random party member
+//         jmp _QueueUncontrolledAction
+// Magic:
+//         lda $3D		;char index
+//         tax
+//         stx $2A
+//         ldx #$028A ; TODO: fixme .sizeof(CharSpells)	;650, size of CharSpells struct
+//         stx $2C
+//         jsr Multiply_16bit    ;**optimize: use rom table instead
+//         ldx $2E
+//         stx SpellOffsetRandom
+//         stz $0E
+// FindAnySpell:		;checks if any spells are learned
+//         lda CharSpells::ID+18,X	;starts at first white spell
+//         cmp #$46		;Quick spell
+//         beq NextSpell
+//         cmp #$FF		;empty spell slot
+//         bne TryRandomSpell
+// NextSpell:
+//         inx
+//         inc $0E
+//         lda $0E
+//         cmp #$36
+//         bne FindAnySpell
+//         bra Fight		;no spells, hit something instead
+// TryRandomSpell:
+//         ldx #$0012		;first white spell
+//         lda #$47		;last time spell
+//         jsr Random_X_A  	;random white/black/time spell
+//         longa
+//         adc SpellOffsetRandom
+//         tax
+//         shorta0
+//         lda CharSpells::ID,X
+//         cmp #$FF		;empty spell slot
+//         beq TryRandomSpell	;keep trying until we hit a known spell
+//         cmp #$46		;quick spell
+//         beq TryRandomSpell	;is no good either
+//         pha 			;holds known random spell
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         lda f:AttackProp,X
+//         sta TempTargetting	;temp area
+//         tdc
+//         tay
+//         sty $16			;target bits
+//         lda TempTargetting
+//         bne CheckTargetting
+// TargetSelf:
+//         longa
+//         lda $3F			;Char Offset
+//         jsr ShiftDivide_128	;char index (could've just loaded that)
+//         tax
+//         shorta0
+//         jsr SetBit_X     	;target self if no targetting info
+//         sta $16
+//         bra TargetReady
+// CheckTargetting:
+//         and #$40		;hits all
+//         bne TargetsAll
+//         lda TempTargetting
+//         and #$08		;targets enemy by default
+//         bne TargetsEnemy
+// TargetsOther:			;assumed to normally target party, now targets monsters
+//         tdc
+//         tax
+//         lda #$07
+//         jsr Random_X_A	     	;random monster 0..7
+//         tax
+//         tdc
+//         jsr SetBit_X
+//         sta $17			;monster target
+//         bra TargetReady
+// TargetsEnemy:			;normally targets enemy, now targets party
+//         tdc
+//         tax
+//         lda #$03
+//         jsr Random_X_A    	;random party 0..3
+//         tax
+//         tdc
+//         jsr SetBit_X
+//         sta $16			;party target
+//         bra TargetReady
+// TargetsAll:
+//         lda TempTargetting
+//         and #$08		;targets enemy by default
+//         bne :+
+//         lda #$FF
+//         sta $17
+//         bra TargetReady
+// :	lda #$F0		;target all party members
+//         sta $16
+// TargetReady:
+//         ldx $3F			;char Offset
+//         pla 			;random known spell
+//         sta CharStruct::SelectedItem,X
+//         lda $16			;party targets
+//         sta CharStruct::PartyTargets,X
+//         lda $17			;monster targets
+//         sta CharStruct::MonsterTargets,X
+//         lda #$21		;magic + costs mp
+//         sta CharStruct::ActionFlag,X
+//         lda #$2C		;first magic command
+//         sta CharStruct::Command,X
+//         stz CharStruct::SecondActionFlag,X
+//         stz CharStruct::SecondCommand,X
+//         stz CharStruct::SecondMonsterTargets,X
+//         stz CharStruct::SecondPartyTargets,X
+//         stz CharStruct::SecondSelectedItem,X
+// _QueueUncontrolledAction:
+//         jmp QueueUncontrolledAction
+}
+
+// Address: _1F80
+// Params:
+// - X = Char Offset
+// - $3D = Char index
+// Sets up a fight command targetting a
+// random party member
+static void berserkAction(void) {
+    // lda #$80
+    // sta CharStruct::ActionFlag,X
+    // lda #$05	;fight
+    // sta CharStruct::Command,X
+    // stz CharStruct::PartyTargets,X
+    // stz CharStruct::SelectedItem,X
+    // stz CharStruct::SecondActionFlag,X
+    // stz CharStruct::SecondCommand,X
+    // stz CharStruct::SecondMonsterTargets,X
+    // stz CharStruct::SecondPartyTargets,X
+    // stz CharStruct::SecondSelectedItem,X
+    // phx
+    // tdc
+    // tax
+    // lda #$07
+    // jsr Random_X_A	;0..7 random monster
+    // tax
+    // tdc
+    // jsr SetBit_X
+    // plx
+    // sta CharStruct::MonsterTargets,X
+    // jmp QueueUncontrolledAction
+}
+
+// Param $3D = char index
+// Sets character's queued action to fire
+// on the next ATB tick, and reset their
+// uncontrolled ATB for their next turn
+static void queueUncontrolledAction(void) {
+    //     lda $3D		;char index
+    //     jsr ResetATB   	;also sets Y = timer offset
+    //     lda $3D
+    //     tax
+    //     lda CurrentTimer::ATB,Y
+    //     cmp #$7F
+    //     bcc :+
+    //     lda #$7F	;max ATB 127
+    // :   sta UncontrolledATB,X
+    //     lda #$01	;action on next ATB tick
+    //     sta CurrentTimer::ATB,Y
+    //     lda #$41    	;waiting for delayed action
+    //     sta EnableTimer::ATB,Y
+    //     rts
+}
+
+// Address: _1FD2
+// Randomizes a table of combatant numbers,
+// also initializes global timers
+static void randomizeOrder(void) {
+//         lda CurrentlyReacting
+//         bne :+
+//         jsr GlobalTimers
+// :	   tdc
+//         tax
+//         dec
+//         									;:
+// :	sta RandomOrder,X
+//         inx
+//         cpx #$000C
+//         bne :-
+//         									;.
+//         tdc
+//         tay 			;slot for writing
+// _RandomizeOrder:
+//         tdc
+//         tax 			;slot for reading
+//         lda #$0B
+//         jsr Random_X_A		;0..11
+//         sta $0E
+//         ldx #$0000
+//         									;:
+// CheckValueInUse:		;see if we've used this number yet
+//         lda $0E
+//         cmp RandomOrder,X
+//         beq _Next		;already used, try another
+//         inx
+//         cpx #$000C
+//         bne CheckValueInUse
+//         									;.
+//         sta RandomOrder,Y	;if not, save it
+//         iny 			;and select next writing slot
+//         									;:
+//  _Next:
+//         cpy #$000C		;12 combatant slots
+//         bne _RandomizeOrder
+//         									;.
+//         rts
+}
+
+// Address: _200B
+// Updates Status/ATB timers for all combatants
+// may skip updates depending on stop/etc.
+static void updateTimers(void) {
+//         jsr GlobalTimers
+//         tdc
+//         tax
+//         stx $0A     		;char index
+// Loop:	tdc
+//         tay
+//         sty $0C     		;timer index
+//         lda $0A
+//         jsr GetTimerOffset
+//         tyx 			;X = Timer Offset
+//         ldy $0A
+//         lda ActiveParticipants,Y
+//         beq NextChar
+//         lda PauseTimerChecks,Y
+//         bne NextChar
+//         lda CurrentlyReacting
+//         bne :+
+//         lda QuickTimeFrozen,Y
+//         bne NextChar
+// :       jsr UpdateTimer 	;first timer is stop
+//         lda $08			;check if stop active
+//         bne NextChar  		;don't process other timers if stopped
+//         ldy #$0008  		;process 8 more status timers
+// :       jsr UpdateTimer
+//         dey
+//         bne :-
+//         jsr UpdateTimer 	;one more status timer (paralyze)
+//         lda $08			;check if paralyze active
+//         bne NextChar
+//         jsr UpdateTimer  	;advance ATB timer if not paralyzed
+// NextChar:
+//         inc $0A     		;next char index
+//         lda $0A
+//         cmp #$0C		;12 combatants
+//         bne Loop
+//         rts
+}
+
+// Advances a status/atb timer if
+// that status is supposed to be checked this tick
+// sets up for the next call to check the next timer
+// Params: 
+//  - $0C = timer index
+//  - X = timer offset
+// Output: $08 = timer triggered
+static void updateTimer(void) {
+//         stz $08    	;timer triggered flag
+//         phy
+//         ldy $0C		;timer index
+//         lda ProcessTimer,Y	;should process this timer this tick?
+//         beq Finish
+//         cpy #$000A	;ProcessTimer::ATB
+//         beq :+
+//         lda CurrentlyReacting
+//         bne Finish
+// :	lda EnableTimer,X	;is it enabled?
+//         beq Finish
+//         bmi TimerActive  	;check the 80h timer flag
+//         lda CurrentTimer,X
+//         beq FlagTimer
+//         dec CurrentTimer,X
+//         lda CurrentTimer,X
+//         bne TimerActive
+// FlagTimer:		;flag EnableTimer when CurrentTimer hits 0
+//         lda EnableTimer,X
+//         ora #$81
+//         sta EnableTimer,X
+// TimerActive:
+//         lda $0C
+//         bne :+		;doesn't branch anywhere regardless
+// :       inc $08    	;timer triggered flag
+// Finish:
+//         ply 		;restore original Y
+//         inx 		;next timer (in offset)
+//         inc $0C		;next timer index
+//         rts
+}
+
+// Decreases global status timers,
+// then flags and reset those that trigger
+// sets ProcessTimer to indicate that status
+// should be updated this tick
+static void globalTimers(void) {
+//         tdc
+//         tax
+// DecTimer:
+//         lda GlobalTimer,X
+//         beq Triggered
+//         dec GlobalTimer,X
+//         stz ProcessTimer,X
+//         bra :+
+// Triggered:
+//         lda #$01
+//         sta ProcessTimer,X		;flag timer for processing
+//         lda f:TimerDurTbl,X		;reset timer from rom
+//         sta GlobalTimer,X
+//         							;:
+// :	inx
+//         cpx #$000B			;11 timers
+//         bne DecTimer
+//         rts
+}
+
+// Attempts to find one character for
+// each timer for whom that timer has ended
+// (EnableTimer bit 80h)
+// Check is in a fixed random order that's
+// set up at battle init
+// but subsequent runs will continue after
+// the last character checked for each timer so
+// it's somewhat fair
+static void findEndedTimers(void) {
+//         tdc
+//         tax
+//         stx $08			;timer index
+//         tay
+// :	sta TimerEnded,Y
+//         iny
+//         cpy #$000B
+//         bne :-
+// TimerLoop:	;for each timer, loop finds the first character for whom that timer ended, checking in a "random" order
+//         tdc
+//         tax
+//         stx $0A			;char count
+//         ldx $08			;timer index
+//         lda RandomOrderIndex,X
+//         pha 			;original RandomOrderIndex
+// CharLoop:	;searches characters in a "random" order
+//         ldx $08			;timer index
+//         lda RandomOrderIndex,X
+//         tax
+//         lda RandomOrder,X
+//         sta $0C			;char index
+//         tax
+//         lda PauseTimerChecks,X
+//         bne NextChar
+//         lda CurrentlyReacting
+//         bne :+
+//         lda QuickTimeFrozen,X
+//         bne NextChar
+// :	lda $0C			;char index
+//         jsr GetTimerOffset      ;Y = Timer Offset
+//         tya
+//         clc
+//         adc $08
+//         tax 			;timer offset + index
+//         lda EnableTimer,X
+//         bpl NextChar		;80h must be set to contiue
+//         lda $0C
+//         tay
+//         lda ActiveParticipants,Y
+//         beq NextChar
+//         lda $08			;timer index
+//         cmp #$01		;poison
+//         beq PoisonCountRegen
+//         cmp #$03		;countdown
+//         beq PoisonCountRegen
+//         cmp #$07		;regen
+//         bne EndTimer
+// PoisonCountRegen:	;skips ending timer for these status if they're also erased/hidden/jumping
+//         phx 		;timer offset + index
+//         ldx $08
+//         lda RandomOrderIndex,X
+//         tax
+//         lda RandomOrder,X
+//         longa
+//         jsr ShiftMultiply_128
+//         tax
+//         shorta0
+//         lda CharStruct::Status4,X
+//         and #$81	;erased or hidden
+//         bne NextCharPLX
+//         lda CharStruct::CmdStatus,X
+//         and #$10	;jumping
+//         beq EndTimerPLX
+// NextCharPLX:
+//         plx
+//         bra NextChar
+// EndTimerPLX:
+//         plx 		;timer offset + index
+// EndTimer:		;sets flag that timer has ended, so effects can be applied later
+//         pla
+//         lda EnableTimer,X
+//         and #$7E	;clear $81
+//         sta EnableTimer,X
+//         ldx $08		;timer index
+//         phx
+//         lda #$01	;flag that we found someone timer ended for
+//         sta TimerEnded,X
+//         lda RandomOrderIndex,X
+//         tax
+//         lda RandomOrder,X
+//         plx 		;timer index
+//         sta TimerReadyChar,X	;which character had their timer end
+//         bra NextTimer	;don't check any more characters for this timer
+// NextChar:	;this character's timer didn't end or isn't eligable,
+//         	;keep looking until all have been checked or one is found
+//         ldx $08		;timer index
+//         inc RandomOrderIndex,X
+//         lda RandomOrderIndex,X
+//         cmp #$0C	;reset index at 12
+//         bne :+
+//         stz RandomOrderIndex,X
+// :       inc $0A        	;char count
+//         lda $0A
+//         cmp #$0C	;12 chars
+//         beq :+
+//         jmp CharLoop
+// :       pla 		;original RandomOrderIndex
+//         sta RandomOrderIndex,X
+// NextTimer:
+//         inc $08        	;next timer index
+//         lda $08
+//         cmp #$0B	;11 timers
+//         beq Ret
+//         jmp TimerLoop
+// Ret:	rts
+}
+
+static void applyTimerEffects(void) {
+//         tdc
+//         tax
+//         stx ProcessingTimer
+// Loop:
+//         ldx ProcessingTimer
+//         lda TimerEnded,X
+//         beq NextTimer
+//         inc RandomOrderIndex,X
+//         lda RandomOrderIndex,X
+//         cmp #$0C		;12 chars
+//         bne :+
+//         stz RandomOrderIndex,X
+// :	    lda TimerReadyChar,X
+//         jsr GetTimerOffset    	;sets Y to timer offset
+//         lda TimerReadyChar,X
+//         jsr CalculateCharOffset
+//         lda ProcessingTimer
+//         beq TimerEffect    	;timer 0 is stop, skips below check
+//         lda EnableTimer,Y	;bits 80h and 01 are cleared prev
+//         bne NextTimer    	;skip effect if any other bits set
+// TimerEffect:
+//         jsr DispatchTimerEffect
+// NextTimer:
+//         inc ProcessingTimer
+//         lda ProcessingTimer
+//         cmp #$0B		;11 timers
+//         bne Loop
+//         rts
+}
+
+// Uses a jump table to call an
+// appropriate timer effect routine
+// Params:
+// - Y = timer offset (used in the effect routines)
+static void dispatchTimerEffect(void) {
+    // lda ProcessingTimer
+    // asl
+    // tax
+    // lda f:TimerEffectJumpTable,X
+    // sta $08
+    // lda f:TimerEffectJumpTable+1,X
+    // sta $09
+    // lda #$c2 ; Load from bank C2
+    // sta $0A
+    // jml [$0008]
+
+    // TimerEffectJumpTable
+    // .word $21E3, $21EE, $222A, $2235, $224E, $2259, $2264, $22AD, $2319, $237C, $238F
+}
+
+// Address: _21E3
+static void timerEffectStop(void) {
+    // ldx AttackerOffset
+    // lda CharStruct::Status3,X
+    // and #$EF	;clear stop
+    // sta CharStruct::Status3,X
+    // rts
+}
+
+// Address: _21EE
+static void timerEffectPoison(void) {
+//         lda #$01
+//         sta EnableTimer::Poison,Y
+//         lda InitialTimer::Poison,Y
+//         sta CurrentTimer::Poison,Y
+//         jsr WipeDisplayStructures
+//         longa
+//         ldx AttackerOffset
+//         lda CharStruct::MaxHP,X
+//         jsr ShiftDivide_16
+//         bne :+
+//         inc 				;min 1 damage
+// :	sta $0E				;poison tick damage
+//         sec
+//         lda CharStruct::CurHP,X
+//         sbc $0E				;poison tick damage
+//         bcs :+
+//         tdc 				;min 0 hp
+// :	sta CharStruct::CurHP,X
+//         shorta0
+//         lda TimerReadyChar::Poison
+//         ldx $0E				;poison tick damage
+//         stx TempDisplayDamage
+//         jsr CopyDisplayDamage
+//         lda #$09	;C1 routine: display regen/poison damage
+//         jmp CallC1
+}
+
+static void timerEffectReflect(void) {
+    // ldx AttackerOffset
+    // lda CharStruct::Status3,X
+    // and #$7F	;clear reflect
+    // sta CharStruct::Status3,X
+    // rts
+}
+
+static void timerEffectCountdown(void) {
+//         ldx AttackerOffset
+//         lda CharStruct::Status1,X
+//         and #$02	;zombie
+//         bne Ret
+//         lda TimerReadyChar::Countdown
+//         jsr KillCharacter
+//         lda MonsterDead
+//         beq Ret
+//         lda #$07	;C1 routine: condemn death animation
+//         jsr CallC1
+// Ret:	   rts
+}
+
+static void timerEffectMute(void) {
+    // ldx AttackerOffset
+    // lda CharStruct::Status2,X
+    // and #$FB	;clear mute
+    // sta CharStruct::Status2,X
+    // rts
+}
+
+static void timerEffectHPLeak(void) {
+    // ldx AttackerOffset
+    // lda CharStruct::Status4,X
+    // and #$F7	;clear hp leak
+    // sta CharStruct::Status4,X
+    // rts
+}
+
+static void timerEffectOld(void) {
+//         lda #$01
+//         sta EnableTimer::Old,Y
+//         lda InitialTimer::Old,Y
+//         sta CurrentTimer::Old,Y
+//         ldx AttackerOffset
+//         stz $0E
+// StatsLoop:		;applies to all 4 main stats
+//         lda CharStruct::BaseStr,X
+//         dec
+//         beq :+		;**bug: wraps 0 stats to 255
+//         sta CharStruct::BaseStr,X
+// :	lda CharStruct::EquippedStr,X
+//         dec
+//         beq :+
+//         sta CharStruct::EquippedStr,X
+// :	inx
+//         inc $0E
+//         lda $0E
+//         cmp #$04	;4 stats
+//         bne StatsLoop
+//         ldx ProcessingTimer
+//         lda TimerReadyChar,X
+//         cmp #$04	;monster check
+//         bcc Ret
+//         ldx AttackerOffset
+//         lda CharStruct::Level,X
+//         dec
+//         beq :+
+//         sta CharStruct::Level,X
+// :	lda CharStruct::MonsterAttack,X
+//         dec
+//         bpl Ret	;bug? only decreases attack if above 128
+//         sta CharStruct::MonsterAttack,X
+// Ret:	rts
+}
+
+static void timerEffectRegen(void) {
+//         lda #$01
+//         sta EnableTimer::Regen,Y
+//         lda InitialTimer::Regen,Y
+//         cmp #$1E
+//         bcs :+
+//         lda #$1E	;max 30 ticks if it was slower
+//         sta InitialTimer::Regen,Y
+// :	sta CurrentTimer::Regen,Y
+//         jsr WipeDisplayStructures
+//         ldx AttackerOffset
+//         jsr CopyStatsWithBonuses
+//         lda Level
+//         sta $24
+//         lda Vitality
+//         sta $25
+//         jsr Multiply_8bit
+//         ldx AttackerOffset
+//         lda CharStruct::Status1,X
+//         and #$02	;zombie
+//         bne Ret
+//         longa
+//         lda $26
+//         jsr ShiftDivide_16
+//         tax
+//         bne :+
+//         inc 		;min 1
+// :	sta $0E
+//         ldx AttackerOffset
+//         clc
+//         adc CharStruct::CurHP,X
+//         bcs :+
+//         cmp CharStruct::MaxHP,X
+//         bcc :++
+// :	lda CharStruct::MaxHP,X	;cap at maxhp
+// :	sta CharStruct::CurHP,X
+//         shorta0
+//         lda $0F
+//         ora #$80       		;flag to display as healing
+//         sta $0F
+//         lda TimerReadyChar::Regen
+//         ldx $0E
+//         stx TempDisplayDamage
+//         jsr CopyDisplayDamage
+//         lda #$09	;C1 routine: display regen/poison damage
+//         jsr CallC1
+// Ret:	rts
+}
+
+static void timerEffectSing(void) {
+//         lda #$01
+//         sta EnableTimer::Sing,Y
+//         lda InitialTimer::Sing,Y
+//         sta CurrentTimer::Sing,Y
+//         tdc
+//         tay
+//         ldx AttackerOffset
+//         lda CharStruct::Song,X
+//         beq Ret
+// FindSong:		;Y = song stat index
+//         asl
+//         bcs :+
+//         iny
+//         bra FindSong
+// :       sty $12		;song stat index
+//         tdc
+//         tax
+//         stx $0E		;target
+//         lda #$04
+//         sta $10		;after last target
+//         lda TimerReadyChar::Sing
+//         cmp #$04	;monster check? monsters can sing?
+//         bcc ApplySong
+//         lda #$04
+//         sta $0E		;target
+//         lda #$0C
+//         sta $10		;last target +1
+//         ldx #$0180	;**bug: should be $0200 for first monster
+// ApplySong:
+//         stx $14		;char offset
+//         longa
+//         txa
+//         clc
+//         adc $12		;adjust offset by song stat
+//         tax
+//         shorta0
+// CharLoop:
+//         ldy $0E		;target
+//         lda ActiveParticipants,Y
+//         beq Next
+//         clc
+//         lda CharStruct::BonusStr,X	;different stats depending on X
+//         inc
+//         cmp #$64	;don't apply changes at 100 and up
+//         bcs Next
+//         sta CharStruct::BonusStr,X
+// Next:
+//         jsr NextCharOffset
+//         stx $14		;char offset
+//         inc $0E		;next target
+//         lda $0E
+//         cmp $10		;last target +1
+//         bne CharLoop
+// Ret:	rts
+}
+
+static void timerEffectParalyze(void) {
+    // ldx AttackerOffset
+    // lda CharStruct::Status2,X
+    // and #$DF	;clear paralyze
+    // sta CharStruct::Status2,X
+    // ldx ProcessingTimer
+    // lda TimerReadyChar,X
+    // jmp ResetATB
+}
+
+static void timerEffectATB(void) {
+//         jsr CheckBattleEnd
+//         lda BattleOver
+//         bne GoRet
+//         lda TimerReadyChar::ATB
+//         sta AttackerIndex
+//         jsr GetTimerOffset
+//         tyx
+//         lda EnableTimer::Paralyze,X
+//         bne GoRet
+//         lda EnableTimer::ATB,X
+//         beq :+
+//         jmp PerformAction      	;action is ready, do it
+// :	lda TimerReadyChar::ATB
+//         cmp #$04	;monster check
+//         bcs Monster
+//         tdc
+//         tax
+// SearchTurnQueue:	;find character in turn queue
+//         lda ATBReadyQueue,X
+//         cmp TimerReadyChar::ATB
+//         beq GoRet	;character already in turn queue
+//         inx
+//         cpx #$0004
+//         bne SearchTurnQueue
+//         lda TimerReadyChar::ATB
+//         jsr CheckDisablingStatus
+//         bne GoRet
+//         ldx ATBReadyCount
+//         lda TimerReadyChar::ATB
+//         sta ATBReadyQueue,X
+//         inc ATBReadyCount
+// GoRet:	jmp Ret
+// Monster:
+//         jsr MonsterATB
+// Ret:	rts
+}
+
+// Called when character's turn is up,
+// perform their queued action
+static void performAction(void) {
+//         jsr ProcessTurn
+//         lda DelayedFight
+//         bne Ret
+//         lda AttackerIndex
+//         cmp #$04	;monster check
+//         bcs _ResetATB
+//         ldx AttackerOffset
+//         lda CharStruct::CmdStatus,X
+//         and #$E0	;clear many flags (jump/flirt/others?)
+//         sta CharStruct::CmdStatus,X
+//         stz CharStruct::DamageMod,X
+//         lda CharStruct::Status1,X
+//         ora CharStruct::AlwaysStatus1,X
+//         and #$02	;zombie
+//         bne Uncontrolled
+//         lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$18	;charm/berserk
+//         beq _ResetATB
+// Uncontrolled:
+//         lda AttackerIndex
+//         jsr GetTimerOffset
+//         tdc
+//         sta EnableTimer::ATB,Y
+//         inc
+//         sta CurrentTimer::ATB,Y
+//         lda AttackerIndex
+//         tax
+//         lda UncontrolledATB,X
+//         and #$7F	;max 127
+//         sta UncontrolledATB,X
+// _ResetATB:
+//         inc CheckQuick
+//         lda AttackerIndex
+//         jsr ResetATB
+//         stz CheckQuick
+// Ret:	rts
+}
+
+// Waits when a character's turn arrives
+// (amount depending on battle speed setting)
+static void atbWait(void) {
+//         lda ATBWaiting
+//         beq Ret
+//         lda ATBWaitLeft
+//         beq DoneWaiting
+//         dec
+//         sta ATBWaitLeft
+//         bne Ret
+// DoneWaiting:
+//         tdc
+//         sta ATBWaiting
+// Ret:	rts
+}
+
+// Updates ATB for all combatants and
+// sets them active if present
+static void resetAtbAll(void) {
+//         tdc
+//         tax
+//         tay
+//         stx $0E			;char index
+// ResetATBLoop:
+//         lda $0E
+//         jsr ResetATB
+//         lda $0E
+//         jsr CalculateCharOffset
+//         lda $0E
+//         cmp #$04		;monster check
+//         bcs Monster
+//         ldx AttackerOffset
+//         lda CharStruct::CharRow,X
+//         and #$40		;not present
+//         beq SetActive
+//         bne Next
+// Monster:
+//         sec
+//         lda $0E
+//         sbc #$04
+//         tax 			;monster index
+//         lda InitialMonsters,X
+//         beq Next
+// SetActive:
+//         ldx $0E
+//         lda #$01
+//         sta ActiveParticipants,X
+// Next:
+//         inc $0E			;char index
+//         lda $0E
+//         cmp #$0C		;12 participants
+//         bne ResetATBLoop
+//         									;.
+//         rts
+}
+
+// Initialize ATB (A: character index 0-12)
+static void resetAtb(void) {
+//         pha
+//         jsr GetTimerOffset	;Y and $36 = timer offset
+//         pla
+//         jsr CalculateCharOffset
+//         jsr CopyStatsWithBonuses
+//         lda CharStruct::EqWeight,X
+//         jsr ShiftDivide_8	;weight/8
+//         clc
+//         adc #$78     		;+120
+//         sec
+//         sbc Agility    	;-agi
+//         beq :+
+//         bcs :++
+// :	lda #$01     		;min 1
+// :       jsr HasteSlowMod
+//         sta CurrentTimer::ATB,Y
+//         lda EncounterInfo::IntroFX
+//         bpl NotCredits		;80h indicates a credits demo battle
+//         ldx AttackerOffset
+//         cpx #$0200		;monster
+//         bcs CreditsMonster
+//         lda #$01		;party member gets turn immediately
+//         bra CreditsParty
+// CreditsMonster:
+//         lda #$FF		;monster turn as late as possible
+// CreditsParty:
+//         sta CurrentTimer::ATB,Y
+// NotCredits:
+//         lda CheckQuick
+//         beq EnableATB
+//         lda QuickTurns
+//         beq EnableATB
+//         lda CurrentlyReacting
+//         bne EnableATB
+//         dec QuickTurns
+//         lda QuickTurns
+//         bne Quick
+//         phy
+//         jsr ClearQuick
+//         ply
+//         bra EnableATB
+// Quick:										;:
+//         lda #$01
+//         sta CurrentTimer::ATB,Y
+// EnableATB:
+//         lda #$01
+//         sta EnableTimer::ATB,Y
+//         rts
+}
+
+// Unfreezes time for everyone
+static void clearQuick(void) {
+//         tdc
+//         tax
+// :	    stz QuickTimeFrozen,X
+//         inx
+//         cpx #$000C		;12 combatants
+//         bne :-
+//         rts
+}
+
+// Stop Timer (X: #timer; A: Target index 0-12)
+static void stopTimer(void) {
+    // phx
+    // jsr GetTimerOffset
+    // plx
+    // jsr AddTimerOffsetY
+    // tdc
+    // sta EnableTimer,Y
+    // rts
+}
+
+// Start Timer (X: #timer; A: Participant index)
+static void startTimer(void) {
+    // phx
+    // pha
+    // jsr GetTimerOffset
+    // pla
+    // jsr CalculateCharOffset
+    // jsr CopyStatsWithBonuses
+    // plx
+    // jsr GetTimerDuration	;also sets up Y
+    // ldx AttackerOffset	;not actually attacker, in this case
+    // jsr HasteSlowMod
+    // sta CurrentTimer,Y
+    // sta InitialTimer,Y
+    // lda #$01
+    // sta EnableTimer,Y
+    // stz StatusFixedDur
+    // rts
+}
+
+// Get Timer Duration (X - #timer; $3ED7 - IsItem):
+// A = return duration
+// sets up and jumps to a jump table entry that
+// sets the correct duration
+// also sets up Y as the correct timer offset
+static void getTimerDuration(void) {
+    // jsr AddTimerOffsetY      ;Y = X + TimerOffset
+    // txa
+    // asl
+    // clc
+    // adc StatusFixedDur     ;uses alternate fixed status duration
+    // asl
+    // tax
+    // lda f:TimerDurationJumpTable,X
+    // sta $08
+    // lda f:TimerDurationJumpTable+1,X
+    // sta $09
+    // lda #$c2 ;.b #bank(TimerDurationJumpTable)
+    // sta $0A
+    // jmp [$0008]		;jump to table address
+
+    // TimerDurationJumpTable
+
+    // .word DurSpell, Dur120a, DurVit, DurVit, DurSpell
+    // .word Dur120b, DurSpell, Dur49, DurSpell, Dur180mod
+    // .word DurSpell, Dur180, Dur10, Dur10, Dur110mod
+    // .word Dur110mod, Dur30, Dur30, DurSpellmod, Dur120mod
+
+    // .word $2572, $2576, $2579, $2579, $2572
+    //       $2584, $2572, $2587, $2572, $258A
+    //       $2572, $259A, $259D, $259D, $25A0
+    //       $25A0, $25AF, $25AF, $25B2, $25C3
+
+}
+
+// (X): Y = X + $36 Timer Offset)
+static void addTimerOffsetY(void) {
+    // txa
+    // longa
+    // clc
+    // adc TimerOffset
+    // tay
+    // shorta0
+    // rts
+}
+
+// Address: _2572
+// Duration = Spell Duration
+static void durSpell(void) {
+    // lda StatusDuration
+    // rts
+}
+
+// Address: _2576
+// Duration = 120
+static void dur120a(void) {
+    // lda #$78	;120
+    // rts
+}
+
+// Duration = Attacker's Vitality + 20
+static void durVit(void) {
+//     clc
+//     lda Vitality
+//     adc #$14	;+20
+//     bcc :+
+//     lda #$FF	;max 255
+// :	rts
+}
+
+// Address: _2584
+// Duration = 120
+// Duplicate of _2576
+
+// Address: _2587
+// Duration = 49
+// Similar to _2576
+
+// Duration = 180 - Attacker's Magic Power / 2
+static void dur180mod(void) {
+//         lda MagicPower
+//         lsr
+//         sta $0E
+//         sec
+//         lda #$B4	;180
+//         sbc $0E
+//         bcs :+
+//         lda #$01	;min 1
+// :	    rts
+}
+
+// Address: _259A
+// Duration = 180
+// Similar to _2576
+
+// Address: _259D
+// Duration = 10
+// Similar to _259D
+
+// Duration = 110 - Attacker's Magic Power, min 30
+static void dur110mod(void) {
+//     sec
+//     lda #$6E	;110
+//     sbc MagicPower
+//     bcc :+
+//     cmp #$1E	;min 30
+//     bcs :++
+// :	lda #$1E	;min 30
+// :	rts
+}
+
+// Address: _25AF
+// Duration = 30
+// ** optimize: reuse code from Dur110mod
+// Similar to _259D
+
+// Duration = Spell Duration - Attacker's Magic Power / 2
+static void durSpellMod(void) {
+//     lda MagicPower
+//     lsr
+//     sta $0E
+//     sec
+//     lda StatusDuration
+//     sbc $0E
+//     bcs :+
+//     lda #$01	;min 1
+// :	rts
+}
+
+//Duration = 120 - Attacker's Magic Power / 2
+static void dur120mod(void) {
+//     lda MagicPower
+//     lsr
+//     sta $0E
+//     sec
+//     lda #$78	;120
+//     sbc $0E
+//     bcs :+
+//     lda #$01	;min 1
+// :	rts
+}
+
+// Queues up a monster's action when
+// their ATB is ready
+static void monsterAtb(void) {
+//         lda #$01
+//         sta AISkipDeadCheck
+//         sec
+//         lda AttackerIndex
+//         sbc #$04
+//         sta MonsterIndex
+//         jsr ShiftMultiply_16
+//         tax
+//         stx MonsterOffset16
+//         asl
+//         tax
+//         stx MonsterOffset32
+//         tdc
+//         tay
+//         sty TempCharm
+//         ldx MonsterOffset16
+//         lda #$FF
+// :	sta MonsterMagic,X
+//         inx
+//         iny
+//         cpy #$0010	;init 16 byte monster magic struct
+//         bne :-
+//         							;
+//         lda MonsterIndex
+//         asl
+//         tax
+//         lda f:_d0ee95,X
+//         sta $0E
+//         lda f:_d0ee95+1,X
+//         sta $0F
+//         tdc
+//         tay
+//         ldx $0E		;MonsterIndex *100
+//         lda #$FF
+// :	sta MonsterAIScript,X
+//         inx
+//         iny
+//         cpy #$0064	;init 100 bytes to $FF
+//         bne :-
+//         lda AttackerIndex
+//         jsr CalculateCharOffset
+//         ldx AttackerOffset
+//         lda #$2C       	;magic
+//         sta CharStruct::Command,X
+//         lda #$21	;magic + costs mp
+//         sta CharStruct::ActionFlag,X
+//         ldx AttackerOffset
+//         lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$08	;berserk
+//         beq CheckCharm
+//         lda #$01
+//         sta CharStruct::CmdCancelled,X
+//         lda #$80	;monster fight
+//         sta AIBuffer
+//         lda #$FF	;end of list
+//         sta AIBuffer+1
+//         jsr DispatchAICommands
+//         jmp GoFinish
+// CheckCharm:
+//         lda CharStruct::Status2,X
+//         ora CharStruct::AlwaysStatus2,X
+//         and #$10	;charm
+//         beq CheckFlirt
+// TryRandomAction:
+//         ldx AttackerOffset
+//         lda #$01
+//         sta CharStruct::CmdCancelled,X
+//         tdc
+//         tax
+//         lda #$03
+//         jsr Random_X_A 	;0..3
+//         tax
+//         stx $0E
+//         lda MonsterIndex
+//         asl
+//         tax
+//         longa
+//         lda BattleMonsterID,X
+//         jsr ShiftMultiply_4
+//         clc
+//         adc $0E		;random number 0..3
+//         tax 		;offset into control actions table
+//         shorta0
+//         lda f:MonsterControl,X
+//         cmp #$FF
+//         beq TryRandomAction	;no action in this slot, try again
+//         sta AIBuffer
+//         lda #$FF	;end of list
+//         sta AIBuffer+1
+//         inc TempCharm
+//         jsr DispatchAICommands
+//         bra GoFinish
+// CheckFlirt:								;
+//         lda CharStruct::CmdStatus,X
+//         and #$08	;flirt
+//         beq CheckControl
+//         lda #$51	;throbbing command
+//         sta CharStruct::Command,X
+//         lda #$80	;other
+//         sta CharStruct::ActionFlag,X
+//         bra GoFinish
+// CheckControl:
+//         lda CharStruct::Status4,X
+//         and #$20	;control
+//         bne Control
+//         lda CharStruct::Status2,X
+//         and #$40	;sleep
+//         bne Sleep
+//         bra Normal
+// Control:
+//         tdc
+//         tay
+// :	lda ControlTarget,Y
+//         cmp AttackerIndex
+//         beq FoundController
+//         iny
+//         bra :-
+// FoundController:
+//         lda ControlCommand,Y
+//         bne _ControlCommand
+// Sleep:	;or controlled without a command
+//         stz CharStruct::Command,X
+//         lda #$80	;action complete?
+//         sta CharStruct::ActionFlag,X
+//         bra GoFinish
+// _ControlCommand:
+//         tdc
+//         sta ControlCommand,Y
+//         lda MonsterIndex
+//         tax
+//         lda MonsterControlActions,X
+//         sta AIBuffer
+//         lda #$FF	;end of list
+//         sta AIBuffer+1
+//         jsr DispatchAICommands
+// GoFinish:
+//         jmp Finish
+// Normal:
+//         lda MonsterIndex
+//         tax
+//         lda AIActiveConditionSet,X
+//         sta AICurrentActiveCondSet
+//         lda MonsterIndex
+//         asl
+//         tax
+//         longa
+//         clc
+//         lda f:_d0eea5,X	;*1620, size of MonsterAI struct
+//         adc #MonsterAI
+//         sta AIOffset
+//         shorta0
+//         stz AICurrentCheckedSet
+// CheckAIConditions:
+//         lda AICurrentCheckedSet
+//         tax
+//         lda f:_d0eec9,X	;size of a MonsterAI condition
+//         tay
+//         sty AIConditionOffset
+//         stz AICheckIndex
+// CheckSingleCondition:
+//         ldy AIConditionOffset
+//         lda (AIOffset),Y
+//         beq AIActions		;0 always succeeds
+//         cmp #$FE		;indicates end of condition set
+//         beq AIActions
+//         jsr CheckAICondition
+//         lda AIConditionMet
+//         beq NextConditionSet
+//         longa
+//         clc
+//         lda AIConditionOffset
+//         adc #$0004		;next condition in set
+//         sta AIConditionOffset
+//         shorta0
+//         inc AICheckIndex
+//         bra CheckSingleCondition
+// NextConditionSet:	;failed a condition in this set, check next set of conditions
+//         inc AICurrentCheckedSet
+//         lda AICurrentCheckedSet
+//         cmp #$0A		;10 conditions max
+//         bne CheckAIConditions
+// AIActions:
+//         longa
+//         clc
+//         lda AIOffset
+//         adc #$00AA	;advances from Conditions to Actions
+//         sta AIOffset
+//         shorta0
+//         lda AICurrentActiveCondSet
+//         cmp AICurrentCheckedSet
+//         beq ConditionOK	;matches so don't need to change things
+//         lda MonsterIndex
+//         tax
+//         lda AICurrentCheckedSet
+//         sta AIActiveConditionSet,X	;checked cond is now current
+//         lda MonsterIndex
+//         asl
+//         tay
+//         lda AICurrentCheckedSet
+//         asl
+//         tax
+//         lda f:_d0eeb5,X
+//         sta AICurrentOffset,Y
+//         lda f:_d0eeb5+1,X
+//         sta AICurrentOffset+1,Y
+// ConditionOK:
+//         jsr ProcessAIScript
+// Finish:
+//         ldx MonsterOffset16
+//         lda MonsterMagic,X
+//         longa
+//         jsr ShiftMultiply_8
+//         tax
+//         shorta0
+//         lda f:AttackProp,X
+//         and #$03       	;delay values
+//         tax
+//         lda f:AttackDelayTbl,X
+//         pha
+//         lda AttackerIndex
+//         jsr GetTimerOffset
+//         pla
+//         sta CurrentTimer::ATB,Y    ;**bug? doesn't adjust for haste/slow
+//         lda #$41	;pending action
+//         sta EnableTimer::ATB,Y
+//         lda MonsterIndex
+//         asl
+//         tax
+//         stz ForcedTarget::Party,X
+//         stz ForcedTarget::Monster,X
+//         rts
+}
+
+static void CheckAICondition(void) {
+//     cmp #$13	;$12 is last valid condition
+//         bcc :+
+//         tdc 		;always succeed	(if invalid)
+// :	sta $0E		;condition to check
+//         asl
+//         tax
+//         lda f:AICondition,X
+//         sta $08
+//         lda f:AICondition+1,X
+//         sta $09
+//         lda #$C2    ;.b #bank(AICondition)
+//         sta $0A
+//         iny
+//         lda (AIOffset),Y
+//         sta AIParam1
+//         iny
+//         lda (AIOffset),Y
+//         sta AIParam2
+//         iny
+//         lda (AIOffset),Y
+//         sta AIParam3
+//         stz AIConditionMet
+//         lda AISkipDeadCheck
+//         bne Jump
+//         ldx AttackerOffset
+//         lda CharStruct::CurHP,X
+//         ora CharStruct::CurHP+1,X
+//         beq Dead
+//         lda CharStruct::Status1,X
+//         and #$C0	;dead or stone
+//         beq NotDead
+// Dead:
+//         lda $0E
+//         cmp #$0F	;condition: dead
+//         beq Jump
+//         rts
+
+// NotDead:
+//         lda $0E
+//         cmp #$0F	;auto-fail condition: dead if not dead
+//         bne Jump
+//         rts
+
+// Jump:       jml [$0008]	;jump to AICondition table
+
+// AICondition table
+// %generatejumptable(AICondition,$12)
+// vanilla values:
+// .word $283A, $283E, $289D, $28DB, $28EB, $291F, $2939, $29B1
+// .word $2A29, $2A63, $2A9D, $2AD2, $2B19, $2B2A, $2B6F, $2B87
+// .word $2B93, $2BC0, $2BFD
+}
+
+// Address: _283A
+// AI Condition $00: Always Succeed
+static void aiCondition00(void) {
+    // inc AIConditionMet
+    // rts
+}
+
+// Address: _283E
+// AI Condition 01: Check Status
+// Param1: AITarget routine
+// Param2: Status offset (0-3 for status 1-4)
+// Param3: Status bits
+// if checking for death status,
+// also succeed if hp is 0 (though this behavior is bugged)
+static void aiCondition01(void) {
+//         lda AIParam1
+//         jsr GetAITarget	;populates list of targets to check
+//         lda AIParam2
+//         tax
+//         stx $0E
+//         tdc
+//         tay
+// Loop:	longa
+//         lda AITargetOffsets,Y
+//         cmp #$FFFF	;end of list or no target found
+//         bne TargetFound
+//         shorta0
+//         bra Finish
+// TargetFound:
+//         sta $10		;target offset
+//         clc
+//         adc $0E		;status offset
+//         tax
+//         shorta0
+//         lda CharStruct::Status1,X	;could be status 1-4 depending
+//         ora CharStruct::AlwaysStatus1,X	;on status offset
+//         and AIParam3
+//         bne Match
+//         lda $0E
+//         bne Next
+//         lda AIParam3
+//         bpl Next
+//         ldx $10			;if asked to check death status
+//         lda CharStruct::CurHP,X	;also succeed if hp is 0
+//         ora CharStruct::CurHP,X	;**bug: should be high byte $2007
+//         bne Next
+// Match:       inc AIConditionMet
+// Next:	iny
+//         iny
+//         cpy #$0018	;12 characters * 2 bytes
+//         bne Loop
+// Finish:			;fail if any targets failed
+//         lda AIMultiTarget
+//         beq Ret
+//         lda AITargetCount
+//         cmp AIConditionMet
+//         beq Ret
+//         stz AIConditionMet
+// Ret:	rts
+}
+
+// AI Condition 02: HP less than value
+// Param1: AITarget routine
+// Param2: HP (low byte)
+// Param3: HP (high byte)
+static void aiCondition02(void) {
+//         lda AIParam1
+//         jsr GetAITarget
+//         tdc
+//         tay
+// Loop:	longa
+//         lda AITargetOffsets,Y
+//         tax
+//         cmp #$FFFF	;end of list or no target found
+//         beq FinishMode
+//         lda CharStruct::CurHP,X
+//         cmp AIParam2
+//         bcs Next
+//         inc AIConditionMet
+// Next:	tdc
+//         shorta
+//         iny
+//         iny
+//         cpy #$0018	;12 characters * 2 bytes
+//         bne Loop
+//         bra Finish	;not needed (resetting mode is harmless)
+// FinishMode:		;need to fix A back to 8 bit
+//         shorta0
+// Finish:			;fail if any targets failed
+//         lda AIMultiTarget
+//         beq Ret
+//         lda AITargetCount
+//         cmp AIConditionMet
+//         beq Ret
+//         stz AIConditionMet
+// Ret:	rts
+}
+
+// AI Condition 03: Check Variable
+// Param2: Var to check (0-3)
+// Param3: Value
+static void aiCondition03(void) {
+//         lda AIParam2
+//         tax
+//         lda AIVars,X
+//         cmp AIParam3
+//         bne Fail
+//         inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition 04: Alone
+// Param2:
+//  - if 0, succeeds when completely alone
+//	- if non-0, succeeds when all active monsters are the same
+static void aiCondition04(void) {
+//         lda AIParam2
+//         bne CheckSame
+//         lda MonstersVisible
+//         jsr CountSetBits
+//         dex
+//         beq Met
+//         rts
+
+// CheckSame:
+//         lda MonsterIndex
+//         asl
+//         tax
+//         lda BattleMonsterID,X
+//         sta $0E
+//         tdc
+//         tay
+// Loop:	lda ActiveParticipants+4,Y
+//         beq Next
+//         tya
+//         asl
+//         tax
+//         lda BattleMonsterID,X
+//         cmp $0E
+//         bne Fail
+// Next:	iny
+//         cpy #$0008
+//         bne Loop
+// Met:
+//         inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition 05: Compare Visible Monsters
+// Param1:
+//  - if 0, succeeds if visible monsters match
+//    provided value
+//	- if non-0, succeeds if they do not match
+//Param3: Monster Bits (1 bit per monster)
+static void aiCondition05(void) {
+//         lda AIParam1
+//         beq CheckMatch
+//         lda MonstersVisible
+//         cmp AIParam3
+//         bne Met
+//         rts
+
+// CheckMatch:
+//         lda MonstersVisible
+//         cmp AIParam3
+//         bne Fail
+// Met:    inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition 06: Reaction to Command and/or Element
+// Param1: if set, inverts test so
+//         a match fails the condition, and
+//         ignores element when checking commands
+// Param2: Command (post-remap values)
+//	       Command $07, normally BuildUp, is used
+//         as a flag to skip the command check and
+//         just check element
+// Param3: Element (ignored if zero)
+static void aiCondition06(void) {
+//         ldx AttackerOffset
+//         lda ReactionFlags
+//         and #$01
+//         bne Reaction2	;Check 2nd set of reactions instead
+//         lda AIParam2	;command
+//         cmp #$07	;used as a flag to skip command check
+//         beq SkipCmdCheck1
+//         lda AIParam1	;invert checks
+//         beq CheckCmdMatch1
+//         lda AIParam2
+//         cmp CharStruct::Reaction1Command,X
+//         bne Met	;if param1 is >0, succeed when no cmd match
+//         rts
+
+// CheckCmdMatch1:
+//         lda AIParam2
+//         cmp CharStruct::Reaction1Command,X
+//         bne Fail	;if param1 is 0, fail when no cmd match
+// SkipCmdCheck1:		;command match or command $07 override
+//         lda AIParam1
+//         beq CheckElemMatch1
+//         lda AIParam3	;element
+//         and CharStruct::Reaction1Element,X
+//         beq Met	;if param1 is >0, succeed when no elem match
+//         rts	;(only reachable via the $07 override)
+// CheckElemMatch1:
+//         lda AIParam3
+//         beq Met	;succeed when element is 0
+//         and CharStruct::Reaction1Element,X
+//         bne Met	;or when any element matches
+//         rts
+
+// Reaction2:	;same logic as above, but react to the second stored command
+//         lda AIParam2
+//         cmp #$07
+//         beq SkipCmdCheck2
+//         lda AIParam1
+//         beq CheckCmdMatch2
+//         lda AIParam2
+//         cmp CharStruct::Reaction2Command,X
+//         bne Met
+//         rts
+
+// CheckCmdMatch2:
+//         lda AIParam2
+//         cmp CharStruct::Reaction2Command,X
+//         bne Fail
+// SkipCmdCheck2:
+//         lda AIParam1
+//         beq CheckElemMatch2
+//         lda AIParam3
+//         and CharStruct::Reaction2Element,X
+//         beq Met
+//         rts
+
+// CheckElemMatch2:
+//         lda AIParam3
+//         beq Met
+//         and CharStruct::Reaction2Element,X
+//         beq Fail
+// Met:       inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition $07: Reaction to Command and/or Category
+// Param1: if set, inverts test so a match fails
+//         the condition, and ignores category when
+//         checking commands
+// Param2: Command (post-remap values)
+//         Command $07, normally BuildUp, is used
+//         as a flag to skip the command check and
+//         just check category
+// Param3: Category (ignored if zero)
+static void aiCondition07(void) {
+//         ldx AttackerOffset
+//         lda ReactionFlags
+//         and #$01
+//         bne Reaction2	;Check 2nd set of reactions instead
+//         lda AIParam2	;command
+//         cmp #$07	;used as a flag to skip command check
+//         beq SkipCmdCheck1
+//         lda AIParam1	;invert checks if set
+//         beq CheckCmdMatch1
+//         lda AIParam2
+//         cmp CharStruct::Reaction1Command,X
+//         bne Met	;if param1 is >0, succeed when no cmd match
+//         rts
+
+// CheckCmdMatch1:
+//         lda AIParam2
+//         cmp CharStruct::Reaction1Command,X
+//         bne Fail	;if param1 is 0, fail when no cmd match
+// SkipCmdCheck1:		;command match or command $07 override
+//         lda AIParam1
+//         beq CheckCatMatch1
+//         lda AIParam3	;category
+//         and CharStruct::Reaction1Category,X
+//         beq Met	;if param1 >0, succeed when no category match
+//         rts
+
+// CheckCatMatch1:
+//         lda AIParam3
+//         beq Met	;succeed when category is 0
+//         and CharStruct::Reaction1Category,X
+//         bne Met	;or when any category matches
+//         rts
+
+// Reaction2:	;same logic as above, but react to the second stored command
+//         lda AIParam2
+//         cmp #$07	;used as a flag to skip command check
+//         beq SkipCmdCheck2
+//         lda AIParam1
+//         beq CheckCmdMatch2
+//         lda AIParam2
+//         cmp CharStruct::Reaction2Command,X
+//         bne Met
+//         rts
+
+// CheckCmdMatch2:
+//         lda AIParam2
+//         cmp CharStruct::Reaction2Command,X
+//         bne Fail
+// SkipCmdCheck2:
+//         lda AIParam1
+//         beq CheckCatMatch2
+//         lda AIParam3
+//         and CharStruct::Reaction2Category,X
+//         beq Met
+//         rts
+
+// CheckCatMatch2:
+//         lda AIParam3
+//         beq Met
+//         and CharStruct::Reaction2Category,X
+//         beq Fail
+// Met:       inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition $08: Reaction to Magic
+// Param1: if set, inverts test so a match
+//         fails the condition
+// Param2: Spell
+static void aiCondition08(void) {
+//         ldx AttackerOffset
+//         lda ReactionFlags
+//         and #$01	;check second set of reactions
+//         bne Reaction2
+//         lda AIParam1
+//         beq CheckMatch1
+//         lda CharStruct::Reaction1Magic,X
+//         cmp AIParam2
+//         bne Met
+//         rts
+
+// CheckMatch1:
+//         lda CharStruct::Reaction1Magic,X
+//         cmp AIParam2
+//         beq Met
+//         rts
+
+// Reaction2:
+//         lda AIParam1
+//         beq CheckMatch2
+//         lda CharStruct::Reaction2Magic,X
+//         cmp AIParam2
+//         bne Met
+//         rts
+
+// CheckMatch2:
+//         lda CharStruct::Reaction2Magic,X
+//         cmp AIParam2
+//         bne Fail
+// Met:       inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition $09: Reaction to Item
+// Param1: if set, inverts test so a match
+//         fails the condition
+// Param2: Item
+static void aiCondition09(void) {
+//         ldx AttackerOffset
+//         lda ReactionFlags
+//         and #$01	;check second set of reactions
+//         bne Reaction2
+//         lda AIParam1
+//         beq CheckMatch1
+//         lda CharStruct::Reaction1Item,X
+//         cmp AIParam2
+//         bne Met
+//         rts
+
+// CheckMatch1:
+//         lda CharStruct::Reaction1Item,X
+//         cmp AIParam2
+//         beq Met
+//         rts
+
+// Reaction2:
+//         lda AIParam1
+//         beq CheckMatch2
+//         lda CharStruct::Reaction2Item,X
+//         cmp AIParam2
+//         bne Met
+//         rts
+
+// CheckMatch2:
+//         lda CharStruct::Reaction2Item,X
+//         cmp AIParam2
+//         bne Fail
+// Met:       inc AIConditionMet
+// Fail:	rts
+}
+
+// AI Condition $0A: Reaction to Targetting
+// Param3: if 0, succeeds when attack was single target
+//	       if non-0, succeeds when attack was multi target
+static void aiCondition0A(void) {
+//         lda ReactionFlags
+//         and #$01	;check second set of reactions
+//         bne Reaction2
+//         ldx AttackerOffset
+//         lda CharStruct::Reaction1Targets,X
+//         jsr CountSetBits
+//         dex 		;targets -1
+//         bmi Fail	;fail for 0 targets
+//         jmp CheckInvert
+// Reaction2:
+//         ldx AttackerOffset
+//         lda CharStruct::Reaction2Targets,X
+//         jsr CountSetBits
+//         dex 		;targets -1
+//         bmi Fail	;fail for 0 targets
+//         jsr CheckInvert
+// Fail:	rts
+// CheckInvert:
+//         lda AIParam3	;inverts
+//         bne Invert
+//         txa
+//         bne Fail2	;fail for >1 targets
+//         beq Met	;succeed for exactly 1 target
+// Invert:
+//         txa
+//         beq Fail2	;fail for exactly 1 target
+// Met:       inc AIConditionMet
+// Fail2:	rts
+}
+
+// Address: _2AD2
+// AI Condition 0B: Check CharStruct param
+// Param1: AITarget routine
+// Param2: Offset within CharStruct to check
+// Param3: Value for success
+static void aiCondition0B(void) {
+//         lda AIParam1
+//         jsr GetAITarget	;populates list of targets to check
+//         lda AIParam2
+//         tax
+//         stx $0E		;Offset within CharStruct
+//         tdc
+//         tay
+// Loop:	longa
+//         lda AITargetOffsets,Y
+//         cmp #$FFFF	;end of list or no target found
+//         bne TargetFound
+//         shorta0
+//         bra Finish
+// TargetFound:
+//         clc
+//         adc $0E		;Offset within CharStruct
+//         tax
+//         shorta0
+//         lda CharStruct::CharRow,X	;check any single CharStruct byte
+//         cmp AIParam3		;compare with provided value
+//         bne :+
+//         inc AIConditionMet
+// :	iny
+//         iny
+//         cpy #$0018	;12 characters * 2 bytes
+//         bne Loop
+// Finish:			;fail if any targets failed
+//         lda AIMultiTarget
+//         beq Ret
+//         lda AITargetCount
+//         cmp AIConditionMet
+//         beq Ret
+//         stz AIConditionMet
+// Ret:	rts
 }
