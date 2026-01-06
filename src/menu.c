@@ -21,6 +21,8 @@ static void func_ff7d(void);
 // Execute Menu
 void execMenu(void) {
     // Jump to subroutine InitMenu
+    initMenu();
+    
     // Store Zero to $39
     // Load $34 to Accumulator
     // AND Accumulator with #7
@@ -43,14 +45,17 @@ static void initMenu(void) {
     // Lengthen Accumulator and Indexes to 16-bit
     // Load #$0100 to Accumulator
     // Transfer Accumulator to Direct Page Register (Set direct page to #$0100)
-    // Load #$f533 to X (copy interrupt jump code)
-    // Load #$1f00 to Y
-    // Load #$0007 to Accumulator
-    // MVN #$c0, #$7e
+    // Load #$f533 to X (set as source data address)
+    //  - The addres contains Interrupt Jump Code
+    // Load #$1f00 to Y (set as destination data address)
+    // Load #$0007 to Accumulator (number of bytes to copy)
+    // MoVe (Copy bytes of) memories from #$c0 to #$7e, then repeat with increment both addresses)
+
     // Store Zero to $8e
     // Shorten Accumulator to 8-bit
     // Load #$80 to Accumulator
     // Store Accumulator to f:$002100
+
     // Store Zero to $44
     // Store Zero to $45
     // Store Zero to $46
@@ -66,17 +71,19 @@ static void initMenu(void) {
     // Jump to subroutine _d447 (Update Window Color)
     // Jump to subroutine _f5a9 (Update Mono/Stereo Setting)
     // Jump to subroutine _a16e (Reset Sprite Data)
+
     // Lengthen Accumulator to 16-bits
     // Load #$f573 to X
     // Load #$750f to Y
     // Load #$0017 to Acculator
-    // MVN #$c0, #$7e
+    // MoVe memory #$c0 to #$7e in increasing order
+
     // Return from Subroutine 
 }
 
 // Reset Sprite Data
 static void func_a16e(void) {
-    // Push Processor status Register
+    // PusH Processor status register
     // Lengthen Accumulator to 16-bit
     // Load #$0220 to X
     // [LBL a174] STZ $01fe,x
