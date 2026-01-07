@@ -1,4 +1,5 @@
 //.import _c10003, _c10006
+#include "btlgfx.h"
 
 //.import ExecBattle_ext
 #include "battle.h"
@@ -7,6 +8,7 @@
 #include "menu.h"
 
 //.import ShowCutscene_ext, Decomp_ext
+#include "cutscene.h"
 
 //.import InitSound_ext, ExecSound_ext
 #include "sound.h"
