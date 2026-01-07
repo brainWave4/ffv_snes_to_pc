@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 // for subroute _c10009
 #include "btlgfx.h"
 
@@ -20,6 +22,12 @@ static void func_d447(void);
 static void func_f549(void);
 static void func_ff7d(void);
 
+static uint16_t add_39 = 0;
+static uint16_t add_c7 = 0;
+static uint8_t add_44 = 0;
+static uint8_t add_45 = 0;
+static uint8_t add_48 = 0;
+
 // Address: _a016
 // Execute Menu
 void execMenu(void) {
@@ -27,11 +35,39 @@ void execMenu(void) {
     initMenu();
     
     // Store Zero to $39
+    //  - $39 is also involved in:
+    //    - here
+    //      - _c2a06b (show menu)
+    //      - _c2b8ae (A is stored there)
+    //      - _c2ba7d
+    //      - _c2bc5e
+    //      - _c2bd47
+    //      - _c2bf2e
+    //      - _c2c56b
+    //      - _c2c803 (menu state $05)
+    //    - field
+    //      - GiveGil (_0efe)
+    //      - CalcGil
+    //      - HexToDec
+    //      - EventCmd_ad
+    //      - CalcInnPrice
+    //      - _c0bf3f (calculate gp [event])
+    //  - in field, $39 seems to be involved with Gil
+    //  - Perhaps it's only involved in Gil
+    //    multiplication in tens.
+    //  - Could be set when defined directly.
+
     // Load $34 to Accumulator
     // AND Accumulator with #7
     // Arithmetic Shift Left
     // Transfer Accumulator to X
-    // Store $c7 to Accumulator
+    // STore Accumulator to $c7 
+    //  - Essentially, $c7 = ($34 && 7) << 1
+    //  - $c7 is also involved in:
+    //      - _c2a06b (show menu) (A is stored there)
+    //      - _c2a2e9 (get next input) (A is also stored there)
+    //      - ...
+
     // Shorten Accumulator to 8-bit
     // Jump to ($01c7)
 }
@@ -51,8 +87,8 @@ static void initMenu(void) {
     // Load #$f533 to X (set as source data address)
     //  - The addres contains Interrupt Jump Code
     // Load #$1f00 to Y (set as destination data address)
-    // Load #$0007 to Accumulator (number of bytes to copy)
-    // MoVe (Copy bytes of) memories from #$c0 to #$7e, then repeat with increment both addresses)
+    // Load #$0007 to Accumulator (6 bytes to copy)
+    // MoVe (Copy [6] bytes of) memories from $c0(f533) to $7e(1f00)
 
     // Store Zero to $8e
     // Shorten Accumulator to 8-bit
@@ -60,10 +96,26 @@ static void initMenu(void) {
     // Store Accumulator to f:$002100
 
     // Store Zero to $44
+    //  - Here, $44 is also involved in:
+    //     - _c2a033 (menu command $00: main menu) (A is stored there)
+    //     - _c2b25e
+    //     - _c2ba7d
+    //     - _c2bc5e
+    //     - _c2cfdc (menu state $00: main menu)
+    //     - _c2d851 (get list of available abilities)
+    //  - Could be set when defined directly.
     // Store Zero to $45
+    //  - Seems to be a bitmask
     // Store Zero to $46
+    //  - Here, $46 is also involved in:
+    //     - _c2a2e9 (get next input) (X is stored there)
+    //     - _c2a394 (init tutorial script) (A is stored there)
     // Store Zero to $47
+    //  - Not used elsewhere here.
     // Store Zero to $48
+    //  - Here, $48 is also involved in:
+    //     - _c2a2e9 (get next input)
+    //     - _c2a394 (init tutorial script) (A is stored there)
     // Jump to subroutine _a18a
     // Jump to subroutine _d230
     // Jump to subroutine _d37b
@@ -78,7 +130,7 @@ static void initMenu(void) {
     // Lengthen Accumulator to 16-bits
     // Load #$f573 to X
     // Load #$750f to Y
-    // Load #$0017 to Acculator
+    // Load #$0017 to A
     // MoVe memory #$c0 to #$7e in increasing order
 
     // Return from Subroutine 
