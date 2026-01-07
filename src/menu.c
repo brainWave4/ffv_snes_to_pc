@@ -1,4 +1,7 @@
+// for subroute _c10009
 #include "btlgfx.h"
+
+// for ExecSound_ext
 #include "sound.h"
 
 void execMenu(void);

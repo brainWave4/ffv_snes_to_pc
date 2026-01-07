@@ -1,7 +1,12 @@
 #include <stdint.h>
 
-//#include "btlgfx.h"
+// for ExecBtlGfx_ext
+#include "btlgfx.h"
+
+// for ExecSound_ext
 #include "sound.h"
+
+// TO: import RNGTbl (from field), AttackMessageTbl
 
 // FUNCTION DECLARATIONS
 void execBattle(void);

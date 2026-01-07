@@ -1,3 +1,16 @@
+//.import _c10003, _c10006
+
+//.import ExecBattle_ext
+#include "battle.h"
+
+//.import ExecMenu_ext, _c2a008
+#include "menu.h"
+
+//.import ShowCutscene_ext, Decomp_ext
+
+//.import InitSound_ext, ExecSound_ext
+#include "sound.h"
+
 void start(void);
 
 void start(void) {

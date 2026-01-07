@@ -1,5 +1,10 @@
+// for _c2a006
 #include "menu.h"
+
+// for Decomp_ext
 //#include "cutscene.h"
+
+// for ExecSound_ext
 #include "sound.h"
 
 void execBtlGfx(void);
