@@ -11,16 +11,16 @@ void updateJoypad(void);
 void func_a006(void);
 void func_a008(void);
 static void initMenu(void);
-static void func_a16e(void);
+static void resetSpriteData(void);
 static void func_a18a(void);
 static void func_a1cf(void);
 static void func_a247(void);
 static void func_d230(void);
 static void func_d37b(void);
 static void func_d3db(void);
-static void func_d447(void);
-static void func_f549(void);
-static void func_ff7d(void);
+static void updateWindowColor(void);
+static void updateMonoStereoSetting(void);
+static void updateJoypadConfig(void);
 
 static uint16_t add_39 = 0;
 static uint16_t add_c7 = 0;
@@ -106,49 +106,74 @@ static void initMenu(void) {
     //  - Could be set when defined directly.
     // Store Zero to $45
     //  - Seems to be a bitmask
+    //  - Could be also set when defined directly.
     // Store Zero to $46
     //  - Here, $46 is also involved in:
     //     - _c2a2e9 (get next input) (X is stored there)
     //     - _c2a394 (init tutorial script) (A is stored there)
+    //  - Could be also set when defined directly.
     // Store Zero to $47
     //  - Not used elsewhere here.
+    //  - Could be defined directly when set elsewhere.
     // Store Zero to $48
     //  - Here, $48 is also involved in:
     //     - _c2a2e9 (get next input)
     //     - _c2a394 (init tutorial script) (A is stored there)
+    //  - Could be also set when defined directly.
+
     // Jump to subroutine _a18a
+    func_a18a();
+
     // Jump to subroutine _d230
+    func_d230();
+
     // Jump to subroutine _d37b
+    func_d37b();
+
     // Jump to subroutine _d3db
+    func_d3db();
+
     // Jump to subroutine _a247
+    func_a247();
+
     // Jump to subroutine _a1cf
-    // Jump to subroutine _ff7d (Update Joypad Config)
-    // Jump to subroutine _d447 (Update Window Color)
-    // Jump to subroutine _f5a9 (Update Mono/Stereo Setting)
-    // Jump to subroutine _a16e (Reset Sprite Data)
+    func_a1cf();
+
+    // Jump to subroutine _ff7d
+    updateJoypadConfig();
+
+    // Jump to subroutine _d447
+    updateWindowColor();
+
+    // Jump to subroutine _f5a9
+    updateMonoStereoSetting();
+
+    // Jump to subroutine _a16e
+    resetSpriteData();
 
     // Lengthen Accumulator to 16-bits
     // Load #$f573 to X
     // Load #$750f to Y
     // Load #$0017 to A
-    // MoVe memory #$c0 to #$7e in increasing order
+    // MVN #$c0, #$7e
+    //  - Copy A bytes from #$c0f573 to #$7e750f
 
     // Return from Subroutine 
 }
 
-// Reset Sprite Data
-static void func_a16e(void) {
+// Address: _a16e
+static void resetSpriteData(void) {
     // PusH Processor status register
     // Lengthen Accumulator to 16-bit
     // Load #$0220 to X
     // [LBL a174] STZ $01fe,x
     // Decrement Index Register X x2
-    // Branch to [LBL a174] if (what is?) not equal
+    // Branch to [LBL a174] if zero flag clear
     // Load #$0020 to X
     // Load #$aaaa to Accumulator
     // [LBL a181] STA $03fe,x
     // Decrement Index Register X x2
-    // Branch to [LBL a181] if (what is?) not equal
+    // Branch to [LBL a181] if zero flag clear
     // Pull Processor status Register
     // Return from Subroutine 
 }
@@ -214,11 +239,11 @@ static void func_d37b(void) {}
 
 static void func_d3db(void) {}
 
-// Update Window Color
-static void func_d447(void) {}
+// Address: _d447
+static void updateWindowColor(void) {}
 
-// Update Mono/Stereo Setting
-static void func_f549(void) {}
+// Address: _f549
+static void updateMonoStereoSetting(void) {}
 
-// Update Joypad Config
-static void func_ff7d(void) {}
+// Address: _ff7d
+static void updateJoypadConfig(void) {}
