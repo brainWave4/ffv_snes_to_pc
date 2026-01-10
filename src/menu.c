@@ -22,11 +22,19 @@ static void updateWindowColor(void);
 static void updateMonoStereoSetting(void);
 static void updateJoypadConfig(void);
 
-static uint16_t add_39 = 0;
-static uint16_t add_c7 = 0;
-static uint8_t add_44 = 0;
-static uint8_t add_45 = 0;
-static uint8_t add_48 = 0;
+static uint16_t addr_7e008e = 0;
+static uint16_t addr_7e2100 = 128;
+static uint16_t addr_7e0039 = 0;
+static uint16_t addr_7e00c7 = 0;
+static uint8_t addr_7e0044 = 0;
+static uint8_t addr_7e0045 = 0;
+static uint8_t addr_7e0048 = 0;
+
+static uint8_t addr_7e4200 = 0;
+static uint8_t addr_7e2101 = 0;
+static uint8_t addr_7e2105 = 0;
+static uint8_t addr_7e2106 = 0;
+static uint8_t addr_7e2115 = 0;
 
 // Address: _a016
 // Execute Menu
@@ -57,7 +65,7 @@ void execMenu(void) {
     //    multiplication in tens.
     //  - Could be set when defined directly.
 
-    // Load $34 to Accumulator
+    // Load $(7e00)34 to Accumulator
     // AND Accumulator with #7
     // Arithmetic Shift Left
     // Transfer Accumulator to X
@@ -89,11 +97,17 @@ static void initMenu(void) {
     // Load #$1f00 to Y (set as destination data address)
     // Load #$0007 to Accumulator (6 bytes to copy)
     // MoVe (Copy [6] bytes of) memories from $c0(f533) to $7e(1f00)
+    //  - Perhaps addr_1f00 is an array of pointers to functions?
 
     // Store Zero to $8e
+    //  - Here, $8e is also involved in func_a1cf(...)
+    //  - Could be set when defined directly.
+
     // Shorten Accumulator to 8-bit
-    // Load #$80 to Accumulator
+    // Load #$80 to Accumulator (A = 80 in hex number, 128 if converted to dec)
     // Store Accumulator to f:$002100
+    //  - Could be set when defined directly,
+    //    even if the value is not a zero.
 
     // Store Zero to $44
     //  - Here, $44 is also involved in:
@@ -153,10 +167,21 @@ static void initMenu(void) {
 
     // Lengthen Accumulator to 16-bits
     // Load #$f573 to X
+    //  .byte   $00,$00,$00,$00
+    //  .byte   $00,$00,$00,$01
+    //  .byte   $18,$00,$30,$7e
+    //  .byte   $00,$10,$01,$00
+    //  .byte   $01,$00,$00,$00
+    //  .byte   $00,$00,$00,$00
     // Load #$750f to Y
+    //  - Address _750f is also used for storing,
+    //    but only that one byte.
     // Load #$0017 to A
+    //  - $17-1 bytes to copy
+    //  - $16 bytes to copy
+    //  - 22 bytes to copy
     // MVN #$c0, #$7e
-    //  - Copy A bytes from #$c0f573 to #$7e750f
+    //  - Copy 22 bytes from #$c0f573 to #$7e750f
 
     // Return from Subroutine 
 }
@@ -182,31 +207,58 @@ static void func_a18a(void) {
     // Push data Bank register
     // Push Processor status register
     // Shorten Accumulator to 8-bit
+
     // Load #$00 to Accumulator
     // Push Accumulator
     // Pull Data Bank Register
+
     // Load #$01 to Accumulator
     // Store Accumulator to $4200
+    //  - Could NOT set when defined directly.
+    //     - This is because func_a18a(...) is
+    //       also called by another function.
+    addr_7e4200 = 1;
+
     // Load #$01 to Accumulator
     // Store Accumulator to $2101
+    addr_7e2101 = 1;
+
     // Load #$00 to Accumulator (mode 0)
     // Store Accumulator to $2105
+    addr_7e2105 = 0;
     // Store Accumulator to $2106
+    addr_7e2106 = 0;
+
     // Load #$80 to Accumulator
+    //  - $80 = 128
     // Store Accumulator to $2115
-    // Load #$0008 to X
+    addr_7e2115 = 0;
+
+    // Load #$0008 to X (X = $8)
+
     // [LBL a1ac] stz $210c,x
-    // stz $210c,x (done twice?)
+    // stz $210c,x (done twice)
+    //  - Store Zero to $08210c
     // Decrement Index Register X
     // Branch to [LBL alac], if not equal
+    for(uint x = 8; x > 0; x--){
+
+    }
+
     // Lengthen Accumulator to 16-bit
     // Load #$f53b to X
+    //  .byte   $02,$0a,$12,$1a,$77,$77
+    //  .byte   $00,$00,$00,$00,$00,$00
     // Load #$2107 to Y
     // Load #$0005 to Accumulator
     // MVN #$c0, #$00
+    //  - copy 4 bytes from #$c0f53b to #$002107
+
     // Load #$212c to Y
     // Load #$0005 to A
     // MVN #$c0, #$00
+    //  - copy 4 bytes from #$c0f53b to #$00212c
+
     // PulL Processor status register
     // PulL data Bank register
     // Return from Subroutine
