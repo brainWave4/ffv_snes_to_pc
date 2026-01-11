@@ -22,19 +22,23 @@ static void updateWindowColor(void);
 static void updateMonoStereoSetting(void);
 static void updateJoypadConfig(void);
 
-static uint16_t addr_7e008e = 0;
-static uint16_t addr_7e2100 = 128;
-static uint16_t addr_7e0039 = 0;
-static uint16_t addr_7e00c7 = 0;
-static uint8_t addr_7e0044 = 0;
-static uint8_t addr_7e0045 = 0;
-static uint8_t addr_7e0048 = 0;
+static uint16_t addr_7e0034 = 0;
 
-static uint8_t addr_7e4200 = 0;
-static uint8_t addr_7e2101 = 0;
-static uint8_t addr_7e2105 = 0;
-static uint8_t addr_7e2106 = 0;
-static uint8_t addr_7e2115 = 0;
+static uint16_t addr_7e008e;
+static uint16_t addr_7e2100;
+static uint8_t addr_7e0044;
+static uint8_t addr_7e0045;
+static uint8_t addr_7e0046;
+static uint8_t addr_7e0047;
+static uint8_t addr_7e0048;
+static uint16_t addr_7e0039;
+static uint16_t addr_7e00c7;
+
+static uint8_t addr_7e4200;
+static uint8_t addr_7e2101;
+static uint8_t addr_7e2105;
+static uint8_t addr_7e2106;
+static uint8_t addr_7e2115;
 
 // Address: _a016
 // Execute Menu
@@ -63,18 +67,21 @@ void execMenu(void) {
     //  - in field, $39 seems to be involved with Gil
     //  - Perhaps it's only involved in Gil
     //    multiplication in tens.
-    //  - Could be set when defined directly.
+    addr_7e0039 = 0;
 
     // Load $(7e00)34 to Accumulator
     // AND Accumulator with #7
     // Arithmetic Shift Left
     // Transfer Accumulator to X
     // STore Accumulator to $c7 
-    //  - Essentially, $c7 = ($34 && 7) << 1
+    //  - Essentially, Address $c7 = ($34 & 7) << 1
     //  - $c7 is also involved in:
     //      - _c2a06b (show menu) (A is stored there)
     //      - _c2a2e9 (get next input) (A is also stored there)
     //      - ...
+    //  - $c7 could be a bitmask
+    addr_7e00c7 = addr_7e0034 & 7;
+    addr_7e00c7 <<= 1;
 
     // Shorten Accumulator to 8-bit
     // Jump to ($01c7)
@@ -101,13 +108,12 @@ static void initMenu(void) {
 
     // Store Zero to $8e
     //  - Here, $8e is also involved in func_a1cf(...)
-    //  - Could be set when defined directly.
+    addr_7e008e = 0;
 
     // Shorten Accumulator to 8-bit
     // Load #$80 to Accumulator (A = 80 in hex number, 128 if converted to dec)
     // Store Accumulator to f:$002100
-    //  - Could be set when defined directly,
-    //    even if the value is not a zero.
+    addr_7e2100 = 128;
 
     // Store Zero to $44
     //  - Here, $44 is also involved in:
@@ -117,23 +123,23 @@ static void initMenu(void) {
     //     - _c2bc5e
     //     - _c2cfdc (menu state $00: main menu)
     //     - _c2d851 (get list of available abilities)
-    //  - Could be set when defined directly.
+    addr_7e0044 = 0;
     // Store Zero to $45
     //  - Seems to be a bitmask
-    //  - Could be also set when defined directly.
+    addr_7e0045 = 0;
     // Store Zero to $46
     //  - Here, $46 is also involved in:
     //     - _c2a2e9 (get next input) (X is stored there)
     //     - _c2a394 (init tutorial script) (A is stored there)
-    //  - Could be also set when defined directly.
+    addr_7e0046 = 0;
     // Store Zero to $47
     //  - Not used elsewhere here.
-    //  - Could be defined directly when set elsewhere.
+    addr_7e0047 = 0;
     // Store Zero to $48
     //  - Here, $48 is also involved in:
     //     - _c2a2e9 (get next input)
     //     - _c2a394 (init tutorial script) (A is stored there)
-    //  - Could be also set when defined directly.
+    addr_7e0048 = 0;
 
     // Jump to subroutine _a18a
     func_a18a();
@@ -214,9 +220,6 @@ static void func_a18a(void) {
 
     // Load #$01 to Accumulator
     // Store Accumulator to $4200
-    //  - Could NOT set when defined directly.
-    //     - This is because func_a18a(...) is
-    //       also called by another function.
     addr_7e4200 = 1;
 
     // Load #$01 to Accumulator
@@ -232,7 +235,7 @@ static void func_a18a(void) {
     // Load #$80 to Accumulator
     //  - $80 = 128
     // Store Accumulator to $2115
-    addr_7e2115 = 0;
+    addr_7e2115 = 128;
 
     // Load #$0008 to X (X = $8)
 

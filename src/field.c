@@ -29,12 +29,12 @@ static void initInterrupts(void);
 static void initHardware(void);
 static void execEvent(void);
 
-static uint8_t h_memsel = 0;
-static uint8_t h_mdmaen = 0;
-static uint8_t h_hdmaen = 0;
-static uint8_t h_inidisp = 0;
-static uint8_t h_nmitimen = 143;
-static uint8_t addr_7e0134 = 3;
+static uint8_t h_memsel;
+static uint8_t h_mdmaen;
+static uint8_t h_hdmaen;
+static uint8_t h_inidisp;
+static uint8_t h_nmitimen;
+static uint8_t addr_7e0134;
 
 void start(void) {
     // SEt Interrpt flag
@@ -44,13 +44,17 @@ void start(void) {
     // Shorten Accumulator (A) to 8-bits
 
     // STore Zero to hMEMSEL
-    //  - Used elsewhere?
+    h_memsel = 0;
     // STore Zero to hMDMAEN
+    h_mdmaen = 0;
     // STore Zero to hHDMAEN
+    h_hdmaen = 0;
     // LoaD #$8f (143) to A
     // Store A to hINIDISP
+    h_inidisp = 143;
     // LoaD #0 to A
     // Store A to hNMITIMEN
+    h_nmitimen = 0;
 
     // LoaD #0 to A
     // eXchange data Bank and A 8-bit accumulators
