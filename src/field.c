@@ -29,12 +29,26 @@ static void initInterrupts(void);
 static void initHardware(void);
 static void execEvent(void);
 
+static uint8_t addr_7e0139 = 0;
+static uint8_t addr_7e0af9 = 0;
+
 static uint8_t h_memsel;
 static uint8_t h_mdmaen;
 static uint8_t h_hdmaen;
 static uint8_t h_inidisp;
 static uint8_t h_nmitimen;
 static uint8_t addr_7e0134;
+static uint8_t addr_7e00bd;
+static uint8_t addr_7e00bc;
+static uint8_t addr_7e00ce;
+static uint8_t addr_7e0057;
+static uint8_t addr_7e0058;
+static uint8_t addr_7e0059;
+static uint8_t addr_7e0b60;
+static uint8_t addr_7e0b5f;
+static uint8_t addr_7e00b9;
+static uint8_t addr_7e0088;
+static uint8_t addr_7e0089;
 
 void start(void) {
     // SEt Interrpt flag
@@ -84,7 +98,7 @@ void start(void) {
 
     // LoaD #3 to Accumulator
     // STore A to $0134
-    //  - Could be set when defined directly.
+    addr_7e0134 = 3;
 
     // Jump to Subroutine Long ExecMenu_ext
     execMenu();
@@ -99,50 +113,93 @@ void start(void) {
     initInterrupts();
 
     // LoaD $0139 to A
-    // Branch to [NewGame] if EQual (Zero Flag is set)
+    // Branch to [NewGame] if EQual
+    //  - by equal, it's if the zero flag is set
+    //  - for this case, check whether Address $0139 is valued zero.
+    if (addr_7e0139 == 0) {
+        // [NewGame]
+        // Jump to SubRoutine _c048fa
+        func_c048fa();
+        // Jump to SubRoutine _c048ed
+        func_c048ed();
+        // Jump to SubRoutine _c048dd
+        func_c048dd();
+        // Jump to SubRoutine _c04528
+        func_c04528();
+        // Jump to SubRoutine _c0450a
+        func_c0450a();
+        
+        // Load #1 to A
+        // Store A to $bd
+        addr_7e00bd = 1;
+        // Store A to $bc
+        addr_7e00bc = 1;
 
-    // (restore saved game)
+        // Load #$0010 to X
+        // Store X to $ce
+        addr_7e00ce = 16;
 
-    // Jump to SubRoutine _c0491d
-    // LoaD $0af9 to A
-    // Store A to $0b60
-    // Shift Right A
-    // Store A to $0b5f
-    // Load #1 to A
-    // Store A to $bd (show party sprite)
-    // Store A to $bc (senable walking animation)
-    // INCrement A
-    // Store A to $b9
-    // Load $0ad8 to A (x position)
-    // Store A to $1088
-    // Load $0ad9 to A (y position)
-    // Store A to $1089
-    // Jump to subroutine LoadMapNoFade
-    
-    // Jump to FieldLoop
+        // Load #1 to A
+        // Store A to $57
+        addr_7e0057 = 1;
 
-    // [NewGame]
-    // Jump to SubRoutine _c048fa
-    // Jump to SubRoutine _c048ed
-    // Jump to SubRoutine _c048dd
-    // Jump to SubRoutine _c04528
-    // Jump to SubRoutine _c0450a
-    // Load #1 to A
-    // Store A to $bd
-    // Store A to $bc
-    // Load #$0010 to X
-    // Store X to $ce
-    // Load #1 to A
-    // Store $57 to A
-    // Load #$81 to A
-    // Store A to hNMITIMEN
-    // cli
-    // Jump to SubRoutine ExecEvent
-    // Store Zero to $57
-    // Store Zero to $58
-    // Store Zero to $59
-    
-    // JuMP to FieldLoop
+        // Load #$81 to A
+        // Store A to hNMITIMEN
+        h_nmitimen = 129;
+
+        // CLear Interrupt flag
+        // Jump to SubRoutine ExecEvent
+        execEvent();
+
+        // Store Zero to $57
+        addr_7e0057 = 0;
+        // Store Zero to $58
+        addr_7e0058 = 0;
+        // Store Zero to $59
+        addr_7e0059 = 0;
+
+        // JuMP to FieldLoop
+        //  - To be called outside branch
+    } else {
+        // (restore saved game)
+
+        // Jump to SubRoutine _c0491d
+        func_c0491d();
+
+        // LoaD $0af9 to A
+        // Store A to $0b60
+        addr_7e0b60 = addr_0af9;
+
+        // Shift Right A
+        // Store A to $0b5f
+        addr_7e0b5f = addr_7e0b60 >> 1;
+
+        // Load #1 to A
+        // Store A to $bd (show party sprite)
+        addr_7e00bd = 1;
+        // Store A to $bc (senable walking animation)
+        addr_7e00bc = 1;
+
+        // INCrement A
+        // Store A to $b9
+        addr_7e00b9 = 2;
+
+        // Load $0ad8 to A (x position)
+        // Store A to $1088
+        addr_7e1088 = addr_7e0ad8;
+
+        // Load $0ad9 to A (y position)
+        // Store A to $1089
+        addr_7e1089 = addr_7e0ad9;
+
+        // Jump to subroutine LoadMapNoFade
+        loadMapNoFade();
+        
+        // Jump to FieldLoop
+        //  - To be called outside branch
+    }
+
+    fieldLoop(void);
 }
 
 // Field Main Loop
