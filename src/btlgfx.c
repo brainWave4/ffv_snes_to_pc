@@ -1,3 +1,5 @@
+// Bank Range: C1, D9
+
 // for _c2a006
 #include "menu.h"
 

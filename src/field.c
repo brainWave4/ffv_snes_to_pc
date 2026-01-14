@@ -1,3 +1,5 @@
+// Bank Range: C0
+
 //.import _c10003, _c10006
 #include "btlgfx.h"
 

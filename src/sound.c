@@ -1,3 +1,5 @@
+// Bank Range: C4
+
 void initSound(void);
 void execSound(void);
 

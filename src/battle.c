@@ -1,3 +1,5 @@
+// Bank Range: C2/0000 - C2/9FFF
+
 #include <stdint.h>
 
 // for ExecBtlGfx_ext

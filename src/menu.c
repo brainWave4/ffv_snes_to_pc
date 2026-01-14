@@ -1,3 +1,5 @@
+// Bank Range: C2/A000 - C2/FFFF, D0
+
 #include <stdint.h>
 
 // for subroute _c10009

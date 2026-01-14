@@ -1,3 +1,5 @@
+// Bank Range: C3
+
 // for ExecSound_ext
 #include "sound.h"
 
