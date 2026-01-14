@@ -29,13 +29,20 @@ static void initInterrupts(void);
 static void initHardware(void);
 static void execEvent(void);
 
+// These adresses are loaded before
+// having valued stored there
 static uint8_t addr_7e0139 = 0;
 static uint8_t addr_7e0af9 = 0;
 
+// Address: _420d
 static uint8_t h_memsel;
+// Address: _420b
 static uint8_t h_mdmaen;
+// Address: _420c
 static uint8_t h_hdmaen;
+// Address: _2100
 static uint8_t h_inidisp;
+// Address: _4200
 static uint8_t h_nmitimen;
 static uint8_t addr_7e0134;
 static uint8_t addr_7e00bd;

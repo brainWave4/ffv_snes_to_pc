@@ -22,7 +22,10 @@ static void updateWindowColor(void);
 static void updateMonoStereoSetting(void);
 static void updateJoypadConfig(void);
 
+// These adresses are loaded before
+// having valued stored there
 static uint16_t addr_7e0034 = 0;
+static uint16_t addr_7e008e = 0;
 
 static uint16_t addr_7e008e;
 static uint16_t addr_7e2100;
@@ -39,9 +42,11 @@ static uint8_t addr_7e2101;
 static uint8_t addr_7e2105;
 static uint8_t addr_7e2106;
 static uint8_t addr_7e2115;
+static uint16_t addr_7e420c;
 
 // Address: _a016
 // Execute Menu
+// Q: What address is ($01c7)?
 void execMenu(void) {
     // Jump to subroutine InitMenu
     initMenu();
@@ -95,6 +100,7 @@ void func_a008(void) {}
 
 // Address: _a11b
 // Initiate Menu
+// TODO: Copy bytes
 static void initMenu(void) {
     // Lengthen Accumulator and Indexes to 16-bit
     // Load #$0100 to Accumulator
@@ -209,6 +215,7 @@ static void resetSpriteData(void) {
     // Return from Subroutine 
 }
 
+// TODO: Loops
 static void func_a18a(void) {
     // Push data Bank register
     // Push Processor status register
@@ -267,12 +274,15 @@ static void func_a18a(void) {
     // Return from Subroutine
 }
 
+// TODO: Loop
 static void func_a1cf(void) {
     // PusH data Bank register
     // PusH Processor status register
     // Lengthen Accumulator (A) to 16-bit
     // Load $8e to A
     // Store A to f:$00420c
+    addr_7e420c = addr_7e008e;
+
     // Load #$f547 to X
     // [LBL a1dc] lda $c00000,x
     // Branch to [LBL a1ed] if Equal
@@ -281,12 +291,79 @@ static void func_a1cf(void) {
     // Load #$0004 to A
     // MVN #$c0, #$00
     // Branch to [LBL a1dc]
+    
     // [LBL a1ed] PulL Processor status register
     // PulL data Bank register
     // Return from Subroutine
 }
 
-static void func_a247(void) {}
+static void func_a247(void) {
+    // PusH Processor status register
+    // Lengthen A
+    // Load #$d000 (53248) to X
+    // Store X to $e0
+    // Load #$0100 (256) to X
+    // Store X to $e2
+    // Load #$000c (53248) to X
+    // Store X to $e4
+    // Load $8e to Y
+    // Load #$0000 to A (Weapon Properties)
+    // Jump Subroute to _c2a23b
+    // Load #$01c0 (448) to X
+    // Store X to $e2
+    // Load #$0600 (1536) to A (Armor Properties)
+    // Jump Subroute to _c2a23b
+    // Load #$0008 to X
+    // Store X to $e4
+    // Load #$0200 to X
+    // Store X to $e2
+    // Load #$0a80 to A (Item Properties)
+    // Jump Subroute to _c2a23b
+    // Load #$d200 to X
+    // Store X to $e0
+    // Load #$0009 to X
+    // Store X to $e4
+    // Load $8e to Y
+    // Load #$1380 to A (D1/1380 (item names))
+    // Jump Subroute to _c2a23b
+    // Load #$d400 to X
+    // Store X to $e0
+    // Load #$00ae to X
+    // Store X to $e2
+    // Load #$0006 to X
+    // Store X to $e4
+    // Load $8e to Y
+    // Load #$1c80 to A (D1/1C80 (spell names))
+    // Jump Subroute to _c2a23b
+    // Load #$0200 to X
+    // Store X to $e2
+    // Load #$0009 to X
+    // Store X to $e4
+    // Jump Subroute to _c2a23b
+    // Load #$d600 to X
+    // Store X to $e0
+    // Load #$00a2 to X
+    // Store X to $e2
+    // Load #$0005 to X
+    // Store X to $e4
+    // Load $e4 to Y
+    // Load #$5800 to A (battle command names)
+    // Jump Subroute to _c2a23b
+    // Load #$0100 to X
+    // Store X to $e2
+    // Load $e8 to Y
+    // Store Zero to $e4
+    // Load $e8 to A
+    // Jump Subroute to _c2a23b
+    // Load #$0142 to X
+    // Store X to $e2
+    // Load #$0008 to X
+    // Store X to $e4
+    // Load #$6200 to A (passive ability names)
+    // Jump Subroute to _c2a23b
+    // PulL Processor status register
+    // ReTurn from Subroutine
+}
 
 static void func_d230(void) {}
 
