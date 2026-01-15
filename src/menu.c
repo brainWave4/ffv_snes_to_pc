@@ -217,7 +217,7 @@ static void resetSpriteData(void) {
     // Return from Subroutine 
 }
 
-// TODO: Loops
+// TODO: Loops, Byte copying
 static void func_a18a(void) {
     // Push data Bank register
     // Push Processor status register
@@ -249,10 +249,16 @@ static void func_a18a(void) {
     // Load #$0008 to X (X = $8)
 
     // [LBL a1ac] stz $210c,x
-    // stz $210c,x (done twice)
-    //  - Store Zero to $08210c
+    // stz $210c,x
+    //  - Yes, this is repeated twice
+    //     - This ensures both the low and high bytes
+    //       of the 16-bit addresss is set.
+    //  - X is an index of the given address.
+    //  - Store Zero to $7e210c + $8 (value of X)
+    //  - But whereelse is $7e210c used?
     // Decrement Index Register X
     // Branch to [LBL alac], if not equal
+    //  - loop back if X, after decrement, is not zero
     for(uint x = 8; x > 0; x--){
 
     }
