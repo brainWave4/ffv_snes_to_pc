@@ -16,6 +16,7 @@ static void initMenu(void);
 static void resetSpriteData(void);
 static void func_a18a(void);
 static void func_a1cf(void);
+static void func_a23b(void);
 static void func_a247(void);
 static void func_d230(void);
 static void func_d37b(void);
@@ -201,18 +202,28 @@ static void initMenu(void) {
 }
 
 // Address: _a16e
+// TODO: Loop bytes
 static void resetSpriteData(void) {
     // PusH Processor status register
     // Lengthen Accumulator to 16-bit
     // Load #$0220 to X
+    
     // [LBL a174] STZ $01fe,x
+    //  - Store Zero to ($01fe + x)
     // Decrement Index Register X x2
+    //  - X -= 2
     // Branch to [LBL a174] if zero flag clear
+    //  - Loop back if X > 0 still
+
     // Load #$0020 to X
     // Load #$aaaa to Accumulator
     // [LBL a181] STA $03fe,x
+    //  - Store A to ($03fe + x)
     // Decrement Index Register X x2
+    //  - X -= 2
     // Branch to [LBL a181] if zero flag clear
+    //  - Loop back if X > 0 still
+
     // Pull Processor status Register
     // Return from Subroutine 
 }
@@ -293,10 +304,13 @@ static void func_a1cf(void) {
 
     // Load #$f547 to X
     // [LBL a1dc] lda $c00000,x
+    //  - Load ($c00000 + X) to A
     // Branch to [LBL a1ed] if Equal
+    //  - Equal is when X loops back to 0
     // Transfer A to Y
     // Increment X x2
     // Load #$0004 to A
+    //  - 3 bytes to copy
     // MVN #$c0, #$00
     // Branch to [LBL a1dc]
     
@@ -305,6 +319,20 @@ static void func_a1cf(void) {
     // Return from Subroutine
 }
 
+// Unstarted
+// This function seems to upload text.
+static void func_a23b(void) {
+    // Store A to ($e0 + y)
+    //  - A and Y are inputs
+    // CLear Carry flag
+    // ADd $e4 to A
+    // Increment Y by 2
+    // ComPare Y with $e2
+    // Branch to [LBL _a23b] if not equal
+    // ReTurn to Subroutine
+}
+
+// Unstarted
 static void func_a247(void) {
     // PusH Processor status register
     // Lengthen A
@@ -317,6 +345,7 @@ static void func_a247(void) {
     // Load $8e to Y
     // Load #$0000 to A (Weapon Properties)
     // Jump Subroute to _c2a23b
+    //  - calls func_a23b(...)
     // Load #$01c0 (448) to X
     // Store X to $e2
     // Load #$0600 (1536) to A (Armor Properties)
