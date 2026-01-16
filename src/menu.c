@@ -328,6 +328,7 @@ static void func_a23b(void) {
     // ADd $e4 to A
     // Increment Y by 2
     // ComPare Y with $e2
+    //  - $e2 could be text length limit
     // Branch to [LBL _a23b] if not equal
     // ReTurn to Subroutine
 }
@@ -402,7 +403,36 @@ static void func_a247(void) {
     // ReTurn from Subroutine
 }
 
-static void func_d230(void) {}
+// Unstarted
+static void func_d230(void) {
+    // [LBL d230] PusH data Bank register
+    // PusH Process status register
+
+    // Lengthen A
+    // Load #$2000 to X
+    // Load $8e to A
+
+    // [LBL d239] Decrement X by 2
+    // Store Zero to ($9000 + X)
+    // Branch to [LBL d239] if Not Equal
+    //  - For this case, if X > 0 still
+    // Store Zero to $7e
+
+    // [LBL d242] Jump to SubRoutine _c2d298
+    // Load $7e to A
+    // Increment A
+    // Store A to $7e
+    // Compare A with #$0004
+    // Branch to [LBL d242] if Not Equal
+
+    // Jump to SubRoutine _c2d25b
+    // Load #$efeb to X
+    // Jump to SubRoutine _c2d9fb
+
+    // PulL Processor status register
+    // PulL data Bank register
+    // ReTurn from Subroutine
+}
 
 static void func_d37b(void) {}
 
