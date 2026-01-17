@@ -19,6 +19,7 @@ static void func_a1cf(void);
 static void func_a23b(void);
 static void func_a247(void);
 static void func_d230(void);
+static void func_d25b(void)
 static void func_d37b(void);
 static void func_d3db(void);
 static void updateWindowColor(void);
@@ -432,6 +433,37 @@ static void func_d230(void) {
     // PulL Processor status register
     // PulL data Bank register
     // ReTurn from Subroutine
+}
+
+// Unstarted
+static void func_d25b(void) {
+    // Load $8e to X
+    
+    // [LBL d25d] PusH X onto stack
+    // Load ($c0ecc3 + x) to A
+    // Store A to $e0
+    // Load ($c0ecc5 + x) to A
+    // Store A to $e2
+    // Load ($c0ecc7 + x) to A
+    // Store A to $e4
+    // Load ($c0ecc9 + x) to A
+    // PuaH A
+    // Load ($c0eccb + x) to A
+    // Pull value from stack to X
+    // Jump to SubRoutine _c2d304
+    // Pull to A
+    // CLear Carry flag
+    // ADd #$000a to A
+    // Transfer A to X
+    // ComPare X with #$001e
+    // Branch to [LBL d25d] if Not Equal
+    
+    // Jump to SubRoutine _c2d34c
+    // Load #$b9a0 to X
+    // Load #$9080 to Y
+    // Load #$003f to A
+    // MVN #$c3,#$7e
+    // Return To Subroutine
 }
 
 static void func_d37b(void) {}
