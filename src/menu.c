@@ -31,7 +31,6 @@ static void updateJoypadConfig(void);
 // These adresses are loaded before
 // having valued stored there
 static uint16_t addr_7e0034 = 0;
-static uint16_t addr_7e008e = 0;
 
 static uint16_t addr_7e008e;
 static uint16_t addr_7e2100;
