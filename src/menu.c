@@ -27,6 +27,7 @@ static void func_d3db(void);
 static void updateWindowColor(void);
 static void updateMonoStereoSetting(void);
 static void updateJoypadConfig(void);
+static void func_ffc2(void);
 
 // These adresses are loaded before
 // having valued stored there
@@ -549,4 +550,72 @@ static void updateWindowColor(void) {}
 static void updateMonoStereoSetting(void) {}
 
 // Address: _ff7d
-static void updateJoypadConfig(void) {}
+// Unstarted
+static void updateJoypadConfig(void) {
+    // PusH data Bank
+    // PusH Direct page
+    // PusH A
+    // PusH X
+    // PusH Y
+    // PusH Processor status
+
+    // Push Effect Address $0000 into stack
+    // PulL data Bank
+    // PulL data Bank
+    // Lengthen A
+    // Push Effect Address $0100 into stack
+    // PulL Direct page
+    // LoaD #$0416 to A
+    //  - delay = 22 frames
+    //  - rate = 4 frames
+    // STore A to $18
+    // STore Zero to $4d (single controller)
+    // LoaD #$0000 to Y
+    // Transfer Y to X
+
+    // [@ff99] Load ($0975 + y) to A (joypad config)
+    // Jump SubRoutine to func_ffc2(...)
+    // Store A to ($26 + x)
+    // INcrement Y
+    // INcrement X by 2
+    // ComPare Y to #$0007
+    // Branch to [@ff99] if Not Equal
+
+    // STore Zero to $0e
+    // STore Zero to $14
+    // STore Zero to $16
+    // LoaD #$0101 to A
+    // LoaD #$000c to X
+
+    // [@ffb5] DEcrement X by 2
+    // STore A to ($1a + x)
+    // Branch to [@ffb5] if Not Equal
+
+    // PulL Processor status
+    // PulL Y
+    // PulL X
+    // PulL A
+    // PulL Direct page
+    // PulL data Bank
+    // ReTurn to Subroutine
+}
+
+// Unstarted
+static void func_ffc2(void) {
+    // PusH X
+    // And A with #$00fc
+    // eXchange higher and lower Bytes of A
+    // Load #$0000 to X
+
+    // [@ffca] Shift A left
+    // Branch to [@ffd7] if Carry Set
+    // Increment X by 2
+    // ComPare X with #$000c
+    // Branch to [@ffca] if Not Equals
+
+    // Load #$0000 to X
+    // Load ($c0e7b8 + X) to A
+
+    // PulL X
+    // ReTurn to Subroute
+}
