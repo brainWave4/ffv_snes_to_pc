@@ -19,7 +19,9 @@ static void func_a1cf(void);
 static void func_a23b(void);
 static void func_a247(void);
 static void func_d230(void);
-static void func_d25b(void)
+static void func_d25b(void);
+static void func_d304(void);
+static void func_d34c(void);
 static void func_d37b(void);
 static void func_d3db(void);
 static void updateWindowColor(void);
@@ -451,6 +453,7 @@ static void func_d25b(void) {
     // Load ($c0eccb + x) to A
     // Pull value from stack to X
     // Jump to SubRoutine _c2d304
+    //  - call func_d304(...)
     // Pull to A
     // CLear Carry flag
     // ADd #$000a to A
@@ -459,10 +462,80 @@ static void func_d25b(void) {
     // Branch to [LBL d25d] if Not Equal
     
     // Jump to SubRoutine _c2d34c
+    //  - call func_d34c(...)
     // Load #$b9a0 to X
     // Load #$9080 to Y
     // Load #$003f to A
     // MVN #$c3,#$7e
+    // Return To Subroutine
+}
+
+// Q: What does DEC addr mean?
+static void func_d304(void) {
+    // PusH data Bank register
+    // PusH Processor status register
+    // Store $e8 to A
+
+    // [LBL d308] PusH X
+    // LoaD $e4 to A
+    // Clear Cary flag
+    // Add ($c00002 + X) to A
+    // Transfer A to Y
+    // Load $e0 to A
+    // Clear Cary flag
+    // Add ($c00000 + X) to A
+    // Transfer A to X
+    // Load $e2 to A
+    // Add $8e to A
+    // And A with #$00ff
+    // Compare A with #$00d4
+    // Branch to [LBL d33a] if EQual
+    // Compare A with #$00d3
+    // Branch to [LBL d332] if EQual
+    // Load #$001f to A
+    // MVN #$d2, #$7e
+    // Branch to [LBL d340]
+    // [LBL d332] Load #$001f to A
+    // MVN #$d3, #$7e
+    // Branch to [LBL d340]
+    // [LBL d33a] Load #$001f to A
+    // MVN #$d4, #$7e
+    // [LBL d340] PulL X
+    // INcrement X by 4
+    // DEC $e8
+    // Branch to [LBL d308] if Not Equal
+
+    // PulL Processor status register
+    // PulL data Bank register
+    // Return To Subroutine
+}
+
+// Q: What does DEC addr mean?
+static void func_d34c(void) {
+    // Load $8e to X
+    // [@d34e] PusH X
+    // Transfer X to A
+    // CLear Carry flag
+    // Add #$0017 to A
+    // Transfer A to X
+    // CLear Carry flag
+    // Add #$0007 to A
+    // Transfer A to Y
+    // Load #$0008 to A
+    // Store $85 to A
+    // [@d35f] Load ($9000 + x) to A
+    // And A with #$00ff
+    // Store A to ($9000 + y)
+    // DEcrement X
+    // DEcrement Y by 2
+    // DEC $85
+    // Branch to [@d35f] if Not Equal
+    // PulL A
+    // CLear Carry flag
+    // Add #$0020 to A
+    // Transfer A to X
+    // Compare A with #$0800
+    // Branch to [@d34e] is Not Equal
     // Return To Subroutine
 }
 
