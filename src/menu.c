@@ -25,7 +25,9 @@ static void func_d34c(void);
 static void func_d37b(void);
 static void func_d3db(void);
 static void updateWindowColor(void);
+static void func_d45f(void);
 static void updateMonoStereoSetting(void);
+static void func_d9fb(void);
 static void updateJoypadConfig(void);
 static void func_ffc2(void);
 
@@ -48,6 +50,7 @@ static uint8_t addr_7e2101;
 static uint8_t addr_7e2105;
 static uint8_t addr_7e2106;
 static uint8_t addr_7e2115;
+static uint8_t addr_7e420b;
 static uint16_t addr_7e420c;
 
 // Address: _a016
@@ -618,6 +621,44 @@ static void updateWindowColor(void) {
     // ReTurn to Subroutine
 }
 
+// Unstarted
+static void func_d45f(void) {
+    // PusH data Bank
+    // PusH Processor status
+    // Shorten A
+
+    // Jump to SubRoutine _c2d4c5
+    //  - func_d4c5(..)
+    // LoaD $80 to X
+    // Load ($0500 + X) to A
+    // And A with #$07
+    // eXchange higher and lower Bytes in A
+    // LoaD ($0501 + x) to A
+    // And A with #$1f
+    // LoaD $7e to Y
+    // set flags based on ($051a + X) and A
+    // Branch to [@d484] if oVerflow is Set
+    // Branch to [@d47e] if PLus
+    //  - as in if negative flag clear
+    // LoaD #$15 to A
+
+    // [@d47e] eXchange higher and lower Bytes in A
+    // Jump to SubRoutine _c2d492
+    //  - func_d492(..)
+    // BRAnch to [@d48f]
+
+    // [@d484] LoaD #$f807 to X
+    //  - grayscale battle character palette ???
+    // Lengthen A
+    // Jump to SubRoutine _c2d4b4
+    //  - func_d4b4(..)
+    // MVN #$c0, #$7e
+
+    // PulL Processor status
+    // PulL data Bank
+    // ReTurn to Subroutine
+}
+
 // Address: _f5a9
 // Unstarted
 static void updateMonoStereoSetting(void) {
@@ -634,6 +675,25 @@ static void updateMonoStereoSetting(void) {
     // Jump to Subroutine Long ExecSound_ext
 
     // PulL Processor status
+    // ReTurn to Subroutine
+}
+
+// TODO: Move bytes
+static void func_d9fb(void) {
+    // Load ($c00000 + X) to A
+    //  - X is an input
+    // Store A to f:$002116
+    
+    // Increment X by 2
+    // Load #$4300 to Y
+    // Load #$0006 to A
+    // MVN #$c0, #$00
+    
+    // Shorten A
+    // Load #$01 to A
+    // Store A to $420b
+    addr_7e420b = 1;
+
     // ReTurn to Subroutine
 }
 
