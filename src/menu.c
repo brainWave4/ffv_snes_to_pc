@@ -539,15 +539,103 @@ static void func_d34c(void) {
     // Return To Subroutine
 }
 
-static void func_d37b(void) {}
+// Unstarted
+static void func_d37b(void) {
+    // PusH data Bank
+    // PusH Processor status
+    // Lengthen A
 
-static void func_d3db(void) {}
+    // Load #$efe2 to X
+    // Jump to SubRoute func_d9fb(...)
+
+    // PulL Processor status
+    // PulL data Bank
+    // ReTurn to Subroutine
+}
+
+// TODO: Move sets to data
+static void func_d3db(void) {
+    // PusH data Bank
+    // PusH Processor status
+    // Lengthen A
+
+    // STore Zero to $7e
+    // [@d3e1] Jump to SubRoutine func_d45f(...)
+    // LoaD $7e to A
+    // Increment A
+    // Store A to $7e
+    // Compare A to #$0004
+    // Branch to [@d3e1] if Not Equal
+
+    // LoaD #$b9e0 to X
+    // LoaD #$7480 to Y
+    // LoaD #$001f to A
+    // MVN #$c3, #$7e
+
+    // LoaD #$f867 to X
+    // LoaD #$74c0 to Y
+    // LoaD #$001f to A
+    // MVN #$c0, #$7e
+
+    // LoaD #$b960 to X
+    // LoaD #$74e0 to Y
+    // LoaD #$001f to A
+    // MVN #$c3, #$7e
+
+    // Jump to SubRoutine func_d42e(..)
+    // LoaD #$eff4 to X
+    // LoaD #$4300 to Y
+    // LoaD #$0006 to A
+    // MVN #$c0, #$00
+
+    // Shorten A
+    // STore Zero to $2121
+    // LoaD #$01 to A
+    // STore A to $420b
+
+    // PulL Processor status
+    // PulL data Bank
+    // ReTurn to Subroutine
+}
 
 // Address: _d447
-static void updateWindowColor(void) {}
+// Unstarted
+static void updateWindowColor(void) {
+    // PusH Processor status
+    // Lengthen A
 
-// Address: _f549
-static void updateMonoStereoSetting(void) {}
+    // Load $8e to Y
+    // [@d44c] Load $0971 (window color) to A
+    // Store A to ($7302 + y)
+    // Transfer Y to A
+    // CLear Carry flag
+    // Add #$0008 to A
+    // Transfer A to Y
+    // Compare A with #$0100
+    // Branch to [@d44c] when Not Equal
+
+    // PulL Processor status
+    // ReTurn to Subroutine
+}
+
+// Address: _f5a9
+// Unstarted
+static void updateMonoStereoSetting(void) {
+    // PusH Processor status
+    // Shorten A
+
+    // Load f:$000973 to A
+    // And A with #$02
+    // Logical Shift A Right
+    // CLear Carry flag
+    // Add #$f3 to A
+    //  - $f3 is stereo; $f4 is mono
+    // Store A to f:$001d00
+    // Jump to Subroutine Long ExecSound_ext
+
+    // PulL Processor status
+    // ReTurn to Subroutine
+}
 
 // Address: _ff7d
 // Unstarted
