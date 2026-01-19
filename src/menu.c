@@ -27,7 +27,8 @@ static void updateWindowColor(void);
 static void func_d45f(void);
 static void updateMonoStereoSetting(void);
 static void func_d9fb(void);
-static void func_fe5b(void);
+static void updateJoypadInput(void);
+static void func_fedo(void);
 static void setControllerSettingsBattle(void);
 static void setControllerSettingsField(void);
 void updateJoypadConfig(void);
@@ -78,16 +79,16 @@ static uint16_t addr_7e420c;
 
 void func_a00a(void) {
     setControllerSettingsBattle();
-    func_fe5b();
+    updateJoypadInput();
 }
 
 void func_a00f(void) {
     setControllerSettingsField();
-    func_fe5b();
+    updateJoypadInput();
 }
 
 // _a012
-//  - Jump SubRoutine to func_fe5b(..)
+//  - Jump SubRoutine to updateJoypadInput(..)
 //  - ReTurn to subroutine Long
 // Could have called it directly by
 //   making the function public.
@@ -730,8 +731,84 @@ static void func_d9fb(void) {
     // ReTurn to Subroutine
 }
 
+// Address: _fe5b
 // Unstarted
-static void func_fe5b(void) {}
+static void updateJoypadInput(void) {
+    // PusH Processor status
+    // Lengthen A
+    // Push A
+    // PusH Processor status
+    // PusH X
+    // PusH Y
+    // PusH data Bank
+    // PusH Direct page
+    // Shorten A
+    // Lengthen Indexes
+
+    // Load #$00 to A
+    // PusH A
+    // PulL data Bank
+    // Push Effective Address $0100
+    // PulL Direct page
+    // LoaD #$01 to A
+
+    // [@fe72] BIT $4212
+    // Branch to [@fe72] if Not Equal
+    // LoaD #$0000 to Y
+    // LoaD $4d to A
+    // Branch to [@fe97] if EQual
+    // LoaD $0974 to A
+    // AND A with #$80
+    // Branch to [@fe97] if EQual
+    //  - If single controller
+    // LoaD $010d to A
+    // Lengthen A
+    // AND A with #$0003
+    // Transfer A to X
+    // LoaD ($097c + X) to A
+    //  - character assigned to controller
+    // AND A with #$00ff
+    // Branch to [@fe97] if EQual
+    // INcrement Y
+
+    // [@fe97] Lengthen A
+    // STore Y to $12
+    // Transfer Y to A
+    // A Shift Left
+    // Transfer A to X
+    // Load ($4218 + X) to A
+    // STore A to $06
+    // AND A with #$000f
+    // Branch to [@feaa] if EQual
+    // STore Zero to $06
+
+    // [@feaa] Load ($14 + X) to A
+    // STore A to $0e
+    // Jump to SubRoutine _c2fed0
+    //  - func_fedo(..)
+    // LoaD $12 to A
+    // A Shift Left
+    // Transfer A to X
+    // LoaD $0e to A
+    // STore A to ($14 + X)
+    // PulL Direct page (it's the previous)
+    // LoaD $010a to A
+    // STore A to $00
+    // LoaD $0108 to A
+    // STore A to $02
+    // LoaD $0106 to A
+    // STore A to $04
+
+    // PulL data Bank
+    // PulL Y
+    // PulL X
+    // PulL Processor status
+    // PulL A
+    // PulL Processor status
+    // ReTurn to Subroutine
+}
+
+static void func_fedo(void) {}
 
 // Address: _ff56
 // Unstarted
