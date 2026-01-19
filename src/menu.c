@@ -8,6 +8,8 @@
 // for ExecSound_ext
 #include "sound.h"
 
+void func_a00a(void);
+void func_a00f(void);
 void execMenu(void);
 static void initMenu(void);
 static void resetSpriteData(void);
@@ -25,9 +27,10 @@ static void updateWindowColor(void);
 static void func_d45f(void);
 static void updateMonoStereoSetting(void);
 static void func_d9fb(void);
-void setControllerSettingsBattle(void);
-void setControllerSettingsField(void);
-static void updateJoypadConfig(void);
+static void func_fe5b(void);
+static void setControllerSettingsBattle(void);
+static void setControllerSettingsField(void);
+void updateJoypadConfig(void);
 static void func_ffc2(void);
 
 // These adresses are loaded before
@@ -51,6 +54,43 @@ static uint8_t addr_7e2106;
 static uint8_t addr_7e2115;
 static uint8_t addr_7e420b;
 static uint16_t addr_7e420c;
+
+// _a000 is ExecMenu_ext
+// Branches to _a016 execMenu(..)
+// Could have called it directly by
+//   making the function public.
+
+// UpdateJoypad_ext
+//  - Jump SubRoutine to _ff7d updateJoypadConfig(..)
+//  - ReTurn to subroutine Long
+// Could have called it directly by
+//   making the function public.
+
+// _a006
+// Branches to func_a00a(..)
+// Could have called it directly by
+//   making the function public.
+
+// _a008
+// Branches to func_a00f(..)
+// Could have called it directly by
+//   making the function public.
+
+void func_a00a(void) {
+    setControllerSettingsBattle();
+    func_fe5b();
+}
+
+void func_a00f(void) {
+    setControllerSettingsField();
+    func_fe5b();
+}
+
+// _a012
+//  - Jump SubRoutine to func_fe5b(..)
+//  - ReTurn to subroutine Long
+// Could have called it directly by
+//   making the function public.
 
 // Address: _a016
 // Execute Menu
@@ -690,9 +730,12 @@ static void func_d9fb(void) {
     // ReTurn to Subroutine
 }
 
+// Unstarted
+static void func_fe5b(void) {}
+
 // Address: _ff56
 // Unstarted
-void setControllerSettingsBattle(void) {
+static void setControllerSettingsBattle(void) {
     // PusH Processor status
     // Lengthen A
     // Push A
@@ -710,7 +753,7 @@ void setControllerSettingsBattle(void) {
 
 // Address: _ff68
 // Unstarted
-void setControllerSettingsField(void) {
+static void setControllerSettingsField(void) {
     // PusH Processor status
     // Lengthen A
     // Push A
@@ -729,7 +772,7 @@ void setControllerSettingsField(void) {
 
 // Address: _ff7d
 // Unstarted
-static void updateJoypadConfig(void) {
+void updateJoypadConfig(void) {
     // PusH data Bank
     // PusH Direct page
     // PusH A
