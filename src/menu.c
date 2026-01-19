@@ -9,9 +9,6 @@
 #include "sound.h"
 
 void execMenu(void);
-void updateJoypad(void);
-void func_a006(void);
-void func_a008(void);
 static void initMenu(void);
 static void resetSpriteData(void);
 static void func_a18a(void);
@@ -28,6 +25,8 @@ static void updateWindowColor(void);
 static void func_d45f(void);
 static void updateMonoStereoSetting(void);
 static void func_d9fb(void);
+void setControllerSettingsBattle(void);
+void setControllerSettingsField(void);
 static void updateJoypadConfig(void);
 static void func_ffc2(void);
 
@@ -100,12 +99,6 @@ void execMenu(void) {
     // Shorten Accumulator to 8-bit
     // Jump to ($01c7)
 }
-
-void updateJoypad(void) {}
-
-void func_a006(void) {}
-
-void func_a008(void) {}
 
 // Address: _a11b
 // Initiate Menu
@@ -694,6 +687,43 @@ static void func_d9fb(void) {
     // Store A to $420b
     addr_7e420b = 1;
 
+    // ReTurn to Subroutine
+}
+
+// Address: _ff56
+// Unstarted
+void setControllerSettingsBattle(void) {
+    // PusH Processor status
+    // Lengthen A
+    // Push A
+    
+    // Load #$0310 to A
+    //  - Delay = 16 frames
+    //  - Rate = 3 frames
+    // Store A to f:$000118 (Repeat Settings)
+    // Store A to f:$00014d (Allow Multiple Controllers)
+
+    // PulL A
+    // PulL Processor status
+    // ReTurn to Subroutine
+}
+
+// Address: _ff68
+// Unstarted
+void setControllerSettingsField(void) {
+    // PusH Processor status
+    // Lengthen A
+    // Push A
+    
+    // Load #$0416 to A
+    //  - Delay = 22 frames
+    //  - Rate = 4 frames
+    // Store A to f:$000118 (Repeat Settings)
+    // Load #$0000 to A
+    // Store A to f:$00014d (Single Controller)
+
+    // PulL A
+    // PulL Processor status
     // ReTurn to Subroutine
 }
 
