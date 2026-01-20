@@ -11,7 +11,14 @@
 void func_a00a(void);
 void func_a00f(void);
 void execMenu(void);
-static void func_a06b(void);
+static void mainMenu(void);
+static void collectItemsAfterBattle(void);
+static void shop(void);
+static void initMenuSettings(void);
+static void tutorial(void);
+static void galufToKrile(void);
+static void nameChange(void);
+static void showMenu(void);
 static void initMenu(void);
 static void resetSpriteData(void);
 static void func_a18a(void);
@@ -150,8 +157,108 @@ void execMenu(void) {
     // Jump to ($01c7)
 }
 
+// CommonReturn
+//  - Jump SubRoutine to func_b2bd(..)
+//  - Then move onto _a030
+//     - Essentially does nothing
+//  - Could've called the first function directly
+
+// Address: _a030
+//  - Shorten A
+//  - Return To subroutine Long
+
+// Address: _a033
+// Menu Command $00
 // Unstarted
-static void func_a06b(void) {}
+static void mainMenu(void) {
+    // LoaD $35 to A
+    // STore A to $44
+
+    // LoaD #$01 A
+    // BRAnch to _a06b
+    //  - showMenu(..)
+    //  - Input: A
+}
+
+// Address: _a03b
+// Menu Command $01
+// Unstarted
+static void collectItemsAfterBattle(void) {
+    // LoaD #$0a to A
+    // BRAnch to _a06b
+    //  - showMenu(..)
+    //  - Input: A
+}
+
+// Address: _a03f
+// Menu Command $02
+// Unstarted
+static void shop(void) {
+    // LoaD #$06 to A
+    // BRAnch to _a06b
+    //  - showMenu(..)
+}
+
+// Address: _a043
+// Menu Command $03
+// Unstarted
+static void initMenuSettings(void) {
+    // Jump to SubRoutine _a1f0
+    func_a1f0();
+
+    // Jump to SubRoutine _ff7d
+    updateJoypadConfig();
+
+    // Jump to SubRoutine _d447
+    updateWindowColor();
+
+    // Jump to SubRoutine _f5a9
+    updateMonoStereoSetting();
+
+    // LoaD #$0c to A
+    // BRAnch to _a06b
+    //  - showMenu(..)
+}
+
+// Address: _a053
+// Menu Command $04
+// Unstarted
+static void tutorial(void) {
+    // LoaD #$80 to A
+    // TeSt A Bits for zero flags
+    //  - Enable Tutorial Mode
+    // STore Zero to $49 (clear pause counter)
+    // STore Zero to $4a
+    // Jump to SubRoutine _a394
+    //  - init tutorial script
+
+    // LoaD #$01 to A
+    // BRAnch to _a06b
+    //  - showMenu(..)
+}
+
+// Address: _a062
+// Menu Command $06
+// Unstarted
+// Tramsfer Galuf's stats to Krile
+static void galufToKrile(void) {
+    // Store Zero to $35
+    // Jump to SubRoutine _c2d958
+    // BRAnch to _c2a030
+}
+
+// Address: _a069
+// Menu Command $05
+// Unstarted
+// Returns: Immediate value #$0d
+static void nameChange(void) {
+    // Load #$0d to A
+}
+
+// Address: _a06b
+// Unstarted
+// Input: uint8_t (previously stored in A)
+static void showMenu(void) {}
 
 // Address: _a11b
 // Initiate Menu
@@ -522,8 +629,8 @@ static void loadFromSlot(void) {
 
     // Load #$0b to A
     // Jump to SubRoutine to _c2a06b
-    //  - func_a06b(..)
-    //  - show menu
+    //  - showMenu(..)
+    //  - Input: A
 
     // [@bf47] Jump to SubRoutine _c2a1f0
     //  - func_a1f0(..)
