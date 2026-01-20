@@ -17,6 +17,8 @@ static void func_a18a(void);
 static void func_a1cf(void);
 static void func_a23b(void);
 static void func_a247(void);
+static void saveToSlot(void);
+static void loadFromSlot(void);
 static void func_d230(void);
 static void func_d25b(void);
 static void func_d304(void);
@@ -441,6 +443,113 @@ static void func_a247(void) {
     // Jump Subroute to _c2a23b
     // PulL Processor status register
     // ReTurn from Subroutine
+}
+
+// Address: _bef7
+// Unstarted
+static void saveToSlot(void) {
+    // PusH Process status register
+    // Lengthen A
+
+    // INCrement value in $09c2
+    // Jump to SubRoutine _c2bf7d
+    //  - func_bf7d(..)
+    //  - get pointer to save slot in sram
+    // PusH X
+    // Transfer A to Y
+    // LoaD #$0500 to X
+    // Load #$05ff to A
+    // PusH data Bank
+    // PusH Y
+    // MVN #$00, #$30
+    //  - Save SRAM
+
+    // PulL Y
+    // PulL data Bank
+    // Store Y to $fc
+
+    // Jump to SubRoutine _c2f588
+    //  - func_f588(..)
+    // PulL X
+    // STore A to ($307ff0 + X)
+
+    // LoaD #$e41b to A
+    // STore A to ($307ff8 + X)
+
+    // LoaD $6f to A
+    // AND A with #$0003
+    // STore A to $307fe0
+
+    // Jump to SubRoutine _c2e0c8
+    //  - func_e0c8(..)
+
+    // PulL Process status register
+    // Return To Subroutine
+}
+
+// Address: _bf2e
+// Unstarted
+static void loadFromSlot(void) {
+    // Load $55 to A
+    // CoMPare A with #$01
+    // Jump to _c2bf89 if Not Equal
+    //  - func_bf89(..)
+
+    // Load $2d13 to A
+    // Branch to [@bf47] if Not Equal
+
+    // Jump to SubRoutine to _c2bef7
+    //  - saveToSlot(..)
+
+    // Jump to SubRoutine to _c2b2bd
+    //  - func_b2bd(..)
+
+    // Load #$0b to A
+    // Jump to SubRoutine to _c2a06b
+    //  - func_a06b(..)
+    //  - show menu
+
+    // [@bf47] Jump to SubRoutine _c2a1f0
+    //  - func_a1f0(..)
+    //  - init config settings
+
+    // Load $094a to A
+    // PusH A
+    // PusH Process status register
+    // Lengthen A
+
+    // Jump to SubRoutine _c2bf7d
+    //  - func_bf7d(..)
+    //  - get pointer to save slot in sram
+    // Transfer A to X
+    // LoaD #$0500 to Y
+    // LoaD #$05ff to A
+    // PusH data Bank
+    // MVN #$30, #$00
+    //  - load sram
+    
+    // PulL data Bank
+    // PulL Processor
+    // PulL A
+    // CLear Carry flag
+
+    // Add $0af9 to A
+    //  - Update Random
+    // STore A to $0af9
+
+    // LoaD $6f to A
+    // STore A to $62
+
+    // Lengthen A
+    // Load #$0001 to A
+    // STore A to $39
+
+    // Jump to SubRoutine _c2ff7d
+    //  - updateJoypadConfig(..)
+    // Jump to SubRoutine _c2f5a9
+    //  - updateMonoStereoSetting(..)
+    // Jump to SubRoutine CommonReturn
+    //  - exit menu
 }
 
 // Unstarted
