@@ -11,14 +11,19 @@
 void func_a00a(void);
 void func_a00f(void);
 void execMenu(void);
+static void func_a06b(void);
 static void initMenu(void);
 static void resetSpriteData(void);
 static void func_a18a(void);
 static void func_a1cf(void);
+static void func_a1f0(void);
 static void func_a23b(void);
 static void func_a247(void);
+static void func_b2bd(void);
 static void saveToSlot(void);
 static void loadFromSlot(void);
+static void func_bf7d(void);
+static void func_bf89(void);
 static void func_d230(void);
 static void func_d25b(void);
 static void func_d304(void);
@@ -29,6 +34,8 @@ static void updateWindowColor(void);
 static void func_d45f(void);
 static void updateMonoStereoSetting(void);
 static void func_d9fb(void);
+static void func_e0c8(void);
+static void func_f588(void);
 static void updateJoypadInput(void);
 static void func_fedo(void);
 static void setControllerSettingsBattle(void);
@@ -142,6 +149,9 @@ void execMenu(void) {
     // Shorten Accumulator to 8-bit
     // Jump to ($01c7)
 }
+
+// Unstarted
+static void func_a06b(void) {}
 
 // Address: _a11b
 // Initiate Menu
@@ -362,6 +372,9 @@ static void func_a1cf(void) {
 }
 
 // Unstarted
+static void func_a1f0(void) {}
+
+// Unstarted
 // This function seems to upload text.
 static void func_a23b(void) {
     // Store A to ($e0 + y)
@@ -444,6 +457,9 @@ static void func_a247(void) {
     // PulL Processor status register
     // ReTurn from Subroutine
 }
+
+// Unstarted
+static void func_b2bd(void) {}
 
 // Address: _bef7
 // Unstarted
@@ -551,6 +567,12 @@ static void loadFromSlot(void) {
     // Jump to SubRoutine CommonReturn
     //  - exit menu
 }
+
+// Unstarted
+static void func_bf7d(void) {}
+
+// Unstarted
+static void func_bf89(void) {}
 
 // Unstarted
 static void func_d230(void) {
@@ -839,6 +861,11 @@ static void func_d9fb(void) {
 
     // ReTurn to Subroutine
 }
+
+static void func_e0c8(void) {}
+
+// Unstarted
+static void func_f588(void) {}
 
 // Address: _fe5b
 // Unstarted
