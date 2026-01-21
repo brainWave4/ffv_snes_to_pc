@@ -19,6 +19,8 @@ static void tutorial(void);
 static void galufToKrile(void);
 static void nameChange(void);
 static void showMenu(void);
+static void dma(void);
+static void waitForVblank(void);
 static void initMenu(void);
 static void resetSpriteData(void);
 static void func_a18a(void);
@@ -245,6 +247,7 @@ static void galufToKrile(void) {
     // Store Zero to $35
     // Jump to SubRoutine _c2d958
     // BRAnch to _c2a030
+    //  - func_a030(..)
 }
 
 // Address: _a069
@@ -258,7 +261,116 @@ static void nameChange(void) {
 // Address: _a06b
 // Unstarted
 // Input: uint8_t (previously stored in A)
-static void showMenu(void) {}
+static void showMenu(void) {
+    // Shorten A
+    // Store A to $43 (Menu State)
+
+    // Load #$7e to A
+    // PusH A
+    // PulL data Bank
+    // Lengthen A
+
+    // Jump to SubRoutine _c2c16a
+    //  - func_c16a(..)
+    // Jump to SubRoutine _c2a16e
+    //  - resetSpriteData(..)
+
+    // Load $43 (Menu State) to A
+    // AND A with #$00ff
+    // DECrement A
+    // A Shift Left
+    // Transfer A to X
+    // Load ($c0e60e + X) to A
+    // STore A to $c7
+    // Push (E) Relative addr [@a08f]-1
+    // JuMP to ($01c7)
+
+    // [@a08f] Lengthen A
+    // Load $43 (Menu State) to A
+    // AND A with #$00ff
+    // CoMPare A with #$000c
+    // Branch to [@a0a2] if Not Equal
+    // LoaD $39 to A
+    // Jump to _c2a030 if EQual
+    //  - func_a030(..)
+
+    // [@a0a2] Shorten A
+    // LoaD #$00 to A
+    // PusH A
+    // PulL data Bank
+    // STore Zero to $2121
+    // Lengthen A
+    // STore Zero to $2102
+    // STore Zero to $2116
+
+    // LoaD #$f5b2 to X
+    //  - 02 04 00 02 00 20 02 (sprite data)
+    // Jump to SubRoutine _c2a0f6
+    //  - dma(..)
+
+    // LoaD #$f5b9 to X
+    //  - 02 22 00 73 7E 00 02 (color palettes)
+    // Jump to SubRoutine _c2a0f6
+
+    // LoaD #$f58b to X
+    //  - 01 18 00 30 7E 00 40 (vram)
+    // Jump to SubRoutine _c2a0f6
+
+    // Shorten A
+    // LoaD #$04 to A
+    // STore A to $ca
+    // LoaD #$00 to A
+    // STore A to $7e7511
+    
+    // Jump to SubRoutine _c2a106
+    //  - waitForVblank(..)
+    // LoaD $7e750e to A
+    // STore A to $420c
+
+    // LoaD $4210 to A
+    // LoaD #$81 to A
+    // STore A to $4200
+
+    // LoaD #$00 to A
+    // STore A to $7e7522
+    // STore A to $7e7525
+
+    // LoaD A to #$03
+    // STore A to $7e7513
+
+    // JuMP to _c2a2e9
+    //  - getNextInput(..)
+}
+
+// Address: _a0f6
+// Unstarted
+// +X: address of dma parameters (+$C00000)
+static void dma(void) {
+    // LoaD #$4300 to Y
+    // LoaD #$0006 to A
+    // MVN #$c0, #$00
+    // LoaD #$0001 to 1
+    // STore A to $420b
+    // Return to Subroutine
+}
+
+// Address: _a106
+// Unstarted
+static void waitForVblank(void) {
+    // PusH Processor status
+    // Shorten A
+
+    // [@a109] LoaD f:$004210 to A
+    // Branch to [@a109] if MInus
+    //  - negative flag is set
+    // [@a10f] LoaD f:$004210 to A
+    // Branch to [@a109] if PLus
+    //  - negative flasg clear
+    // [@a10f] LoaD f:$004210 to A
+
+    // PulL Processor status
+    // ReTurn to Subroutine
+}
 
 // Address: _a11b
 // Initiate Menu
