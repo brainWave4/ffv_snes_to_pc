@@ -28,6 +28,8 @@ static void func_a1cf(void);
 static void func_a1f0(void);
 static void func_a23b(void);
 static void func_a247(void);
+static void getNextInput(void);
+static void getPressedBtnIdx(void);
 static void func_b2bd(void);
 static void saveToSlot(void);
 static void loadFromSlot(void);
@@ -675,6 +677,85 @@ static void func_a247(void) {
     // Jump Subroute to _c2a23b
     // PulL Processor status register
     // ReTurn from Subroutine
+}
+
+// Address: _a2e9
+// Unstarted
+static void getNextInput(void) {
+    // Shorten A
+    // Lenghten Indexes
+    
+    // Jump to SubRoutine _c2e66f
+    // Jump to SubRoutine _c2fc2f
+    // PEA $7e7e
+    // PulL data Bank
+    // PulL data Bank
+    // BIT test A with $45
+    // Branch to [@a301] if MInus
+    //  - if in tutorial mode
+    // Jump to SubRoutine _c2a33a
+    //  - getPressedBtnIdx(..)
+    // BRAnch to [@a320]
+
+    // [@a301] LoaD $49 to X
+    //  - decrement pause counter
+    // Branch to [@a30c] is MInus
+    // DEcrement X
+    // STore X to $49
+    // LoaD $8e to A
+    // BRAnch to [@a320]
+
+    // [@a30c] LoaD $48 to A
+    // Branch to [@a314] if Not Equal
+    //  - branch if tutorial script pointer is valid
+    // Load #$08 to A
+    //  - exit menu
+    // BRAnch to [@a320]
+
+    // [@a314] LoaD [$46] (tutorial script) to A
+    // LoaD $46 to X
+    // INcrement X
+    // STore X to $46
+    // LoaD #$000f to X
+    // STore X to $49
+
+    // [@a320] STore $4b to A
+    // BIT test with #$10
+    // Branch to [@a328] if EQual
+    //  - if not a pause
+    // LoaD #$07 to A
+    //  - pause command
+
+    // [@a328] Lengthen A
+    // AND A with #$000f
+    // A Shift Left
+    // Transfer A to X
+    // Load ($c0e628 + X to A)
+    // STore A to $c7
+    // Shorten A
+    // Jump to ($01c7)
+}
+
+// Address: _a33a
+// Unstarted
+static void getPressedBtnIdx(void) {
+    // PusH Proccessor
+    // Lengthen A
+    // LoaD $8e to X
+
+    // [@a33f] LoaD $0a to A (buttons pressed)
+    // AND A with ($c0e7d2 + X) (button mask)
+    // Branch to [@a34f] if Not Equals
+    //  - if buttons are pressed
+    // INcrement X by 3 (next button)
+    // ComPare X with #$0012
+    // Branch to [@a33f] if Not Equals
+
+    // [@a34f] LoaD ($c0e7d4 + X) to A (button index)
+    // AND A with #$00ff
+
+    // PulL Processor
+    // Return To Subroutine
 }
 
 // Unstarted
