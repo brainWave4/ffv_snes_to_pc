@@ -345,6 +345,7 @@ static void showMenu(void) {
 }
 
 // Address: _a0f6
+// Direct Memory Access
 // Unstarted
 // +X: address of dma parameters (+$C00000)
 static void dma(void) {
