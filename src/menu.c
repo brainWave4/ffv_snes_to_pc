@@ -35,6 +35,8 @@ static void saveToSlot(void);
 static void loadFromSlot(void);
 static void func_bf7d(void);
 static void func_bf89(void);
+static void func_c162(void);
+static void func_c16a(void);
 static void func_d230(void);
 static void func_d25b(void);
 static void func_d304(void);
@@ -248,8 +250,9 @@ static void tutorial(void) {
 static void galufToKrile(void) {
     // Store Zero to $35
     // Jump to SubRoutine _c2d958
+
     // BRAnch to _c2a030
-    //  - func_a030(..)
+    //  - This function only shortens A
 }
 
 // Address: _a069
@@ -294,7 +297,7 @@ static void showMenu(void) {
     // Branch to [@a0a2] if Not Equal
     // LoaD $39 to A
     // Jump to _c2a030 if EQual
-    //  - func_a030(..)
+    //  - This function only shortens A
 
     // [@a0a2] Shorten A
     // LoaD #$00 to A
@@ -874,6 +877,52 @@ static void func_bf7d(void) {}
 
 // Unstarted
 static void func_bf89(void) {}
+
+// Unstarted
+static void func_c162(void) {
+    // Load $5b to A
+    // CLear Carry flag
+    // ADd #$04 to A (with Carry)
+    // JuMP to _c2a47c
+}
+
+// Unstarted
+// TODO: MVN
+static void func_c16a(void) {
+    // PusH data Bank
+    // LoaD $43 (menu state) to A
+    // A aND with #$00ff
+    // DECrement A
+    // A Shift Left
+    // Transfer A to X
+    // LoaD ($c0f5e7 + X) to A
+    // Transfer A to X
+    // LoaD #$2bdc to Y
+    // LoaD #$0017 to A (24 bytes to copy)
+    // MVN #$c0, #$7e
+    // LoaD $8e to X
+
+    // [@c183] Load ($c0f5cf + X) to A
+    //  - mvn destination address (+$7E0000)
+    // STore A to $e6
+    // PusH X
+    // LoaD ($c0e7e7 + X) to A (jump address)
+    // STore A to $c7
+    // LoaD ($2bdc + X) to A (pointer to data)
+    // PER [@c199] -1
+    // JuMP to ($01c7)
+
+    // [@c199] PulL X
+    // INcrement X by 2
+    // ComPare X with #$0018
+    // Branch to [@c183] if Not Equal
+
+    // PulL data Bank
+    // Jump to SubRoutine _c2a18a
+    //  - func_a18a(..)
+
+    // Return To Subroutine
+}
 
 // Unstarted
 static void func_d230(void) {
