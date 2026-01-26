@@ -286,9 +286,11 @@ static void showMenu(void) {
     // A Shift Left
     // Transfer A to X
     // Load ($c0e60e + X) to A
+    //  - $c0e60e is within Shape Mask Section
     // STore A to $c7
     // Push (E) Relative addr [@a08f]-1
     // JuMP to ($01c7)
+    //  - the address stored in $7e01c7
 
     // [@a08f] Lengthen A
     // Load $43 (Menu State) to A
@@ -304,12 +306,16 @@ static void showMenu(void) {
     // PusH A
     // PulL data Bank
     // STore Zero to $2121
+    //  - The Address is for CGADD
     // Lengthen A
     // STore Zero to $2102
+    //  - OAMADDL
     // STore Zero to $2116
+    //  - VMADDL
 
     // LoaD #$f5b2 to X
     //  - 02 04 00 02 00 20 02 (sprite data)
+    //  - Part of From Address, $c0f5b2
     // Jump to SubRoutine _c2a0f6
     //  - dma(..)
 
@@ -494,6 +500,7 @@ static void resetSpriteData(void) {
 
     // Load #$0020 to X
     // Load #$aaaa to Accumulator
+    
     // [LBL a181] STA $03fe,x
     //  - Store A to ($03fe + x)
     // Decrement Index Register X x2
@@ -900,6 +907,7 @@ static void func_c16a(void) {
     // LoaD #$2bdc to Y
     // LoaD #$0017 to A (24 bytes to copy)
     // MVN #$c0, #$7e
+    //  - To: $7e2bdc
     // LoaD $8e to X
 
     // [@c183] Load ($c0f5cf + X) to A
