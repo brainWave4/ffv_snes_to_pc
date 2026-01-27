@@ -5,7 +5,7 @@ A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi
 |From|To|Type|Section|Module|
 |---|---|---|---|---|
 |C0/0000|C0/FFFF|Instr|Field|Field|
-|C1/0000|C1/FFFF|Instr|Battel Graphics|Btlgfx|
+|C1/0000|C1/FFFF|Instr|Battle Graphics|Btlgfx|
 |C2/0000|C2/9FFF|Instr|Battle|Battle|
 |C2/A000|C2/FFFF|Instr|Menu|Menu|
 |C3/0000|C3/FFFF|Instr|Cutscene|Cutscene|
@@ -20,7 +20,7 @@ A RAM is where the game stores variable for future use. It is mapped at Bank 7E-
 ## Character Stats
 For Character 1:
 |From|To|Type|Section|
-|---|---|---|---|---|
+|---|---|---|---|
 |7E/0500||Bitwise|ID, Gender, In party, Row|
 |7E/0501||ID|Job|
 |7E/0502||Integer|Level|
@@ -48,7 +48,7 @@ For Character 1:
 
 For the rest:
 |From|To|Type|Section|
-|---|---|---|---|---|
+|---|---|---|---|
 |7E/0550|7E/059F|Set|Character 2 Stats|
 |7E/05A0|7E/05EF|Set|Character 3 Stats|
 |7E/05F0|7E/063F|Set|Character 4 Stats|
@@ -57,7 +57,7 @@ They are structured the same as Character 1.
 
 ## Items
 |From|To|Type|Section|
-|---|---|---|---|---|
+|---|---|---|---|
 |7E/0640|7E/073F|IDs|Up to 256 kinds of Items|
 |7E/0740|7E/038F|Integers|Number of said Items|
 
@@ -70,7 +70,7 @@ A small section designed for storing data. They are preserved even when the powe
 ## Saves
 Here is how the first save slot is structured:
 |From|To|Type|Section|
-|---|---|---|---|---|
+|---|---|---|---|
 |$0000|$004F|Set|Character Slot 1|
 |$0050|$009F|Set|Character Slot 2|
 |$00A0|$00EF|Set|Character Slot 3|
@@ -83,7 +83,7 @@ Here is how the first save slot is structured:
 
 For the remaining save slots:
 |From|To|Type|Section|
-|---|---|---|---|---|
+|---|---|---|---|
 |$0700|$0D00|Set|Save Slot 2|
 |$0E00|$1400|Set|Save Slot 3|
 |$1500|$1B00|Set|Save Slot 4|
@@ -93,7 +93,7 @@ They are structured the same as Save Slot 1.
 ### Character Slots
 For the first character:
 |From|To|Type|Section|
-|---|---|---|---|---|
+|---|---|---|---|
 |$00||Bitwise|ID, Gender, In party, Row|
 |$01||ID|Job|
 |$02||Integer|Level|
