@@ -103,7 +103,95 @@ They are structured the same as Character 1.
 |7E/0640|7E/073F|IDs|Up to 256 kinds of Items|
 |7E/0740|7E/038F|Integers|Number of said Items|
 
-## Jobs and other Progression
+## Job Progression
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/0840|7E/0843|Bitwise|Jobs Unlocked|
+|7E/0843|7E/0844|Integer|Character 1's Knight Lv, ABP|
+|7E/0845|7E/0846|Integer|Character 1's Monk Lv, ABP|
+|7E/0847|7E/0848|Integer|Character 1's Theif Lv, ABP|
+|7E/0849|7E/084A|Integer|Character 1's Dragoon Lv, ABP|
+|7E/084B|7E/084C|Integer|Character 1's Ninja Lv, ABP|
+|7E/084D|7E/084E|Integer|Character 1's Samurai Lv, ABP|
+|7E/084F|7E/0850|Integer|Character 1's Berserker Lv, ABP|
+|7E/0851|7E/0852|Integer|Character 1's Ranger Lv, ABP|
+|7E/0853|7E/0854|Integer|Character 1's Mystic Knight Lv, ABP|
+|7E/0855|7E/0856|Integer|Character 1's White Mage Lv, ABP|
+|7E/0857|7E/0858|Integer|Character 1's Black Mage Lv, ABP|
+|7E/0859|7E/085A|Integer|Character 1's Time Mage Lv, ABP|
+|7E/085B|7E/085C|Integer|Character 1's Summoner Lv, ABP|
+|7E/085D|7E/085E|Integer|Character 1's Blue Mage Lv, ABP|
+|7E/085F|7E/0860|Integer|Character 1's Red Mage Lv, ABP|
+|7E/0861|7E/0862|Integer|Character 1's Beastmaster Lv, ABP|
+|7E/0863|7E/0864|Integer|Character 1's Chemist Lv, ABP|
+|7E/0865|7E/0866|Integer|Character 1's Geomancer Lv, ABP|
+|7E/0867|7E/0868|Integer|Character 1's Bard Lv, ABP|
+|7E/0869|7E/086A|Integer|Character 1's Dancer Lv, ABP|
+|7E/086B|7E/086C|Integer|Character 1's Mime Lv, ABP|
+|7E/086D|7E/086E|Integer|Character 1's Freelancer Lv, ABP (useless)|
+|7E/086F|7E/089A|Integers|Character 2's Jobs Lv, ABP|
+|7E/089B|7E/08C6|Integers|Character 3's Jobs Lv, ABP|
+|7E/08C7|7E/08F2|Integers|Character 4's Jobs Lv, ABP|
+|7E/08F3||Integers|Bart's Number of Abilities|
+|7E/08F3||Integers|Lenna's Number of Abilities|
+|7E/08F3||Integers|Galuf/Krile's Number of Abilities|
+|7E/08F3||Integers|Faris's Number of Abilities|
+|7E/08F7|7E/090A|Bitwise|Bart's Unlocked Abilities|
+|7E/090B|7E/091E|Bitwise|Lenna's Unlocked Abilities|
+|7E/091F|7E/0932|Bitwise|Galuf/Krile's Unlocked Abilities|
+|7E/0933|7E/0946|Bitwise|Faris's Unlocked Abilities|
+
+## Game Progression
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/0947|7E/0949|Integer|Gil
+|7E/094A|7E/094D|Integer|Time Played (in Frames)
+|7E/094E|7E/094F|Integer|Number of Enemies Defeated
+|7E/0950|7E/096F|Integer|Magic Unlocked
+
+## Config
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/0970||Integer|Command Set, Message Speed, Battle Mode, Battle Speed|
+|7E/0971|7E/0972|Integer|Window Color (in 555 RBG)|
+|7E/0973||Bitwise|Re-Equip, Sound, Cursor, Gauge Display|
+|7E/0974||Bitwise|Controller(Normal/Custom, Single/Multi)|
+|7E/0975||Bitwise|Button Configure A|
+|7E/0976||Bitwise|Button Configure B|
+|7E/0977||Bitwise|Button Configure X|
+|7E/0978||Bitwise|Button Configure Y|
+|7E/0979||Bitwise|Button Configure L|
+|7E/097A||Bitwise|Button Configure R|
+|7E/097B||Bitwise|Button Configure Select|
+|7E/097C||Bitwise|Character 1 (1P/2P)|
+|7E/097D||Bitwise|Character 2 (1P/2P)|
+|7E/097E||Bitwise|Character 3 (1P/2P)|
+|7E/097F||Bitwise|Character 4 (1P/2P)|
+|7E/0980||Bitwise|Character 1 Shortcut Commands Placement|
+|7E/0981||Bitwise|Character 2 Shortcut Commands Placement|
+|7E/0982||Bitwise|Character 3 Shortcut Commands Placement|
+|7E/0983||Bitwise|Character 4 Shortcut Commands Placement|
+
+## Names
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/0990|7E/0995|Text|Bartz's|
+|7E/0996|7E/099B|Text|Lenna's|
+|7E/099C|7E/09A1|Text|Galuf's|
+|7E/09A2|7E/09A7|Text|Faris's|
+|7E/09A8|7E/09B3|Text|Krile's|
+
+## Game Progression 2
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/09B4||Integer|Magic Lamp|
+|7E/09B5||Integer|Number of Escapes|
+|7E/09B6||Integer|Wonder Rod Magic|
+|7E/09C0|7E/09C1|Integer|Total Number of Battles|
+|7E/09C2|7E/09C3|Integer|Total Times Saves|
+|7E/09C4||Integer|Battle Results|
+
+## Field
 
 # SRAM
 
@@ -123,7 +211,7 @@ Here is how the first save slot is structured:
 |$05D8||Integer|Map X Position|
 |$05D9||Integer|Map Y Position|
 
-It looks structured the same as RAM > Character Stats - Jobs and other Progression.
+It looks structured the same as RAM > Character Stats - Field.
 
 As for the remaining save slots:
 |From|To|Type|Section|
