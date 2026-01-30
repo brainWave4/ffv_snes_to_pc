@@ -144,7 +144,7 @@ They are structured the same as Character 1.
 |7E/091F|7E/0932|Bitwise|Galuf/Krile's Unlocked Abilities|
 |7E/0933|7E/0946|Bitwise|Faris's Unlocked Abilities|
 
-For an integer used for a Job's Lv and ABP, 4 bits are used for the former while the remaining 12 bits are used for the latter.
+For an integer used for a Job's Lv and ABP, the highest 4 bits are used for the former while the remaining 12 bits are used for the latter.
 
 Jobs Lv and ABP for the rest of the characters are ordered the same as Character 1's.
 
@@ -188,7 +188,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/09A2|7E/09A7|Text|Faris's|
 |7E/09A8|7E/09B3|Text|Krile's|
 
-### Game Progression 2
+### Battle Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/09B4||Integer|Magic Lamp|
@@ -197,8 +197,35 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/09C0|7E/09C1|Integer|Total Number of Battles|
 |7E/09C2|7E/09C3|Integer|Total Times Saves|
 |7E/09C4||Integer|Battle Results|
+|7E/09C5|7E/09D3|Bitwises|Battle Events|
 
 ### Field
+
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/09D4|7E/0A13|Bitwises|Treasures Opened|
+|7E/0A14|7E/0AD3|Bitwises|Events Cleared|
+|7E/0AD4|7E/0AD5|ID|Current Town/Dungeon|
+|7E/0AD6|7E/0AD7|ID|Current World|
+|7E/0AD8||Integer|Player's X Position|
+|7E/0AD9||Integer|Player's Y Position|
+|7E/0ADA||Integer|Character Representing Player|
+|7E/0ADB||Integer|Player's Facing Direction|
+|7E/0ADC||Integer|Current Vehicle|
+|7E/0ADD||ID|Chocobo Settings|
+|7E/0ADE||Integer|Chocobo's Height (highest bit toggles visibility)|
+|7E/0ADF||Integer|Chocobo's X Position|
+|7E/0AE0||Integer|Chocobo's Y Position|
+|7E/0AE1|7E/0AE4|Integers|Black Chocobo|
+|7E/0AE5|7E/0AE8|Integers|Dragon|
+|7E/0AE9|7E/0AEC|Integers|Submarine|
+|7E/0AED|7E/0AF0|Integers|Steamship|
+|7E/0AF1|7E/0AF4|Integers|Airship|
+|7E/0AF5|7E/0AF6|ID|Teleport Map|
+|7E/0AF7||Integer|Teleport Map X|
+|7E/0AF8||Integer|Teleport Map Y|
+
+All Vehicles (Black Chocobo, Dragon, Submarine, Steamship and Airship) are structured the same as Chocobo.
 
 # SRAM
 
