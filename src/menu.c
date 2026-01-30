@@ -881,7 +881,16 @@ static void loadFromSlot(void) {
 }
 
 // Unstarted
-static void func_bf7d(void) {}
+// Get Pointer to Save Slot in SRAM
+static void func_bf7d(void) {
+    // Load $6f to A
+    // And A with #$0003 (save slot)
+    // A Shift Left
+    // Transfer A to X
+    // Load ($c0f8ef + X) to A
+    //  - Pointer to Save Slot in SRAM
+    // Return To Subroutine
+}
 
 // Unstarted
 static void func_bf89(void) {}
