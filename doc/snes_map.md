@@ -243,16 +243,16 @@ For the first character:
 |$0C|$0D|Integer|Max MP|
 |$0E|$14|IDs|Equipments|
 |$15||ID|Monster Caught|
-|$16|$19||IDs|Commands|
+|$16|$19|IDs|Commands|
 |$1A|$1D|Bitwises|Status|
 |$1E||Bitwise|Action (Defend, Guard etc) Flags|
 |7$1F||Bitwise|Damage Modifier|
 |$20|$21|Bitwise|Innate Abilities|
 |$22||Bitwise|Elemental Boosts|
 |$23||Integer|Equipment Weight|
-|$24|$27||Integers|Base Parameters (of Strength, Agility, Stamina and Magic)|
-|$28|$2B||Integers|Current Parameters|
-|$2C|$2F||Integers|Evasion and Defence, by Physical and Magical|
+|$24|$27|Integers|Base Parameters (of Strength, Agility, Stamina and Magic)|
+|$28|$2B|Integers|Current Parameters|
+|$2C|$2F|Integers|Evasion and Defence, by Physical and Magical|
 |$30|$34|Bitwises|Elemental Properties|
 |$35|$37|Bitwises|Status Resistances|
 |$38|$39|Bitwises|Weapon and Equipment Properties|
