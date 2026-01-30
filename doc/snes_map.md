@@ -21,7 +21,10 @@ A RAM is where the game stores variable for future use. It is mapped at Bank 7E-
 
 ## Battle
 ## Menu
-## Character Stats
+## For Saving
+These range of addresses are to be stored in a save slot address when saving the game.
+
+### Character Stats
 For Character 1:
 |From|To|Type|Section|
 |---|---|---|---|
@@ -97,13 +100,13 @@ For the rest:
 
 They are structured the same as Character 1.
 
-## Items
+### Items
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0640|7E/073F|IDs|Up to 256 kinds of Items|
 |7E/0740|7E/038F|Integers|Number of said Items|
 
-## Job Progression
+### Job Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0840|7E/0843|Bitwise|Jobs Unlocked|
@@ -132,16 +135,20 @@ They are structured the same as Character 1.
 |7E/086F|7E/089A|Integers|Character 2's Jobs Lv, ABP|
 |7E/089B|7E/08C6|Integers|Character 3's Jobs Lv, ABP|
 |7E/08C7|7E/08F2|Integers|Character 4's Jobs Lv, ABP|
-|7E/08F3||Integers|Bart's Number of Abilities|
-|7E/08F3||Integers|Lenna's Number of Abilities|
-|7E/08F3||Integers|Galuf/Krile's Number of Abilities|
-|7E/08F3||Integers|Faris's Number of Abilities|
+|7E/08F3||Integer|Bart's Number of Abilities|
+|7E/08F4||Integer|Lenna's Number of Abilities|
+|7E/08F5||Integer|Galuf/Krile's Number of Abilities|
+|7E/08F6||Integer|Faris's Number of Abilities|
 |7E/08F7|7E/090A|Bitwise|Bart's Unlocked Abilities|
 |7E/090B|7E/091E|Bitwise|Lenna's Unlocked Abilities|
 |7E/091F|7E/0932|Bitwise|Galuf/Krile's Unlocked Abilities|
 |7E/0933|7E/0946|Bitwise|Faris's Unlocked Abilities|
 
-## Game Progression
+For an integer used for a Job's Lv and ABP, 4 bits are used for the former while the remaining 12 bits are used for the latter.
+
+Jobs Lv and ABP for the rest of the characters are ordered the same as Character 1's.
+
+### Game Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0947|7E/0949|Integer|Gil
@@ -149,7 +156,7 @@ They are structured the same as Character 1.
 |7E/094E|7E/094F|Integer|Number of Enemies Defeated
 |7E/0950|7E/096F|Integer|Magic Unlocked
 
-## Config
+### Config
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0970||Integer|Command Set, Message Speed, Battle Mode, Battle Speed|
@@ -172,7 +179,7 @@ They are structured the same as Character 1.
 |7E/0982||Bitwise|Character 3 Shortcut Commands Placement|
 |7E/0983||Bitwise|Character 4 Shortcut Commands Placement|
 
-## Names
+### Names
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0990|7E/0995|Text|Bartz's|
@@ -181,7 +188,7 @@ They are structured the same as Character 1.
 |7E/09A2|7E/09A7|Text|Faris's|
 |7E/09A8|7E/09B3|Text|Krile's|
 
-## Game Progression 2
+### Game Progression 2
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/09B4||Integer|Magic Lamp|
@@ -191,7 +198,7 @@ They are structured the same as Character 1.
 |7E/09C2|7E/09C3|Integer|Total Times Saves|
 |7E/09C4||Integer|Battle Results|
 
-## Field
+### Field
 
 # SRAM
 
