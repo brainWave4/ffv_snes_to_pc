@@ -475,9 +475,9 @@ static void initMenu(void) {
     //  - Address _750f is also used for storing,
     //    but only that one byte.
     // Load #$0017 to A
-    //  - $17-1 bytes to copy
-    //  - $16 bytes to copy
-    //  - 22 bytes to copy
+    //  - $17+1 bytes to copy
+    //  - $18 bytes to copy
+    //  - 24 bytes to copy
     // MVN #$c0, #$7e
     //  - Copy 22 bytes from #$c0f573 to #$7e750f
 
@@ -565,12 +565,12 @@ static void func_a18a(void) {
     // Load #$2107 to Y
     // Load #$0005 to Accumulator
     // MVN #$c0, #$00
-    //  - copy 4 bytes from #$c0f53b to #$002107
+    //  - copy 6 bytes from #$c0f53b to #$002107
 
     // Load #$212c to Y
     // Load #$0005 to A
     // MVN #$c0, #$00
-    //  - copy 4 bytes from #$c0f53b to #$00212c
+    //  - copy 6 bytes from #$c0f53b to #$00212c
 
     // PulL Processor status register
     // PulL data Bank register
@@ -594,7 +594,7 @@ static void func_a1cf(void) {
     // Transfer A to Y
     // Increment X x2
     // Load #$0004 to A
-    //  - 3 bytes to copy
+    //  - 5 bytes to copy
     // MVN #$c0, #$00
     // Branch to [LBL a1dc]
     
@@ -785,11 +785,12 @@ static void saveToSlot(void) {
     // PusH X
     // Transfer A to Y
     // LoaD #$0500 to X
-    // Load #$05ff to A
+    // Load #$05ff to A ($600 bytes to copy)
     // PusH data Bank
     // PusH Y
     // MVN #$00, #$30
-    //  - Save SRAM
+    //  - $00 is the bank mirrored from $7e RAM
+    //  - $30 is the bank where SRAM is mapped
 
     // PulL Y
     // PulL data Bank
@@ -850,7 +851,7 @@ static void loadFromSlot(void) {
     //  - get pointer to save slot in sram
     // Transfer A to X
     // LoaD #$0500 to Y
-    // LoaD #$05ff to A
+    // LoaD #$05ff to A ($600 bytes to copy)
     // PusH data Bank
     // MVN #$30, #$00
     //  - load sram
