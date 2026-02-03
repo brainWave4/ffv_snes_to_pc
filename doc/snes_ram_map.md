@@ -1,30 +1,11 @@
-# ROM
+A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F. 7E/0000 - 7E/1FFF
 
-A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi-ROM, it is mapped at Bank C0-FF.
-
-|From|To|Type|Section|Module|
-|---|---|---|---|---|
-|C0/0000|C0/FFFF|Instr|Field|Field|
-|C1/0000|C1/FFFF|Instr|Battle Graphics|Btlgfx|
-|C2/0000|C2/9FFF|Instr|Battle (General)|Battle|
-|C2/0148|C2/01B0|Text|Hidden Message||
-|C2/04FB|C2/200A|Instr|Commands|Battle|
-|C2/200B|C2/27BE|Instr|Timer|Battle|
-|C2/27BF|C2/3E7E|Instr|AI|Battle|
-|C2/A000|C2/FFFF|Instr|Menu|Menu|
-|C3/0000|C3/FFFF|Instr|Cutscene|Cutscene|
-|C4/0000|C4/FFFF|Instr|Sound|Sound|
-
-# RAM
-
-A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F.
-
-## Battle
-## Menu
-## For Saving
+# Battle
+# Menu
+# For Saving
 These range of addresses are to be stored in a save slot address when saving the game.
 
-### Character Stats
+## Character Stats
 For Character 1:
 |From|To|Type|Section|
 |---|---|---|---|
@@ -100,13 +81,13 @@ For the rest:
 
 They are structured the same as Character 1.
 
-### Items
+## Items
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0640|7E/073F|IDs|Up to 256 kinds of Items|
 |7E/0740|7E/038F|Integers|Number of said Items|
 
-### Job Progression
+## Job Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0840|7E/0843|Bitwise|Jobs Unlocked|
@@ -148,7 +129,7 @@ For an integer used for a Job's Lv and ABP, the highest 4 bits are used for the 
 
 Jobs Lv and ABP for the rest of the characters are ordered the same as Character 1's.
 
-### Game Progression
+## Game Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0947|7E/0949|Integer|Gil
@@ -156,7 +137,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/094E|7E/094F|Integer|Number of Enemies Defeated
 |7E/0950|7E/096F|Integer|Magic Unlocked
 
-### Config
+## Config
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0970||Integer|Command Set, Message Speed, Battle Mode, Battle Speed|
@@ -179,7 +160,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0982||Bitwise|Character 3 Shortcut Commands Placement|
 |7E/0983||Bitwise|Character 4 Shortcut Commands Placement|
 
-### Names
+## Names
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0990|7E/0995|Text|Bartz's|
@@ -188,7 +169,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/09A2|7E/09A7|Text|Faris's|
 |7E/09A8|7E/09B3|Text|Krile's|
 
-### Battle Progression
+## Battle Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/09B4||Integer|Magic Lamp|
@@ -199,7 +180,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/09C4||Integer|Battle Results|
 |7E/09C5|7E/09D3|Bitwises|Battle Events|
 
-### Field
+## Field
 
 |From|To|Type|Section|
 |---|---|---|---|
@@ -226,67 +207,3 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0AF8||Integer|Teleport Map Y|
 
 All Vehicles (Black Chocobo, Dragon, Submarine, Steamship and Airship) are structured the same as Chocobo.
-
-# SRAM
-
-A small section designed for storing data. They are preserved even when the power turns off. They are mapped Bank 30-3F by 6000-7FFF, but for simplicity sake, they will be referred by $0000 onwards.
-
-## Saves
-Here is how the first save slot is structured:
-|From|To|Type|Section|
-|---|---|---|---|
-|$0000|$004F|Set|Character Slot 1|
-|$0050|$009F|Set|Character Slot 2|
-|$00A0|$00EF|Set|Character Slot 3|
-|$00F0|$013F|Set|Character Slot 4|
-|$0140|$023F|IDs|Current Items|
-|$0240|$033F|Integers|Number of said Items|
-|$0447|$0449|Integer|Gil|
-|$05D8||Integer|Map X Position|
-|$05D9||Integer|Map Y Position|
-
-It looks structured the same as RAM > Character Stats - Field.
-
-As for the remaining save slots:
-|From|To|Type|Section|
-|---|---|---|---|
-|$0700|$0D00|Set|Save Slot 2|
-|$0E00|$1400|Set|Save Slot 3|
-|$1500|$1B00|Set|Save Slot 4|
-
-They are structured the same as Save Slot 1.
-
-### Character Slots
-For the first character:
-|From|To|Type|Section|
-|---|---|---|---|
-|$00||Bitwise|ID, Gender, In party, Row|
-|$01||ID|Job|
-|$02||Integer|Level|
-|$03|$05|Integer|Exp|
-|$06|$07|Integer|Current HP|
-|$08|$09|Integer|Max HP|
-|$0A|$0B|Integer|Current MP|
-|$0C|$0D|Integer|Max MP|
-|$0E|$14|IDs|Equipments|
-|$15||ID|Monster Caught|
-|$16|$19|IDs|Commands|
-|$1A|$1D|Bitwises|Status|
-|$1E||Bitwise|Action (Defend, Guard etc) Flags|
-|7$1F||Bitwise|Damage Modifier|
-|$20|$21|Bitwise|Innate Abilities|
-|$22||Bitwise|Elemental Boosts|
-|$23||Integer|Equipment Weight|
-|$24|$27|Integers|Base Parameters (of Strength, Agility, Stamina and Magic)|
-|$28|$2B|Integers|Current Parameters|
-|$2C|$2F|Integers|Evasion and Defence, by Physical and Magical|
-|$30|$34|Bitwises|Elemental Properties|
-|$35|$37|Bitwises|Status Resistances|
-|$38|$39|Bitwises|Weapon and Equipment Properties|
-|$3A||Integer|Job Level|
-|$3B|$3C|Integer|ABP|
-
-The remaining characters share the same structure.
-
-## Checksum
-$1C00 is empty until $1FF0, which is a checksum to check for the save files' legitimacy.
