@@ -1,31 +1,25 @@
 A small section designed for storing data. They are preserved even when the power turns off. They are mapped Bank 30-3F by 6000-7FFF, but for simplicity sake, they will be referred by $0000 onwards.
 
 # Saves
-Here is how the first save slot is structured:
+
+There are four save slot save slots:
+|From|To|Type|Section|
+|---|---|---|---|
+|$0000|$06FF|Set|Save Slot 1|
+|$0700|$0DFF|Set|Save Slot 2|
+|$0E00|$14FF|Set|Save Slot 3|
+|$1500|$1BFF|Set|Save Slot 4|
+
+The Save Slot 1 is structured further below. It's the same as RAM > For Saving. As for the remaining save slot, they are also structured the same, just at a different offset.
+
+## Character Slots
 |From|To|Type|Section|
 |---|---|---|---|
 |$0000|$004F|Set|Character Slot 1|
 |$0050|$009F|Set|Character Slot 2|
 |$00A0|$00EF|Set|Character Slot 3|
 |$00F0|$013F|Set|Character Slot 4|
-|$0140|$023F|IDs|Current Items|
-|$0240|$033F|Integers|Number of said Items|
-|$0447|$0449|Integer|Gil|
-|$05D8||Integer|Map X Position|
-|$05D9||Integer|Map Y Position|
 
-It looks structured the same as RAM > Character Stats - Field.
-
-As for the remaining save slots:
-|From|To|Type|Section|
-|---|---|---|---|
-|$0700|$0D00|Set|Save Slot 2|
-|$0E00|$1400|Set|Save Slot 3|
-|$1500|$1B00|Set|Save Slot 4|
-
-They are structured the same as Save Slot 1.
-
-## Character Slots
 For the first character:
 |From|To|Type|Section|
 |---|---|---|---|
@@ -42,11 +36,11 @@ For the first character:
 |$16|$19|IDs|Commands|
 |$1A|$1D|Bitwises|Status|
 |$1E||Bitwise|Action (Defend, Guard etc) Flags|
-|7$1F||Bitwise|Damage Modifier|
+|$1F||Bitwise|Damage Modifier|
 |$20|$21|Bitwise|Innate Abilities|
 |$22||Bitwise|Elemental Boosts|
 |$23||Integer|Equipment Weight|
-|$24|$27|Integers|Base Parameters (of Strength, Agility, Stamina and Magic)|
+|$24|$27|Integers|Base Parameters|
 |$28|$2B|Integers|Current Parameters|
 |$2C|$2F|Integers|Evasion and Defence, by Physical and Magical|
 |$30|$34|Bitwises|Elemental Properties|
@@ -54,8 +48,28 @@ For the first character:
 |$38|$39|Bitwises|Weapon and Equipment Properties|
 |$3A||Integer|Job Level|
 |$3B|$3C|Integer|ABP|
+|$3D|$3F|Bitwise|Magic Level Progression|
+|$40|$43|Bitwise|Equipment Category|
+|$44|$45|Integer|Attack|
+|$46||Bitwise|Attack ID Reaction|
+|$4A|$4D|Integer|Freelancer Parameters|
+|$4E|$4F|Bitwise|Freelancer Innate Abilities|
 
-The remaining characters share the same structure.
+The parameters (using Base Parameters as an example) are structured:
+
+|From|To|Type|Section|
+|---|---|---|---|
+|$24||Integer|Strength|
+|$25||Integer|Agility|
+|$26||Integer|Stamina|
+|$27||Integer|Magic|
+
+## Items
+
+|From|To|Type|Section|
+|---|---|---|---|
+|$0140|$023F|IDs|Current Items|
+|$0240|$033F|Integers|Number of said Items|
 
 # Checksum
 $1C00 is empty until $1FF0, which is a checksum to check for the save files' legitimacy.

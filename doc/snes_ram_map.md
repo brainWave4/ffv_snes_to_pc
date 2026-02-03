@@ -62,7 +62,7 @@ For Character 1:
 |7E/0539||Bitwise|Equipment Properties|
 |7E/053A||Integer|Job Level|
 |7E/053B|7E/053C|Integer|ABP|
-|7E/053D|7E/053F|Bitwise|Magic used|
+|7E/053D|7E/053F|Bitwise|Magic Level Progression|
 |7E/0540|7E/0543|Bitwise|Equipment Category|
 |7E/0544|7E/0545|Integer|Attack|
 |7E/0546||Bitwise|Attack ID Reaction|
