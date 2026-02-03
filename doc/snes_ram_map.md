@@ -36,7 +36,7 @@ For Character 1:
 |7E/051E||Bitwise|Action (Defend, Guard etc) Flags|
 |7E/051F||Bitwise|Damage Modifier|
 |7E/0520|7E/0521|Bitwise|Innate Abilities|
-|7E/0522||Bitwise|Elemental Boosts|
+|7E/0522||Bitwise|Equipment Elements|
 |7E/0523||Integer|Equipment Weight|
 |7E/0524||Integer|Base Strength|
 |7E/0525||Integer|Base Agility|
@@ -65,7 +65,10 @@ For Character 1:
 |7E/053D|7E/053F|Bitwise|Magic Level Progression|
 |7E/0540|7E/0543|Bitwise|Equipment Category|
 |7E/0544|7E/0545|Integer|Attack|
-|7E/0546||Bitwise|Attack ID Reaction|
+|7E/0546||Bitwise|Previous Command|
+|7E/0546||Bitwise|Previous Attack|
+|7E/0546||Bitwise|Previous Item|
+|7E/0546||Bitwise|Previous Element|
 |7E/054A||Integer|Freelancer Strength|
 |7E/054B||Integer|Freelancer Agility|
 |7E/054C||Integer|Freelancer Stamina|

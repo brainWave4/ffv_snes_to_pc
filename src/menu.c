@@ -56,9 +56,15 @@ static void setControllerSettingsField(void);
 void updateJoypadConfig(void);
 static void func_ffc2(void);
 
+// Address: $7e0500 - $7e0aff
+Save current_save;
+
 // These adresses are loaded before
 // having valued stored there
 static uint16_t addr_7e0034 = 0;
+
+// Address: $306000 - $307bff
+static Save[4] saves;
 
 static uint16_t addr_7e008e;
 static uint16_t addr_7e2100;
