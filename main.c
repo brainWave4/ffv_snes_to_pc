@@ -5,6 +5,9 @@
 
 #include "field.h"
 
+#define BASE_GAME_WIDTH 256
+#define BASE_GAME_HEIGHT 224
+
 typedef struct {
     SDL_Window* window;
     SDL_Renderer* renderer;
@@ -21,7 +24,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     AppState* state = (AppState*)SDL_calloc(1, sizeof(AppState));
     if (!state) return SDL_APP_FAILURE;
 
-    state->window = SDL_CreateWindow("FFV", 256, 224, 0);
+    state->window = SDL_CreateWindow("FFV", BASE_GAME_WIDTH, BASE_GAME_HEIGHT, 0);
     if (state->window == NULL) {
         SDL_Log("SDL_CreateWindow Error: %s", SDL_GetError())
         return SDL_APP_FAILURE;
