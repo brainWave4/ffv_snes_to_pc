@@ -1,4 +1,4 @@
-A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F. 7E/0000 - 7E/1FFF
+A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F. It is also mirrored at Bank 00-3F and 80-BF, both by $0000 - $1FFFF, making the addresses interchangable for ease of access.
 
 # Battle
 # Menu
