@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <stdint.h>
+#include <wchar.h>
 
 typedef struct {
     uint8_t strength;
@@ -87,6 +88,8 @@ typedef struct {
     uint32_t gil;
     uint32_t playTime;
 
+    wchar_t[5][6] names;
+
     uint16_t enemiesDefeated;
     uint16_t windowColor;
 
@@ -124,8 +127,6 @@ typedef struct {
 
     uint8_t[4] playerNumber;
     uint8_t[4] shortcutPlacement;
-
-    char[5][6] names;
 
     uint8_t magicLamp;
     uint8_t timesEscaped;
