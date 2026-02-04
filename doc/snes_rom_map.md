@@ -21,6 +21,16 @@ This bank covers 2 sections: One for battling, and another for menus. They are t
 
 # Bank C3
 This bank covers Cutscenes
+|From|To|Type|Content|Module|
+|---|---|---|---|---|
+|C3/A300|C3/B949|Data|Menu Tilemap & Cursor Data|Menu|
+|C3/B94A|C3/B95F||Unused Space||
+|C3/B960|C3/E9FF|Data|Menu Palettes|Menu|
+|C3/BA00|C3/BAFF||Unused Space||
+|C3/BB00|C3/E6FF|Data|Map Palettes (44 items x 256 bytes)||
+|C3/E700|C3/EAFF||Unused Space||
+|C3/EB00|C3/FDFF|1bpp|Kana Graphics|Menu|
+|C3/FE00|C3/FFFF||Unused Space||
 
 # Banks C4 - C6
 This range of bank covers Audio. They are to be put into Sound Module.
@@ -41,7 +51,7 @@ This range of bank covers Audio. They are to be put into Sound Module.
 |C4/3DAA|C5/46A9||Instruments used in BGMs (72 items x 35 bytes)|
 |C4/46AA|C5/E5E7||Instrument BRRs (35 items, varying size)|
 |C5/E5E8|C6/FE75||BGMs (72 items, varying size)|
-|C6/FE76|C6/FFFF||Empty Space|
+|C6/FE76|C6/FFFF||Unused Space|
 
 # Banks C7 - DF
 This range covers the rest of the data. Which module they are to be put into varies.
