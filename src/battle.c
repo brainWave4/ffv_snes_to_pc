@@ -128,13 +128,10 @@ static void stopTimer(void);
 static void startTimer(void);
 static void getTimerDuration(void);
 static void addTimerOffsetY(void);
-static void durSpell(void);
-static void dur120a(void);
-static void durVit(void);
-static void dur180mod(void);
-static void dur110mod(void);
-static void durSpellMod(void);
-static void dur120mod(void);
+static uint8_t durSpell(void);
+static uint8_t durVit(void);
+static uint8_t dur180mod(void);
+static uint8_t dur110mod(void);
 static void monsterAtb(void);
 
 static void CheckAICondition(void);
@@ -150,6 +147,9 @@ static void aiCondition08(void);
 static void aiCondition09(void);
 static void aiCondition0A(void);
 static void aiCondition0B(void);
+
+const uint8_t MIN_BYTE = 1;
+const uint8_t MAX_BYTE = 255;
 
 // Address: $09c0
 uint16_t battleCount = 0;
@@ -5167,59 +5167,70 @@ static void addTimerOffsetY(void) {
 
 // Address: _2572
 // Duration = Spell Duration
-static void durSpell(void) {
-    // lda StatusDuration
-    // rts
+static uint8_t durSpell(uint8_t value) {
+    // LoaD StatusDuration to A
+    // Return To Subroutine
+    return value;
 }
 
 // Address: _2576
 // Duration = 120
-static void dur120a(void) {
-    // lda #$78	;120
-    // rts
-}
+// Similar to durSpell(..), but with a direct value as the input.
 
 // Duration = Attacker's Vitality + 20
-static void durVit(void) {
-//     clc
-//     lda Vitality
-//     adc #$14	;+20
-//     bcc :+
-//     lda #$FF	;max 255
-// :	rts
+// TODO: Update formula to include Vitality
+static uint8_t durVit(void) {
+    // CLear Carry Flag
+    // LoaD Vitality to A
+    // ADd A with #$14 (#20) and Carry
+    uint8_t sum = 20;
+
+    // Branch to next label if Carry Clear
+    // LoaD #$FF (max #255) to A
+    // [LBL] Return To Subroutine
+    if (sum > MAX_BYTE) return MAX_BYTE;
+
+    return sum;
 }
 
 // Address: _2584
 // Duration = 120
-// Duplicate of _2576
+// Similar of durSpell(..)
 
 // Address: _2587
 // Duration = 49
-// Similar to _2576
+// Similar to durSpell(..)
 
 // Duration = 180 - Attacker's Magic Power / 2
-static void dur180mod(void) {
-//         lda MagicPower
-//         lsr
-//         sta $0E
-//         sec
-//         lda #$B4	;180
-//         sbc $0E
-//         bcs :+
-//         lda #$01	;min 1
-// :	    rts
+// TODO: Update formula with Magic Power
+static uint8_t dur180mod(uint8_t base) {
+    // Load MagicPower to A
+    // (L)Shift A Right
+    // Store A to $0E
+    // SEt Carry
+    // Load #$B4 (#180) to A
+    // SuBtract $0E from A with Carry
+    uint8_t total = base;
+
+    // Branch to next label if Carry Set
+    // LoaD #$01 to A
+    // [LBL] Return To Subroutine
+    if (total < MIN_BYTE) return MIN_BYTE;
+
+    return total;
 }
 
 // Address: _259A
 // Duration = 180
-// Similar to _2576
+// Similar to durSpell(..)
 
 // Address: _259D
 // Duration = 10
-// Similar to _259D
+// Similar to durSpell(..)
 
 // Duration = 110 - Attacker's Magic Power, min 30
-static void dur110mod(void) {
+// TODO: Update formula with Magic Power
+static uint8_t dur110mod(void) {
 //     sec
 //     lda #$6E	;110
 //     sbc MagicPower
@@ -5228,38 +5239,22 @@ static void dur110mod(void) {
 //     bcs :++
 // :	lda #$1E	;min 30
 // :	rts
+    uint8_t total = 110;
+
+    if (total < 30) return 30;
+
+    return total;
 }
 
 // Address: _25AF
 // Duration = 30
-// ** optimize: reuse code from Dur110mod
-// Similar to _259D
+// Similar to durSpell(..)
 
 // Duration = Spell Duration - Attacker's Magic Power / 2
-static void durSpellMod(void) {
-//     lda MagicPower
-//     lsr
-//     sta $0E
-//     sec
-//     lda StatusDuration
-//     sbc $0E
-//     bcs :+
-//     lda #$01	;min 1
-// :	rts
-}
+// Similar to dur180mod(..), but with starting value pointing to spell duration
 
-//Duration = 120 - Attacker's Magic Power / 2
-static void dur120mod(void) {
-//     lda MagicPower
-//     lsr
-//     sta $0E
-//     sec
-//     lda #$78	;120
-//     sbc $0E
-//     bcs :+
-//     lda #$01	;min 1
-// :	rts
-}
+// Duration = 120 - Attacker's Magic Power / 2
+// Similar to dur180mod(..), with with different starting value
 
 // Queues up a monster's action when
 // their ATB is ready
