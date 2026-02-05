@@ -18,7 +18,7 @@ To extract the assets, open Command Prompt or Terminal on the project folder and
 python3 '...\extract_assets.py' '...\ffv.sfc'
 ```
 where, for the following arguements:
-* `'...\extract_assets.py'` (in the `rom_tools` folder) is the full filepath, in quotations.
+* `'...\extract_assets.py'` (in the `tools` folder) is the full filepath, in quotations.
 * `'...\ffv.sfc'` is the full filepath to the FFV ROM. This arguement is optional; if left out, the program will search for a FFV ROM in `base_rom` folder.
 
 ### Compilation
