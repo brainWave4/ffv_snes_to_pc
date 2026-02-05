@@ -2,6 +2,12 @@ A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi
 
 # Bank C0
 This bank covers Field.
+|From|To|Type|Content|
+|---|---|---|---|
+|$F987|$FA9C|Pointers|Menu Texts|
+|$FA9D|$FE89|Text|Menu Texts (11 items, variable size)|
+|$FEBB|$FEBF||Unused Space|
+|$FEC0|$FFC0|Data|RNG Table ($FF bytes of items)|
 
 # Bank C1
 This bank covers Battle Graphics. They are to be put into Btlgfx Module.
@@ -58,4 +64,42 @@ This range covers the rest of the data. Which module they are to be put into var
 
 |From|To|Type|Content|Module|
 |---|---|---|---|---|
-|CA/0000|CA/FFFF|Text|Dialogs (2176 items, variable size)|Field|
+|C8/2220|C8/32FF|Pointers|Dialogs||
+|CA/0000|CA/FFF4|Text|Dialogs (2176 items, variable size)|Field|
+|D0/5C00|D0/67FF|Text|Monster Names (384 items x 8 bytes)||
+|D0/7000|D0/7147|Pointers|Map Titles||
+|D0/7200|D0/7667|Text|Map Titles (163 items, variable size)||
+|D0/8700|D0/88FF|Text|Monster Special Attack Names (64 items x 8 bytes)||
+|D0/F000|D0/F1D3|Pointers|Battle Dialogs||
+|D0/F1D4|D0/FEBB|Text|Battle Dialogs(234 items, variable size)||
+|D0/FEBC|D0/FFE0||Unused Space||
+|D1/1380|D1/1C7F|Text|Item Names (256 items x 9 bytes)||
+|D1/1C80|D1/1E2F|Text|Magic Names (72 items x 6 bytes)||
+|D1/1E30|D1/1E89|Text|Summon Attacks (15 items x 6 bytes)||
+|D1/1E8A|D1/247A|Text|Attack Names (161 items x 9 bytes)||
+|D1/247B|D1/2480||Unused Space||
+|D1/28B6|D1/2975|Text|Status Names (24 items x 8 bytes)||
+|D1/2D00|D1/2D3F|Text|Shop Type Names (8 items x 8 bytes)||
+|D1/39A9|D1/3BA8|Pointers|Battle Messages||
+|D1/3BA9|D1/3F0D|Text|Battle Messages (256 items, variable size)||
+|D1/3F0E|D1/3FFF||Unused Space||
+|D1/4000|D1/41FF|Pointers|Item Descriptions||
+|D1/4100|D1/43FD|Text|Item Descriptions(256 items, var. size)||
+|D1/43FE|D1/4FFF||Unused Space||
+|D1/52B5|D1/52BF||Unused Space||
+|D1/542C|D1/54FF||Unused Space||
+|D1/5500|D1/551D|Text|Character Names (5 items x 6 bytes)||
+|D1/5532|D1/55FF||Unused Space||
+|D1/5600|D1/56AF|Text|Job Names (22 items x 8 bytes)||
+|D1/57E4|D1/57FF||Unused Space||
+|D1/5800|D1/59DF|Text|Battle Command Names (96 items x 5 bytes)
+|D1/5F80|D1/61FF||Unused Space||||
+|D1/6200|D1/6307|Text|Passive Ability Names (33 items x 8)||
+|D1/6452|D1/66FF||Unused Space||
+|D1/6700|D1/6AB0|Text|Special Ability Names (105 items x 9 bytes)||
+|D1/6F89|D1/6FFF||Unused Space||
+|D1/7140|D1/716B|Pointers|Job Descriptions||
+|D1/724A|D1/7336|Text|Job Descriptions (22 items, variable size)||
+|D1/7337|D1/77B9|Pointers|Ability Descriptions||
+|D1/7337|D1/77B9|Text|Ability Descriptions (111 items, variable size)||
+|D1/77BA|D1/7F9F||Unused Space||
