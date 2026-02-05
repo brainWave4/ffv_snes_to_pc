@@ -13,11 +13,13 @@ This is a reverse engineer of Final Fantasy V, porting from SNES/Super Famicon t
 
 For copyright reasons, not everything is implemented on this project. To get the rest of the content, they are to be extracted from the base ROM.
 
-To extract the assets, open Command Prompt or Terminal and type:
+To extract the assets, open Command Prompt or Terminal on the project folder and type:
 ```
-python "...\extract.py"
+python3 '...\extract_assets.py' '...\ffv.sfc'
 ```
-where `"...\extract.py"` is the full filepath, in quotations.
+where, for the following arguements:
+* `'...\extract_assets.py'` (in the `rom_tools` folder) is the full filepath, in quotations.
+* `'...\ffv.sfc'` is the full filepath to the FFV ROM. This arguement is optional; if left out, the program will search for a FFV ROM in `base_rom` folder.
 
 ### Compilation
 
