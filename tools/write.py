@@ -32,9 +32,7 @@ def writeTextFixedBytes(lang, file, rommap, addr, item_count, byte_count):
             for j in range(byte_count):
                 char_index = int.from_bytes(rommap[addr["b"]][addr["h"]][addr["l"]])
 
-                if char_index == 0xff:
-                    file.write("　")
-                else:
+                if char_index < 0xCD:
                     offset = 0x20
                     char = kana[char_index - offset]
                     file.write(char)
@@ -49,7 +47,19 @@ def text(rommap, lang, textsFixedBytes):
 
 def textJp(rommap):
     textsFixedBytes = [
-        {DICT_FILE: "monster_names", DICT_ADDR: {"b": 0x10, "h": 0x5c, "l": 0}, DICT_ITEMS: 384, DICT_BYTES: 8}
+        {DICT_FILE: "monster_names", DICT_ADDR: {"b": 0x10, "h": 0x5c, "l": 0}, DICT_ITEMS: 384, DICT_BYTES: 8},
+        {DICT_FILE: "monster_specials", DICT_ADDR: {"b": 0x10, "h": 0x87, "l": 0}, DICT_ITEMS: 64, DICT_BYTES: 8},
+        {DICT_FILE: "item_names", DICT_ADDR: {"b": 0x11, "h": 0x13, "l": 0x80}, DICT_ITEMS: 256, DICT_BYTES: 9},
+        {DICT_FILE: "magic_names", DICT_ADDR: {"b": 0x11, "h": 0x1c, "l": 0x80}, DICT_ITEMS: 72, DICT_BYTES: 6},
+        {DICT_FILE: "summon_attacks", DICT_ADDR: {"b": 0x11, "h": 0x1e, "l": 0x30}, DICT_ITEMS: 15, DICT_BYTES: 6},
+        {DICT_FILE: "attack_names", DICT_ADDR: {"b": 0x11, "h": 0x1e, "l": 0x8a}, DICT_ITEMS: 161, DICT_BYTES: 9},
+        {DICT_FILE: "status_names", DICT_ADDR: {"b": 0x11, "h": 0x28, "l": 0xb6}, DICT_ITEMS: 24, DICT_BYTES: 8},
+        {DICT_FILE: "shop_types", DICT_ADDR: {"b": 0x11, "h": 0x2d, "l": 0}, DICT_ITEMS: 8, DICT_BYTES: 8},
+        {DICT_FILE: "char_names", DICT_ADDR: {"b": 0x11, "h": 0x55, "l": 0}, DICT_ITEMS: 5, DICT_BYTES: 6},
+        {DICT_FILE: "job_names", DICT_ADDR: {"b": 0x11, "h": 0x56, "l": 0}, DICT_ITEMS: 22, DICT_BYTES: 8},
+        {DICT_FILE: "battle_commands", DICT_ADDR: {"b": 0x11, "h": 0x58, "l": 0}, DICT_ITEMS: 96, DICT_BYTES: 5},
+        {DICT_FILE: "passive_abilities", DICT_ADDR: {"b": 0x11, "h": 0x62, "l": 0}, DICT_ITEMS: 33, DICT_BYTES: 8},
+        {DICT_FILE: "special_abilities", DICT_ADDR: {"b": 0x11, "h": 0x56, "l": 0}, DICT_ITEMS: 105, DICT_BYTES: 9}
     ]
 
     text(rommap, FILE_JP, textsFixedBytes)
