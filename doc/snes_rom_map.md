@@ -1,4 +1,4 @@
-A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi-ROM, it is mapped at Bank C0-FF.
+A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi-ROM, it is mapped at Bank C0-FF. However, if opened by a hex editor, the bank is offset at $00 instead.
 
 # Bank C0
 This bank covers Field.
