@@ -4,6 +4,5 @@ Place one of the following ROMs in this folder:
 
 Then, on the project folder, open your terminal and type:
 ```
-python3 "...\extract_assets.py"
+python3 "tools/extract_assets.py"
 ```
-where `"...\extract_assets.py"` (in the `tools` folder) is the full filepath, in quotations.
