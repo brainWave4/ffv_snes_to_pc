@@ -29,3 +29,7 @@ else:
         rommap = rom.getRomMap(EXT_SFC, filepath, HEADER_TITLE, title)
     else:
         print(f"Error: Arguement 1 should be a filepath that ends with {EXT_SFC}")
+
+if rommap:
+    import write
+    write.everything(rommap)
