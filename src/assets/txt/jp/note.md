@@ -1,0 +1,1 @@
+This folder contains all texts in Japanese.
