@@ -11,6 +11,8 @@ DICT_ADDR = "addr"
 DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
 
+kana = "バばビびブぶベべボぼガがギぎグぐゲげゴごザざジじズずゼぜゾぞダだヂぢヅづデでドどヴパぱピぴプぷペぺポぽ０１２３４５６７８９ｍｈｐハはヒひフふヘへホほカかキきクくケけコこサさシしスすセせソそタたチちツつテてトとウうアあイいエえオおナなニにヌぬネねノのマまミみムむメめモもラらリりルるレれロろヤやユゆヨよワわンんヲをッっャゃュゅョょァーィ…ゥ！ェ？ォ"
+
 def incrementAddr(addr):
     addr["l"] += 1
 
@@ -28,7 +30,15 @@ def writeTextFixedBytes(lang, file, rommap, addr, item_count, byte_count):
     with open (fullpath, 'w') as file:
         for i in range(item_count):
             for j in range(byte_count):
-                file.write(rommap[addr["b"]][addr["h"]][addr["l"]])
+                char_index = int.from_bytes(rommap[addr["b"]][addr["h"]][addr["l"]])
+
+                if char_index == 0xff:
+                    file.write("　")
+                else:
+                    offset = 0x20
+                    char = kana[char_index - offset]
+                    file.write(char)
+                
                 incrementAddr(addr)
             
             file.write("\n")
