@@ -11,7 +11,7 @@ DICT_ADDR = "addr"
 DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
 
-kana = "バばビびブぶベべボぼガがギぎグぐゲげゴごザざジじズずゼぜゾぞダだヂぢヅづデでドどヴパぱピぴプぷペぺポぽ０１２３４５６７８９ｍｈｐハはヒひフふヘへホほカかキきクくケけコこサさシしスすセせソそタたチちツつテてトとウうアあイいエえオおナなニにヌぬネねノのマまミみムむメめモもラらリりルるレれロろヤやユゆヨよワわンんヲをッっャゃュゅョょァーィ…ゥ！ェ？ォ"
+dict_char = {}
 
 def incrementAddr(addr):
     addr["l"] += 1
@@ -32,20 +32,34 @@ def writeTextFixedBytes(lang, file, rommap, addr, item_count, byte_count):
             for j in range(byte_count):
                 char_index = int.from_bytes(rommap[addr["b"]][addr["h"]][addr["l"]])
 
-                if char_index < 0xCD:
-                    offset = 0x20
-                    char = kana[char_index - offset]
+                if char_index in dict_char:
+                    char = dict_char[char_index]
                     file.write(char)
+                else:
+                    print(f"Missing char: index {char_index}")
                 
                 incrementAddr(addr)
             
             file.write("\n")
+    
+    print(f"Written down {fullpath}")
 
 def text(rommap, lang, textsFixedBytes):
     for d in textsFixedBytes:
         writeTextFixedBytes(lang, d[DICT_FILE], rommap, d[DICT_ADDR], d[DICT_ITEMS], d[DICT_BYTES])
 
 def textJp(rommap):
+    kana = "バばビびブぶベべボぼガがギぎグぐゲげゴごザざジじズずゼぜゾぞダだヂぢヅづデでドどヴパぱピぴプぷペぺポぽ０１２３４５６７８９ｍｈｐハはヒひフふヘへホほカかキきクくケけコこサさシしスすセせソそタたチちツつテてトとウうアあイいエえオおナなニにヌぬネねノのマまミみムむメめモもラらリりルるレれロろヤやユゆヨよワわンんヲをッっャゃュゅョょァーィ…ゥ！ェ？ォ％／：「」。ＡＢＸＹＬＲＥＨＭＰＳＣＴ←→＋"
+    for i in range(len(kana)):
+        dict_char[0x20 + i] = kana[i]
+    
+    icons = ["[sw]", "[wh]", "[bk]", "[tm]", "[dg]", "[sp]", "[ax]", "[kt]", "[rd]", "[sf]", "[bw]", "[hp]", "[wp]", "[bl]", "[sh]", "[hm]", "[ar]", "[rl]", "Ｕ"]
+    for i in range(len(icons)):
+        dict_char[0xE3 + i] = icons[i]
+
+    dict_char[0xFE] = "　"
+    dict_char[0xFF] = ""
+
     textsFixedBytes = [
         {DICT_FILE: "monster_names", DICT_ADDR: {"b": 0x10, "h": 0x5c, "l": 0}, DICT_ITEMS: 384, DICT_BYTES: 8},
         {DICT_FILE: "monster_specials", DICT_ADDR: {"b": 0x10, "h": 0x87, "l": 0}, DICT_ITEMS: 64, DICT_BYTES: 8},
