@@ -5,7 +5,7 @@ This bank covers Field.
 |From|To|Type|Content|
 |---|---|---|---|
 |$F987|$FA9C|Pointers|Menu Texts|
-|$FA9D|$FE89|Text|Menu Texts (11 items, variable size)|
+|$FA9D|$FE89|Text|Menu Texts (139 items, variable size)|
 |$FEBB|$FEBF||Unused Space|
 |$FEC0|$FFC0|Data|RNG Table ($FF bytes of items)|
 
