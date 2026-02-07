@@ -23,26 +23,33 @@ def writeText(rommap, addr_i, file):
         print(f"Missing char: index {char_index}")
 
 
-def byFixedBytes(lang, filepath, inner_f, rommap, addr, item_count, byte_count):
-    with open (filepath, 'w') as file:
-        for i in range(item_count):
-            for j in range(byte_count):
-                addr_i = addr + i * byte_count + j
-                inner_f(rommap, addr_i, file)
-            
-            file.write("\n")
+def byFixedBytes(lang, file, inner_f, rommap, addr):
+    byte_count = inner_f["byte"]
 
-def writeToFile(lang, file, inner_f, rommap, addr, item_count, byte_count):
-    ext = {writeText: EXT_TXT}[inner_f]
-    fullpath = pathlib.Path(FILE_CAR) / FILE_TXT / lang / (file + ext)
+    for i in range(inner_f["item"]):
+        for j in range(byte_count):
+            addr_i = addr + i * byte_count + j
+            inner_f["def"](rommap, addr_i, file)
+        
+        file.write("\n")
+
+def writeToFile(lang, filename, inner_f, rommap, addr):
+    ext = {writeText: EXT_TXT}[inner_f["def"]]
+    fullpath = pathlib.Path(FILE_CAR) / FILE_TXT / lang / (filename + ext)
     
-    byFixedBytes(lang, fullpath, inner_f, rommap, addr, item_count, byte_count)
+    with open (fullpath, 'w') as file:
+        byFixedBytes(lang, file, inner_f, rommap, addr)
 
     print(f"Written down {fullpath}")
 
 def text(rommap, lang, textsFixedBytes):
     for d in textsFixedBytes:
-        writeToFile(lang, d[DICT_FILE], writeText, rommap, d[DICT_ADDR], d[DICT_ITEMS], d[DICT_BYTES])
+        inner_f = {
+            "def": writeText,
+            "item": d[DICT_ITEMS],
+            "byte": d[DICT_BYTES]
+        }
+        writeToFile(lang, d[DICT_FILE], inner_f, rommap, d[DICT_ADDR])
 
 def textJp(rommap):
     kana = "バばビびブぶベべボぼガがギぎグぐゲげゴごザざジじズずゼぜゾぞダだヂぢヅづデでドどヴパぱピぴプぷペぺポぽ０１２３４５６７８９ｍｈｐハはヒひフふヘへホほカかキきクくケけコこサさシしスすセせソそタたチちツつテてトとウうアあイいエえオおナなニにヌぬネねノのマまミみムむメめモもラらリりルるレれロろヤやユゆヨよワわンんヲをッっャゃュゅョょァーィ…ゥ！ェ？ォ％／：「」。ＡＢＸＹＬＲＥＨＭＰＳＣＴ←→＋"
