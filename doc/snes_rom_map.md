@@ -74,8 +74,7 @@ This range covers the rest of the data. Which module they are to be put into var
 |D0/F1D4|D0/FEBB|Text|Battle Dialogs||
 |D0/FEBC|D0/FFE0||Unused Space||
 |D1/1380|D1/1C7F|Text|Item Names (256 items x 9 bytes)||
-|D1/1C80|D1/1E2F|Text|Magic Names (72 items x 6 bytes)||
-|D1/1E30|D1/1E89|Text|Summon Attacks (15 items x 6 bytes)||
+|D1/1C80|D1/1E89|Text|Magic Names (87 items x 6 bytes)||
 |D1/1E8A|D1/247A|Text|Attack Names (161 items x 9 bytes)||
 |D1/247B|D1/2480||Unused Space||
 |D1/28B6|D1/2975|Text|Status Names (24 items x 8 bytes)||
