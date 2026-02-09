@@ -4,6 +4,13 @@ A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi
 This bank covers Field.
 |From|To|Type|Content|
 |---|---|---|---|
+|$9D9B|$A18A|Data|Map Animation Prop|
+|$CF00|$D23F|Data|Unknown|
+|$D240|$D33F|Data|Unknown|
+|$D340|$D37F|Palette|Window|
+|$D380|$D97F|4bpp|Window|
+|$D980|$D9B7|Pointers|Overlay Prop|
+|$D9B8|$DEFB|Data|Overlay Prop|
 |$F987|$FA9C|Pointers|Menu Texts (139 items)|
 |$FA9D|$FE89|Text|Menu Texts|
 |$FEBB|$FEBF||Unused Space|

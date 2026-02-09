@@ -68,7 +68,6 @@ def byPointers(file, inner_f, rommap, addr):
         checkpoints.append(target_addr)
 
     for c in checkpoints:
-        print(addr, c)
         while addr < c:
             inner_f[DICT_FUNC](inner_f, rommap, addr, file)
             addr += 1
