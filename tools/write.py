@@ -9,6 +9,7 @@ EXT_TXT = ".txt"
 DICT_FILE = "file"
 DICT_ADDR = "addr"
 DICT_PTR = "ptr_addr"
+DICT_PTR_BANK = "ptr_bank"
 DICT_FUNC = "def"
 DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
@@ -21,7 +22,7 @@ def writeText(inner_f, rommap, addr_i, file):
     match inner_f[DICT_RULE]:
         case "pause_s":
             file.write("[PAUSE ")
-            file.write(cur_val)
+            file.write(str(cur_val))
             file.write("s]")
             
             inner_f[DICT_RULE] = ""
@@ -62,10 +63,12 @@ def byPointers(file, inner_f, rommap, addr):
         target_addr = int.from_bytes(rommap[addr_ptr_b])
         target_addr *= 0x100
         target_addr += int.from_bytes(rommap[addr_ptr_a])
+        target_addr += inner_f[DICT_PTR_BANK] * 0x10000
         
         checkpoints.append(target_addr)
 
     for c in checkpoints:
+        print(addr, c)
         while addr < c:
             inner_f[DICT_FUNC](inner_f, rommap, addr, file)
             addr += 1
@@ -95,6 +98,7 @@ def text(rommap, lang, textsPtrs, textsFixedBytes):
         inner_f = {
             DICT_FUNC: writeText,
             DICT_PTR: d[DICT_PTR],
+            DICT_PTR_BANK: d[DICT_PTR_BANK],
             DICT_ITEMS: d[DICT_ITEMS],
             DICT_TEXT: d[DICT_TEXT],
             DICT_RULE: ""
@@ -115,14 +119,14 @@ def textJp(rommap):
     import text_table_sfc as text_table
 
     textsPtrs = [
-        {DICT_FILE: "menu_text", DICT_ADDR: 0xfa9d, DICT_PTR: 0xf987, DICT_ITEMS: 139, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "dialogs", DICT_ADDR: 0xa0000, DICT_PTR: 0x82220, DICT_ITEMS: 2176, DICT_TEXT: text_table.text[0]},
-        {DICT_FILE: "map_titles", DICT_ADDR: 0x107200, DICT_PTR: 0x107000, DICT_ITEMS: 163, DICT_TEXT: text_table.text[0]},
-        {DICT_FILE: "battle_dialogs", DICT_ADDR: 0x10f1d4, DICT_PTR: 0x10f000, DICT_ITEMS: 234, DICT_TEXT: text_table.text[1]},
-        {DICT_FILE: "battle_messages", DICT_ADDR: 0x113ba9, DICT_PTR: 0x1139a9, DICT_ITEMS: 256, DICT_TEXT: text_table.text[1]},
-        {DICT_FILE: "item_descriptions", DICT_ADDR: 0x114100, DICT_PTR: 0x114000, DICT_ITEMS: 256, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "job_descriptions", DICT_ADDR: 0x11724a, DICT_PTR: 0x117140, DICT_ITEMS: 22, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "ability_descriptions", DICT_ADDR: 0x117337, DICT_PTR: 0x11716c, DICT_ITEMS: 111, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "menu_text", DICT_ADDR: 0xfa9d, DICT_PTR: 0xf987, DICT_PTR_BANK: 0, DICT_ITEMS: 139, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "dialogs", DICT_ADDR: 0xa0000, DICT_PTR: 0x82220, DICT_PTR_BANK: 0xa, DICT_ITEMS: 2176, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "map_titles", DICT_ADDR: 0x107200, DICT_PTR: 0x107000, DICT_PTR_BANK: 0x10, DICT_ITEMS: 163, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "battle_dialogs", DICT_ADDR: 0x10f1d4, DICT_PTR: 0x10f000, DICT_PTR_BANK: 0x10, DICT_ITEMS: 234, DICT_TEXT: text_table.text[1]},
+        {DICT_FILE: "battle_messages", DICT_ADDR: 0x113ba9, DICT_PTR: 0x1139a9, DICT_PTR_BANK: 0x11, DICT_ITEMS: 256, DICT_TEXT: text_table.text[1]},
+        {DICT_FILE: "item_descriptions", DICT_ADDR: 0x114100, DICT_PTR: 0x114000, DICT_PTR_BANK: 0x11, DICT_ITEMS: 256, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "job_descriptions", DICT_ADDR: 0x11724a, DICT_PTR: 0x117140, DICT_PTR_BANK: 0x11, DICT_ITEMS: 22, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "ability_descriptions", DICT_ADDR: 0x117337, DICT_PTR: 0x11716c, DICT_PTR_BANK: 0x11, DICT_ITEMS: 111, DICT_TEXT: text_table.text[2]},
     ]
 
     textsFixedBytes = [
