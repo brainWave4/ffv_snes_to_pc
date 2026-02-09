@@ -118,28 +118,28 @@ def textJp(rommap):
     import text_table_sfc as text_table
 
     textsPtrs = [
-        {DICT_FILE: "menu_text", DICT_ADDR: 0xfa9d, DICT_PTR: 0xf987, DICT_PTR_BANK: 0, DICT_ITEMS: 139, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "menu_text", DICT_ADDR: 0xfa9d, DICT_PTR: 0xf987, DICT_PTR_BANK: 0, DICT_ITEMS: 139, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "dialogs", DICT_ADDR: 0xa0000, DICT_PTR: 0x82220, DICT_PTR_BANK: 0xa, DICT_ITEMS: 2176, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "map_titles", DICT_ADDR: 0x107200, DICT_PTR: 0x107000, DICT_PTR_BANK: 0x10, DICT_ITEMS: 163, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "battle_dialogs", DICT_ADDR: 0x10f1d4, DICT_PTR: 0x10f000, DICT_PTR_BANK: 0x10, DICT_ITEMS: 234, DICT_TEXT: text_table.text[1]},
         {DICT_FILE: "battle_messages", DICT_ADDR: 0x113ba9, DICT_PTR: 0x1139a9, DICT_PTR_BANK: 0x11, DICT_ITEMS: 256, DICT_TEXT: text_table.text[1]},
-        {DICT_FILE: "item_descriptions", DICT_ADDR: 0x114100, DICT_PTR: 0x114000, DICT_PTR_BANK: 0x11, DICT_ITEMS: 256, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "job_descriptions", DICT_ADDR: 0x11724a, DICT_PTR: 0x117140, DICT_PTR_BANK: 0x11, DICT_ITEMS: 22, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "ability_descriptions", DICT_ADDR: 0x117337, DICT_PTR: 0x11716c, DICT_PTR_BANK: 0x11, DICT_ITEMS: 111, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "item_descriptions", DICT_ADDR: 0x114100, DICT_PTR: 0x114000, DICT_PTR_BANK: 0x11, DICT_ITEMS: 256, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "job_descriptions", DICT_ADDR: 0x11724a, DICT_PTR: 0x117140, DICT_PTR_BANK: 0x11, DICT_ITEMS: 22, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "ability_descriptions", DICT_ADDR: 0x117337, DICT_PTR: 0x11716c, DICT_PTR_BANK: 0x11, DICT_ITEMS: 111, DICT_TEXT: text_table.text[0]},
     ]
 
     textsFixedBytes = [
-        {DICT_FILE: "monster_names", DICT_ADDR: 0x105c00, DICT_ITEMS: 384, DICT_BYTES: 8, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "monster_names", DICT_ADDR: 0x105c00, DICT_ITEMS: 384, DICT_BYTES: 8, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "monster_specials", DICT_ADDR: 0x108700, DICT_ITEMS: 64, DICT_BYTES: 8, DICT_TEXT: text_table.text[1]},
-        {DICT_FILE: "item_names", DICT_ADDR: 0x111380, DICT_ITEMS: 256, DICT_BYTES: 9, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "magic_names", DICT_ADDR: 0x111c80, DICT_ITEMS: 87, DICT_BYTES: 6, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "item_names", DICT_ADDR: 0x111380, DICT_ITEMS: 256, DICT_BYTES: 9, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "magic_names", DICT_ADDR: 0x111c80, DICT_ITEMS: 87, DICT_BYTES: 6, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "attack_names", DICT_ADDR: 0x111e8a, DICT_ITEMS: 161, DICT_BYTES: 9, DICT_TEXT: text_table.text[1]},
-        {DICT_FILE: "status_names", DICT_ADDR: 0x1128b6, DICT_ITEMS: 24, DICT_BYTES: 8, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "status_names", DICT_ADDR: 0x1128b6, DICT_ITEMS: 24, DICT_BYTES: 8, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "shop_types", DICT_ADDR: 0x112d00, DICT_ITEMS: 8, DICT_BYTES: 8, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "char_names", DICT_ADDR: 0x115500, DICT_ITEMS: 5, DICT_BYTES: 6, DICT_TEXT: text_table.text[0]},
-        {DICT_FILE: "job_names", DICT_ADDR: 0x115600, DICT_ITEMS: 22, DICT_BYTES: 8, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "battle_commands", DICT_ADDR: 0x115800, DICT_ITEMS: 96, DICT_BYTES: 5, DICT_TEXT: text_table.text[2]},
-        {DICT_FILE: "passive_abilities", DICT_ADDR: 0x116200, DICT_ITEMS: 33, DICT_BYTES: 8, DICT_TEXT: text_table.text[2]},
+        {DICT_FILE: "job_names", DICT_ADDR: 0x115600, DICT_ITEMS: 22, DICT_BYTES: 8, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "battle_commands", DICT_ADDR: 0x115800, DICT_ITEMS: 96, DICT_BYTES: 5, DICT_TEXT: text_table.text[0]},
+        {DICT_FILE: "passive_abilities", DICT_ADDR: 0x116200, DICT_ITEMS: 33, DICT_BYTES: 8, DICT_TEXT: text_table.text[0]},
         {DICT_FILE: "special_abilities", DICT_ADDR: 0x115600, DICT_ITEMS: 105, DICT_BYTES: 9, DICT_TEXT: text_table.text[1]}
     ]
 
