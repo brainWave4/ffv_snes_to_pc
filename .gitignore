@@ -1043,6 +1043,7 @@ dkms.conf
 #### Specific to this Project
 # Assets
 *.txt
+*.pal
 
 # ROMs
 *.sfc

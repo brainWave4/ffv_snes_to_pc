@@ -78,7 +78,7 @@ def byPointers(file, inner_f, rommap, addr):
             addr += 1
         file.write("\n")
 
-def byFixedBytes(file, inner_f, rommap, addr):
+def byItemsTimesBytes(file, inner_f, rommap, addr):
     byte_count = inner_f[DICT_BYTES]
 
     for i in range(inner_f[DICT_ITEMS]):
@@ -100,6 +100,17 @@ def writeToFile(filename, file_info, byLoop, inner_f, rommap, addr):
 
     print(f"Written down {fullpath}")
 
+def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, rommap, addr):
+    for i in range(item_count):
+        final_name = filename
+        
+        if i < 0x10:
+            final_name += "0"
+
+        final_name += hex(i)
+        
+        writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
+
 def palette(rommap):
     file_info = {
         "folder": "pal",
@@ -109,7 +120,7 @@ def palette(rommap):
     for d in [
         {DICT_FILE: "window", DICT_ADDR: 0xd340, DICT_ITEMS: 1, DICT_BYTES: 0x40},
         {DICT_FILE: "map", DICT_ADDR: 0x3bb00, DICT_ITEMS: 256, DICT_BYTES: 44},
-        {DICT_FILE: "monster", DICT_ADDR: 0xed0000, DICT_ITEMS: 1, DICT_BYTES: 0x2270},
+        {DICT_FILE: "monster", DICT_ADDR: 0xed000, DICT_ITEMS: 1, DICT_BYTES: 0x2270},
         {DICT_FILE: "world", DICT_ADDR: 0xffcc0, DICT_ITEMS: 256, DICT_BYTES: 3},
         {DICT_FILE: "attack", DICT_ADDR: 0x11a3a0, DICT_ITEMS: 16, DICT_BYTES: 128},
         {DICT_FILE: "battle_char", DICT_ADDR: 0x14a3c0, DICT_ITEMS: 32, DICT_BYTES: 110},
@@ -121,7 +132,11 @@ def palette(rommap):
             DICT_FUNC: writeByte,
             DICT_BYTES: d[DICT_BYTES]
         }
-        writeToFile(d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
+        
+        if d[DICT_ITEMS] > 1:
+            writeFilesTimesItems(d[DICT_ITEMS], d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
+        else:
+            writeToFile(d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
 
 def text(rommap, lang, textsPtrs, textsFixedBytes):
     file_info = {
@@ -148,7 +163,7 @@ def text(rommap, lang, textsPtrs, textsFixedBytes):
             DICT_TEXT: d[DICT_TEXT],
             DICT_RULE: ""
         }
-        writeToFile(d[DICT_FILE], file_info, byFixedBytes, inner_f, rommap, d[DICT_ADDR])
+        writeToFile(d[DICT_FILE], file_info, byItemsTimesBytes, inner_f, rommap, d[DICT_ADDR])
 
 def textJp(rommap):
     import text_table_sfc as text_table
