@@ -1,10 +1,7 @@
 import pathlib
 
 FILE_CAR = "src/assets"
-FILE_TXT = "txt"
 FILE_JP = "jp"
-
-EXT_TXT = ".txt"
 
 DICT_FILE = "file"
 DICT_ADDR = "addr"
@@ -15,6 +12,9 @@ DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
 DICT_TEXT = "text"
 DICT_RULE = "special_rule"
+
+def writeByte(inner_f, rommap, addr_i, file):
+    file.write(rommap[addr_i])
 
 def writeText(inner_f, rommap, addr_i, file):
     cur_val = int.from_bytes(rommap[addr_i])
@@ -53,6 +53,11 @@ def writeText(inner_f, rommap, addr_i, file):
                 char = text_table[cur_val]
                 file.write(char)
 
+def byBytes(file, inner_f, rommap, addr):
+    for i in range(inner_f[DICT_BYTES]):
+        addr_i = addr + i
+        inner_f[DICT_FUNC](inner_f, rommap, addr_i, file)
+
 def byPointers(file, inner_f, rommap, addr):
     checkpoints = []
 
@@ -83,16 +88,39 @@ def byFixedBytes(file, inner_f, rommap, addr):
         
         file.write("\n")
 
-def writeToFile(lang, filename, byLoop, inner_f, rommap, addr):
-    ext = {writeText: EXT_TXT}[inner_f[DICT_FUNC]]
-    fullpath = pathlib.Path(FILE_CAR) / FILE_TXT / lang / (filename + ext)
+def writeToFile(filename, file_info, byLoop, inner_f, rommap, addr):
+    folder = file_info["folder"]
+    ext = file_info["ext"]
+    fullpath = pathlib.Path(FILE_CAR) / folder / (filename + ext)
     
-    with open (fullpath, 'w') as file:
+    writemode = 'w' if inner_f[DICT_FUNC] == writeText else 'wb'
+    
+    with open (fullpath, writemode) as file:
         byLoop(file, inner_f, rommap, addr)
 
     print(f"Written down {fullpath}")
 
+def palette(rommap):
+    file_info = {
+        "folder": "pal",
+        "ext": ".pal"
+    }
+
+    for d in [
+        {DICT_FILE: "map", DICT_ADDR: 0xd340, DICT_BYTES: 40}
+    ]:
+        inner_f = {
+            DICT_FUNC: writeByte,
+            DICT_BYTES: d[DICT_BYTES]
+        }
+        writeToFile(d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
+
 def text(rommap, lang, textsPtrs, textsFixedBytes):
+    file_info = {
+        "folder": "txt/" + lang,
+        "ext": ".txt"
+    }
+
     for d in textsPtrs:
         inner_f = {
             DICT_FUNC: writeText,
@@ -102,7 +130,7 @@ def text(rommap, lang, textsPtrs, textsFixedBytes):
             DICT_TEXT: d[DICT_TEXT],
             DICT_RULE: ""
         }
-        writeToFile(lang, d[DICT_FILE], byPointers, inner_f, rommap, d[DICT_ADDR])
+        writeToFile(d[DICT_FILE], file_info, byPointers, inner_f, rommap, d[DICT_ADDR])
     
     for d in textsFixedBytes:
         inner_f = {
@@ -112,7 +140,7 @@ def text(rommap, lang, textsPtrs, textsFixedBytes):
             DICT_TEXT: d[DICT_TEXT],
             DICT_RULE: ""
         }
-        writeToFile(lang, d[DICT_FILE], byFixedBytes, inner_f, rommap, d[DICT_ADDR])
+        writeToFile(d[DICT_FILE], file_info, byFixedBytes, inner_f, rommap, d[DICT_ADDR])
 
 def textJp(rommap):
     import text_table_sfc as text_table
@@ -146,4 +174,5 @@ def textJp(rommap):
     text(rommap, FILE_JP, textsPtrs, textsFixedBytes)
 
 def everything(rommap):
+    palette(rommap)
     textJp(rommap)
