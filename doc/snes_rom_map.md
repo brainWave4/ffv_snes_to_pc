@@ -11,6 +11,7 @@ This bank covers Field.
 |$D380|$D97F|4bpp|Window|
 |$D980|$D9B7|Pointers|Overlay Prop|
 |$D9B8|$DEFB|Data|Overlay Prop|
+|$DF00|$E4FF|1bpp|Map Overlay|
 |$F987|$FA9C|Pointers|Menu Texts (139 items)|
 |$FA9D|$FE89|Text|Menu Texts|
 |$FEBB|$FEBF||Unused Space|
@@ -42,7 +43,7 @@ This bank covers Cutscenes
 |C3/BA00|C3/BAFF||Unused Space||
 |C3/BB00|C3/E6FF|Data|Map Palettes (44 items x 256 bytes)||
 |C3/E700|C3/EAFF||Unused Space||
-|C3/EB00|C3/FDFF|1bpp|Kana Graphics|Menu|
+|C3/EB00|C3/FDFF|1bpp|Big Fonts|Menu|
 |C3/FE00|C3/FFFF||Unused Space||
 
 # Banks C4 - C6
@@ -73,10 +74,38 @@ This range covers the rest of the data. Which module they are to be put into var
 |---|---|---|---|---|
 |C8/2220|C8/32FF|Pointers|Dialogs (2176 items)||
 |CA/0000|CA/FFF4|Text|Dialogs|Field|
+|CB/0290|CD/F9FE|Data|Sub Tilemaps||
+|CD/FA40|CD/FBA7|Data|Map Palette Animation||
+|CD/FE00|CD/FFFF|4bpp|Timer Font||
+|CE/9C00|CE/CFFF|Data|Map Props (26 items)||
+|CE/D000|CE/F26F|Palette|Monsters||
+|CF/D800|CF/DFFF|4bpp|Minimap||
+|CF/EA00|CF/F0BF|Data|World Tile Props (3*576)||
+|CF/F0C0|CF/F9BF|Data|World Tileset (3*768)||
+|CF/F9C0|CF/FCBF|Data|World Tile Attributes (3*256)||
+|CF/FCC0|CF/FFBF|Palette|World (3*256)||
+|D0/0000|D0/2FFF|Data|Monster Prop||
+|D0/3000|D0/4FFF|Data|Battle Prop||
+|D0/5000|D0/55FF|Data|Monster Item||
+|D0/5600|D0/5BFF|Data|Monster Control||
 |D0/5C00|D0/67FF|Text|Monster Names (384 items x 8 bytes)||
-|D0/7000|D0/7147|Pointers|Map Titles(163 items)||
+|D0/6800|D0/6FFF|Data|Random Battle Group||
+|D0/7000|D0/7147|Pointers|Map Titles (163 items)||
 |D0/7200|D0/7667|Text|Map Titles||
+|D0/7800|D0/79FF|Data|Event Battle Group||
+|D0/7A00|D0/7FFF|Data|World Battle Group||
+|D0/8000|D0/83FF|Data|Sub Battle Group||
+|D0/8400|D0/84BF|Data|World Battle Rate||
+|D0/84C0|D0/853F|Data|Sub Battle Rate||
+|D0/8600|D0/86FF|Data|Monster Release||
 |D0/8700|D0/88FF|Text|Monster Special Attack Names (64 items x 8 bytes)||
+|D0/8900|D0/98FF|Data|Monster Positions||
+|D0/9900|D0/9BFF|Data|Monster Special Prop||
+|D0/D004|D0/D333|Data|Monster Stencil Small||
+|D0/D334|D0/DBD3|Data|Monster Stencil Large||
+|D0/E003|D0/E162|Data|Misc Battle||
+|D0/E220|D0/E31F|Data|Unknown||
+|D0/E4CB|D0/EBE4|4bpp|"The End"||
 |D0/F000|D0/F1D3|Pointers|Battle Dialogs (234 items)||
 |D0/F1D4|D0/FEBB|Text|Battle Dialogs||
 |D0/FEBC|D0/FFE0||Unused Space||
