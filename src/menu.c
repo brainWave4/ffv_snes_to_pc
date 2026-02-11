@@ -1,6 +1,7 @@
 // Bank Range: C2/A000 - C2/FFFF, D0
-
 #include <stdint.h>
+
+#include "menu.h"
 
 // for subroute _c10009
 #include "btlgfx.h"
@@ -8,9 +9,6 @@
 // for ExecSound_ext
 #include "sound.h"
 
-void func_a00a(void);
-void func_a00f(void);
-void execMenu(void);
 static void mainMenu(void);
 static void collectItemsAfterBattle(void);
 static void shop(void);

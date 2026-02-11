@@ -1,6 +1,7 @@
 // Bank Range: C2/0000 - C2/9FFF
-
 #include <stdint.h>
+
+#include "battle.h"
 
 // for ExecBtlGfx_ext
 #include "btlgfx.h"
@@ -11,7 +12,6 @@
 // TO: import RNGTbl (from field), AttackMessageTbl
 
 // FUNCTION DECLARATIONS
-void execBattle(void);
 static void setupRegisters(void);
 static uint8_t getRandBetween(uint8_t min, uint8_t max);
 static void wipeDisplayStructures(void);

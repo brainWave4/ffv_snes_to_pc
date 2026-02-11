@@ -1,10 +1,8 @@
 // Bank Range: C3
+#include "cutscene.h"
 
 // for ExecSound_ext
 #include "sound.h"
-
-void showCutscene(uint8_t id);
-void decomp(void);
 
 // Address: 000f
 // A: cutscene id

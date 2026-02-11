@@ -1,4 +1,5 @@
 // Bank Range: C0
+#include "field.h"
 
 //.import _c10003, _c10006
 #include "btlgfx.h"
@@ -15,7 +16,6 @@
 //.import InitSound_ext, ExecSound_ext
 #include "sound.h"
 
-void start(void);
 static void fieldLoop(void);
 static void showCutsceneFromField(uint8_t id);
 static void func_c044e3(void);

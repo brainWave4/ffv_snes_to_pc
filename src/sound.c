@@ -1,7 +1,5 @@
 // Bank Range: C4
-
-void initSound(void);
-void execSound(void);
+#include "sound.h"
 
 // Initiate Sound
 void initSound(void) {
