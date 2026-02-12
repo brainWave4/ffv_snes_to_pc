@@ -5,6 +5,7 @@ FILE_JP = "jp"
 
 DICT_FILE = "file"
 DICT_ADDR = "addr"
+DICT_END = "addr_end"
 DICT_PTR = "ptr_addr"
 DICT_PTR_BANK = "ptr_bank"
 DICT_FUNC = "def"
@@ -52,6 +53,12 @@ def writeText(inner_f, rommap, addr_i, file):
             else:
                 char = text_table[cur_val]
                 file.write(char)
+
+def byAddrRange(file, inner_f, rommap, addr):
+    while addr < inner_f[DICT_END]:
+        inner_f[DICT_FUNC](inner_f, rommap, addr, file)
+        
+        addr += 1
 
 def byBytes(file, inner_f, rommap, addr):
     for i in range(inner_f[DICT_BYTES]):
@@ -110,6 +117,22 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
         final_name += hex(i)
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
+
+def binaryData(rommap):
+    file_info = {
+        "folder": "data",
+        "ext": ".bin"
+    }
+
+    for d in [
+        {DICT_FILE: "map_anim", DICT_ADDR: 0x9d9b, DICT_END: 0xa18b}
+    ]:
+        inner_f = {
+            DICT_FUNC: writeByte,
+            DICT_END: d[DICT_END]
+        }
+
+        writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
 
 def palette(rommap):
     file_info = {
@@ -197,5 +220,6 @@ def textJp(rommap):
     text(rommap, FILE_JP, textsPtrs, textsFixedBytes)
 
 def everything(rommap):
+    binaryData(rommap)
     palette(rommap)
     textJp(rommap)
