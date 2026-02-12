@@ -4,13 +4,13 @@ A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi
 This bank covers Field.
 |From|To|Type|Content|
 |---|---|---|---|
-|$9D9B|$A18A|Data|Map Animation Prop|
+|$9D9B|$A18A|Data|Map Animation Properties|
 |$CF00|$D23F|Data|Unknown|
 |$D240|$D33F|Data|Unknown|
 |$D340|$D37F|Palette|Window|
 |$D380|$D97F|4bpp|Window|
-|$D980|$D9B7|Pointers|Overlay Prop|
-|$D9B8|$DEFB|Data|Overlay Prop|
+|$D980|$D9B7|Pointers|Overlay Properties|
+|$D9B8|$DEFB|Data|Overlay Properties|
 |$DF00|$E4FF|1bpp|Map Overlay|
 |$F987|$FA9C|Pointers|Menu Texts (139 items)|
 |$FA9D|$FE89|Text|Menu Texts|
@@ -37,6 +37,8 @@ This bank covers 2 sections: One for battling, and another for menus. They are t
 This bank covers Cutscenes
 |From|To|Type|Content|Module|
 |---|---|---|---|---|
+|C3/0200|C3/7E4C|Data|Unknown||
+|C3/7E4D|C3/A06E|Data|Cutscene Code||
 |C3/A300|C3/B949|Data|Menu Tilemap & Cursor Data|Menu|
 |C3/B94A|C3/B95F||Unused Space||
 |C3/B960|C3/E9FF|Data|Menu Palettes|Menu|
@@ -77,15 +79,15 @@ This range covers the rest of the data. Which module they are to be put into var
 |CB/0290|CD/F9FE|Data|Sub Tilemaps||
 |CD/FA40|CD/FBA7|Data|Map Palette Animation||
 |CD/FE00|CD/FFFF|4bpp|Timer Font||
-|CE/9C00|CE/CFFF|Data|Map Props (26 items)||
+|CE/9C00|CE/CFFF|Data|Map Propertiess (26 items)||
 |CE/D000|CE/F26F|Palette|Monsters||
 |CF/D800|CF/DFFF|4bpp|Minimap||
-|CF/EA00|CF/F0BF|Data|World Tile Props (3*576)||
+|CF/EA00|CF/F0BF|Data|World Tile Propertiess (3*576)||
 |CF/F0C0|CF/F9BF|Data|World Tileset (3*768)||
 |CF/F9C0|CF/FCBF|Data|World Tile Attributes (3*256)||
 |CF/FCC0|CF/FFBF|Palette|World (3*256)||
-|D0/0000|D0/2FFF|Data|Monster Prop||
-|D0/3000|D0/4FFF|Data|Battle Prop||
+|D0/0000|D0/2FFF|Data|Monster Properties||
+|D0/3000|D0/4FFF|Data|Battle Properties||
 |D0/5000|D0/55FF|Data|Monster Item||
 |D0/5600|D0/5BFF|Data|Monster Control||
 |D0/5C00|D0/67FF|Text|Monster Names (384 items x 8 bytes)||
@@ -100,7 +102,8 @@ This range covers the rest of the data. Which module they are to be put into var
 |D0/8600|D0/86FF|Data|Monster Release||
 |D0/8700|D0/88FF|Text|Monster Special Attack Names (64 items x 8 bytes)||
 |D0/8900|D0/98FF|Data|Monster Positions||
-|D0/9900|D0/9BFF|Data|Monster Special Prop||
+|D0/9900|D0/9BFF|Data|Monster Special Properties||
+|D0/C800|D0/CFD8|Data|Song Script 41||
 |D0/D004|D0/D333|Data|Monster Stencil Small||
 |D0/D334|D0/DBD3|Data|Monster Stencil Large||
 |D0/E003|D0/E162|Data|Misc Battle||
@@ -109,12 +112,21 @@ This range covers the rest of the data. Which module they are to be put into var
 |D0/F000|D0/F1D3|Pointers|Battle Dialogs (234 items)||
 |D0/F1D4|D0/FEBB|Text|Battle Dialogs||
 |D0/FEBC|D0/FFE0||Unused Space||
+|D1/0000|D1/05FF|Data|Weapon Properties||
+|D1/0600|D1/0A7F|Data|Armor Properties||
+|D1/0A80|D1/0B7F|Data|Item Properties||
+|D1/0B80|D1/137F|Data|Attack Properties||
 |D1/1380|D1/1C7F|Text|Item Names (256 items x 9 bytes)||
 |D1/1C80|D1/1E89|Text|Magic Names (87 items x 6 bytes)||
 |D1/1E8A|D1/247A|Text|Attack Names (161 items x 9 bytes)||
-|D1/247B|D1/2480||Unused Space||
+|D1/247B|D1/247F||Unused Space||
+|D1/2480|D1/257F|Data|Eqipment Types||
+|D1/2580|D1/26BF|Data|Armor Element||
+|D1/26C0|D1/287F|Data|Armor Status||
 |D1/28B6|D1/2975|Text|Status Names (24 items x 8 bytes)||
 |D1/2D00|D1/2D3F|Text|Shop Type Names (8 items x 8 bytes)||
+|D1/3000|D1/320F|Data|Map Tresures||
+|D1/3210|D1/35FF|Data|Treasure Properties||
 |D1/39A9|D1/3BA8|Pointers|Battle Messages (256 items)||
 |D1/3BA9|D1/3F0D|Text|Battle Messages||
 |D1/3F0E|D1/3FFF||Unused Space||
@@ -133,8 +145,18 @@ This range covers the rest of the data. Which module they are to be put into var
 |D1/6452|D1/66FF||Unused Space||
 |D1/6700|D1/6AB0|Text|Special Ability Names (105 items x 9 bytes)||
 |D1/6F89|D1/6FFF||Unused Space||
+|D1/7000|D1/713F|Data|Char Prop||
 |D1/7140|D1/716B|Pointers|Job Descriptions (22 items)||
 |D1/724A|D1/7336|Text|Job Descriptions||
 |D1/716C|D1/7249|Pointers|Ability Descriptions (111 items)||
 |D1/7337|D1/77B9|Text|Ability Descriptions||
-|D1/77BA|D1/7F9F||Unused Space||
+|D1/77BA|D1/7F9F|Scr|Unused Space||
+|D1/7F00|D1/979F|Scr|Graphic Attacks||
+|D1/97A0|D1/9B9F|Scr|Weapons||
+|D1/9BA0|D1/A39F|Scr|Weapon Hit||
+|D1/A3A0|D1/AB9F|Palette|Attacks||
+|D1/ABA0|D1/BDFF|4bpp|Animals||
+|D1/BE00|D1/BFFF|Scr|Animals||
+|D1/C000|D1/D7FF|3bpp|Weapons||
+|D1/D800|D1/EFFF|3bpp|Weapon Hit||
+|D1/F000|D1/FFFF|3bpp|Small Font||
