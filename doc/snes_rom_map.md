@@ -154,9 +154,37 @@ This range covers the rest of the data. Which module they are to be put into var
 |D1/7F00|D1/979F|Scr|Graphic Attacks||
 |D1/97A0|D1/9B9F|Scr|Weapons||
 |D1/9BA0|D1/A39F|Scr|Weapon Hit||
-|D1/A3A0|D1/AB9F|Palette|Attacks||
+|D1/A3A0|D1/AB9F|Palette|Attacks (32 items)||
 |D1/ABA0|D1/BDFF|4bpp|Animals||
 |D1/BE00|D1/BFFF|Scr|Animals||
 |D1/C000|D1/D7FF|3bpp|Weapons||
 |D1/D800|D1/EFFF|3bpp|Weapon Hit||
-|D1/F000|D1/FFFF|3bpp|Small Font||
+|D1/F000|D1/FFFF|2bpp|Small Fonts||
+|D2/0000|D4/93FF|4bpp|Battle Characters (1536 items)||
+|D4/9400|D4/97BF|4bpp|Dead Characters (192 items)||
+|D4/97C0|D4/A3BF|3bpp|Battle Sprites||
+|D4/A3C0|D4/B17F|Palette|Battle Characters (32 items)||
+|D4/BA21|D4/BB30|Data|Battle Backgrounds Properties||
+|D4/BB31|D4/C5B0|Palettes|Battle Backgrounds (32 items)||
+|D4/C736|D4/C747|Pointers|Battle Background Flip||
+|D4/C748|D4/C86C|Data|Battle Background Flip||
+|D4/C86D|D4/C8A4|Pointers|Battle Background Tiles||
+|D4/C8A5|D4/EFF0|Scr|Battle Background Tiles||
+|D4/F000|D4/FE7D|Data|Sample BRR 33||
+|D5/0000|D8/2FFF|Data|Monster Graphics||
+|D8/41D5|D8/DE35|4bpp|Battle Backgrounds||
+|D8/E000|D8/E07F|Data|Init NPC Switch||
+|D9/0000|D9/7C4F|3bpp|Attacks||
+|D9/9655|D9/9854|Palette|Attack Target||
+|DA/0000|DB/39FF|4bpp|Map||
+|DB/3A00|DB/4D7F|3bpp|Vehicle||
+|DB/4D80|DB/7FFF|4bpp|World||
+|DB/8000|DB/CFFF|4bpp|World Graphics||
+|DB/D000|DB/F7FF|1bpp|Kanji||
+|DB/F800|DB/FFA2|Data|Sample BRR 2F||
+|DC/0000|DC/0021|Pointers|Map Bg3 Gfx||
+|DC/0024|DC/2D83|2bpp|Map Bg3 Gfx||
+|DC/2D84|DC/2E1F|Pointers|Map Gfx||
+|DC/2E24|DF/99E3|4bpp|Map Gfx||
+|DF/9B00|DF/FBFF|4bpp|Map Animations||
+|DF/FC00|DF/FFFF|Palette|Map Sprites||
