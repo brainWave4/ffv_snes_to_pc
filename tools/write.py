@@ -125,7 +125,39 @@ def binaryData(rommap):
     }
 
     for d in [
-        {DICT_FILE: "map_anim", DICT_ADDR: 0x9d9b, DICT_END: 0xa18b}
+        {DICT_FILE: "map_anim_props", DICT_ADDR: 0x9d9b, DICT_END: 0xa18b},
+        {DICT_FILE: "unknown_c0cf00", DICT_ADDR: 0xcf00, DICT_END: 0xd240},
+        {DICT_FILE: "unknown_c0d240", DICT_ADDR: 0xd240, DICT_END: 0xd340},
+        {DICT_FILE: "unknown_c32000", DICT_ADDR: 0x32000, DICT_END: 0x37e4d},
+        {DICT_FILE: "cutscene_code", DICT_ADDR: 0x37e4d, DICT_END: 0x3a06f},
+        {DICT_FILE: "sub_tilemaps", DICT_ADDR: 0xb0290, DICT_END: 0xdf9ff},
+        {DICT_FILE: "map_pal_anim", DICT_ADDR: 0xdfa40, DICT_END: 0xdfb48},
+        {DICT_FILE: "map_props", DICT_ADDR: 0xe9c00, DICT_END: 0xed000},
+        {DICT_FILE: "world_tile_props", DICT_ADDR: 0xfea00, DICT_END: 0xff0c0},
+        {DICT_FILE: "world_tilesets", DICT_ADDR: 0xff0c0, DICT_END: 0xff9c0},
+        {DICT_FILE: "world_tile_attr", DICT_ADDR: 0xff9c0, DICT_END: 0xffcc0},
+        {DICT_FILE: "monster_props", DICT_ADDR: 0x100000, DICT_END: 0x103000},
+        {DICT_FILE: "battle_props", DICT_ADDR: 0x103000, DICT_END: 0x105000},
+        {DICT_FILE: "monster_items", DICT_ADDR: 0x105000, DICT_END: 0x105600},
+        {DICT_FILE: "monster_control", DICT_ADDR: 0x105600, DICT_END: 0x105c00},
+        {DICT_FILE: "battle_groups_random", DICT_ADDR: 0x106800, DICT_END: 0x107000},
+        {DICT_FILE: "battle_groups_events", DICT_ADDR: 0x107800, DICT_END: 0x107a00},
+        {DICT_FILE: "battle_groups_world", DICT_ADDR: 0x107a00, DICT_END: 0x108000},
+        {DICT_FILE: "battle_groups_sub", DICT_ADDR: 0x108000, DICT_END: 0x108400},
+        {DICT_FILE: "battle_rates_world", DICT_ADDR: 0x108400, DICT_END: 0x1084c0},
+        {DICT_FILE: "battle_rates_sub", DICT_ADDR: 0x108400, DICT_END: 0x108600},
+        {DICT_FILE: "monster_release", DICT_ADDR: 0x108600, DICT_END: 0x108700},
+        {DICT_FILE: "monster_pos", DICT_ADDR: 0x108900, DICT_END: 0x109900},
+        {DICT_FILE: "monster_special_props", DICT_ADDR: 0x109900, DICT_END: 0x109c00},
+        {DICT_FILE: "monster_stencil_small", DICT_ADDR: 0x100004, DICT_END: 0x10d334},
+        {DICT_FILE: "monster_stencil_large", DICT_ADDR: 0x10d334, DICT_END: 0x10dbd4},
+        {DICT_FILE: "misc_battle", DICT_ADDR: 0x10e003, DICT_END: 0x10e163},
+        {DICT_FILE: "unknown_d0e220", DICT_ADDR: 0x10e220, DICT_END: 0x10e320},
+        {DICT_FILE: "battle_bg_props", DICT_ADDR: 0x14ba21, DICT_END: 0x14bb31},
+        {DICT_FILE: "sample_brr_33", DICT_ADDR: 0x14f000, DICT_END: 0x14fe7e},
+        {DICT_FILE: "monster_graphics", DICT_ADDR: 0x150000, DICT_END: 0x183000},
+        {DICT_FILE: "init_npc_switch", DICT_ADDR: 0x18e000, DICT_END: 0x18e080},
+        {DICT_FILE: "sample_brr_2f", DICT_ADDR: 0x1bf800, DICT_END: 0x1bffa3}
     ]:
         inner_f = {
             DICT_FUNC: writeByte,
