@@ -128,6 +128,7 @@ def binaryData(rommap):
         {DICT_FILE: "map_anim_props", DICT_ADDR: 0x9d9b, DICT_END: 0xa18b},
         {DICT_FILE: "unknown_c0cf00", DICT_ADDR: 0xcf00, DICT_END: 0xd240},
         {DICT_FILE: "unknown_c0d240", DICT_ADDR: 0xd240, DICT_END: 0xd340},
+        {DICT_FILE: "rng_table", DICT_ADDR: 0xfec0, DICT_END: 0xffc0},
         {DICT_FILE: "unknown_c32000", DICT_ADDR: 0x32000, DICT_END: 0x37e4d},
         {DICT_FILE: "cutscene_code", DICT_ADDR: 0x37e4d, DICT_END: 0x3a06f},
         {DICT_FILE: "sub_tilemaps", DICT_ADDR: 0xb0290, DICT_END: 0xdf9ff},
