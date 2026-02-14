@@ -199,9 +199,18 @@ def palette(rommap):
         {DICT_FILE: "attack_target", DICT_ADDR: 0x199655, DICT_ITEMS: 1, DICT_BYTES: 0x1f0},
         {DICT_FILE: "map_sprites", DICT_ADDR: 0x1ffc00, DICT_ITEMS: 32, DICT_BYTES: 32}
     ]:
+        
+        header = b"RIFF"
+        header += (DICT_BYTES + 16).toBytes(4, 'little')
+        header += b"PAL "
+        header += b"data"
+        header += DICT_BYTES.toBytes(4, 'little')
+        header += b'\x00\x03\x00\x01'
+
         inner_f = {
             DICT_FUNC: writeByte,
-            DICT_BYTES: d[DICT_BYTES]
+            DICT_BYTES: d[DICT_BYTES],
+            DICT_HEADER: header
         }
         
         if d[DICT_ITEMS] > 1:
