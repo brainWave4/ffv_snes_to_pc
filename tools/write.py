@@ -110,11 +110,8 @@ def writeToFile(filename, file_info, byLoop, inner_f, rommap, addr):
 def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, rommap, addr):
     for i in range(item_count):
         final_name = filename
-        
-        if i < 0x10:
-            final_name += "0"
 
-        final_name += hex(i)
+        final_name += f"{item_count:03d}"
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
 
