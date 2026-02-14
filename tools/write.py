@@ -201,10 +201,10 @@ def palette(rommap):
     ]:
         
         header = b"RIFF"
-        header += (DICT_BYTES + 16).toBytes(4, 'little')
+        header += (d[DICT_BYTES] + 16).to_bytes(4, 'little')
         header += b"PAL "
         header += b"data"
-        header += DICT_BYTES.toBytes(4, 'little')
+        header += d[DICT_BYTES].to_bytes(4, 'little')
         header += b'\x00\x03\x00\x01'
 
         inner_f = {
