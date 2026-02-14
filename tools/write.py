@@ -6,6 +6,7 @@ FILE_JP = "jp"
 DICT_FILE = "file"
 DICT_ADDR = "addr"
 DICT_END = "addr_end"
+DICT_HEADER = "bin_header"
 DICT_PTR = "ptr_addr"
 DICT_PTR_BANK = "ptr_bank"
 DICT_FUNC = "def"
@@ -103,6 +104,9 @@ def writeToFile(filename, file_info, byLoop, inner_f, rommap, addr):
     writemode = 'w' if inner_f[DICT_FUNC] == writeText else 'wb'
     
     with open (fullpath, writemode) as file:
+        if DICT_HEADER in inner_f:
+            file.write(inner_f[DICT_HEADER])
+
         byLoop(file, inner_f, rommap, addr)
 
     print(f"Written down {fullpath}")
