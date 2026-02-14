@@ -167,6 +167,20 @@ def binaryData(rommap):
 
         writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
 
+def textures(rommap):
+    file_info = {
+        "folder": "pal",
+        "ext": ".1bpp"
+    }
+
+    for d in [
+        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_END: 0xe500}
+    ]:
+        inner_f = {
+            DICT_FUNC: writeByte
+        }
+        writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
+
 def palette(rommap):
     file_info = {
         "folder": "pal",
