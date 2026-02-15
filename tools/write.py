@@ -9,6 +9,9 @@ DICT_END = "addr_end"
 DICT_HEADER = "bin_header"
 DICT_PTR = "ptr_addr"
 DICT_PTR_BANK = "ptr_bank"
+DICT_DEPTH = "texture_depth"
+DICT_WIDTH = "texture_width"
+DICT_HEIGHT = "texture_height"
 DICT_FUNC = "def"
 DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
@@ -175,12 +178,39 @@ def textures(rommap):
     }
 
     for d in [
-        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_END: 0xe500}
+        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_WIDTH: 128, DICT_HEIGHT: 10}
     ]:
+        d[DICT_BYTES] = d[DICT_WIDTH] * d[DICT_HEIGHT] / d[DICT_DEPTH]
+        
+        file_size = data_size + 14 + 8
+        
+        # BMP File Header
+        header = b'BM'
+        header += file_size.to_bytes(4, 'little')
+        header += (54 + 8).to_bytes(8, 'big')
+
+        # DIB Header
+        header += 40.to_bytes(4, 'little')
+        header += d[DICT_WIDTH].to_bytes(4, 'little')
+        header += d[DICT_HEIGHT].to_bytes(4, 'little')
+        header += b'\x01\x00'
+        header += d[DICT_DEPTH].to_bytes(2, 'little')
+        header += b'\x00\x00\x00\x00'
+        header += b'\x00\x00\x00\x00'
+        header += b'\x00\x00\x00\x00'
+        header += b'\x00\x00\x00\x00'
+        header += b'\x02\x00\x00\x00'
+        header += b'\x00\x00\x00\x00'
+
+        # Base Palette
+        header += b'\x00\x00\x00\x00'
+        header += b'\xff\xff\xff\x00'
+
         inner_f = {
-            DICT_FUNC: writeByte
+            DICT_FUNC: writeByte,
+            DICT_HEADER: header
         }
-        writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
+        writeToFile(d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
 
 def palette(rommap):
     file_info = {
