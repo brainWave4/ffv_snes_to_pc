@@ -190,7 +190,7 @@ def textures(rommap):
         header += (54 + 8).to_bytes(8, 'big')
 
         # DIB Header
-        header += 40.to_bytes(4, 'little')
+        header += (40).to_bytes(4, 'little')
         header += d[DICT_WIDTH].to_bytes(4, 'little')
         header += d[DICT_HEIGHT].to_bytes(4, 'little')
         header += b'\x01\x00'
