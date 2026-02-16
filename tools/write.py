@@ -173,14 +173,15 @@ def binaryData(rommap):
 
 def texture(rommap):
     file_info = {
-        "folder": "pal",
+        "folder": "textures",
         "ext": ".1bpp"
     }
 
     for d in [
-        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_WIDTH: 128, DICT_HEIGHT: 10}
+        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_WIDTH: 128, DICT_HEIGHT: 10},
+        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_WIDTH: 8, DICT_HEIGHT: 608}
     ]:
-        d[DICT_BYTES] = int(d[DICT_WIDTH] * d[DICT_HEIGHT] / d[DICT_DEPTH])
+        d[DICT_BYTES] = d[DICT_WIDTH] * d[DICT_DEPTH] * d[DICT_HEIGHT]
         
         file_size = d[DICT_BYTES] + 14 + 8
         
