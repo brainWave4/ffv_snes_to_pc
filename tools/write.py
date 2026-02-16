@@ -171,7 +171,7 @@ def binaryData(rommap):
 
         writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
 
-def textures(rommap):
+def texture(rommap):
     file_info = {
         "folder": "pal",
         "ext": ".1bpp"
@@ -180,9 +180,9 @@ def textures(rommap):
     for d in [
         {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_WIDTH: 128, DICT_HEIGHT: 10}
     ]:
-        d[DICT_BYTES] = d[DICT_WIDTH] * d[DICT_HEIGHT] / d[DICT_DEPTH]
+        d[DICT_BYTES] = int(d[DICT_WIDTH] * d[DICT_HEIGHT] / d[DICT_DEPTH])
         
-        file_size = data_size + 14 + 8
+        file_size = d[DICT_BYTES] + 14 + 8
         
         # BMP File Header
         header = b'BM'
@@ -208,7 +208,8 @@ def textures(rommap):
 
         inner_f = {
             DICT_FUNC: writeByte,
-            DICT_HEADER: header
+            DICT_HEADER: header,
+            DICT_BYTES: d[DICT_BYTES]
         }
         writeToFile(d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
 
@@ -300,5 +301,6 @@ def textJp(rommap):
 
 def everything(rommap):
     binaryData(rommap)
+    texture(rommap)
     palette(rommap)
     textJp(rommap)

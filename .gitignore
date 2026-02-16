@@ -1042,8 +1042,12 @@ dkms.conf
 
 #### Specific to this Project
 # Assets
-*.txt
+*.1bpp
+*.2bpp
+*.4bpp
+*.8bpp
 *.pal
+*.txt
 
 # ROMs
 *.sfc
