@@ -3,6 +3,7 @@ These are the bugs and glitches to take into account during the re-implementatio
 # SNES
 
 ## Agility bug
+Agility is used in damage calculations for some weapons, but not all are correctly implemented.
 
 ## Vehicle Landing oversights
 Landing on certain spots prevents the player from boarding the vehicle again.
@@ -24,8 +25,6 @@ Fixed by the PS release.
 
 ## Bypass event glitch
 
-## Catch bug
-
 ## Control glitch
 
 ## Damage Overflow
@@ -37,6 +36,7 @@ Fixed by the PS release.
 ## Equipment bugs
 
 ## Faris in Tule glitch
+When Faris is the player avatar and she temporary leaves in Tule, the avatar does not change accordingly.
 
 ## Graphical bug
 
@@ -51,6 +51,15 @@ Fixed by the PS release.
 ## Mix and Dualcast Glitch
 
 ## Power Drink bug
+
+## Release > Banish bug
+Some monsters, when releases, does no effect in battle.
+
+Affected monsters:
+* Moss Fungus
+* Gel Fish
+
+These monsters appear to use Banish as a special enemy ability and not a Time Magic. This makes them target the caster, rather than a random enemy.
 
 ## Resize bug
 
