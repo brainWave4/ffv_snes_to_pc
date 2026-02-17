@@ -4,13 +4,23 @@ These are the bugs and glitches to take into account during the re-implementatio
 
 ## Agility bug
 
-## Airship Hiryuu glitch
+## Vehicle Landing oversights
+Landing on certain spots prevents the player from boarding the vehicle again.
+
+Vehicles and Spots:
+* Black Chocobo and the middle of the small grove surrounding the Guardian Tree (merged world).
+* Airship/Hiryuu and merged world's entrance to Ghido's Cave
+
+Fixed by the PS release, by making those sport unlandable.
 
 ## Ancient Library glitch
 
-## Berserker and Fleeing glitch
+## Berserker and Fleeing glitches
+List:
+1. A full party of Berserkers cannot Run from battle.
+2. If one of them attacks with a Chicken Knife and its effect activates, subsequent attacks will fail to deal damage.
 
-## Black Chocobo glitch
+Fixed by the PS release.
 
 ## Bypass event glitch
 
