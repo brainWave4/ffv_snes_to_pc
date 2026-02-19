@@ -147,6 +147,13 @@ static void aiCondition08(void);
 static void aiCondition09(void);
 static void aiCondition0A(void);
 static void aiCondition0B(void);
+static void aiCondition0C(void);
+static void aiCondition0D(void);
+static void aiCondition0E(void);
+static void aiCondition0F(void);
+static void aiCondition10(void);
+static void aiCondition11(void);
+static void aiCondition12(void);
 
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
@@ -6017,3 +6024,24 @@ static void aiCondition0B(void) {
 //         stz AIConditionMet
 // Ret:	rts
 }
+
+// Address: _2B19
+static void aiCondition0C(void) {}
+
+// Address: _2B2A
+static void aiCondition0D(void) {}
+
+// Address: _2B6F
+static void aiCondition0E(void) {}
+
+// Address: _2B87
+static void aiCondition0F(void) {}
+
+// Address: _2B93
+static void aiCondition10(void) {}
+
+// Address: _2BC0
+static void aiCondition11(void) {}
+
+// Address: _2BFD
+static void aiCondition12(void) {}
