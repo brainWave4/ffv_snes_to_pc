@@ -9,7 +9,7 @@
 // for ExecSound_ext
 #include "sound.h"
 
-// TO: import RNGTbl (from field), AttackMessageTbl
+// TODO: import RNGTbl (from field), AttackMessageTbl
 
 // FUNCTION DECLARATIONS
 static void setupRegisters(void);
@@ -134,7 +134,7 @@ static uint8_t dur180mod(void);
 static uint8_t dur110mod(void);
 static void monsterAtb(void);
 
-static void CheckAICondition(void);
+static void checkAICondition(void);
 static void aiCondition00(void);
 static void aiCondition01(void);
 static void aiCondition02(void);
@@ -5500,51 +5500,49 @@ static void monsterAtb(void) {
 //         rts
 }
 
-static void CheckAICondition(void) {
-//     cmp #$13	;$12 is last valid condition
-//         bcc :+
-//         tdc 		;always succeed	(if invalid)
-// :	sta $0E		;condition to check
-//         asl
-//         tax
-//         lda f:AICondition,X
-//         sta $08
-//         lda f:AICondition+1,X
-//         sta $09
-//         lda #$C2    ;.b #bank(AICondition)
-//         sta $0A
-//         iny
-//         lda (AIOffset),Y
-//         sta AIParam1
-//         iny
-//         lda (AIOffset),Y
-//         sta AIParam2
-//         iny
-//         lda (AIOffset),Y
-//         sta AIParam3
-//         stz AIConditionMet
-//         lda AISkipDeadCheck
-//         bne Jump
-//         ldx AttackerOffset
-//         lda CharStruct::CurHP,X
-//         ora CharStruct::CurHP+1,X
-//         beq Dead
-//         lda CharStruct::Status1,X
-//         and #$C0	;dead or stone
-//         beq NotDead
-// Dead:
-//         lda $0E
-//         cmp #$0F	;condition: dead
-//         beq Jump
-//         rts
+static void checkAICondition(void) {
+//  CoMPare A with #$13         ($12 is last valid condition)
+//  Branch to next label if Carry Clear
+//  Transfer DireCt page to A   (always succeed	if invalid)
+//  [LBL] STore A to $0E		(condition to check)
+//  Accumulator Shift Left
+//  Transfer A to X
+//  LoaD f:AICondition,X to A
+//  STore A to $08
+//  LoaD f:AICondition+1,X to A
+//  Store A to $09
+//  LoaD #$C2 to A
+//  STore A to $0A
+//  Increment Y
+//  LoaD (AIOffset),Y to A
+//  STore A to AIParam1
+//  Increment Y
+//  LoaD (AIOffset),Y to A
+//  STore A to AIParam2
+//  Increment Y
+//  LoaD (AIOffset),Y to A
+//  STore A to AIParam3
+//  STore Zero to AIConditionMet
+//  LoaD AISkipDeadCheck to A
+//  Branch to [Jump] if Not Equal
+//  LoaD AttackerOffset to X
+//  LoaD CharStruct::CurHP,X to A
+//  OR A with CharStruct::CurHP+1,X
+//  Branch to [Dead] if EQuals
+//  LoaD CharStruct::Status1,X to A
+//  AND A with #$C0     (dead or stone)
+//  Branch to [NotDead] if EQuals
+//  [Dead] LoaD $0E to A
+//  Compare A with #$0F (condition: dead)
+//  Branch to [Jump] if EQuals
+//  Return To Subroutine
 
-// NotDead:
-//         lda $0E
-//         cmp #$0F	;auto-fail condition: dead if not dead
-//         bne Jump
-//         rts
+//  [NotDead] LoaD $0E to A
+//  CoMPare A with #$0F (auto-fail condition: dead if not dead)
+//  Branch to Jump if Not Equals
+//  Return To Subroutine
 
-// Jump:       jml [$0008]	;jump to AICondition table
+//  [Jump] JuMp Long to [$0008] (AICondition table)
 
 // AICondition table
 // %generatejumptable(AICondition,$12)
@@ -5557,8 +5555,8 @@ static void CheckAICondition(void) {
 // Address: _283A
 // AI Condition $00: Always Succeed
 static void aiCondition00(void) {
-    // inc AIConditionMet
-    // rts
+    // INCrement AIConditionMet
+    // Return To Subroutine
 }
 
 // Address: _283E
@@ -5569,50 +5567,48 @@ static void aiCondition00(void) {
 // if checking for death status,
 // also succeed if hp is 0 (though this behavior is bugged)
 static void aiCondition01(void) {
-//         lda AIParam1
-//         jsr GetAITarget	;populates list of targets to check
-//         lda AIParam2
-//         tax
-//         stx $0E
-//         tdc
-//         tay
-// Loop:	longa
-//         lda AITargetOffsets,Y
-//         cmp #$FFFF	;end of list or no target found
-//         bne TargetFound
-//         shorta0
-//         bra Finish
-// TargetFound:
-//         sta $10		;target offset
-//         clc
-//         adc $0E		;status offset
-//         tax
-//         shorta0
-//         lda CharStruct::Status1,X	;could be status 1-4 depending
-//         ora CharStruct::AlwaysStatus1,X	;on status offset
-//         and AIParam3
-//         bne Match
-//         lda $0E
-//         bne Next
-//         lda AIParam3
-//         bpl Next
-//         ldx $10			;if asked to check death status
-//         lda CharStruct::CurHP,X	;also succeed if hp is 0
-//         ora CharStruct::CurHP,X	;**bug: should be high byte $2007
-//         bne Next
-// Match:       inc AIConditionMet
-// Next:	iny
-//         iny
-//         cpy #$0018	;12 characters * 2 bytes
-//         bne Loop
-// Finish:			;fail if any targets failed
-//         lda AIMultiTarget
-//         beq Ret
-//         lda AITargetCount
-//         cmp AIConditionMet
-//         beq Ret
-//         stz AIConditionMet
-// Ret:	rts
+//  LoaD AIParam1 to A
+//  Jump to SubRoutine GetAITarget	(populates list of targets to check)
+//  LoaD AIParam2 to A
+//  Transfer A to X
+//  STore X to $0E
+//  Transfer DireCt page to A
+//  Transfer A to Y
+//  [Loop] Lengthen A
+//  Load AITargetOffsets,Y to A
+//  CoMPare A with #$FFFF	(end of list or no target found)
+//  Branch to [TargetFound] if Not Equals
+//  Shorten A
+//  BRAnch to [Finish]
+//  [TargetFound]
+//  STore A to $10		(target offset)
+//  CLear Carry flag
+//  ADd $0E to A with Carry		(status offset)
+//  Transfer A to X
+//  Shorten A
+//  LoaD CharStruct::Status1,X to A	;could be status 1-4 depending
+//  OR A with CharStruct::AlwaysStatus1,X	;on status offset
+//  AND A with AIParam3
+//  Branch to [Match] if Not Equals
+//  LoaD $0E to A
+//  Branch to [Next] if Not Equals
+//  LoaD AIParam3 to A
+//  Branch to [Next] if PLus
+//  LoaD $10 to A			;if asked to check death status
+//  LoaD CharStruct::CurHP,X to A	;also succeed if hp is 0
+//  OR A with CharStruct::CurHP,X	;**bug: should be high byte $2007
+//  Branch to [Next] if Not Equals
+//  [Match] INCrement AIConditionMet
+//  [Next] INcrement Y by 2
+//  ComPare Y with #$0018	;12 characters * 2 bytes
+//  Branch to [Loop] if Not Equals
+//  [Finish] LoaD AIMultiTarget to A
+//  Branch to [Ret] if Equals
+//  LoaD AITargetCount to A
+//  CoMPare A with AIConditionMet
+//  Branch to [Ret] if Equals
+//  Store Zero to AIConditionMet
+//  [Ret] Return To Subroutine
 }
 
 // AI Condition 02: HP less than value
