@@ -188,8 +188,8 @@ void execBattle(void) {
     // _0023:  sta     $09c0            (Store accumulator to $09c0)
     if (battleCount < 0xffff) ++battleCount;
 
-    //         shorta0                  (Set Accumulator to 8-bits)
-    //         stz     $7cd8            (Store Zero to $7cd8)
+    //  Clear A, then Shorten                  (Set Accumulator to 8-bits)
+    //  Store Zero to     $7cd8            (Store Zero to $7cd8)
     // _002c:  jsr     StartBattle      (Call startBattle())
     //         lda     #0               (load #0 onto Accumulator)
     //  STore A to     f:hINIDISP       (Store accumulator to f:hINIDISP)
@@ -246,10 +246,10 @@ static void setupRegisters(void) {
 // Output: Result
 static uint8_t getRandBetween(uint8_t min, uint8_t max) {
 // _007C:  shorti
-//         stx $3c
+//  STore X to $3c
 //         cpx #$ff
 //         bne :+
-//         bra _Finish
+//  BRAnch to _Finish
 // :CoMPare A with #00
 //         beq _Finish
 //  CoMPare A with $3c
@@ -269,14 +269,14 @@ static uint8_t getRandBetween(uint8_t min, uint8_t max) {
 //  CoMPare A with #$ff
 //         bne :+
 //         lda f:RNGTbl,X
-//         bra _Finish
+//  BRAnch to _Finish
 // :
 //         inc
 //  STore A to Divisor
-//         stz Divisor+1
+//  Store Zero to Divisor+1
 //         lda f:RNGTbl,X
 //  Transfer A to X
-//         stx Dividend
+//  STore X to Dividend
 //         longi
 //  Jump To Subroutine Division
 //         shorti
@@ -361,7 +361,7 @@ static void wipeDisplayStructures(void) {
     // _0218:
     //         ldx #$0090
     // WipeAnimBlocks:		;wipes Anim structure and blocking information after it, $3BCC-$3C5B
-    //         stz ActionAnim0::Flags,X
+    //  Store Zero to ActionAnim0::Flags,X
     //  DEcrement X
     //         bpl WipeAnimBlocks
     // Transfer X to A 		;A now $FF
@@ -378,12 +378,12 @@ static void wipeDisplayStructures(void) {
     //  Transfer Direct page to aCcumulator
     //         ldx #$000F
     // WipeReflectCounters:	;wipes $7B49-7B58
-    //         stz CounterReflecteeTable,X
+    //  Store Zero to CounterReflecteeTable,X
     //  DEcrement X
     //         bpl WipeReflectCounters
     //         ldx #$002F
     // WipeMessageBoxData:	;wipes numbers used for message boxes, $3CBF-$3CEE
-    //         stz MessageBoxData,X
+    //  Store Zero to MessageBoxData,X
     //  DEcrement X
     //         bpl WipeMessageBoxData
     //  Return To Subroutine
@@ -408,7 +408,7 @@ static void copyStatsWithBonuses(void) {
 // :	sta Strength,Y
 //         inx
 //         iny
-//         cpy #$0004
+//  ComPare Y with #$0004
 //         bne AddCopyStats
 //         ply
 //         plx
@@ -440,7 +440,7 @@ static void copyDisplayDamage(void) {
 
 // Address: _028A
 static void wipeActionData(void) {
-//         stz a:wTargetIndex	;**optimize: wastes a byte
+//  Store Zero to a:wTargetIndex	;**optimize: wastes a byte
 //         ldx #$0133
 // :	   stz $79F9,X	        ;clears memory $79F9 - $7B2C
 //  DEcrement X
@@ -506,10 +506,10 @@ static void checkMultiTarget(void) {
 
 // Address: _02CF
 static void removeInactiveTargets(void) {
-//         stz NoValidTargets
+//  Store Zero to NoValidTargets
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $0E
+//  STore X to $0E
 // Loop:
 //         lda ActiveParticipants,X
 //         beq Inactive
@@ -527,7 +527,7 @@ static void removeInactiveTargets(void) {
 //         lda PartyTargets
 //  Jump To Subroutine ClearBit_X
 //  STore A to PartyTargets
-//         bra NextPLX
+//  BRAnch to NextPLX
 // Monster:
 // Transfer X to A
 //         sec
@@ -544,7 +544,7 @@ static void removeInactiveTargets(void) {
 //         lda $0E
 //         adc #$0080	;next CharStruct offset
 //  STore A to $0E
-//         shorta0
+//  Clear A, then Shorten
 //         inx
 //         cpx #$000C	;12 battle participants
 //         bne Loop
@@ -552,7 +552,7 @@ static void removeInactiveTargets(void) {
 //         ora MonsterTargets
 //         bne Ret
 //         inc NoValidTargets
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Address: _0324
@@ -562,8 +562,8 @@ static void copyRomMagicInfo(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8	;Size of Magic Data
 //  Transfer A to X
-//         shorta0
-//         stz $3D
+//  Clear A, then Shorten
+//  Store Zero to $3D
 // CopyFirst5:
 //         lda f:AttackProp,X
 //  STore A to AttackInfo,Y
@@ -620,12 +620,12 @@ static void getItemsUsableY(void) {
 //         beq Equipment
 //         lda InventoryFlags,Y
 //  AND A with #$20
-//         beq RetZero
+//  Branch to [Ret] if EQualsZero
 //         lda #$AA		;usable for none
-//         bra Ret
+//  BRAnch to Ret
 // RetZero:
 //         lda #$00		;usable for all
-//         bra Ret
+//  BRAnch to Ret
 // Equipment:		;**optimize: this whole section is basically a copy of the GetItemUsableA $455E subroutine
 //         lda Temp,Y
 //  A Shift Left
@@ -638,7 +638,7 @@ static void getItemsUsableY(void) {
 //  STore A to TempEquippable,Y
 //         inx
 //         iny
-//         cpy #$0004
+//  ComPare Y with #$0004
 //         bne :-
 //         									;.
 //  Transfer Direct page to aCcumulator
@@ -669,21 +669,21 @@ static void getItemsUsableY(void) {
 //         lda $0E
 //  AND A with #$7F		;clear first character bit
 //  STore A to $0E
-//         bra NextChar
+//  BRAnch to NextChar
 // Check1:
 //  CoMPare A with #$01
 //         bne Check2
 //         lda $0E
 //  AND A with #$DF		;clear second character bit
 //  STore A to $0E
-//         bra NextChar
+//  BRAnch to NextChar
 // Check2:
 //  CoMPare A with #$02
 //         bne Other
 //         lda $0E
 //  AND A with #$F7         	;clear third character bit
 //  STore A to $0E
-//         bra NextChar
+//  BRAnch to NextChar
 // Other:
 //         lda $0E
 //  AND A with #$FD		;clear fourth character bit
@@ -696,7 +696,7 @@ static void getItemsUsableY(void) {
 //         cpx #$0010			;4 bytes * 4 characters
 //         bne DetermineEquippableLoop
 //         lda $0E
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Address: _03FA
@@ -726,7 +726,7 @@ static void setupInventoryInfo(void) {
 //         clc
 //         adc $0E			;armor *12 (size of equipment struct)
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:ArmorProp,X
 //  AND A with #$08		;target enemy?
 //         beq ItemZero
@@ -735,13 +735,13 @@ static void setupInventoryInfo(void) {
 //  STore A to Temp,Y
 //         lda #$5A
 //  STore A to InventoryFlags,Y
-//         bra Ret
+//  BRAnch to Ret
 // ItemZero:	;or armor targettng bit 08h
 //         lda #$80		;not usable
 //  STore A to Temp,Y
 //         lda #$5A
 //  STore A to InventoryFlags,Y
-//         bra Ret
+//  BRAnch to Ret
 // Weapon:
 //         longa
 //  A Shift Left
@@ -751,7 +751,7 @@ static void setupInventoryInfo(void) {
 //         clc
 //         adc $0E         	;weapon *12
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:WeaponProp+4,X
 //  AND A with #$80
 //  Jump To Subroutine ShiftDivide_32	;shift to 04h bit
@@ -767,7 +767,7 @@ static void setupInventoryInfo(void) {
 //         pla
 //  AND A with #$3F		;mask to just equip info
 //  STore A to Temp,Y
-//         bra Ret
+//  BRAnch to Ret
 // Consumable:
 //         sec
 //         sbc #$E0
@@ -776,7 +776,7 @@ static void setupInventoryInfo(void) {
 //  A Shift Left
 //  A Shift Left
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:ConsumableItemProp,X
 //  STore A to InventoryTargetting,Y
 //         lda f:ConsumableItemProp+2,X
@@ -800,9 +800,9 @@ static void applyPercentage(void) {
 //  DEcrement X
 //         bpl :-
 //         ldx #$0064		;100
-//         stx $12
+//  STore X to $12
 //         ldx $2E			;previous multiply result (low bytes)
-//         stx $0E
+//  STore X to $0E
 //         lda $30			;(high bytes)
 //  STore A to $10
 // ;32 bit division routine
@@ -837,7 +837,7 @@ static void applyPercentage(void) {
 //         rol $18
 //  DEcrement X
 //         bne :--
-//         shorta0
+//  Clear A, then Shorten
 // ;division ends here
 //         clc
 //         lda $16		;quotient, input/100
@@ -856,7 +856,7 @@ static void applyPercentage(void) {
 //  STore A to $08
 //         lda $0B
 //  STore A to $09
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Notes about Commands in Asm
@@ -905,30 +905,30 @@ static void commandTable00(void) {
 //  STore A to GFXQueue,Y
 //         inx
 //         iny
-//         cpy #$0064
+//  ComPare Y with #$0064
 //         bne CopyGFXQueue
-//         bra Continue
+//  BRAnch to Continue
 // Party:
 //  Jump To Subroutine FindOpenGFXQueueSlot   ;next slot in X
-//         stz GFXQueue::Flag,X
-//         stz GFXQueue::Cmd,X
-//         stz GFXQueue::Type,X
-//         stz GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X
+//  Store Zero to GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Cmd,X
+//  Store Zero to GFXQueue::Type,X
+//  Store Zero to GFXQueue::Data1,X
+//  Store Zero to GFXQueue::Data2,X
 // Continue:
 //         lda ProcSequence
 //  Transfer A to X
 //         lda #$7E
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         inc UnknownReaction
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
 //         lda #$80		;first party member
 //  STore A to CommandTargetBitmask,X
-//         stz CommandTargetBitmask+1,X
+//  Store Zero to CommandTargetBitmask+1,X
 //         inc ProcSequence
 //  Return To Subroutine
 }
@@ -938,7 +938,7 @@ static void commandTable00(void) {
 static void itemCommand(void) {
 // CommandTable01:
 // CommandTable1F:
-//         stz SelectedItem
+//  Store Zero to SelectedItem
 //  Jump To Subroutine SelectCurrentProcSequence	;$0C = ProcSequence*12
 //  Jump To Subroutine GetTargets
 //         ldx AttackerOffset
@@ -958,9 +958,9 @@ static void itemCommand(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         ldy $0C		;ProcSequence*12
-//         stz $0A
+//  Store Zero to $0A
 // :       lda f:ConsumableItemProp,X
 //  STore A to AttackInfo,Y
 //         inx
@@ -989,7 +989,7 @@ static void itemCommand(void) {
 //         lda ProcSequence
 //  Transfer A to X
 //         inc HitsInactive,X	;can hit dead targets
-//         bra TargetOK
+//  BRAnch to TargetOK
 // _CheckRetarget:
 //  Jump To Subroutine CheckRetarget
 // TargetOK:
@@ -1000,14 +1000,14 @@ static void itemCommand(void) {
 //  STore A to Temp
 //  Jump To Subroutine GFXCmdAttackNameFromTemp
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$09		;command 9: item use
 //  STore A to GFXQueue::Type,X
 //         lda TempSpell
 //  STore A to GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X
+//  Store Zero to GFXQueue::Data2,X
 //         ldy $0C		;ProcSequence*12
 //         lda ProcSequence
 //  Transfer A to X
@@ -1040,7 +1040,7 @@ static void weaponItem(void) {
 //  STore A to SelectedItem
 //  Transfer A to X
 //         lda RHWeapon::ItemMagic,Y
-//         bra ItemReady
+//  BRAnch to ItemReady
 // Left:       inc TempHand
 //         lda CharStruct::LHWeapon,X
 //  STore A to CharStruct::SelectedItem,X
@@ -1075,26 +1075,26 @@ static void weaponItem(void) {
 //         lda ProcSequence
 //  Transfer A to X
 //         inc HitsInactive,X
-//         bra TargetOK
+//  BRAnch to TargetOK
 // DontRetarget:
 //  Jump To Subroutine CheckRetarget
 // TargetOK:
 //  Jump To Subroutine BuildTargetBitmask
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC	;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$0A	;command 10: weapon used as item
 //  STore A to GFXQueue::Type,X
 //         pla
 //  STore A to GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X
+//  Store Zero to GFXQueue::Data2,X
 //         lda ProcSequence
 //  Transfer A to X
 //         lda AtkType,X
 //         bpl :+
 //  Transfer Direct page to aCcumulator
-//         bra :++
+//  BRAnch to :++
 // :	ldy $0C
 //         lda AttackInfo::MagicAtkType,Y
 //  AND A with #$7F
@@ -1129,7 +1129,7 @@ static void weaponItem(void) {
 //  STore A to HandItems::Flags,Y
 //         lda #$AA
 //  STore A to HandItems::Usable,Y
-//         bra DoneHandItems
+//  BRAnch to DoneHandItems
 // Left2:	tdc
 //  STore A to HandItems::ID+1,Y
 //  STore A to HandItems::Level+1,Y
@@ -1153,8 +1153,8 @@ static void weaponItem(void) {
 //  Transfer A to X 		;message box index *3
 //         lda SelectedItem
 //  STore A to MessageBoxData,X
-//         stz MessageBoxData+1,X
-//         stz MessageBoxData+2,X
+//  Store Zero to MessageBoxData+1,X
+//  Store Zero to MessageBoxData+2,X
 //  Jump To Subroutine GFXCmdMessage
 //         lda DisplayInfo::CurrentChar
 //         pha
@@ -1165,7 +1165,7 @@ static void weaponItem(void) {
 //         pla
 //  STore A to DisplayInfo::CurrentChar
 //  Jump To Subroutine ApplyGear
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Address: _0767
@@ -1176,14 +1176,14 @@ static void prepMagicLamp(void) {
 //  CoMPare A with #$20	;>=32, egg chop
 //         bcs EggChop
 //         lda #$0D	;chocobo
-//         bra Continue
+//  BRAnch to Continue
 // EggChop:
 //         lda #$0E	;egg chop
 // Continue:
 //  Transfer A to X
 //         lda f:_d0eee7,X
 //  STore A to TempSpell
-//         stz TempIsEffect
+//  Store Zero to TempIsEffect
 //         clc
 //         lda BattleData::MagicLamp
 //         adc #$01
@@ -1290,7 +1290,7 @@ static void simpleFight(void) {
 //  Transfer A to X
 //         lda f:_d0ed85,X	;size of combined gear stats struct
 //  Transfer A to X
-//         stx $0E			;gear stats offset
+//  STore X to $0E			;gear stats offset
 //         ldx AttackerOffset
 //         lda CharStruct::RHWeapon,X
 //         bne RH
@@ -1298,7 +1298,7 @@ static void simpleFight(void) {
 // RH:
 //  Jump To Subroutine SelectCurrentProcSequence
 //         sty $14			;AttackInfo Offset
-//         stz $12			;loop index
+//  Store Zero to $12			;loop index
 //         ldx $0E			;gear stats offset
 // :	lda RHWeapon,X
 //  STore A to AttackInfo,Y
@@ -1313,7 +1313,7 @@ static void simpleFight(void) {
 //  AND A with #$04		;magic sword ok
 //         bne __MSword
 //  Transfer Direct page to aCcumulator
-//         bra __DoneMSword
+//  BRAnch to __DoneMSword
 // __MSword:
 //         ldx AttackerOffset
 //         lda CharStruct::MSwordAnim,X
@@ -1321,7 +1321,7 @@ static void simpleFight(void) {
 // __DoneMSword:
 //         pha
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$01		;ability/command animation
@@ -1337,8 +1337,8 @@ static void simpleFight(void) {
 //  Transfer A to X
 //         pla
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //  Jump To Subroutine FinishCommand
 //  Jump To Subroutine GFXCmdDamageNumbers
 // LH:
@@ -1348,7 +1348,7 @@ static void simpleFight(void) {
 //  Return To Subroutine 			;no weapons (not even fists)
 // :	jsr SelectCurrentProcSequence
 //         sty $12			;AttackInfo Offset
-//         stz $14			;loop index
+//  Store Zero to $14			;loop index
 //         ldx $0E			;gear stats offset
 // :	lda LHWeapon,X
 //  STore A to AttackInfo,Y
@@ -1364,20 +1364,20 @@ static void simpleFight(void) {
 //         lda LHWeapon::AtkType,X
 //  STore A to AtkType,Y
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$01		;ability/command animation
 //  STore A to GFXQueue::Type,X
 //         lda #$04		;fight
 //  STore A to GFXQueue::Data1,X
-//         stx $08			;GFXQueue offset
+//  STore X to $08			;GFXQueue offset
 //         ldx $0E			;gear stats offset
 //         lda LHWeapon::Properties,X
 //  AND A with #$04		;magic sword ok
 //         bne __MSword2
 //         lda #$80		;left hand
-//         bra __DoneMSword2
+//  BRAnch to __DoneMSword2
 // __MSword2:
 //         ldx AttackerOffset
 //         lda CharStruct::MSwordAnim,X
@@ -1387,8 +1387,8 @@ static void simpleFight(void) {
 //  STore A to GFXQueue::Data2,X	;magic sword anim
 //         lda ProcSequence
 //  Transfer A to X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //  Jump To Subroutine FinishCommand
 //  Jump To Subroutine GFXCmdDamageNumbers
 //  Return To Subroutine
@@ -1474,9 +1474,9 @@ static void commandTable0C(void) {
 //   Jump To Subroutine GFXCmdAbilityAnim
 //          lda ProcSequence
 //   Transfer A to X
-//          stz AtkType,X
-//          stz MultiTarget,X
-//          stz TargetType,X
+//   Store Zero to AtkType,X
+//   Store Zero to MultiTarget,X
+//   Store Zero to TargetType,X
 //   Jump To Subroutine FinishCommandNullTargets
 //          inc UnknownReaction
 //          ldx AttackerOffset
@@ -1519,13 +1519,13 @@ static void commandTable2D(void) {
 //  Transfer A to X
 //         lda f:_d0ed85,X	;size of combined gearstats struct
 //  Transfer A to X
-//         stx $0E			;gear stats offset
+//  STore X to $0E			;gear stats offset
 //         ldx AttackerOffset
 //         lda CharStruct::RHWeapon,X
 //         bne RH
 //         jmp LH
 // RH:	   jsr SelectCurrentProcSequence
-//         stz $12
+//  Store Zero to $12
 //         ldx $0E
 // :	   lda RHWeapon,X
 //  STore A to AttackInfo,Y
@@ -1542,8 +1542,8 @@ static void commandTable2D(void) {
 //  Transfer A to X
 //         pla
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //  Jump To Subroutine FinishCommand
 //  Jump To Subroutine GFXCmdDamageNumbers
 // LH:     ldx AttackerOffset
@@ -1551,7 +1551,7 @@ static void commandTable2D(void) {
 //         bne :+
 //         jmp Finish
 // :	   jsr SelectCurrentProcSequence
-//         stz $12
+//  Store Zero to $12
 //         ldx $0E			;gear stats offset
 // :       lda LHWeapon,X
 //  STore A to AttackInfo,Y
@@ -1568,8 +1568,8 @@ static void commandTable2D(void) {
 //  STore A to AtkType,Y
 //         lda ProcSequence
 //  Transfer A to X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //  Jump To Subroutine FinishCommand
 //  Jump To Subroutine GFXCmdDamageNumbers
 // Finish:       inc UnknownReaction
@@ -1661,7 +1661,7 @@ static void commandTable10(void) {
 //         bpl Weapon		;otherwise, a scroll
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stz $0E			;target bits
+//  Store Zero to $0E			;target bits
 // TargetActiveMonsters:
 //         lda ActiveParticipants+4,X
 //         beq Next
@@ -1757,52 +1757,52 @@ static void commandTable14(void) {
 //  Jump To Subroutine Random_X_A		;0..Level
 //         bne :+
 //  Transfer Direct page to aCcumulator 		;0 mystidian rabbit
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$05
 //         bcs :+
 //         lda #$01	;<5 squirrel
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$0A
 //         bcs :+
 //         lda #$02	;<10 bee swarm
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$14
 //         bcs :+
 //         lda #$03	;<20 nightingale
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$1E
 //         bcs :+
 //         lda #$04	;<30 momonga
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$28
 //         bcs :+
 //         lda #$05	;<40 falcon
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$32
 //         bcs :+
 //         lda #$06	;<50 skunk
-//         bra Chosen
+//  BRAnch to Chosen
 // :CoMPare A with #$3C
 //         bcs :+
 //         lda #$07	;<60 wild boar
-//         bra Chosen
+//  BRAnch to Chosen
 // :	lda #$08	;otherwise unicorn
 // Chosen:
 //  STore A to TempSpell
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
 // :	lda f:SpecialAbilityAttackProp,X
 //  STore A to Temp,Y
 //         inx
 //         iny
-//         cpy #$0008	;copy 8 bytes magic info
+//  ComPare Y with #$0008	;copy 8 bytes magic info
 //         bne :-
-//         stz PartyTargets
-//         stz MonsterTargets
+//  Store Zero to PartyTargets
+//  Store Zero to MonsterTargets
 //         lda Temp	;targetting byte in magic info
 //         bne Targetting
 //         lda AttackerIndex
@@ -1810,13 +1810,13 @@ static void commandTable14(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to PartyTargets	;default to targetting self
-//         bra TargetSet
+//  BRAnch to TargetSet
 // Targetting:
 //  AND A with #$08		;target enemy
 //         bne TargetEnemy
 //         lda #$F0
 //  STore A to PartyTargets	;entire party
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetEnemy:
 //         lda Temp
 //  AND A with #$40		;hits all targets
@@ -1829,13 +1829,13 @@ static void commandTable14(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to MonsterTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetAll:
 //         lda #$FF
 //  STore A to MonsterTargets
 // TargetSet:
-//         stz TempAttachedSpell	;CastSpell routine params
-//         stz TempSkipNaming
+//  Store Zero to TempAttachedSpell	;CastSpell routine params
+//  Store Zero to TempSkipNaming
 //         lda #$01		;animals are effect magic
 //  STore A to TempIsEffect
 //         jmp CastSpell
@@ -1857,7 +1857,7 @@ static void commandTable15(void) {
 static void commandTable16(void) {
 //         lda #$17		;ability name
 //  Jump To Subroutine GFXCmdAttackNameA
-//         stz $22			;index for attack loop
+//  Store Zero to $22			;index for attack loop
 // AttackLoop:
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
@@ -1868,7 +1868,7 @@ static void commandTable16(void) {
 //  Jump To Subroutine SetBit_X
 //         ldx AttackerOffset
 //  STore A to CharStruct::MonsterTargets,X
-//         stz CharStruct::PartyTargets,X
+//  Store Zero to CharStruct::PartyTargets,X
 //         ldx AttackerOffset
 //         lda CharStruct::MonsterTargets,X
 //  STore A to MonsterTargets
@@ -1899,14 +1899,14 @@ static void commandTable16(void) {
 //  Transfer A to X
 //         lda f:_d0ed85,X	;combined size of gearstats structs
 //  Transfer A to X
-//         stx $0E			;gearstats offset
+//  STore X to $0E			;gearstats offset
 //         ldx AttackerOffset
 //         lda CharStruct::RHWeapon,X
 //         bne RH
 //         jmp LH
 // RH:Jump To Subroutine SelectCurrentProcSequence
 //         sty $14			;AttackInfo offset
-//         stz $12
+//  Store Zero to $12
 //         ldx $0E			;gearstats offset
 // :	lda RHWeapon,X
 //  STore A to AttackInfo,Y
@@ -1917,14 +1917,14 @@ static void commandTable16(void) {
 //  CoMPare A with #$0C		;copy 12 bytes weapon data
 //         bne :-
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$01		;ability/command anim
 //  STore A to GFXQueue::Type,X
 //         lda #$04		;fight
 //  STore A to GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X	;right hand, no msword anim
+//  Store Zero to GFXQueue::Data2,X	;right hand, no msword anim
 //         ldx $0E			;gearstats offset
 //         lda RHWeapon::AtkType,X
 //         pha
@@ -1932,8 +1932,8 @@ static void commandTable16(void) {
 //  Transfer A to X
 //         pla
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
@@ -1949,7 +1949,7 @@ static void commandTable16(void) {
 //         jmp Finish
 // :Jump To Subroutine SelectCurrentProcSequence
 //         sty $12
-//         stz $14
+//  Store Zero to $14
 //         ldx $0E		;gearstats offset
 // :	lda LHWeapon,X
 //  STore A to AttackInfo,Y
@@ -1965,7 +1965,7 @@ static void commandTable16(void) {
 //         lda LHWeapon::AtkType,X
 //  STore A to AtkType,Y
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$01		;ability/command anim
@@ -1976,8 +1976,8 @@ static void commandTable16(void) {
 //  STore A to GFXQueue::Data2,X
 //         lda ProcSequence
 //  Transfer A to X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
@@ -1990,9 +1990,9 @@ static void commandTable16(void) {
 // Finish:	inc $22			;attack loop index
 //         lda $22
 //  CoMPare A with #$04		;4 attacks
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         jmp AttackLoop
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Address: _0DA2
@@ -2048,8 +2048,8 @@ static void commandTable17(void) {
 //  Transfer A to X
 //         lda #$7E		;always miss
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda #$0D		;ability animation
 //  Jump To Subroutine GFXCmdAbilityAnim
 //  Jump To Subroutine FinishCommandNullTargets
@@ -2058,13 +2058,13 @@ static void commandTable17(void) {
 // PickRandomSummon:
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $0E
+//  STore X to $0E
 //         lda #$0E
 //  Jump To Subroutine Random_X_A    	;0..14
 //         clc
 //         adc #$48		;offset of first summon
 //  STore A to TempSpell
-//         stz TempIsEffect
+//  Store Zero to TempIsEffect
 //         lsr
 //         ror $0E
 //         lsr
@@ -2079,20 +2079,20 @@ static void commandTable17(void) {
 //  Jump To Subroutine SelectBit_X
 //         beq PickRandomSummon	;don't know this one, try again
 // MagicLamp:			;Magic Lamp use jumps in here
-//         stz PartyTargets
-//         stz MonsterTargets
+//  Store Zero to PartyTargets
+//  Store Zero to MonsterTargets
 //         lda TempSpell
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
 // :	lda f:AttackProp,X
 //  STore A to Temp,Y
 //         inx
 //         iny
-//         cpy #$0008		;copy 8 bytes magic data
+//  ComPare Y with #$0008		;copy 8 bytes magic data
 //         bne :-
 //         lda Temp		;targetting
 //         bne FindTargets
@@ -2102,7 +2102,7 @@ static void commandTable17(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to PartyTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // FindTargets:
 //  AND A with #$40		;hits all
 //         bne TargetAll
@@ -2118,17 +2118,17 @@ static void commandTable17(void) {
 //         bne DeadAlly
 //  Jump To Subroutine NextCharOffset
 //         iny
-//         cpy #$0004		;4 chars
+//  ComPare Y with #$0004		;4 chars
 //         bne :-
 //         lda #$80		;defaults to first member if none dead
-//         bra SetAlly
+//  BRAnch to SetAlly
 // DeadAlly:
 //         tyx
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 // SetAlly:
 //  STore A to PartyTargets	;target single dead ally
-//         bra TargetSet
+//  BRAnch to TargetSet
 // SingleEnemy:
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
@@ -2138,33 +2138,33 @@ static void commandTable17(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to MonsterTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetAll:
 //         lda Temp		;targetting
 //  AND A with #$08		;enemy by default
 //         bne AllEnemy
 //         lda #$F0
 //  STore A to PartyTargets	;all allies
-//         bra TargetSet
+//  BRAnch to TargetSet
 // AllEnemy:
 //         lda #$FF
 //  STore A to MonsterTargets	;all enemies
 // TargetSet:
-//         stz TempAttachedSpell	;params for CastSpell
-//         stz TempSkipNaming
+//  Store Zero to TempAttachedSpell	;params for CastSpell
+//  Store Zero to TempSkipNaming
 //  Jump To Subroutine CastSpell
 //         lda TempAttachedSpell
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         lda TempAttachedSpell	;second spell, for phoenix summon
 //  STore A to TempSpell
-//         stz TempIsEffect
+//  Store Zero to TempIsEffect
 //         lda TempMonsterTargets
 //  STore A to MonsterTargets
 //         lda TempPartyTargets
 //  STore A to PartyTargets
 //         inc TempSkipNaming	;2nd spell has no label and diff anim
 //  Jump To Subroutine CastSpell
-// Ret:	rts
+// [Ret] Return To Subroutine
 
 // ConjureMagicLamp := CommandTable17::MagicLamp   ; Definition needed to jump to here
 }
@@ -2235,14 +2235,14 @@ static void commandTable1D(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
 // :  	lda f:AttackProp,X
 //  STore A to TempMagicInfo,Y
 //         inx
 //         iny
-//         cpy #$0008		;8 bytes magic data
+//  ComPare Y with #$0008		;8 bytes magic data
 //         bne :-
 //  Jump To Subroutine SelectCurrentProcSequence
 //  Transfer Direct page to aCcumulator
@@ -2263,8 +2263,8 @@ static void commandTable1D(void) {
 //         iny
 //         cpx #$0008		;then copy remaining 3 bytes
 //         bne :-
-//         stz MonsterTargets
-//         stz PartyTargets
+//  Store Zero to MonsterTargets
+//  Store Zero to PartyTargets
 //         lda TempMagicInfo::Targetting
 //         bne Targetting
 //         lda AttackerIndex
@@ -2272,7 +2272,7 @@ static void commandTable1D(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to PartyTargets	;default to attacker if no targetting
-//         bra TargetSet
+//  BRAnch to TargetSet
 // Targetting:
 //  AND A with #$40		;all targets
 //         bne TargetAll
@@ -2290,7 +2290,7 @@ static void commandTable1D(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to PartyTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetEnemy:
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
@@ -2300,14 +2300,14 @@ static void commandTable1D(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to MonsterTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetAll:
 //         lda TempMagicInfo::Targetting
 //  AND A with #$08		;enemy by default
 //         bne TargetAllEnemy
 //         lda #$F0
 //  STore A to PartyTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetAllEnemy:
 //         lda #$FF
 //  STore A to MonsterTargets
@@ -2319,10 +2319,10 @@ static void commandTable1D(void) {
 //         lda ProcSequence
 //  Transfer A to X
 //         inc HitsInactive,X
-//         bra TargetOK
+//  BRAnch to TargetOK
 // _CheckRetarget:
 //  Jump To Subroutine CheckRetarget
-//         bra TargetOK
+//  BRAnch to TargetOK
 // Multi:
 //  Jump To Subroutine RemoveInactiveTargets
 //  Jump To Subroutine CheckMultiTarget
@@ -2330,11 +2330,11 @@ static void commandTable1D(void) {
 //  Jump To Subroutine BuildTargetBitmask
 //         lda TempSpell
 //  STore A to Temp+1		;attack id
-//         stz Temp		;string table 0
+//  Store Zero to Temp		;string table 0
 //  Jump To Subroutine GFXCmdAttackNameFromTemp
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
-//         stz GFXQueue::Data2,X
+//  Store Zero to GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Data2,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$00		;attack animation
@@ -2377,7 +2377,7 @@ static void commandTable1D(void) {
 //         beq Found
 //         inx
 //         iny
-//         cpy #$0004		;4 command slots
+//  ComPare Y with #$0004		;4 command slots
 //         bne FindCmd
 //         beq CopyStats
 // Found:
@@ -2387,7 +2387,7 @@ static void commandTable1D(void) {
 //  STore A to CharCommands::Targetting,X
 //         inx
 //         iny
-//         bra FindCmd		;keep going, could have multiple copies
+//  BRAnch to FindCmd		;keep going, could have multiple copies
 // CopyStats:	;backs up attacker's stats so it can load monster stats instead, they will be restored later
 //         ldx AttackerOffset
 //         lda CharStruct::Level,X
@@ -2405,10 +2405,10 @@ static void commandTable1D(void) {
 // CopyStatus:
 //         lda CharStruct::Status1,X
 //  STore A to SavedCharStats::Status1,Y
-//         stz CharStruct::Status1,X	;clear status for released mon
+//  Store Zero to CharStruct::Status1,X	;clear status for released mon
 //         inx
 //         iny
-//         cpy #$0009		;9 bytes of status/passives
+//  ComPare Y with #$0009		;9 bytes of status/passives
 //         bne CopyStatus
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
@@ -2416,10 +2416,10 @@ static void commandTable1D(void) {
 // CopyMSword:
 //         lda CharStruct::MSwordElemental1,X
 //  STore A to SavedCharStats::MSwordElemental1,Y
-//         stz CharStruct::MSwordElemental1,X	;clear all msword
+//  Store Zero to CharStruct::MSwordElemental1,X	;clear all msword
 //         inx
 //         iny
-//         cpy #$0006		;6 bytes msword elements/status
+//  ComPare Y with #$0006		;6 bytes msword elements/status
 //         bne CopyMSword
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
@@ -2427,16 +2427,16 @@ static void commandTable1D(void) {
 // CopyMisc:
 //         lda CharStruct::AlwaysStatus1,X
 //  STore A to SavedCharStats::AlwaysStatus1,Y
-//         stz CharStruct::AlwaysStatus1,X
+//  Store Zero to CharStruct::AlwaysStatus1,X
 //         inx
 //         iny
-//         cpy #$000B		;11 bytes always status/bonuses/etc
+//  ComPare Y with #$000B		;11 bytes always status/bonuses/etc
 //         bne CopyMisc
 //         lda ReleasedMonsterID
 //         longa
 //  Jump To Subroutine ShiftMultiply_32
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         ldy AttackerOffset
 //         lda CharStruct::CharRow,Y
 //  AND A with #$7F		;always front row
@@ -2537,15 +2537,15 @@ static void commandTable22(void) {
 //  CoMPare A with #$0B
 //         bcs :+
 //  Transfer Direct page to aCcumulator          	;<11, 0
-//         bra Chosen
+//  BRAnch to Chosen
 // :	cmp #$15
 //         bcs :+
 //         lda #$01     	;<21, 1
-//         bra Chosen
+//  BRAnch to Chosen
 // :	cmp #$33
 //         bcs :+
 //         lda #$02     	;<50, 2
-//         bra Chosen
+//  BRAnch to Chosen
 // :	lda #$03     	;otherwise 3
 // Chosen:
 //  STore A to $0E		;terrain spell slot 0-3
@@ -2560,17 +2560,17 @@ static void commandTable22(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
 // :	lda f:SpecialAbilityAttackProp,X
 //  STore A to Temp,Y
 //         inx
 //         iny
-//         cpy #$0008	;copy 8 bytes spell data
+//  ComPare Y with #$0008	;copy 8 bytes spell data
 //         bne :-
-//         stz PartyTargets
-//         stz MonsterTargets
+//  Store Zero to PartyTargets
+//  Store Zero to MonsterTargets
 //         lda Temp		;targetting byte
 //         bne Targetting
 //         lda AttackerIndex	;default to attacker
@@ -2578,7 +2578,7 @@ static void commandTable22(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to PartyTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // Targetting:
 //  AND A with #$08	;target enemy by default
 //         bne TargetEnemy
@@ -2593,11 +2593,11 @@ static void commandTable22(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to PartyTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetAllParty:
 //         lda #$F0
 //  STore A to PartyTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetEnemy:
 //         lda Temp
 //  AND A with #$40	;target all
@@ -2610,13 +2610,13 @@ static void commandTable22(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to MonsterTargets
-//         bra TargetSet
+//  BRAnch to TargetSet
 // TargetAllEnemy:
 //         lda #$FF
 //  STore A to MonsterTargets
 // TargetSet:
-//         stz TempAttachedSpell
-//         stz TempSkipNaming
+//  Store Zero to TempAttachedSpell
+//  Store Zero to TempSkipNaming
 //         lda #$01
 //  STore A to TempIsEffect
 //         jmp CastSpell
@@ -2635,9 +2635,9 @@ static void commandTable24(void) {
 //  Jump To Subroutine GFXCmdAbilityAnim
 //         lda ProcSequence
 //  Transfer A to X
-//         stz AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to AtkType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         inc UnknownReaction
 //  Jump To Subroutine FinishCommandNullTargets
 //         lda AttackerIndex
@@ -2654,17 +2654,17 @@ static void commandTable24(void) {
 //         beq Found
 //         inx
 //         iny
-//         cpy #$0004	;4 command slots
+//  ComPare Y with #$0004	;4 command slots
 //         bne FindHideCommands
-//         beq Ret
+//  Branch to [Ret] if EQuals
 // Found:	lda #$26	;show command
 //  STore A to CharCommands::ID,X
 //         lda #$08	;target enemy?
 //  STore A to CharCommands::Targetting,X
 //         inx
 //         iny
-//         bra FindHideCommands
-// Ret:	rts
+//  BRAnch to FindHideCommands
+// [Ret] Return To Subroutine
 }
 
 // Address: _12B3
@@ -2680,9 +2680,9 @@ static void commandTable25(void) {
 //  Jump To Subroutine GFXCmdAbilityAnim
 //         lda ProcSequence
 //  Transfer A to X
-//         stz AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to AtkType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         inc UnknownReaction
 //  Jump To Subroutine FinishCommandNullTargets
 //         lda AttackerIndex
@@ -2699,17 +2699,17 @@ static void commandTable25(void) {
 //         beq Found
 //         inx
 //         iny
-//         cpy #$0004	;4 command slots
+//  ComPare Y with #$0004	;4 command slots
 //         bne FindShowCommands
-//         beq Ret
+//  Branch to [Ret] if EQuals
 // Found:
 //         lda #$25
 //  STore A to CharCommands::ID,X
-//         stz CharCommands::Targetting,X
+//  Store Zero to CharCommands::Targetting,X
 //         inx
 //         iny
-//         bra FindShowCommands
-// Ret:	rts
+//  BRAnch to FindShowCommands
+// [Ret] Return To Subroutine
 }
 
 // Address: _1306
@@ -2737,8 +2737,8 @@ static void commandTable28(void) {
 // Address: _1333
 // Command $2A (Dance)
 static void commandTable29(void) {
-//         stz ProcSequence	;reset command sequence (no procs)
-//         stz NextGFXQueueSlot
+//  Store Zero to ProcSequence	;reset command sequence (no procs)
+//  Store Zero to NextGFXQueueSlot
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
 //         lda #$03
@@ -2753,11 +2753,11 @@ static void commandTable29(void) {
 //         bcs NotSwordDance	;50% chance of sword dance
 //         lda #$03		;sword dance
 //  STore A to TempDance
-//         bra DanceCheck
+//  BRAnch to DanceCheck
 // NotSwordDance:
 //  Jump To Subroutine Random_0_99
 //         lsr
-//         stz TempDance
+//  Store Zero to TempDance
 //         rol TempDance		;50% chance of 0 or 1
 // DanceCheck:
 //         lda TempDance
@@ -2771,7 +2771,7 @@ static void commandTable29(void) {
 //         lda TempDance
 //         adc #$79		;offset to dance strings
 //  STore A to Temp+1		;string id / ability id
-//         stz Temp		;string table
+//  Store Zero to Temp		;string table
 //  Jump To Subroutine GFXCmdAttackNameFromTemp
 //         lda #$29		;dance anim
 //  Jump To Subroutine GFXCmdAbilityAnim
@@ -2784,7 +2784,7 @@ static void commandTable29(void) {
 // SwordDance:
 //         lda #$7D		;sword dance ability
 //  STore A to Temp+1		;string id / ability id
-//         stz Temp		;string table
+//  Store Zero to Temp		;string table
 //  Jump To Subroutine GFXCmdAttackNameFromTemp
 //         lda #$29		;dance anim
 //  Jump To Subroutine GFXCmdAbilityAnim
@@ -2792,8 +2792,8 @@ static void commandTable29(void) {
 //  Transfer A to X
 //         lda #$7F		;do nothing
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //  Jump To Subroutine FinishCommandNullTargets
 //  Jump To Subroutine GFXCmdDamageNumbers
 //         ldx AttackerOffset
@@ -2813,7 +2813,7 @@ static void commandTable2A(void) {
 //  STore A to CharStruct::ActionFlag,X
 //         inx
 //         iny
-//         cpy #$000A	;copy 10 bytes action data
+//  ComPare Y with #$000A	;copy 10 bytes action data
 //         bne :-
 //         ldx AttackerOffset
 //         lda CharStruct::ActionFlag,X
@@ -2866,15 +2866,15 @@ static void commandTable31(void) {
 //         lda #$4B	;wind slash spell effect
 //  STore A to TempEffect
 // WeaponEffectCommand:	;called here for other weapon effects
-//         stz $0E		;hand
-//         stz NextGFXQueueSlot
+//  Store Zero to $0E		;hand
+//  Store Zero to NextGFXQueueSlot
 //         ldx AttackerOffset
 //         lda CharStruct::RHWeapon,X
 //         bne :+
 //         lda #$80	;left hand
 //  STore A to $0E
 // :	jsr FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag
+//  Store Zero to GFXQueue::Flag
 //         lda #$FC	;exec graphics command
 //  STore A to GFXQueue::Cmd
 //         lda #$01	;ability/command anim
@@ -2885,28 +2885,28 @@ static void commandTable31(void) {
 //  STore A to GFXQueue::Data2
 //         lda #$7E	;always miss
 //  STore A to AtkType
-//         stz MultiTarget
-//         stz TargetType
-//         stz CommandTargetBitmask
-//         stz CommandTargetBitmask+1
+//  Store Zero to MultiTarget
+//  Store Zero to TargetType
+//  Store Zero to CommandTargetBitmask
+//  Store Zero to CommandTargetBitmask+1
 //         inc ProcSequence
 //  Jump To Subroutine GFXCmdDamageNumbers
 //         lda #$FF
 //  STore A to a:wMonsterTargets	;**optimize: wasted bytes
-//         stz a:wPartyTargets
+//  Store Zero to a:wPartyTargets
 //         lda TempEffect
 //  STore A to TempSpell
 //         lda #$01
 //  STore A to TempIsEffect
 //  STore A to TempSkipNaming
-//         stz TempAttachedSpell
+//  Store Zero to TempAttachedSpell
 //  Jump To Subroutine CastSpell
 //         ldx AttackerOffset
 //         lda CharStruct::Command,X
 //  CoMPare A with #$0C	;capture/mug
 //         bne Ret	;removes return address from stack for capture
 //         plx 		;likely unreachable since capture cancels procs
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Address: _1490
@@ -2938,8 +2938,8 @@ static void commandTable32(void) {
 // Attacks twice per hand if
 // hand's weapon has this command proc
 static void commandTable33(void) {
-//         stz ProcSequence	;cancels any other procs
-//         stz NextGFXQueueSlot
+//  Store Zero to ProcSequence	;cancels any other procs
+//  Store Zero to NextGFXQueueSlot
 //         ldx AttackerOffset
 //         lda CharStruct::MonsterTargets,X
 //  STore A to MonsterTargets
@@ -2970,14 +2970,14 @@ static void commandTable33(void) {
 //  Transfer A to X
 //         lda f:_d0ed85,X	;size of one character's gear structs
 //  Transfer A to X
-//         stx $0E			;GearStruct offset
+//  STore X to $0E			;GearStruct offset
 //         ldx AttackerOffset
 //         lda CharStruct::RHWeapon,X
 //         bne RH
 //         jmp LH
 // RH:	jsr SelectCurrentProcSequence
 //         sty $14
-//         stz $12
+//  Store Zero to $12
 //         ldx $0E
 // :      	lda RHWeapon,X
 //  STore A to AttackInfo,Y
@@ -2988,14 +2988,14 @@ static void commandTable33(void) {
 //  CoMPare A with #$0C		;copy 12 bytes weapon data
 //         bne :-
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$01		;ability/command animation
 //  STore A to GFXQueue::Type,X
 //         lda #$04		;fight
 //  STore A to GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X	;right hand, no msword
+//  Store Zero to GFXQueue::Data2,X	;right hand, no msword
 //         ldx $0E			;GearStruct offset
 //         lda RHWeapon::AtkType,X
 //         pha
@@ -3003,8 +3003,8 @@ static void commandTable33(void) {
 //  Transfer A to X
 //         pla
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
@@ -3016,7 +3016,7 @@ static void commandTable33(void) {
 //  Jump To Subroutine GFXCmdDamageNumbers
 //  Jump To Subroutine SelectCurrentProcSequence
 //         sty $14
-//         stz $12
+//  Store Zero to $12
 //         ldx $0E			;GearStruct offset
 //         lda RHWeapon::Properties,X
 //  AND A with #$02		;command instead of attack
@@ -3035,11 +3035,11 @@ static void commandTable33(void) {
 //         lda #$80
 //  STore A to ActionAnimShift	;flag for later anim manipulation
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
-//         stz GFXQueue::Cmd,X
-//         stz GFXQueue::Type,X
-//         stz GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X
+//  Store Zero to GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Cmd,X
+//  Store Zero to GFXQueue::Type,X
+//  Store Zero to GFXQueue::Data1,X
+//  Store Zero to GFXQueue::Data2,X
 //         ldx $0E			;GearStruct offset
 //         lda RHWeapon::AtkType,X
 //         pha
@@ -3047,8 +3047,8 @@ static void commandTable33(void) {
 //  Transfer A to X
 //         pla
 //  STore A to AtkType,X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
@@ -3064,7 +3064,7 @@ static void commandTable33(void) {
 //         jmp Ret
 // :Jump To Subroutine SelectCurrentProcSequence
 //         sty $12
-//         stz $14
+//  Store Zero to $14
 //         ldx $0E			;GearStruct offset
 // :   	lda LHWeapon,X
 //  STore A to AttackInfo,Y
@@ -3080,7 +3080,7 @@ static void commandTable33(void) {
 //         lda LHWeapon::AtkType,X
 //  STore A to AtkType,Y
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Flag,X
 //         lda #$FC		;exec graphics command
 //  STore A to GFXQueue::Cmd,X
 //         lda #$01		;command/ability anim
@@ -3091,8 +3091,8 @@ static void commandTable33(void) {
 //  STore A to GFXQueue::Data2,X
 //         lda ProcSequence
 //  Transfer A to X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
@@ -3104,11 +3104,11 @@ static void commandTable33(void) {
 //  Jump To Subroutine GFXCmdDamageNumbers
 //  Jump To Subroutine SelectCurrentProcSequence
 //         sty $12
-//         stz $14
+//  Store Zero to $14
 //         ldx $0E
 //         lda LHWeapon::Properties,X
 //  AND A with #$02		;command instead of attack
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         lda LHWeapon::Param3,X
 //  CoMPare A with #$55		;this command
 //         bne Ret
@@ -3129,15 +3129,15 @@ static void commandTable33(void) {
 //         lda LHWeapon::AtkType,X
 //  STore A to AtkType,Y
 //  Jump To Subroutine FindOpenGFXQueueSlot
-//         stz GFXQueue::Flag,X
-//         stz GFXQueue::Cmd,X
-//         stz GFXQueue::Type,X
-//         stz GFXQueue::Data1,X
-//         stz GFXQueue::Data2,X
+//  Store Zero to GFXQueue::Flag,X
+//  Store Zero to GFXQueue::Cmd,X
+//  Store Zero to GFXQueue::Type,X
+//  Store Zero to GFXQueue::Data1,X
+//  Store Zero to GFXQueue::Data2,X
 //         lda ProcSequence
 //  Transfer A to X
-//         stz MultiTarget,X
-//         stz TargetType,X
+//  Store Zero to MultiTarget,X
+//  Store Zero to TargetType,X
 //         lda ProcSequence
 //  A Shift Left
 //  Transfer A to X
@@ -3147,7 +3147,7 @@ static void commandTable33(void) {
 //  STore A to CommandTargetBitmask+1,X
 //         inc ProcSequence
 //  Jump To Subroutine GFXCmdDamageNumbers
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Address: _16A2
@@ -3167,8 +3167,8 @@ static void copyAbilityInfo(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
-//         stz $0A
+//  Clear A, then Shorten
+//  Store Zero to $0A
 // :	lda f:BattleCmdProp,X
 //  STore A to AttackInfo,Y
 //         inx
@@ -3306,10 +3306,10 @@ static void handleAtbMenu(void) {
 //         lda CharStruct::CurMP,X
 //  CoMPare A with DisplayInfo::CurMP
 //         bne Differs
-//         shorta0
-//         bra Matches
+//  Clear A, then Shorten
+//  BRAnch to Matches
 // Differs:	;disable commands as needed, and update displayinfo for menu
-//         shorta0
+//  Clear A, then Shorten
 //  Jump To Subroutine CheckDisablingStatus
 //         bne Disabled
 //  Jump To Subroutine DisableCommandsMagic
@@ -3327,14 +3327,14 @@ static void handleAtbMenu(void) {
 //  STore A to DisplayInfo::Status3
 //         lda CharStruct::CurMP,X
 //  STore A to DisplayInfo::CurMP
-//         shorta0
-//         bra Matches
+//  Clear A, then Shorten
+//  BRAnch to Matches
 // Disabled:	;if character has become disabled while their menu is open, close the menu
 //         lda DisplayInfo::CurrentChar
 //  STore A to MenuCurrentChar
 //         lda GearChanged
 //         beq :+
-//         stz GearChanged
+//  Store Zero to GearChanged
 //  Jump To Subroutine ReplaceHands
 //  Jump To Subroutine ApplyGear
 // :	lda DisplayInfo::CurrentChar
@@ -3351,7 +3351,7 @@ static void handleAtbMenu(void) {
 //  Return To Subroutine
 // Matches:	;data either already matched or has been updated
 //         lda ControllingA
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         lda DisplayInfo::CurrentChar
 //  Transfer A to X
 //         lda ControlTarget,X
@@ -3370,17 +3370,17 @@ static void handleAtbMenu(void) {
 //         bne WaitMenu2	;ends up 0 eventually? via interrupts?
 //         lda #$80
 //  STore A to MenuData::ActionFlag
-//         stz MenuData::Command
-//         stz MenuData::MonsterTargets
-//         stz MenuData::PartyTargets
-//         stz MenuData::SelectedItem
-//         stz MenuData::SecondActionFlag
-//         stz MenuData::SecondCommand
-//         stz MenuData::SecondMonsterTargets
-//         stz MenuData::SecondPartyTargets
-//         stz MenuData::SecondSelectedItem
-//         bra MenuClosed
-// Ret:	rts
+//  Store Zero to MenuData::Command
+//  Store Zero to MenuData::MonsterTargets
+//  Store Zero to MenuData::PartyTargets
+//  Store Zero to MenuData::SelectedItem
+//  Store Zero to MenuData::SecondActionFlag
+//  Store Zero to MenuData::SecondCommand
+//  Store Zero to MenuData::SecondMonsterTargets
+//  Store Zero to MenuData::SecondPartyTargets
+//  Store Zero to MenuData::SecondSelectedItem
+//  BRAnch to MenuClosed
+// [Ret] Return To Subroutine
 // MenuClosed:								;
 //         lda DisplayInfo::CurrentChar
 //  CoMPare A with #$FF
@@ -3417,7 +3417,7 @@ static void handleAtbMenu(void) {
 //         lda #$01		;increase ATB to 1 (no longer ready)
 //  STore A to CurrentTimer::ATB,Y
 //  STore A to EnableTimer::ATB,Y
-//         bra FinishEarly
+//  BRAnch to FinishEarly
 // DontStopTime:
 //  Jump To Subroutine CheckDisablingStatus
 //         beq NotDisabled
@@ -3426,7 +3426,7 @@ static void handleAtbMenu(void) {
 //  STore A to DisplayInfo::CurrentChar
 //  Return To Subroutine
 // NotDisabled:	;character's turn has just come up
-//         stz MenuCurrentChar+1
+//  Store Zero to MenuCurrentChar+1
 //  Jump To Subroutine ApplyBerserkStatus
 //         bne FinishEarly
 //  Jump To Subroutine DisableCommandsMagic
@@ -3442,14 +3442,14 @@ static void handleAtbMenu(void) {
 //  STore A to DisplayInfo::Status3
 //         lda CharStruct::CurMP,X
 //  STore A to DisplayInfo::CurMP
-//         stz CharStruct::CmdStatus,X	;also damagemod
-//         shorta0
+//  Store Zero to CharStruct::CmdStatus,X	;also damagemod
+//  Clear A, then Shorten
 //  Jump To Subroutine CheckControlTargetActive
 //         lda #$01
 //  STore A to FleeTickerActive	;can't start running until first atb
 //         lda EncounterInfo::IntroFX
 //         bpl NoCredits
-//         stz MenuData::MenuOpen
+//  Store Zero to MenuData::MenuOpen
 //  Return To Subroutine
 // NoCredits:
 //         lda DisplayInfo::CurrentChar
@@ -3467,7 +3467,7 @@ static void handleAtbMenu(void) {
 //         beq WaitMenu3
 //  Return To Subroutine
 // ProcessMenuCommand:
-//         stz ATBWaiting
+//  Store Zero to ATBWaiting
 //  Jump To Subroutine ProcessMenuCommandData
 //         lda #$FF	;no current char
 //  STore A to DisplayInfo::CurrentChar
@@ -3507,7 +3507,7 @@ static void processMenuCommandData(void) {
 //  STore A to CurrentChar
 //         lda GearChanged
 //         beq :+
-//         stz GearChanged
+//  Store Zero to GearChanged
 //  Jump To Subroutine ReplaceHands
 //  Jump To Subroutine ApplyGear
 // :	lda DisplayInfo::CurrentChar
@@ -3528,8 +3528,8 @@ static void processMenuCommandData(void) {
 // ClearControl:
 //         lda DisplayInfo::CurrentChar
 //  Transfer A to X
-//         stz ControlTarget,X
-//         bra ClearMenuData
+//  Store Zero to ControlTarget,X
+//  BRAnch to ClearMenuData
 // :	lda DisplayInfo::CurrentChar
 //  CoMPare A with MenuData::CurrentChar
 //         beq :+
@@ -3538,7 +3538,7 @@ static void processMenuCommandData(void) {
 //         lda #$0D	;C1 Routine
 //  Jump To Subroutine CallC1
 // WaitForever:
-//         bra WaitForever	;infinite loop?
+//  BRAnch to WaitForever	;infinite loop?
 // :	lda DisplayInfo::CurrentChar
 //  Transfer A to X
 //         lda ControlTarget,X
@@ -3571,32 +3571,32 @@ static void processMenuCommandData(void) {
 // ClearMenuData:
 //         lda #$80
 //  STore A to MenuData::ActionFlag
-//         stz MenuData::Command
-//         stz MenuData::MonsterTargets
-//         stz MenuData::PartyTargets
-//         stz MenuData::SelectedItem
-//         stz MenuData::SecondActionFlag
-//         stz MenuData::SecondCommand
-//         stz MenuData::SecondMonsterTargets
-//         stz MenuData::SecondPartyTargets
-//         stz MenuData::SecondSelectedItem
-//         bra CopyCommands
+//  Store Zero to MenuData::Command
+//  Store Zero to MenuData::MonsterTargets
+//  Store Zero to MenuData::PartyTargets
+//  Store Zero to MenuData::SelectedItem
+//  Store Zero to MenuData::SecondActionFlag
+//  Store Zero to MenuData::SecondCommand
+//  Store Zero to MenuData::SecondMonsterTargets
+//  Store Zero to MenuData::SecondPartyTargets
+//  Store Zero to MenuData::SecondSelectedItem
+//  BRAnch to CopyCommands
 // NoControlTarget:
 //         lda ControllingB
 //         bne ClearMenuData	;controlling with no target
 // CopyCommands:
 //         lda DisplayInfo::CurrentChar
 //  Transfer A to X
-//         stx $2A
+//  STore X to $2A
 //         ldx #$028A   	;650, size of CharSpells struct
-//         stx $2C
+//  STore X to $2C
 //  Jump To Subroutine Multiply_16bit	;not using the rom *650 table?
 //         longa
 //         clc
 //         lda $2E		;CurrentChar * 650
 //         adc #$2D34   	;CharSpells struct location
 //  STore A to TempSpellOffset
-//         shorta0
+//  Clear A, then Shorten
 //         ldx AttackerOffset
 //         lda CharStruct::Status2,X
 //         ora CharStruct::AlwaysStatus2,X
@@ -3633,13 +3633,13 @@ static void processMenuCommandData(void) {
 //  STore A to CharStruct::SecondSelectedItem,X
 //         lda MenuData::SecondActionFlag
 //  STore A to CharStruct::SecondActionFlag,X
-//         bra CheckCommand
+//  BRAnch to CheckCommand
 // NotXMagic:
-//         stz CharStruct::SecondCommand,X
-//         stz CharStruct::SecondMonsterTargets,X
-//         stz CharStruct::SecondMonsterTargets,X	;**bug: PartyTargets
-//         stz CharStruct::SecondSelectedItem,X
-//         stz CharStruct::SecondActionFlag,X
+//  Store Zero to CharStruct::SecondCommand,X
+//  Store Zero to CharStruct::SecondMonsterTargets,X
+//  Store Zero to CharStruct::SecondMonsterTargets,X	;**bug: PartyTargets
+//  Store Zero to CharStruct::SecondSelectedItem,X
+//  Store Zero to CharStruct::SecondActionFlag,X
 // CheckCommand:
 //         lda MenuData::Command
 //  STore A to $24
@@ -3711,7 +3711,7 @@ static void processMenuCommandData(void) {
 //         beq WeaponAttackDelay
 //         jmp WeaponUseDelay
 // WeaponAttackDelay:	;despite the calculation, I don't think any weapons have delay values
-//         stz $0E
+//  Store Zero to $0E
 //         lda DisplayInfo::CurrentChar
 //  STore A to $24
 //         lda #$54     ;84, size of GearStats struct
@@ -3749,7 +3749,7 @@ static void processMenuCommandData(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:ConsumableItemProp+2,X
 //  AND A with #$08
 //         bne :+
@@ -3759,14 +3759,14 @@ static void processMenuCommandData(void) {
 //  AND A with #$03	;delay bits (delay/10)
 //  Transfer A to X
 //         lda f:AttackDelayTbl,X
-//         bra Finish
+//  BRAnch to Finish
 // MagicDelay:
-//         stz $0E
+//  Store Zero to $0E
 //         lda MenuData::SelectedItem
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:AttackProp,X
 //  AND A with #$03	;delay bits (delay/10)
 //  Transfer A to X
@@ -3779,7 +3779,7 @@ static void processMenuCommandData(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:AttackProp,X
 //  AND A with #$03	;delay bits (delay/10)
 //  Transfer A to X
@@ -3789,7 +3789,7 @@ static void processMenuCommandData(void) {
 //  STore A to $0E
 // FinishMagic:
 //         lda $0E		;attack delay
-//         bra Finish
+//  BRAnch to Finish
 // WeaponUseDelay:
 //         lda DisplayInfo::CurrentChar
 //  STore A to $24
@@ -3804,14 +3804,14 @@ static void processMenuCommandData(void) {
 //         clc
 //         adc #$000C	;shifts offset from RHWeapon to LHWeapon
 //  Transfer A to Y
-//         shorta0
+//  Clear A, then Shorten
 // :	lda RHWeapon::ItemMagic,Y	;could be LHWeapon
 //  AND A with #$7F	;weapon magic to cast
 //         beq Finish
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:AttackProp,X
 //  AND A with #$03	;delay bits (delay/10)
 //  Transfer A to X
@@ -3828,18 +3828,18 @@ static void processMenuCommandData(void) {
 //  STore A to EnableTimer::ATB,Y
 //         lda #$80		;physical/other
 //  STore A to MenuData::ActionFlag
-//         stz MenuData::Command
-//         stz MenuData::CurrentChar
-//         stz MenuData::MonsterTargets
-//         stz MenuData::PartyTargets
-//         stz MenuData::SelectedItem
-//         stz MenuData+7
-//         stz MenuData::SecondActionFlag
-//         stz MenuData::SecondCommand
-//         stz MenuData+10
-//         stz MenuData::SecondMonsterTargets
-//         stz MenuData::SecondPartyTargets
-//         stz MenuData::SecondSelectedItem
+//  Store Zero to MenuData::Command
+//  Store Zero to MenuData::CurrentChar
+//  Store Zero to MenuData::MonsterTargets
+//  Store Zero to MenuData::PartyTargets
+//  Store Zero to MenuData::SelectedItem
+//  Store Zero to MenuData+7
+//  Store Zero to MenuData::SecondActionFlag
+//  Store Zero to MenuData::SecondCommand
+//  Store Zero to MenuData+10
+//  Store Zero to MenuData::SecondMonsterTargets
+//  Store Zero to MenuData::SecondPartyTargets
+//  Store Zero to MenuData::SecondSelectedItem
 //  Return To Subroutine
 }
 
@@ -3931,12 +3931,12 @@ static void applyBerserkStatus(void) {
 static void disableCommandsMagic(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $16
+//  STore X to $16
 //         lda Void
 //  AND A with #$40     	;void
 //         beq :+
 //         ldx #$0080
-//         stx $16		;disables magic
+//  STore X to $16		;disables magic
 // :	lda DisplayInfo::CurrentChar
 //  Jump To Subroutine CalculateSpellOffset	;sets Y
 //         longa
@@ -3976,7 +3976,7 @@ static void disableCommandsMagic(void) {
 //         lda CharSpells::Flags,Y
 //         ora #$0080
 //  STore A to CharSpells::Flags,Y
-//         bra NextSpell
+//  BRAnch to NextSpell
 // CheckStatus:
 //         lda CharSpells::Flags,Y
 //  AND A with #$FF7F	;clear bit 80h in flags, disabled bit?
@@ -4008,7 +4008,7 @@ static void disableCommandsMagic(void) {
 //         inx
 //         cpx #$0082	;130 spell slots
 //         bne DisableSpells
-//         shorta0
+//  Clear A, then Shorten
 //         lda DisplayInfo::CurrentChar
 //  STore A to $24
 //         lda #$14	;20, size of CharCommands struct
@@ -4016,7 +4016,7 @@ static void disableCommandsMagic(void) {
 //  Jump To Subroutine Multiply_8bit
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $0E
+//  STore X to $0E
 //         ldy $26
 //         longa
 // DisableCommands:
@@ -4039,7 +4039,7 @@ static void disableCommandsMagic(void) {
 //         lda CharCommands::Flags,Y
 //         ora #$0080	;disabled
 //  STore A to CharCommands::Flags,Y
-//         bra NextCommand
+//  BRAnch to NextCommand
 // EnableCommand:
 //         lda CharCommands::Flags,Y
 //  AND A with #$FF7F	;enabled
@@ -4050,7 +4050,7 @@ static void disableCommandsMagic(void) {
 //         lda $0E
 //  CoMPare A with #$0004	;4 commands per character
 //         bne DisableCommands
-//         shorta0
+//  Clear A, then Shorten
 //  Return To Subroutine
 }
 
@@ -4062,8 +4062,8 @@ static void disableCommandsMagic(void) {
 static void handleUncontrolledParty(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $3D		;char index, used in subroutines also
-//         stx $3F		;char offset
+//  STore X to $3D		;char index, used in subroutines also
+//  STore X to $3F		;char offset
 // Loop:
 //         ldx $3D
 //         lda UncontrolledATB,X
@@ -4078,7 +4078,7 @@ static void handleUncontrolledParty(void) {
 //         bne Next
 //         ldx $3D
 //         dec UncontrolledATB,X
-//         bra Next
+//  BRAnch to Next
 // ActionReady:
 //         ldx $3F		;char offset
 //         lda #$01
@@ -4088,13 +4088,13 @@ static void handleUncontrolledParty(void) {
 //  AND A with #$02	;zombie
 //         beq :+
 //  Jump To Subroutine ZombieAction
-//         bra Next
+//  BRAnch to Next
 // :	lda CharStruct::Status2,X
 //         ora CharStruct::AlwaysStatus2,X
 //  AND A with #$10	;charm
 //         beq :+
 //  Jump To Subroutine CharmAction
-//         bra Next
+//  BRAnch to Next
 // :	lda CharStruct::Status2,X
 //         ora CharStruct::AlwaysStatus2,X
 //  AND A with #$08	;berserk
@@ -4103,7 +4103,7 @@ static void handleUncontrolledParty(void) {
 // Next:
 //         ldx $3F		;char offset
 //  Jump To Subroutine NextCharOffset
-//         stx $3F
+//  STore X to $3F
 //         inc a:$003D	;char index ; TODO: dont know why this is being done?
 //         lda a:$003D
 //  CoMPare A with #$04	;4 characters
@@ -4166,13 +4166,13 @@ static void charmAction(void) {
 //  STore A to CharStruct::ActionFlag,X
 //         lda #$05	;fight
 //  STore A to CharStruct::Command,X
-//         stz CharStruct::MonsterTargets,X
-//         stz CharStruct::SelectedItem,X
-//         stz CharStruct::SecondActionFlag,X
-//         stz CharStruct::SecondCommand,X
-//         stz CharStruct::SecondMonsterTargets,X
-//         stz CharStruct::SecondPartyTargets,X
-//         stz CharStruct::SecondSelectedItem,X
+//  Store Zero to CharStruct::MonsterTargets,X
+//  Store Zero to CharStruct::SelectedItem,X
+//  Store Zero to CharStruct::SecondActionFlag,X
+//  Store Zero to CharStruct::SecondCommand,X
+//  Store Zero to CharStruct::SecondMonsterTargets,X
+//  Store Zero to CharStruct::SecondPartyTargets,X
+//  Store Zero to CharStruct::SecondSelectedItem,X
 //         phx
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
@@ -4187,13 +4187,13 @@ static void charmAction(void) {
 // Magic:
 //         lda $3D		;char index
 //  Transfer A to X
-//         stx $2A
+//  STore X to $2A
 //         ldx #$028A ; TODO: fixme .sizeof(CharSpells)	;650, size of CharSpells struct
-//         stx $2C
+//  STore X to $2C
 //  Jump To Subroutine Multiply_16bit    ;**optimize: use rom table instead
 //         ldx $2E
-//         stx SpellOffsetRandom
-//         stz $0E
+//  STore X to SpellOffsetRandom
+//  Store Zero to $0E
 // FindAnySpell:		;checks if any spells are learned
 //         lda CharSpells::ID+18,X	;starts at first white spell
 //  CoMPare A with #$46		;Quick spell
@@ -4206,7 +4206,7 @@ static void charmAction(void) {
 //         lda $0E
 //  CoMPare A with #$36
 //         bne FindAnySpell
-//         bra Fight		;no spells, hit something instead
+//  BRAnch to Fight		;no spells, hit something instead
 // TryRandomSpell:
 //         ldx #$0012		;first white spell
 //         lda #$47		;last time spell
@@ -4214,7 +4214,7 @@ static void charmAction(void) {
 //         longa
 //         adc SpellOffsetRandom
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda CharSpells::ID,X
 //  CoMPare A with #$FF		;empty spell slot
 //         beq TryRandomSpell	;keep trying until we hit a known spell
@@ -4224,7 +4224,7 @@ static void charmAction(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:AttackProp,X
 //  STore A to TempTargetting	;temp area
 //  Transfer Direct page to aCcumulator
@@ -4237,10 +4237,10 @@ static void charmAction(void) {
 //         lda $3F			;Char Offset
 //  Jump To Subroutine ShiftDivide_128	;char index (could've just loaded that)
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //  Jump To Subroutine SetBit_X     	;target self if no targetting info
 //  STore A to $16
-//         bra TargetReady
+//  BRAnch to TargetReady
 // CheckTargetting:
 //  AND A with #$40		;hits all
 //         bne TargetsAll
@@ -4256,7 +4256,7 @@ static void charmAction(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to $17			;monster target
-//         bra TargetReady
+//  BRAnch to TargetReady
 // TargetsEnemy:			;normally targets enemy, now targets party
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
@@ -4266,14 +4266,14 @@ static void charmAction(void) {
 //  Transfer Direct page to aCcumulator
 //  Jump To Subroutine SetBit_X
 //  STore A to $16			;party target
-//         bra TargetReady
+//  BRAnch to TargetReady
 // TargetsAll:
 //         lda TempTargetting
 //  AND A with #$08		;targets enemy by default
 //         bne :+
 //         lda #$FF
 //  STore A to $17
-//         bra TargetReady
+//  BRAnch to TargetReady
 // :	lda #$F0		;target all party members
 //  STore A to $16
 // TargetReady:
@@ -4288,11 +4288,11 @@ static void charmAction(void) {
 //  STore A to CharStruct::ActionFlag,X
 //         lda #$2C		;first magic command
 //  STore A to CharStruct::Command,X
-//         stz CharStruct::SecondActionFlag,X
-//         stz CharStruct::SecondCommand,X
-//         stz CharStruct::SecondMonsterTargets,X
-//         stz CharStruct::SecondPartyTargets,X
-//         stz CharStruct::SecondSelectedItem,X
+//  Store Zero to CharStruct::SecondActionFlag,X
+//  Store Zero to CharStruct::SecondCommand,X
+//  Store Zero to CharStruct::SecondMonsterTargets,X
+//  Store Zero to CharStruct::SecondPartyTargets,X
+//  Store Zero to CharStruct::SecondSelectedItem,X
 // _QueueUncontrolledAction:
 //         jmp QueueUncontrolledAction
 }
@@ -4387,7 +4387,7 @@ static void randomizeOrder(void) {
 //         iny 			;and select next writing slot
 //         									;:
 //  _Next:
-//         cpy #$000C		;12 combatant slots
+//  ComPare Y with #$000C		;12 combatant slots
 //         bne _RandomizeOrder
 //         									;.
 //  Return To Subroutine
@@ -4400,7 +4400,7 @@ static void updateTimers(void) {
 //  Jump To Subroutine GlobalTimers
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $0A     		;char index
+//  STore X to $0A     		;char index
 // Loop:	tdc
 //  Transfer A to Y
 //         sty $0C     		;timer index
@@ -4443,12 +4443,12 @@ static void updateTimers(void) {
 //  - X = timer offset
 // Output: $08 = timer triggered
 static void updateTimer(void) {
-//         stz $08    	;timer triggered flag
+//  Store Zero to $08    	;timer triggered flag
 //         phy
 //         ldy $0C		;timer index
 //         lda ProcessTimer,Y	;should process this timer this tick?
 //         beq Finish
-//         cpy #$000A	;ProcessTimer::ATB
+//  ComPare Y with #$000A	;ProcessTimer::ATB
 //         beq :+
 //         lda CurrentlyReacting
 //         bne Finish
@@ -4486,8 +4486,8 @@ static void globalTimers(void) {
 //         lda GlobalTimer,X
 //         beq Triggered
 //         dec GlobalTimer,X
-//         stz ProcessTimer,X
-//         bra :+
+//  Store Zero to ProcessTimer,X
+//  BRAnch to :+
 // Triggered:
 //         lda #$01
 //  STore A to ProcessTimer,X		;flag timer for processing
@@ -4511,16 +4511,16 @@ static void globalTimers(void) {
 static void findEndedTimers(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $08			;timer index
+//  STore X to $08			;timer index
 //  Transfer A to Y
 // :	sta TimerEnded,Y
 //         iny
-//         cpy #$000B
+//  ComPare Y with #$000B
 //         bne :-
 // TimerLoop:	;for each timer, loop finds the first character for whom that timer ended, checking in a "random" order
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $0A			;char count
+//  STore X to $0A			;char count
 //         ldx $08			;timer index
 //         lda RandomOrderIndex,X
 //         pha 			;original RandomOrderIndex
@@ -4565,7 +4565,7 @@ static void findEndedTimers(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_128
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda CharStruct::Status4,X
 //  AND A with #$81	;erased or hidden
 //         bne NextCharPLX
@@ -4574,7 +4574,7 @@ static void findEndedTimers(void) {
 //         beq EndTimerPLX
 // NextCharPLX:
 //         plx
-//         bra NextChar
+//  BRAnch to NextChar
 // EndTimerPLX:
 //         plx 		;timer offset + index
 // EndTimer:		;sets flag that timer has ended, so effects can be applied later
@@ -4591,7 +4591,7 @@ static void findEndedTimers(void) {
 //         lda RandomOrder,X
 //         plx 		;timer index
 //  STore A to TimerReadyChar,X	;which character had their timer end
-//         bra NextTimer	;don't check any more characters for this timer
+//  BRAnch to NextTimer	;don't check any more characters for this timer
 // NextChar:	;this character's timer didn't end or isn't eligable,
 //         	;keep looking until all have been checked or one is found
 //         ldx $08		;timer index
@@ -4599,7 +4599,7 @@ static void findEndedTimers(void) {
 //         lda RandomOrderIndex,X
 //  CoMPare A with #$0C	;reset index at 12
 //         bne :+
-//         stz RandomOrderIndex,X
+//  Store Zero to RandomOrderIndex,X
 // :       inc $0A        	;char count
 //         lda $0A
 //  CoMPare A with #$0C	;12 chars
@@ -4611,15 +4611,15 @@ static void findEndedTimers(void) {
 //         inc $08        	;next timer index
 //         lda $08
 //  CoMPare A with #$0B	;11 timers
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         jmp TimerLoop
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 static void applyTimerEffects(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx ProcessingTimer
+//  STore X to ProcessingTimer
 // Loop:
 //         ldx ProcessingTimer
 //         lda TimerEnded,X
@@ -4628,7 +4628,7 @@ static void applyTimerEffects(void) {
 //         lda RandomOrderIndex,X
 //  CoMPare A with #$0C		;12 chars
 //         bne :+
-//         stz RandomOrderIndex,X
+//  Store Zero to RandomOrderIndex,X
 // :	    lda TimerReadyChar,X
 //  Jump To Subroutine GetTimerOffset    	;sets Y to timer offset
 //         lda TimerReadyChar,X
@@ -4696,10 +4696,10 @@ static void timerEffectPoison(void) {
 //         bcs :+
 //  Transfer Direct page to aCcumulator 				;min 0 hp
 // :	sta CharStruct::CurHP,X
-//         shorta0
+//  Clear A, then Shorten
 //         lda TimerReadyChar::Poison
 //         ldx $0E				;poison tick damage
-//         stx TempDisplayDamage
+//  STore X to TempDisplayDamage
 //  Jump To Subroutine CopyDisplayDamage
 //         lda #$09	;C1 routine: display regen/poison damage
 //         jmp CallC1
@@ -4721,7 +4721,7 @@ static void timerEffectCountdown(void) {
 //         lda TimerReadyChar::Countdown
 //  Jump To Subroutine KillCharacter
 //         lda MonsterDead
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         lda #$07	;C1 routine: condemn death animation
 //  Jump To Subroutine CallC1
 // Ret:	   rts
@@ -4749,7 +4749,7 @@ static void timerEffectOld(void) {
 //         lda InitialTimer::Old,Y
 //  STore A to CurrentTimer::Old,Y
 //         ldx AttackerOffset
-//         stz $0E
+//  Store Zero to $0E
 // StatsLoop:		;applies to all 4 main stats
 //         lda CharStruct::BaseStr,X
 //         dec
@@ -4777,7 +4777,7 @@ static void timerEffectOld(void) {
 //         dec
 //         bpl Ret	;bug? only decreases attack if above 128
 //  STore A to CharStruct::MonsterAttack,X
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 static void timerEffectRegen(void) {
@@ -4816,17 +4816,17 @@ static void timerEffectRegen(void) {
 //         bcc :++
 // :	lda CharStruct::MaxHP,X	;cap at maxhp
 // :	sta CharStruct::CurHP,X
-//         shorta0
+//  Clear A, then Shorten
 //         lda $0F
 //         ora #$80       		;flag to display as healing
 //  STore A to $0F
 //         lda TimerReadyChar::Regen
 //         ldx $0E
-//         stx TempDisplayDamage
+//  STore X to TempDisplayDamage
 //  Jump To Subroutine CopyDisplayDamage
 //         lda #$09	;C1 routine: display regen/poison damage
 //  Jump To Subroutine CallC1
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 static void timerEffectSing(void) {
@@ -4838,16 +4838,16 @@ static void timerEffectSing(void) {
 //  Transfer A to Y
 //         ldx AttackerOffset
 //         lda CharStruct::Song,X
-//         beq Ret
+//  Branch to [Ret] if EQuals
 // FindSong:		;Y = song stat index
 //  A Shift Left
 //         bcs :+
 //         iny
-//         bra FindSong
+//  BRAnch to FindSong
 // :       sty $12		;song stat index
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         stx $0E		;target
+//  STore X to $0E		;target
 //         lda #$04
 //  STore A to $10		;after last target
 //         lda TimerReadyChar::Sing
@@ -4859,13 +4859,13 @@ static void timerEffectSing(void) {
 //  STore A to $10		;last target +1
 //         ldx #$0180	;**bug: should be $0200 for first monster
 // ApplySong:
-//         stx $14		;char offset
+//  STore X to $14		;char offset
 //         longa
 // Transfer X to A
 //         clc
 //         adc $12		;adjust offset by song stat
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 // CharLoop:
 //         ldy $0E		;target
 //         lda ActiveParticipants,Y
@@ -4878,12 +4878,12 @@ static void timerEffectSing(void) {
 //  STore A to CharStruct::BonusStr,X
 // Next:
 //  Jump To Subroutine NextCharOffset
-//         stx $14		;char offset
+//  STore X to $14		;char offset
 //         inc $0E		;next target
 //         lda $0E
 //  CoMPare A with $10		;last target +1
 //         bne CharLoop
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 static void timerEffectParalyze(void) {
@@ -4931,7 +4931,7 @@ static void timerEffectATB(void) {
 // GoRet:	jmp Ret
 // Monster:
 //  Jump To Subroutine MonsterATB
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Called when character's turn is up,
@@ -4947,7 +4947,7 @@ static void performAction(void) {
 //         lda CharStruct::CmdStatus,X
 //  AND A with #$E0	;clear many flags (jump/flirt/others?)
 //  STore A to CharStruct::CmdStatus,X
-//         stz CharStruct::DamageMod,X
+//  Store Zero to CharStruct::DamageMod,X
 //         lda CharStruct::Status1,X
 //         ora CharStruct::AlwaysStatus1,X
 //  AND A with #$02	;zombie
@@ -4972,15 +4972,15 @@ static void performAction(void) {
 //         inc CheckQuick
 //         lda AttackerIndex
 //  Jump To Subroutine ResetATB
-//         stz CheckQuick
-// Ret:	rts
+//  Store Zero to CheckQuick
+// [Ret] Return To Subroutine
 }
 
 // Waits when a character's turn arrives
 // (amount depending on battle speed setting)
 static void atbWait(void) {
 //         lda ATBWaiting
-//         beq Ret
+//  Branch to [Ret] if EQuals
 //         lda ATBWaitLeft
 //         beq DoneWaiting
 //         dec
@@ -4989,7 +4989,7 @@ static void atbWait(void) {
 // DoneWaiting:
 //  Transfer Direct page to aCcumulator
 //  STore A to ATBWaiting
-// Ret:	rts
+// [Ret] Return To Subroutine
 }
 
 // Updates ATB for all combatants and
@@ -4998,7 +4998,7 @@ static void resetAtbAll(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
 //  Transfer A to Y
-//         stx $0E			;char index
+//  STore X to $0E			;char index
 // ResetATBLoop:
 //         lda $0E
 //  Jump To Subroutine ResetATB
@@ -5056,7 +5056,7 @@ static void resetAtb(void) {
 //         cpx #$0200		;monster
 //         bcs CreditsMonster
 //         lda #$01		;party member gets turn immediately
-//         bra CreditsParty
+//  BRAnch to CreditsParty
 // CreditsMonster:
 //         lda #$FF		;monster turn as late as possible
 // CreditsParty:
@@ -5074,7 +5074,7 @@ static void resetAtb(void) {
 //         phy
 //  Jump To Subroutine ClearQuick
 //         ply
-//         bra EnableATB
+//  BRAnch to EnableATB
 // Quick:										;:
 //         lda #$01
 //  STore A to CurrentTimer::ATB,Y
@@ -5274,10 +5274,10 @@ static void monsterAtb(void) {
 //  STore A to MonsterIndex
 //  Jump To Subroutine ShiftMultiply_16
 //  Transfer A to X
-//         stx MonsterOffset16
+//  STore X to MonsterOffset16
 //  A Shift Left
 //  Transfer A to X
-//         stx MonsterOffset32
+//  STore X to MonsterOffset32
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
 //         sty TempCharm
@@ -5286,7 +5286,7 @@ static void monsterAtb(void) {
 // :	sta MonsterMagic,X
 //         inx
 //         iny
-//         cpy #$0010	;init 16 byte monster magic struct
+//  ComPare Y with #$0010	;init 16 byte monster magic struct
 //         bne :-
 //         							;
 //         lda MonsterIndex
@@ -5303,7 +5303,7 @@ static void monsterAtb(void) {
 // :	sta MonsterAIScript,X
 //         inx
 //         iny
-//         cpy #$0064	;init 100 bytes to $FF
+//  ComPare Y with #$0064	;init 100 bytes to $FF
 //         bne :-
 //         lda AttackerIndex
 //  Jump To Subroutine CalculateCharOffset
@@ -5339,7 +5339,7 @@ static void monsterAtb(void) {
 //         lda #$03
 //  Jump To Subroutine Random_X_A 	;0..3
 //  Transfer A to X
-//         stx $0E
+//  STore X to $0E
 //         lda MonsterIndex
 //  A Shift Left
 //  Transfer A to X
@@ -5349,7 +5349,7 @@ static void monsterAtb(void) {
 //         clc
 //         adc $0E		;random number 0..3
 //  Transfer A to X 		;offset into control actions table
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:MonsterControl,X
 //  CoMPare A with #$FF
 //         beq TryRandomAction	;no action in this slot, try again
@@ -5358,7 +5358,7 @@ static void monsterAtb(void) {
 //  STore A to AIBuffer+1
 //         inc TempCharm
 //  Jump To Subroutine DispatchAICommands
-//         bra GoFinish
+//  BRAnch to GoFinish
 // CheckFlirt:								;
 //         lda CharStruct::CmdStatus,X
 //  AND A with #$08	;flirt
@@ -5367,7 +5367,7 @@ static void monsterAtb(void) {
 //  STore A to CharStruct::Command,X
 //         lda #$80	;other
 //  STore A to CharStruct::ActionFlag,X
-//         bra GoFinish
+//  BRAnch to GoFinish
 // CheckControl:
 //         lda CharStruct::Status4,X
 //  AND A with #$20	;control
@@ -5375,7 +5375,7 @@ static void monsterAtb(void) {
 //         lda CharStruct::Status2,X
 //  AND A with #$40	;sleep
 //         bne Sleep
-//         bra Normal
+//  BRAnch to Normal
 // Control:
 //  Transfer Direct page to aCcumulator
 //  Transfer A to Y
@@ -5383,15 +5383,15 @@ static void monsterAtb(void) {
 //  CoMPare A with AttackerIndex
 //         beq FoundController
 //         iny
-//         bra :-
+//  BRAnch to :-
 // FoundController:
 //         lda ControlCommand,Y
 //         bne _ControlCommand
 // Sleep:	;or controlled without a command
-//         stz CharStruct::Command,X
+//  Store Zero to CharStruct::Command,X
 //         lda #$80	;action complete?
 //  STore A to CharStruct::ActionFlag,X
-//         bra GoFinish
+//  BRAnch to GoFinish
 // _ControlCommand:
 //  Transfer Direct page to aCcumulator
 //  STore A to ControlCommand,Y
@@ -5417,15 +5417,15 @@ static void monsterAtb(void) {
 //         lda f:_d0eea5,X	;*1620, size of MonsterAI struct
 //         adc #MonsterAI
 //  STore A to AIOffset
-//         shorta0
-//         stz AICurrentCheckedSet
+//  Clear A, then Shorten
+//  Store Zero to AICurrentCheckedSet
 // CheckAIConditions:
 //         lda AICurrentCheckedSet
 //  Transfer A to X
 //         lda f:_d0eec9,X	;size of a MonsterAI condition
 //  Transfer A to Y
 //         sty AIConditionOffset
-//         stz AICheckIndex
+//  Store Zero to AICheckIndex
 // CheckSingleCondition:
 //         ldy AIConditionOffset
 //         lda (AIOffset),Y
@@ -5440,9 +5440,9 @@ static void monsterAtb(void) {
 //         lda AIConditionOffset
 //         adc #$0004		;next condition in set
 //  STore A to AIConditionOffset
-//         shorta0
+//  Clear A, then Shorten
 //         inc AICheckIndex
-//         bra CheckSingleCondition
+//  BRAnch to CheckSingleCondition
 // NextConditionSet:	;failed a condition in this set, check next set of conditions
 //         inc AICurrentCheckedSet
 //         lda AICurrentCheckedSet
@@ -5454,7 +5454,7 @@ static void monsterAtb(void) {
 //         lda AIOffset
 //         adc #$00AA	;advances from Conditions to Actions
 //  STore A to AIOffset
-//         shorta0
+//  Clear A, then Shorten
 //         lda AICurrentActiveCondSet
 //  CoMPare A with AICurrentCheckedSet
 //         beq ConditionOK	;matches so don't need to change things
@@ -5480,7 +5480,7 @@ static void monsterAtb(void) {
 //         longa
 //  Jump To Subroutine ShiftMultiply_8
 //  Transfer A to X
-//         shorta0
+//  Clear A, then Shorten
 //         lda f:AttackProp,X
 //  AND A with #$03       	;delay values
 //  Transfer A to X
@@ -5495,8 +5495,8 @@ static void monsterAtb(void) {
 //         lda MonsterIndex
 //  A Shift Left
 //  Transfer A to X
-//         stz ForcedTarget::Party,X
-//         stz ForcedTarget::Monster,X
+//  Store Zero to ForcedTarget::Party,X
+//  Store Zero to ForcedTarget::Monster,X
 //  Return To Subroutine
 }
 
@@ -5969,59 +5969,229 @@ static void aiCondition0A(void) {
 // Param2: Offset within CharStruct to check
 // Param3: Value for success
 static void aiCondition0B(void) {
-//         lda AIParam1
-//  Jump To Subroutine GetAITarget	;populates list of targets to check
-//         lda AIParam2
-//  Transfer A to X
-//         stx $0E		;Offset within CharStruct
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-// Loop:	longa
-//         lda AITargetOffsets,Y
-//  CoMPare A with #$FFFF	;end of list or no target found
-//         bne TargetFound
-//         shorta0
-//         bra Finish
-// TargetFound:
-//         clc
-//         adc $0E		;Offset within CharStruct
-//  Transfer A to X
-//         shorta0
-//         lda CharStruct::CharRow,X	;check any single CharStruct byte
-//  CoMPare A with AIParam3		;compare with provided value
-//         bne :+
-//         inc AIConditionMet
-// :	iny
-//         iny
-//         cpy #$0018	;12 characters * 2 bytes
-//         bne Loop
-// Finish:			;fail if any targets failed
-//         lda AIMultiTarget
-//         beq Ret
-//         lda AITargetCount
-//  CoMPare A with AIConditionMet
-//         beq Ret
-//         stz AIConditionMet
-// Ret:	rts
+    //  LoaD AIParam1 to A
+    //  Jump To Subroutine GetAITarget	(populates list of targets to check)
+    //  LoaD AIParam2 to A
+    //  Transfer A to X
+    //  STore X to $0E		(Offset within CharStruct)
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+
+    //  [Loop] Lengthen A
+    //  LoaD AITargetOffsets,Y to A
+    //  CoMPare A with #$FFFF	(end of list or no target found)
+    //  Branch to [TargetFound] if Not Equals
+    //  Clear A, then Shorten
+    //  BRAnch to [Finish]
+
+    //  [TargetFound] CLear Carry
+    //  ADd $0E to A with Carry		(Offset within CharStruct)
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD CharStruct::CharRow,X to A	(check any single CharStruct byte)
+    //  CoMPare A with AIParam3		(compare with provided value)
+    //  Branch to next if Not Equal
+    //  INCrement AIConditionMet
+
+    //  [LBL] INcrement Y by 2
+    //  ComPare Y with #$0018	(12 characters * 2 bytes)
+    //  Branch to [Loop] if Not Equals
+
+    //  [Finish]			(fail if any targets failed)
+    //  LoaD AIMultiTarget to A
+    //  Branch to [Ret] if EQuals
+    //  LoaD AITargetCount to A
+    //  CoMPare A with AIConditionMet
+    //  Branch to [Ret] if EQuals
+    //  Store Zero to AIConditionMet
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _2B19
-static void aiCondition0C(void) {}
+// AI Condition $0C: Compare with value at $A2?
+// Param2/3: 16 bit Value to compare, succeeds if >= value at $A2
+static void aiCondition0C(void) {
+    // Lengthen A
+    // LoaD a:$00A2 to A (something from C1 bank code, TODO: why must this be done?)
+    // CoMPare A with AIParam2
+    // Branch to next label if Clear Carry
+    // INCrement AIConditionMet
+    // [LBL] Transfer Direct page to aCcumulator
+    // Shorten A
+    // Return to Subroutine
+}
 
 // Address: _2B2A
-static void aiCondition0D(void) {}
+// AI Condition $0D: Check Event Flags
+// Param2: Event Flag # (0-15)
+// Param3: Value (bitmask)
+// There's a special case for Event Flag 03
+static void aiCondition0D(void) {
+    // LoaD AIParam2 to A
+    // Transfer A to X
+    // CoMPare A with #$03 (special case)
+    // Branch to [CheckEventFlags] if Not Equals (otherwise just compares flag bits)
+    // STore Zero to $0E
+    // Transfer Direct page to aCcumulator
+    // Transfer A to X
+    // Transfer A to Y
+
+    // [PartyLoop] LoaD BattleData::EventFlags+3 to A
+    // Jump to SubRoutine SelectBit_X
+    // Branch to [Next] if EQuals (if flag bit not set, skip this party slot)
+    // PusH X
+    // LoaD CharStruct::CharRow,Y to A
+    // AND A with #$07 (char id)
+    // Transfer A to X
+    // LoaD $0E to A
+    // Jump to SubRoutine SetBit_X (otherwise, set bit corresponding with char)
+    // STore A to $0E
+    // PulL X
+
+    // [Next] Lengthen A
+    // Transfer Y to A
+    // CLear Carry
+    // ADd #$0080 to A with Carry (next CharStruct Offset)
+    // Transfer A to Y
+    // Clear and Shorten A
+    // INcerment X
+    // ComPare X with #$0004 (4 party slots)
+    // Branch to [PartyLoop] if Not Equals
+    // LoaD $0E to A (bits set for party chars matching flag slots)
+    // BRAnch to [CheckMatch]
+
+    // [CheckEventFlags] LoaD BattleData::EventFlags,X to A
+
+    // [CheckMatch] AND A with AIParam3
+    // Branch to [Ret] if EQuals
+    // INCrement AIConditionMet
+
+    // [RET] Return To Subroutine
+}
 
 // Address: _2B6F
-static void aiCondition0E(void) {}
+// Reaction to Damage
+static void aiCondition0E(void) {
+    // LoaD ReactionFlags to A
+    // AND A with #$01 (check second set of reactions)
+    // Branch to [Reaction2] if Not Equals
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Reaction1Damage,X to A
+    // Branch to [Met] if Not Equals
+    // Return To Subroutine
+
+    // [Reaction2] **bug: didn't load X for this path, but fortunately it's always? correct already
+    // LoaD CharStruct::Reaction2Damage,X to A
+    // Branch to [Fail] if EQuals
+
+    // [Met] INCrement AIConditionMet
+
+    // [Fail] Return To Subroutine
+}
 
 // Address: _2B87
-static void aiCondition0F(void) {}
+// Sets flag to skip dead monster checks (Always Succeeds)
+static void aiCondition0F(void) {
+    // STore Zero to $4751
+    // LoaD #$01 to A
+    // STore A to AISkipDeadCheck
+    // STore A to AIConditionMet
+    // Return to Subroutine
+}
 
 // Address: _2B93
-static void aiCondition10(void) {}
+// One party member alive
+static void aiCondition10(void) {
+    // Transfer Direct page to aCcumulator
+    // Transfer A to X
+    // Transfer A to Y
+    // STore Y to $0E
+
+    // [PartyLoop] (count number of active party members)
+    // LoaD ActiveParticipants,Y to A
+    // Branch to [Next] if EQuals
+    // LoaD CharStruct::Status1,X to A
+    // AND A with #$C2 (Dead, Stone or Zombie)
+    // Branch to [Next] if Not Equals
+    // LoaD CharStruct::CurHP,X to A
+    // OR A with CharStruct::CurHP+1,X
+    // Branch to [Next] if EQuals
+    // INCrement $0E (count of active characters)
+
+    // [Next] Jump to SubRoutine NextCharOffset
+    // INCrement Y
+    // ComPare Y with #$0004 (4 party memebrs)
+    // Branch to [PartyLoop] if Not Equals
+    // LoaD $0E to A
+    // DECrement A
+    // Branch to [Fail] if Not Equals (>1 party member active)
+    // INCrement AIConditionMet
+
+    // [Fail] Return To Subroutine
+}
 
 // Address: _2BC0
-static void aiCondition11(void) {}
+// Reaction to Summon
+static void aiCondition11(void) {
+    // LoaD ReactionFlags to A
+    // AND A with #$01 (check second set of reactions)
+    // Branch to [Reaction2] if Not Equals
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Reaction1Command,X to A
+    // CoMPare A with #$2B (magic)
+    // Branch to next if EQuals
+    // CoMPare A with #$17 (conjure)
+    // Branch to [Fail] if Not Equals
+
+    // [LBL] LoaD CharStruct::Reaction1Magic,X to A
+    // CoMPare A with #$48 (first summon spell)
+    // Branch to [Fail] if Carry Clear
+    // CoMPare A with #$57 (past last summon spell)
+    // Branch to [Fail] if Carry Set
+    // BRAnch to [Met]
+
+    // [Reaction2] LoaD AttackerOffset to X
+    // LoaD CharStruct::Reaction2Command,X to A
+    // CoMPare A with #$2B (magic)
+    // Branch to next if EQuals
+    // CoMPare A with #$17 (conjure)
+    // Branch to [Fail] if Not Equals
+
+    // [LBL] LoaD CharStruct::Reaction2Magic,X to A
+    // CoMPare A with #$48 (first summon spell)
+    // Branch to [Fail] if Carry Clear
+    // CoMPare A with #$57 (past last summon spell)
+    // Branch to [Fail] if Carry Set
+
+    // [Met] INCrement AIConditionMet
+
+    // [Fail] Return To Subroutine
+}
 
 // Address: _2BFD
-static void aiCondition12(void) {}
+// No Female targets available
+static void aiCondition12(void) {
+    // Transfer Dire page to aCcumulator
+    // Transfer A to X
+    // Transfer A to Y
+
+    // [PartyLoop] LoaD CharStruct::CharRow,X to A
+    // AND A with #$08 (gender)
+    // Branch to [Next] if EQuals
+    // LoaD ActiveParticipants,Y to A
+    // Branch to [Next] if EQuals
+    // LoaD CharStruct::Status4,X to A
+    // AND A with #$81 (erased or hidden)
+    // Branch to [Next] if Not Equals
+    // LoaD CharStruct::CmdStatus,X to A
+    // AND A with #$10 (jumping)
+    // Branch to [Fail] if EQuals (girl available, fail condition)
+
+    // [Next] Jump to SubRoutine NextCharOffset
+    // INcement Y
+    // ComPare Y with #$0004
+    // Branch to [PartyLoop] if Not Equals
+    // INCrement AIConditionMet
+
+    // [Fail] Return to SubRoutine
+}
