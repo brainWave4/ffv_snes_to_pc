@@ -511,88 +511,85 @@ static void checkMultiTarget(void) {
 
 // Address: _02CF
 static void removeInactiveTargets(void) {
-//  Store Zero to NoValidTargets
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $0E
+    //  Store Zero to NoValidTargets
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $0E
 
-//  [Loop] LoaD ActiveParticipants,X to A
-//  Branch to [Inactive] if EQuals
-//  LoaD $0E to Y
-//  LoaD CharStruct::Status1,Y to A
-//  AND A with #$C0	;dead/stone
-//  Branch to [Inactive] if Not Equals
-//  LoaD CharStruct::Status4,Y to A
-//  AND A with #$81	;erased/hiding
-//  Branch to [Next] if EQuals
+    //  [Loop] LoaD ActiveParticipants,X to A
+    //  Branch to [Inactive] if EQuals
+    //  LoaD $0E to Y
+    //  LoaD CharStruct::Status1,Y to A
+    //  AND A with #$C0	;dead/stone
+    //  Branch to [Inactive] if Not Equals
+    //  LoaD CharStruct::Status4,Y to A
+    //  AND A with #$81	;erased/hiding
+    //  Branch to [Next] if EQuals
 
-//  [Inactive] PusH X
-//  ComPare X with #$0004	(monster check)
-//  Branch to [Monster] if Carry Set
-//  LoaD PartyTargets
-//  Jump to SubRoutine ClearBit_X
-//  STore A to PartyTargets
-//  BRAnch to [NextPLX]
+    //  [Inactive] PusH X
+    //  ComPare X with #$0004	(monster check)
+    //  Branch to [Monster] if Carry Set
+    //  LoaD PartyTargets
+    //  Jump to SubRoutine ClearBit_X
+    //  STore A to PartyTargets
+    //  BRAnch to [NextPLX]
 
-//  [Monster] Transfer X to A
-//  SEt Carry flag
-//  SuBtract #$04 from A with Carry	(monster index)
-//  Transfer A to X
-//  LoaD MonsterTargets
-//  Jump to SubRoutine ClearBit_X
-//  STore A to MonsterTargets
+    //  [Monster] Transfer X to A
+    //  SEt Carry flag
+    //  SuBtract #$04 from A with Carry	(monster index)
+    //  Transfer A to X
+    //  LoaD MonsterTargets
+    //  Jump to SubRoutine ClearBit_X
+    //  STore A to MonsterTargets
 
-//  [NextPLX] PulL X
+    //  [NextPLX] PulL X
 
-//  [Next]Lengthen A
-//  CLear Carry
-//  LoaD $0E to A
-//  ADd #$0080 to A with Carry	(next CharStruct offset)
-//  STore A to $0E
-//  Clear A, then Shorten
-//  INcrement X
-//  ComPare X with #$000C	(12 battle participants)
-//  Branch to [Loop] if Not Equals
-//  LoaD PartyTargets to A
-//  OR A with MonsterTargets
-//  Branch to [Ret] if Not Equals
-//  INCrement NoValidTargets
+    //  [Next]Lengthen A
+    //  CLear Carry
+    //  LoaD $0E to A
+    //  ADd #$0080 to A with Carry	(next CharStruct offset)
+    //  STore A to $0E
+    //  Clear A, then Shorten
+    //  INcrement X
+    //  ComPare X with #$000C	(12 battle participants)
+    //  Branch to [Loop] if Not Equals
+    //  LoaD PartyTargets to A
+    //  OR A with MonsterTargets
+    //  Branch to [Ret] if Not Equals
+    //  INCrement NoValidTargets
 
-//  [Ret] Return To Subroutine
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _0324
 // Copies magic data for spell in A from
 // ROM to AttackInfo (offset Y)
 static void copyRomMagicInfo(void) {
-//  Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8	;Size of Magic Data
-//  Transfer A to X
-//  Clear A, then Shorten
-//  Store Zero to $3D
-// CopyFirst5:
-//         lda f:AttackProp,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $3D
-//         lda $3D
-//  CoMPare A with #$05
-//         bne CopyFirst5
-//  INcrement Y 			;AttackInfo has 4 bytes that
-//  INcrement Y 			;don't apply to magic
-//  INcrement Y
-//  INcrement Y
-// CopyLast3:
-//         lda f:AttackProp,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $3D
-//         lda $3D
-//  CoMPare A with #$08
-//         bne CopyLast3
-//  Return To Subroutine
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8	(Size of Magic Data)
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  Store Zero to $3D
+
+    //  [CopyFirst5] LoaD f:AttackProp,X to A
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $3D
+    //  LoaD $3D to A
+    //  CoMPare A with #$05
+    //  Branch to [CopyFirst5] if Not Equals
+    //  INcrement Y by 4 			(AttackInfo has 4 bytes that don't apply to magic)
+
+    //  [CopyLast3] LoaD f:AttackProp,X to A
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $3D
+    //  LoaD $3D to A
+    //  CoMPare A with #$08
+    //  Branch to [CopyLast3] if Not Equals
+    //  Return To Subroutine
 }
 
 // Address: _0356
@@ -601,12 +598,12 @@ static void copyRomMagicInfo(void) {
 // For multi-commands like X-Magic/Dualcast
 static void nextMessageBoxSet(void) {
     // CLear Carry flag
-    // lda MessageBoxOffset
-    // adc #$18		;+24, next message box set
+    // LoaD MessageBoxOffset to A
+    // ADd #$18 to A with Carry	    (+24, next message box set)
     // STore A to MessageBoxOffset
     // CLear Carry flag
-    // lda MessageBoxDataOffset
-    // adc #$0C		;+12, next message box data set
+    // LoaD MessageBoxDataOffset to A
+    // ADd #$0C to A with Carry		(+12, next message box data set)
     // STore A to MessageBoxDataOffset
     // Return to SubRoutine
 }
@@ -618,91 +615,89 @@ static void nextMessageBoxSet(void) {
 //  - Format seems to be 2 bits per character,
 //    00 for usable and 10 for not
 static void getItemsUsableY(void) {
-//         lda Temp,Y
-//         bpl :+
-//         lda #$AA		;usable for none
-//         JuMP to Ret
-// :	AND A with #$40		;Consumable
-//         beq Equipment
-//         lda InventoryFlags,Y
-//  AND A with #$20
-//  Branch to [Ret] if EQualsZero
-//         lda #$AA		;usable for none
-//  BRAnch to Ret
-// RetZero:
-//         lda #$00		;usable for all
-//  BRAnch to Ret
-// Equipment:		;**optimize: this whole section is basically a copy of the GetItemUsableA $455E subroutine
-//         lda Temp,Y
-//  A Shift Left
-//  A Shift Left
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//         									;:
-// :	lda f:EquipTypeTbl,X
-//  STore A to TempEquippable,Y
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$0004
-//  Branch to previous label if Not Equals
-//         									;.
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  Transfer A to Y
-//         lda #$AA
-//  STore A to $0E
-//         									;:
-// DetermineEquippableLoop:
-//         lda CharEquippable::Weapons,X
-//  AND A with TempEquippable::Weapons,Y
-//         bne Match
-//         lda CharEquippable::Weapons+1,X
-//  AND A with TempEquippable::Weapons+1,Y
-//         bne Match
-//         lda CharEquippable::Armor,X
-//  AND A with TempEquippable::Armor,Y
-//         bne Match
-//         lda CharEquippable::Armor+1,X
-//  AND A with TempEquippable::Armor+1,Y
-//         beq NextChar
-// Match:
-// Transfer X to A
-//         Logical Shift Right A
-//         Logical Shift Right A
-//         bne Check1
-//         									;.
-//         lda $0E
-//  AND A with #$7F		;clear first character bit
-//  STore A to $0E
-//  BRAnch to NextChar
-// Check1:
-//  CoMPare A with #$01
-//         bne Check2
-//         lda $0E
-//  AND A with #$DF		;clear second character bit
-//  STore A to $0E
-//  BRAnch to NextChar
-// Check2:
-//  CoMPare A with #$02
-//         bne Other
-//         lda $0E
-//  AND A with #$F7         	;clear third character bit
-//  STore A to $0E
-//  BRAnch to NextChar
-// Other:
-//         lda $0E
-//  AND A with #$FD		;clear fourth character bit
-//  STore A to $0E
-// NextChar:
-//  INcrement X
-//  INcrement X
-//  INcrement X
-//  INcrement X
-//  ComPare X with #$0010			;4 bytes * 4 characters
-//         bne DetermineEquippableLoop
-//         lda $0E
-// [Ret] Return To Subroutine
+    //  LoaD Temp,Y to A
+    //  Branch to next label if PLus
+    //  LoaD #$AA to A		(usable for none)
+    //  JuMP to [Ret]
+
+    //  [LBL] AND A with #$40		(Consumable)
+    //  Branch to [Equipment] if EQuals
+    //  LoaD InventoryFlags,Y to A
+    //  AND A with #$20
+    //  Branch to [Ret] if EQuals
+    //  LoaD #$AA to A		(usable for none)
+    //  BRAnch to [Ret]
+
+    //  [RetZero] LoaD #$00 to A		(usable for all)
+    //  BRAnch to [Ret]
+
+    //  [Equipment] 		**optimize: this whole section is basically a copy of the GetItemUsableA $455E subroutine
+    //  LoaD Temp,Y to A
+    //  A Shift Left
+    //  A Shift Left
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+
+    //  [LBL] lda f:EquipTypeTbl,X to A
+    //  STore A to TempEquippable,Y
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$0004
+    //  Branch to previous label if Not Equals
+
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  Transfer A to Y
+    //  LoaD #$AA to A
+    //  STore A to $0E
+
+    //  [DetermineEquippableLoop] LoaDCharEquippable::Weapons,X to A
+    //  AND A with TempEquippable::Weapons,Y
+    //  Branch to [Match] if Not Equals
+    //  LoaD CharEquippable::Weapons+1,X to A
+    //  AND A with TempEquippable::Weapons+1,Y
+    //  Branch to [Match] if Not Equals
+    //  LoaD CharEquippable::Armor,X to A
+    //  AND A with TempEquippable::Armor,Y
+    //  Branch to [Match] if Not Equals
+    //  LoaD CharEquippable::Armor+1,X to A
+    //  AND A with TempEquippable::Armor+1,Y
+    //  Branch to [NextChar] if EQuals
+
+    //  [Match] Transfer X to A
+    //  Logical Shift Right A x2
+    //  Branch to [Check1] if Not Equals
+
+    //  LoaD $0E to A
+    //  AND A with #$7F		;clear first character bit
+    //  STore A to $0E
+    //  BRAnch to [NextChar]
+
+    //  [Check1] CoMPare A with #$01
+    //  Branch to [Check2] if Not Equals
+    //  LoaD $0E to A
+    //  AND A with #$DF		;clear second character bit
+    //  STore A to $0E
+    //  BRAnch to NextChar
+
+    //  [Check2] CoMPare A with #$02
+    //  Branch to [Other] if Not Equals
+    //  LoaD $0E to A
+    //  AND A with #$F7         	;clear third character bit
+    //  STore A to $0E
+    //  BRAnch to NextChar
+
+    //  [Other] LoaD $0E to A
+    //  AND A with #$FD		;clear fourth character bit
+    //  STore A to $0E
+
+    //  [NextChar] INcrement X by 4
+    //  ComPare X with #$0010			;4 bytes * 4 characters
+    //  Branch to [DetermineEquippableLoop] if Not Equals
+    //  LoaD $0E to A
+
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _03FA
@@ -716,80 +711,83 @@ static void getItemsUsableY(void) {
 // D1 item data because I didnt know how the translation
 // from asar to ca65 would work
 static void setupInventoryInfo(void) {
-//         beq ItemZero
-//  CoMPare A with #$E0
-//         bcs Consumable		;>$E0 is consumable
-//  CoMPare A with #$80
-//         bcc Weapon		;<$80 is a weapon
-// Armor:				;otherwise it's armor
-//  SEt Carry flag
-//         sbc #$80		;remove the armor offset
-//         Lengthen A
-//  A Shift Left
-//  A Shift Left
-//  STore A to $0E
-//  A Shift Left
-//  CLear Carry
-//         adc $0E			;armor *12 (size of equipment struct)
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:ArmorProp,X
-//  AND A with #$08		;target enemy?
-//         beq ItemZero
-//         lda f:ArmorProp+2,X
-//  AND A with #$3F		;mask to equip info
-//  STore A to Temp,Y
-//         lda #$5A
-//  STore A to InventoryFlags,Y
-//  BRAnch to Ret
-// ItemZero:	;or armor targettng bit 08h
-//         lda #$80		;not usable
-//  STore A to Temp,Y
-//         lda #$5A
-//  STore A to InventoryFlags,Y
-//  BRAnch to Ret
-// Weapon:
-//         Lengthen A
-//  A Shift Left
-//  A Shift Left
-//  STore A to $0E
-//  A Shift Left
-//  CLear Carry
-//         adc $0E         	;weapon *12
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:WeaponProp+4,X
-//  AND A with #$80
-//  Jump to SubRoutine ShiftDivide_32	;shift to 04h bit
-//  STore A to InventoryFlags,Y
-//         lda f:WeaponProp,X
-//  STore A to InventoryTargetting,Y
-//         lda f:WeaponProp+2,X
-//  PusH A
-//  AND A with #$C0		;flag bits from equipment type(? AND A with throwable)
-//         OR A with #$1A		;set some more bits (??)
-//         OR A with InventoryFlags,Y	;keep existing bits (double grip)
-//  STore A to InventoryFlags,Y
-//  PulL A
-//  AND A with #$3F		;mask to just equip info
-//  STore A to Temp,Y
-//  BRAnch to Ret
-// Consumable:
-//  SEt Carry flag
-//         sbc #$E0
-//         Lengthen A
-//  A Shift Left
-//  A Shift Left
-//  A Shift Left
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:ConsumableItemProp,X
-//  STore A to InventoryTargetting,Y
-//         lda f:ConsumableItemProp+2,X
-//  STore A to InventoryFlags,Y
-//         lda #$40		;consumable
-//  STore A to Temp,Y
-// Ret: 	rts
+    //  Branch to [ItemZero] if EQuals
+    //  CoMPare A with #$E0
+    //  Branch to [Consumable] if Carry Set		(>$E0 is consumable)
+    //  CoMPare A with #$80
+    //  Branch to [Weapon] if Clear Carry		(<$80 is a weapon)
+
+    //  [Armor]				(otherwise it's armor)
+    //  SEt Carry flag
+    //  SuBtract #$80 from A with Carry		(remove the armor offset)
+    //  Lengthen A
+    //  A Shift Left
+    //  A Shift Left
+    //  STore A to $0E
+    //  A Shift Left
+    //  CLear Carry
+    //  ADd $0E to A with Carry			(armor *12 (size of equipment struct))
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:ArmorProp,X to A
+    //  AND A with #$08		(target enemy?)
+    //  Branch to [ItemZero] if EQuals
+    //  LoaD f:ArmorProp+2,X to A
+    //  AND A with #$3F		(mask to equip info)
+    //  STore A to Temp,Y
+    //  LoaD #$5A to A
+    //  STore A to InventoryFlags,Y
+    //  BRAnch to [Ret]
+
+    //  [ItemZero]	(or armor targettng bit 08h)
+    //  LoaD #$80 to A		(not usable)
+    //  STore A to Temp,Y
+    //  LoaD #$5A to A
+    //  STore A to InventoryFlags,Y
+    //  BRAnch to [Ret]
+
+    //  [Weapon] Lengthen A
+    //  A Shift Left
+    //  A Shift Left
+    //  STore A to $0E
+    //  A Shift Left
+    //  CLear Carry
+    //  ADd $0E to A with Carry         	(weapon *12)
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:WeaponProp+4,X to A
+    //  AND A with #$80
+    //  Jump to SubRoutine ShiftDivide_32	;shift to 04h bit
+    //  STore A to InventoryFlags,Y
+    //  LoaD f:WeaponProp,X to A
+    //  STore A to InventoryTargetting,Y
+    //  LoaD f:WeaponProp+2,X to A
+    //  PusH A
+    //  AND A with #$C0		;flag bits from equipment type(? AND A with throwable)
+    //  OR A with #$1A		;set some more bits (??)
+    //  OR A with InventoryFlags,Y	;keep existing bits (double grip)
+    //  STore A to InventoryFlags,Y
+    //  PulL A
+    //  AND A with #$3F		;mask to just equip info
+    //  STore A to Temp,Y
+    //  BRAnch to [Ret]
+
+    //  [Consumable] SEt Carry flag
+    //  SuBtract #$E0 from A with Carry
+    //  Lengthen A
+    //  A Shift Left
+    //  A Shift Left
+    //  A Shift Left
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:ConsumableItemProp,X to A
+    //  STore A to InventoryTargetting,Y
+    //  LoaD f:ConsumableItemProp+2,X to A
+    //  STore A to InventoryFlags,Y
+    //  LoaD #$40 to A		(consumable)
+    //  STore A to Temp,Y
+
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _0491
@@ -801,68 +799,70 @@ static void setupInventoryInfo(void) {
 // Output:
 //  - $08: 2 byte value (value*percentage/100)+Base, capped
 static void applyPercentage(void) {
-//         ldx #$000F
-// :	 STore Zero to $0E,X		;clear $0E-1D
-//  DEcrement X
-//  Branch to previous label if PLus
-//         ldx #$0064		;100
-//  STore X to $12
-//         ldx $2E			;previous multiply result (low bytes)
-//  STore X to $0E
-//         lda $30			;(high bytes)
-//  STore A to $10
-// ;32 bit division routine
-// ;Dividend: 	$0E-11
-// ;Divisor: 	$12-15
-// ;Quotient: 	$16-19
-// ;Remainder: 	$1A-1C
-// ;**optimize: make this a general purpose subroutine, duplicate at $57FE
-//         Lengthen A
-//  CLear Carry
-//         ldx #$0020
-// :	rol $0E
-//         rol $10
-//         rol $1A
-//         rol $1C
-//  SEt Carry flag
-//         lda $1A
-//         sbc $12
-//  STore A to $1A
-//         lda $1C
-//         sbc $14
-//  STore A to $1C
-//         bcs :+
-//         lda $1A
-//         adc $12
-//  STore A to $1A
-//         lda $1C
-//         adc $14
-//  STore A to $1C
-//  CLear Carry
-// :	rol $16
-//         rol $18
-//  DEcrement X
-//  Branch to previous label if Not Equals-
-//  Clear A, then Shorten
-// ;division ends here
-//  CLear Carry
-//         lda $16		;quotient, input/100
-//         adc $08		;base value
-//  STore A to $08		;adjusted value
-//         lda $17		;high byte of above
-//         adc $09
-//  STore A to $09
-//  SEt Carry flag 		;checks against 9999
-//         lda $08
-//         sbc $0A		;9999 low byte
-//         lda $09
-//         sbc $0B		;9999 high byte
-//         bcc Ret
-//         lda $0A		;caps at 9999
-//  STore A to $08
-//         lda $0B
-//  STore A to $09
-// [Ret] Return To Subroutine
+    //  LoaD #$000F to X
+
+    // 	[LBL] STore Zero to $0E,X		(clear $0E-1D)
+    //  DEcrement X
+    //  Branch to previous label if PLus
+    //  LoaD #$0064 to X
+    //  STore X to $12
+    //  LoaD $2E to X			(previous multiply result (low bytes))
+    //  STore X to $0E
+    //  LoaD $30 to A			(high bytes)
+    //  STore A to $10
+
+    //  32 bit division routine
+    //  Dividend: 	$0E-11
+    //  Divisor: 	$12-15
+    //  Quotient: 	$16-19
+    //  Remainder: 	$1A-1C
+    //  **optimize: make this a general purpose subroutine, duplicate at $57FE
+    //  Lengthen A
+    //  CLear Carry
+    //  LoaD #$0020 to X
+
+    //  [LBL] ROtate $0E, $10, $1A and $1C Left
+    //  SEt Carry flag
+    //  LoaD $1A to A
+    //  SuBtract $12 to A with Carry
+    //  STore A to $1A
+    //  LoaD $1C to A
+    //  SuBtract $14 to A with Carry
+    //  STore A to $1C
+    //  Branch to next label if Carry Set
+    //  LoaD $1A to A
+    //  ADd $12 to A with Carry
+    //  STore A to $1A
+    //  LoaD $1C to A
+    //  ADd $14 to A with Carry
+    //  STore A to $1C
+    //  CLear Carry
+
+    //  [LBL] ROtate $16 and $18 Left
+    //  DEcrement X
+    //  Branch to previous label if Not Equals
+    //  Clear A, then Shorten
+
+    //  ;division ends here
+    //  CLear Carry
+    //  LoaD $16 to A		(quotient, input/100)
+    //  ADd $08 to A with Carry		(;base value)
+    //  STore A to $08		(adjusted value)
+    //  LoaD $17 to A		(high byte of above)
+    //  ADd $09 to A with Carry
+    //  STore A to $09
+    //  SEt Carry flag 		(checks against 9999)
+    //  LoaD $08 to A
+    //  SuBtract $0A to A with Carry		(9999 low byte)
+    //  LoaD $09 to A
+    //  SuBtract $0B to A with Carry		(9999 high byte)
+    //  Branch to [Ret] if Carry Clear
+    //  LoaD $0A to A		(caps at 9999)
+    //  STore A to $08
+    //  LoaD $0B to A
+    //  STore A to $09
+
+    //  [Ret] Return To Subroutine
 }
 
 // Notes about Commands in Asm
@@ -878,12 +878,12 @@ static void applyPercentage(void) {
 // Used by Defend and Guard
 static void noActionAbility(void) {
     // Jump to SubRoutine GFXCmdAbilityAnim
-    // lda ProcSequence
+    // LoaD ProcSequence to A
     // Transfer A to X
     // STore Zero to AtkType,X
     // STore Zero to MultiTarget,X
     // STore Zero to TargetType,X
-    // inc UnknownReaction
+    // INCrement UnknownReaction
     // JuMP to FinishCommandNullTargets
 }
 
@@ -1033,145 +1033,152 @@ static void itemCommand(void) {
 
 // Addres: _0632
 static void weaponItem(void) {
-// STore Zero to TempHand
-//         lda AttackerIndex
+//  STore Zero to TempHand
+//  LoaD AttackerIndex to A
 //  Transfer A to X
-//         lda f:_d0ed85,X	;size of one character's gear offset
+//  LoaD f:_d0ed85,X to A	(size of one character's gear offset)
 //  Transfer A to Y
-//         ldx AttackerOffset
-//         lda CharStruct::SelectedItem,X
-//         bne Left
-//         lda CharStruct::RHWeapon,X
+//  LoaD AttackerOffset to X
+//  LoaD CharStruct::SelectedItem,X to A
+//  Branch to [Left] if Not Equals
+//  LoaD CharStruct::RHWeapon,X to A
 //  STore A to CharStruct::SelectedItem,X
 //  STore A to SelectedItem
 //  Transfer A to X
-//         lda RHWeapon::ItemMagic,Y
+//  LoaD RHWeapon::ItemMagic,Y to A
 //  BRAnch to ItemReady
-// Left:INCrement TempHand
-//         lda CharStruct::LHWeapon,X
+
+//  [Left] INCrement TempHand
+//  LoaD CharStruct::LHWeapon,X to A
 //  STore A to CharStruct::SelectedItem,X
 //  STore A to SelectedItem
 //  Transfer A to X
-//         lda LHWeapon::ItemMagic,Y
-// ItemReady:
-//  STore A to TempItemMagic
+//  LoaD LHWeapon::ItemMagic,Y to A
+
+//  [ItemReady] STore A to TempItemMagic
 //  AND A with #$7F
-//         txy 		;Y is now selected item
+//  Transfer X to Y 		(Y is now selected item)
 //  PusH A
 //  PusH A
-//         lda ProcSequence
+//  LoaD ProcSequence to A
 //  Transfer A to X
 //  PulL A
 //  STore A to AtkType,X
 //  Transfer Y to A
-//  STore A to Temp+1	;selected item
-//         lda #$04
+//  STore A to Temp+1	(selected item)
+//  LoaD #$04 to A
 //  STore A to Temp
 //  Jump to SubRoutine GFXCmdAttackNameFromTemp
-//         lda ProcSequence
+//  LoaD ProcSequence to A
 //  Transfer A to X
-//         lda AtkType,X
-//         ldy $0C		;ProcSequence*12
+//  LoaD AtkType,X to A
+//  LoaD $0C to Y		(ProcSequence*12)
 //  Jump to SubRoutine CopyROMMagicInfo
 //  Jump to SubRoutine CheckMultiTarget
-//         bne TargetOK
-//         ldy $0C
-//         lda AttackInfo::MagicAtkType,Y
-//         bpl DontRetarget
-//         lda ProcSequence
+//  Branch to [TargetOK] if Not Equals
+//  LoaD $0C to Y
+//  LoaD AttackInfo::MagicAtkType,Y to A
+//  Branch to [DontRetarget] if PLus
+//  LoaD ProcSequence to A
 //  Transfer A to X
 //  INCrement HitsInactive,X
-//  BRAnch to TargetOK
-// DontRetarget:
+//  BRAnch to [TargetOK]
+
+//  [DontRetarget]
 //  Jump to SubRoutine CheckRetarget
-// TargetOK:
-//  Jump to SubRoutine BuildTargetBitmask
+
+//  [TargetOK] Jump to SubRoutine BuildTargetBitmask
 //  Jump to SubRoutine FindOpenGFXQueueSlot
 //  Store Zero to GFXQueue::Flag,X
-//         lda #$FC	;exec graphics command
+//  LoaD #$FC to A	(exec graphics command)
 //  STore A to GFXQueue::Cmd,X
-//         lda #$0A	;commAND A with 10: weapon used as item
+//  LoaD #$0A to A	(commAND A with 10: weapon used as item)
 //  STore A to GFXQueue::Type,X
 //  PulL A
 //  STore A to GFXQueue::Data1,X
 //  Store Zero to GFXQueue::Data2,X
-//         lda ProcSequence
+//  LoaD ProcSequence to A
 //  Transfer A to X
-//         lda AtkType,X
-//         bpl :+
+//  LoaD AtkType,X to A
+//  Branch to next label if PLus
 //  Transfer Direct page to aCcumulator
-//  BRAnch to :++
-// :	ldy $0C
-//         lda AttackInfo::MagicAtkType,Y
+//  BRAnch to second next label
+
+//  [LBL] LoaD ldy $0C
+//  LoaD AttackInfo::MagicAtkType,Y to A
 //  AND A with #$7F
+
 //  [LBL] STore A to AtkType,X
-//         lda TempTargetting
+//  LoaD TempTargetting to A
 //  STore A to MultiTarget,X
 //  Branch to next label if EQuals
 //  INCrement MultiTarget,X
-//         lda #$80
+//  LoaD #$80 to A
+
 //  [LBL] STore A to TargetType,X
 //  Jump to SubRoutine FinishCommand
 //  Jump to SubRoutine GFXCmdDamageNumbers
-//         lda TempItemMagic
-//         bpl Ret
-// BreakOnUse:	;80h indicates item should now break
-//         lda AttackerIndex
+//  LoaD TempItemMagic to A
+//  Branch to [Ret] if PLus
+
+//  [BreakOnUse]	(80h indicates item should now break)
+//  LoaD  AttackerIndex to A
 //  Jump to SubRoutine ShiftMultiply_4
 //  STore A to $0E
 //  A Shift Left
 //  CLear Carry
-//         adc $0E
+//  ADd $0E to A with Carry
 //  Transfer A to Y 		;Attacker index *12
-//         lda TempHand
-//         bne Left2
+//  LoaD TempHand to A
+//  Branch to [Left2] if Not Equals
 //  Transfer Direct page to aCcumulator
 //  STore A to HandItems::ID,Y
 //  STore A to HandItems::Level,Y
 //  STore A to HandItems::MP,Y
-//         lda #$38
+//  LoaD #$38 to A
 //  STore A to HandItems::Targetting,Y
-//         lda #$5A
+//  LoaD #$5A to A
 //  STore A to HandItems::Flags,Y
-//         lda #$AA
+//  LoaD #$AA to A
 //  STore A to HandItems::Usable,Y
 //  BRAnch to DoneHandItems
-// Left2:	tdc
+
+//  [Left2] Transfer Direct page to aCcumulator
 //  STore A to HandItems::ID+1,Y
 //  STore A to HandItems::Level+1,Y
 //  STore A to HandItems::MP+1,Y
-//         lda #$38
+//  LoaD #$38 to A
 //  STore A to HandItems::Targetting+1,Y
-//         lda #$5A
+//  LoaD #$5A to A
 //  STore A to HandItems::Flags+1,Y
-//         lda #$AA
+//  LoaD #$AA to A
 //  STore A to HandItems::Usable+1,Y
-// DoneHandItems:
-//         lda MessageBoxOffset
+//  [DoneHandItems] LoaD MessageBoxOffset to A
 //  Transfer A to Y
-//         lda #$50	;item shattered message
+//  LoaD #$50 to A	(item shattered message)
 //  STore A to MessageBoxes,Y
-//         lda MessageBoxOffset
+//  LoaD MessageBoxOffset to A
 //  STore A to $0E
 //  A Shift Left
 //  CLear Carry
-//         adc $0E
-//  Transfer A to X 		;message box index *3
-//         lda SelectedItem
+//  ADd $0E to A with Carry
+//  Transfer A to X 		(message box index *3)
+//  LoaD SelectedItem to A
 //  STore A to MessageBoxData,X
 //  Store Zero to MessageBoxData+1,X
 //  Store Zero to MessageBoxData+2,X
 //  Jump to SubRoutine GFXCmdMessage
-//         lda DisplayInfo::CurrentChar
+//  LoaD DisplayInfo::CurrentChar to A
 //  PusH A
-//         lda AttackerIndex
+//  LoaD AttackerIndex to A
 //  STore A to DisplayInfo::CurrentChar
 //  STore A to CurrentChar
 //  Jump to SubRoutine ReplaceHands
 //  PulL A
 //  STore A to DisplayInfo::CurrentChar
 //  Jump to SubRoutine ApplyGear
-// [Ret] Return To Subroutine
+
+//  [Ret] Return To Subroutine
 }
 
 // Address: _0767
@@ -1765,31 +1772,31 @@ static void commandTable14(void) {
 //  Transfer Direct page to aCcumulator 		;0 mystidian rabbit
 //  BRAnch to Chosen
 // :CoMPare A with #$05
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$01	;<5 squirrel
 //  BRAnch to Chosen
 // :CoMPare A with #$0A
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$02	;<10 bee swarm
 //  BRAnch to Chosen
 // :CoMPare A with #$14
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$03	;<20 nightingale
 //  BRAnch to Chosen
 // :CoMPare A with #$1E
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$04	;<30 momonga
 //  BRAnch to Chosen
 // :CoMPare A with #$28
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$05	;<40 falcon
 //  BRAnch to Chosen
 // :CoMPare A with #$32
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$06	;<50 skunk
 //  BRAnch to Chosen
 // :CoMPare A with #$3C
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$07	;<60 wild boar
 //  BRAnch to Chosen
 // :	lda #$08	;otherwise unicorn
@@ -2541,15 +2548,15 @@ static void commandTable22(void) {
 //         lda Level
 //  Jump to SubRoutine Random_X_A 	;0..Level
 //  CoMPare A with #$0B
-//         bcs :+
+//  Branch to next label if Carry Set
 //  Transfer Direct page to aCcumulator          	;<11, 0
 //  BRAnch to Chosen
 // :	cmp #$15
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$01     	;<21, 1
 //  BRAnch to Chosen
 // :	cmp #$33
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$02     	;<50, 2
 //  BRAnch to Chosen
 // :	lda #$03     	;otherwise 3
@@ -3507,7 +3514,7 @@ static void checkControlTargetActive(void) {
 // consuming items when used, and action delays
 static void processMenuCommandData(void) {
 //         lda EncounterInfo::IntroFX
-//         bpl :+		;check for credits demo
+//  Branch to next label if PLus		;check for credits demo
 //  Jump to SubRoutine SetupCreditsDemo
 // :	lda DisplayInfo::CurrentChar
 //  STore A to CurrentChar
@@ -4699,7 +4706,7 @@ static void timerEffectPoison(void) {
 //  SEt Carry flag
 //         lda CharStruct::CurHP,X
 //         sbc $0E				;poison tick damage
-//         bcs :+
+//  Branch to next label if Carry Set
 //  Transfer Direct page to aCcumulator 				;min 0 hp
 //  [LBL] STore A to CharStruct::CurHP,X
 //  Clear A, then Shorten
@@ -4791,7 +4798,7 @@ static void timerEffectRegen(void) {
 //  STore A to EnableTimer::Regen,Y
 //         lda InitialTimer::Regen,Y
 //  CoMPare A with #$1E
-//         bcs :+
+//  Branch to next label if Carry Set
 //         lda #$1E	;max 30 ticks if it was slower
 //  STore A to InitialTimer::Regen,Y
 //  [LBL] STore A to CurrentTimer::Regen,Y
@@ -4817,7 +4824,7 @@ static void timerEffectRegen(void) {
 //         ldx AttackerOffset
 //  CLear Carry
 //         adc CharStruct::CurHP,X
-//         bcs :+
+//  Branch to next label if Carry Set
 //  CoMPare A with CharStruct::MaxHP,X
 //  Branch to next label if Carry Clear+
 // :	lda CharStruct::MaxHP,X	;cap at maxhp
@@ -4847,7 +4854,7 @@ static void timerEffectSing(void) {
 //  Branch to [Ret] if EQuals
 // FindSong:		;Y = song stat index
 //  A Shift Left
-//         bcs :+
+//  Branch to next label if Carry Set
 //  INcrement Y
 //  BRAnch to FindSong
 // :       sty $12		;song stat index
@@ -5052,7 +5059,7 @@ static void resetAtb(void) {
 //  SEt Carry flag
 //         sbc Agility    	;-agi
 //  Branch to next label if EQuals
-//         bcs :++
+//  Branch to next label if Carry Set+
 // :	lda #$01     		;min 1
 // :Jump to SubRoutine HasteSlowMod
 //  STore A to CurrentTimer::ATB,Y
