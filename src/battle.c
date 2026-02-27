@@ -3295,25 +3295,27 @@ static void copyAbilityInfo(void) {
     //  Transfer A to X
     //  Clear A, then Shorten
     //  Store Zero to $0A
-    //  [LBL] lda f:BattleCmdProp,X
+
+    //  [LBL] LoaD f:BattleCmdProp,X to A
     //  STore A to AttackInfo,Y
     //  INcrement X
     //  INcrement Y
     //  INCrement $0A
     //  LoaD $0A to A
-    //  CoMPare A with #$05     ;copy first 5 bytes
+    //  CoMPare A with #$05     (copy first 5 bytes)
     //  Branch to previous label if Not Equals
-    //  INcrement Y          ;skip 4 on destination
+    //  INcrement Y          (skip 4 on destination)
     //  INcrement Y
     //  INcrement Y
     //  INcrement Y
-    //  [LBL] lda f:BattleCmdProp,X
+
+    //  [LBL] LoaD f:BattleCmdProp,X to A
     //  STore A to AttackInfo,Y
     //  INcrement X
     //  INcrement Y
     //  INCrement $0A
     //  LoaD $0A to A
-    //  CoMPare A with #$08      ;copy remaining 3 bytes
+    //  CoMPare A with #$08      (copy remaining 3 bytes)
     //  Branch to previous label if Not Equals
     //  Return To Subroutine
 }
@@ -3347,10 +3349,10 @@ static void gfxCmdAttackNameA(void) {
 
 // Address: _1705
 static void magicAtkTypeSingleTarget(void) {
-    // lda ProcSequence
+    // LoaD ProcSequence to A
     // Transfer A to X
-    // ldy $0C
-    // lda AttackInfo::MagicAtkType,Y
+    // LoaD $0C to Y
+    // LoaD AttackInfo::MagicAtkType,Y to A
     // AND A with #$7F
     // STore A to AtkType,X
     // STore Zero to MultiTarget,X
@@ -3360,16 +3362,16 @@ static void magicAtkTypeSingleTarget(void) {
 
 // Address: _171A
 static void magicAtkTypeMultiTarget(void) {
-    // lda ProcSequence
+    // LoaD ProcSequence to A
     // Transfer A to X
-    // ldy $0C
-    // lda AttackInfo::MagicAtkType,Y
+    // LoaD $0C to Y
+    // LoaD AttackInfo::MagicAtkType,Y to A
     // AND A with #$7F
     // STore A to AtkType,X
-    // lda TempTargetting
-    // inc 	;unconditional, so always considered multitarget
+    // LoaD TempTargetting to A
+    // INCrement A 	(unconditional, so always considered multitarget)
     // STore A to MultiTarget,X
-    // lda #$80	;multi target
+    // LoaD #$80 to A	(multi target)
     // STore A to TargetType,X
     // Return to SubRoutine
 }
@@ -3378,16 +3380,16 @@ static void magicAtkTypeMultiTarget(void) {
 // Copies command targetting to final locations and
 // advances ProcSequence
 static void finishCommand(void) {
-    // lda ProcSequence
+    // LoaD ProcSequence to A
     // A Shift Left
     // Transfer A to X
-    // lda TempTargetBitmask
+    // LoaD TempTargetBitmask to A
     // STore A to CommandTargetBitmask,X
     // STore A to TargetBitmask,X
-    // lda TempTargetBitmask+1
+    // LoaD TempTargetBitmask+1 to A
     // STore A to CommandTargetBitmask+1,X
     // STore A to TargetBitmask+1,X
-    // inc ProcSequence
+    // INCrement ProcSequence
     // Return to SubRoutine
 }
 
@@ -3405,199 +3407,219 @@ static void finishCommandNullTargets(void) {
 
 // Address: _175F
 static void getTargets(void) {
-    // ldx AttackerOffset
-    // lda CharStruct::PartyTargets,X
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::PartyTargets,X to A
     // STore A to PartyTargets
-    // lda CharStruct::MonsterTargets,X
+    // LoaD CharStruct::MonsterTargets,X to A
     // STore A to MonsterTargets
     // Return to SubRoutine
 }
 
 // Address: _176C
 static void handleAtbMenu(void) {
-//         lda MenuData::MenuOpen
-//         bne MenuOpen
-//         JuMP to MenuClosed
-// MenuOpen:	;checks if current display info for status/mp matches what's in CharStruct
-//         lda DisplayInfo::CurrentChar
-//  STore A to CurrentChar
-//  Jump to SubRoutine CalculateCharOffset
-//         Lengthen A
-//         lda CharStruct::Status1,X	;includes status 2
-//  CoMPare A with DisplayInfo::Status1
-//         bne Differs
-//         lda CharStruct::Status3,X	;includes status 4
-//  CoMPare A with DisplayInfo::Status3
-//         bne Differs
-//         lda CharStruct::CurMP,X
-//  CoMPare A with DisplayInfo::CurMP
-//         bne Differs
-//  Clear A, then Shorten
-//  BRAnch to Matches
-// Differs:	;disable commands as needed, AND A with update displayinfo for menu
-//  Clear A, then Shorten
-//  Jump to SubRoutine CheckDisablingStatus
-//         bne Disabled
-//  Jump to SubRoutine DisableCommandsMagic
-//  Jump to SubRoutine ApplyBerserkStatus
-//         bne Disabled
-//         lda #$05		;C1 routine
-//  Jump to SubRoutine CallC1
-//         lda #$06		;C1 routine
-//  Jump to SubRoutine CallC1
-//         Lengthen A
-//         ldx AttackerOffset
-//         lda CharStruct::Status1,X
-//  STore A to DisplayInfo::Status1
-//         lda CharStruct::Status3,X
-//  STore A to DisplayInfo::Status3
-//         lda CharStruct::CurMP,X
-//  STore A to DisplayInfo::CurMP
-//  Clear A, then Shorten
-//  BRAnch to Matches
-// Disabled:	;if character has become disabled while their menu is open, close the menu
-//         lda DisplayInfo::CurrentChar
-//  STore A to MenuCurrentChar
-//         lda GearChanged
-//  Branch to next label if EQuals
-//  Store Zero to GearChanged
-//  Jump to SubRoutine ReplaceHands
-//  Jump to SubRoutine ApplyGear
-//  [LBL] lda DisplayInfo::CurrentChar
-//  STore A to MenuCurrentChar
-//         lda MenuDataC1::MenuOpen
-//         beq WaitMenu
-//         lda #$01	;C1 routine: close menu
-//  Jump to SubRoutine CallC1
-// WaitMenu:
-//         lda MenuDataC1::MenuOpen
-//         bne WaitMenu	;ends up 0 eventually? via interrupts?
-//         lda #$FF
-//  STore A to DisplayInfo::CurrentChar
-//  Return To Subroutine
-// Matches:	;data either already matched or has been updated
-//         lda ControllingA
-//  Branch to [Ret] if EQuals
-//         lda DisplayInfo::CurrentChar
-//  Transfer A to X
-//         lda ControlTarget,X
-//  Branch to next label if EQuals
-//  Transfer A to X
-//         lda ActiveParticipants,X
-//         bne Ret
-//  [LBL] lda DisplayInfo::CurrentChar
-//  STore A to MenuCurrentChar
-//         lda MenuDataC1::MenuOpen
-//         beq WaitMenu2
-//         lda #$01	;C1 routine: close menu
-//  Jump to SubRoutine CallC1
-// WaitMenu2:
-//         lda MenuDataC1::MenuOpen
-//         bne WaitMenu2	;ends up 0 eventually? via interrupts?
-//         lda #$80
-//  STore A to MenuData::ActionFlag
-//  Store Zero to MenuData::Command
-//  Store Zero to MenuData::MonsterTargets
-//  Store Zero to MenuData::PartyTargets
-//  Store Zero to MenuData::SelectedItem
-//  Store Zero to MenuData::SecondActionFlag
-//  Store Zero to MenuData::SecondCommand
-//  Store Zero to MenuData::SecondMonsterTargets
-//  Store Zero to MenuData::SecondPartyTargets
-//  Store Zero to MenuData::SecondSelectedItem
-//  BRAnch to MenuClosed
-// [Ret] Return To Subroutine
-// MenuClosed:								;
-//         lda DisplayInfo::CurrentChar
-//  CoMPare A with #$FF
-//         beq NoCurrentChar
-//         JuMP to ProcessMenuCommand
-// NoCurrentChar:
-//         lda ATBReadyQueue
-//  CoMPare A with #$FF
-//         bne NextReadyATB
-//  Return To Subroutine		;no one else in queue either
-// NextReadyATB:	;there's a character in the queue with ATB ready
-//  PusH A
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-// AdvanceQueue:	;advances all the queue elements up by one, there's a terminator $FF in the 5th slot
-//         lda ATBReadyQueue+1,X
-//  STore A to ATBReadyQueue,X
-//  INcrement X
-//  ComPare X with #$0004
-//         bne AdvanceQueue
-//         dec ATBReadyCount
-//  PulL A
-//  STore A to MenuCurrentChar
-//  STore A to DisplayInfo::CurrentChar
-//  Jump to SubRoutine CalculateCharOffset
-//         lda QuickTurns
-//         beq DontStopTime
-//         lda DisplayInfo::CurrentChar
-//  CoMPare A with QuickCharIndex
-//         beq DontStopTime
-//  Jump to SubRoutine GetTimerOffset  	;sets Y to Timer offset
-//         lda CurrentTimer::ATB,Y
-//         bne FinishEarly	;check if frozen char's ATB is ready
-//         lda #$01		;increase ATB to 1 (no longer ready)
-//  STore A to CurrentTimer::ATB,Y
-//  STore A to EnableTimer::ATB,Y
-//  BRAnch to FinishEarly
-// DontStopTime:
-//  Jump to SubRoutine CheckDisablingStatus
-//         beq NotDisabled
-// FinishEarly:
-//         lda #$FF
-//  STore A to DisplayInfo::CurrentChar
-//  Return To Subroutine
-// NotDisabled:	;character's turn has just come up
-//  Store Zero to MenuCurrentChar+1
-//  Jump to SubRoutine ApplyBerserkStatus
-//         bne FinishEarly
-//  Jump to SubRoutine DisableCommandsMagic
-//         lda #$01
-//  STore A to ATBWaiting
-//         lda ATBWaitTime
-//  STore A to ATBWaitLeft
-//         Lengthen A
-//         ldx AttackerOffset
-//         lda CharStruct::Status1,X	;includes 2
-//  STore A to DisplayInfo::Status1
-//         lda CharStruct::Status3,X	;includes 4
-//  STore A to DisplayInfo::Status3
-//         lda CharStruct::CurMP,X
-//  STore A to DisplayInfo::CurMP
-//  Store Zero to CharStruct::CmdStatus,X	;also damagemod
-//  Clear A, then Shorten
-//  Jump to SubRoutine CheckControlTargetActive
-//         lda #$01
-//  STore A to FleeTickerActive	;can't start running until first atb
-//         lda EncounterInfo::IntroFX
-//         bpl NoCredits
-//  Store Zero to MenuData::MenuOpen
-//  Return To Subroutine
-// NoCredits:
-//         lda DisplayInfo::CurrentChar
-//  Jump to SubRoutine GetTimerOffset	;Y = Timer offset
-//         lda EnableTimer::ATB,Y
-//         beq TimerOff
-//         lda #$FF
-//  STore A to DisplayInfo::CurrentChar
-//         JuMP to NoCurrentChar
-// TimerOff:
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine CallC1 	;C1 routine $00: open menu
-// WaitMenu3:
-//         lda MenuDataC1::MenuOpen
-//         beq WaitMenu3
-//  Return To Subroutine
-// ProcessMenuCommand:
-//  Store Zero to ATBWaiting
-//  Jump to SubRoutine ProcessMenuCommandData
-//         lda #$FF	;no current char
-//  STore A to DisplayInfo::CurrentChar
-//  Return To Subroutine
+    //  LoaD MenuData::MenuOpen to A
+    //  Branch to MenuOpen if Not Equals
+    //  JuMP to [MenuClosed]
+
+    //  [MenuOpen]	(checks if current display info for status/mp matches what's in CharStruct)
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  STore A to CurrentChar
+    //  Jump to SubRoutine CalculateCharOffset
+    //  Lengthen A
+    //  LoaD CharStruct::Status1,X to A	(includes status 2)
+    //  CoMPare A with DisplayInfo::Status1
+    //  Branch to [Differs] if Not Equals
+    //  LoaD CharStruct::Status3,X to A	(includes status 4)
+    //  CoMPare A with DisplayInfo::Status3
+    //  Branch to [Differs] if Not Equals
+    //  LoaD CharStruct::CurMP,X to A
+    //  CoMPare A with DisplayInfo::CurMP
+    //  Branch to [Differs] if Not Equals
+    //  Clear A, then Shorten
+    //  BRAnch to [Matches]
+
+    //  [Differs]	(disable commands as needed, AND A with update displayinfo for menu)
+    //  Clear A, then Shorten
+    //  Jump to SubRoutine CheckDisablingStatus
+    //  Branch to [Disabled] if Not Equals
+    //  Jump to SubRoutine DisableCommandsMagic
+    //  Jump to SubRoutine ApplyBerserkStatus
+    //  Branch to [Disabled] if Not Equals
+    //  LoaD #$05 to A		(C1 routine)
+    //  Jump to SubRoutine CallC1
+    //  LoaD #$06 to A		(C1 routine)
+    //  Jump to SubRoutine CallC1
+    //  Lengthen A
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status1,X to A
+    //  STore A to DisplayInfo::Status1
+    //  LoaD CharStruct::Status3,X to A
+    //  STore A to DisplayInfo::Status3
+    //  LoaD CharStruct::CurMP,X to A
+    //  STore A to DisplayInfo::CurMP
+    //  Clear A, then Shorten
+    //  BRAnch to [Matches]
+
+    //  [Disabled]	(if character has become disabled while their menu is open, close the menu)
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  STore A to MenuCurrentChar
+    //  LoaD GearChanged to A
+    //  Branch to next label if EQuals
+    //  Store Zero to GearChanged
+    //  Jump to SubRoutine ReplaceHands
+    //  Jump to SubRoutine ApplyGear
+
+    //  [LBL] lda DisplayInfo::CurrentChar
+    //  STore A to MenuCurrentChar
+    //  LoaD MenuDataC1::MenuOpen to A
+    //  Branch to WaitMenu if EQuals
+    //  LoaD #$01 to A	(C1 routine: close menu)
+    //  Jump to SubRoutine CallC1
+
+    //  [WaitMenu]
+    //  LoaD MenuDataC1::MenuOpen to A
+    //  Branch to WaitMenu if Not Equals	(ends up 0 eventually? via interrupts?)
+    //  LoaDda #$FF to A
+    //  STore A to DisplayInfo::CurrentChar
+    //  Return To Subroutine
+
+    //  [Matches]	(data either already matched or has been updated)
+    //  LoaD ControllingA to A
+    //  Branch to [Ret] if EQuals
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  Transfer A to X
+    //  LoaD ControlTarget,X to A
+    //  Branch to next label if EQuals
+    //  Transfer A to X
+    //  LoaD ActiveParticipants,X to A
+    //  Branch to [Ret] if Not Equals
+
+    //  [LBL] LoaD DisplayInfo::CurrentChar
+    //  STore A to MenuCurrentChar
+    //  LoaD MenuDataC1::MenuOpen to A
+    //  Branch to [WaitMenu2] if EQuals
+    //  LoaD #$01 to A	(C1 routine: close menu)
+    //  Jump to SubRoutine CallC1
+
+    //  [WaitMenu2]
+    //  LoaD MenuDataC1::MenuOpen to A
+    //  Branch to [WaitMenu2] if Not Equals	(ends up 0 eventually? via interrupts?)
+    //  LoaD #$80 to A
+    //  STore A to MenuData::ActionFlag
+    //  Store Zero to MenuData::Command
+    //  Store Zero to MenuData::MonsterTargets
+    //  Store Zero to MenuData::PartyTargets
+    //  Store Zero to MenuData::SelectedItem
+    //  Store Zero to MenuData::SecondActionFlag
+    //  Store Zero to MenuData::SecondCommand
+    //  Store Zero to MenuData::SecondMonsterTargets
+    //  Store Zero to MenuData::SecondPartyTargets
+    //  Store Zero to MenuData::SecondSelectedItem
+    //  BRAnch to [MenuClosed]
+
+    //  [Ret] Return To Subroutine
+
+    //  [MenuClosed]
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  CoMPare A with #$FF
+    //  Branch to [NoCurrentChar] if EQuals
+    //  JuMP to ProcessMenuCommand
+
+    //  [NoCurrentChar]:
+    //  LoaD ATBReadyQueue to A
+    //  CoMPare A with #$FF
+    //  Branch to [NextReadyATB] if Not Equals
+    //  Return To Subroutine		(no one else in queue either)
+
+    //  [NextReadyATB]	(there's a character in the queue with ATB ready)
+    //  PusH A
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+
+    //  [AdvanceQueue]	(advances all the queue elements up by one, there's a terminator $FF in the 5th slot)
+    //  LoaD ATBReadyQueue+1,X to A
+    //  STore A to ATBReadyQueue,X
+    //  INcrement X
+    //  ComPare X with #$0004
+    //  Branch to AdvanceQueue if Not Equals
+    //  DECrement ATBReadyCount
+    //  PulL A
+    //  STore A to MenuCurrentChar
+    //  STore A to DisplayInfo::CurrentChar
+    //  Jump to SubRoutine CalculateCharOffset
+    //  LoaD QuickTurns to A
+    //  Branch to [DontStopTime] if EQuals
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  CoMPare A with QuickCharIndex
+    //  Branch to [DontStopTime] if EQuals
+    //  Jump to SubRoutine GetTimerOffset  	(sets Y to Timer offset)
+    //  LoaD CurrentTimer::ATB,Y to A
+    //  Branch to FinishEarly if Not Equals	(check if frozen char's ATB is ready)
+    //  LoaD #$01 to A		(increase ATB to 1 (no longer ready))
+    //  STore A to CurrentTimer::ATB,Y
+    //  STore A to EnableTimer::ATB,Y
+    //  BRAnch to [FinishEarly]
+
+    //  [DontStopTime]
+    //  Jump to SubRoutine CheckDisablingStatus
+    //  Branch to [NotDisabled] if EQuals
+
+    //  [FinishEarly]
+    //  LoaD #$FF to A
+    //  STore A to DisplayInfo::CurrentChar
+    //  Return To Subroutine
+
+    //  [NotDisabled]	(character's turn has just come up)
+    //  Store Zero to MenuCurrentChar+1
+    //  Jump to SubRoutine ApplyBerserkStatus
+    //  Branch to [FinishEarly] if Not Equals
+    //  Jump to SubRoutine DisableCommandsMagic
+    //  LoaD #$01 to A
+    //  STore A to ATBWaiting
+    //  LoaD ATBWaitTime to A
+    //  STore A to ATBWaitLeft
+    //  Lengthen A
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status1,X to A	(includes 2)
+    //  STore A to DisplayInfo::Status1
+    //  LoaD CharStruct::Status3,X to A	(includes 4)
+    //  STore A to DisplayInfo::Status3
+    //  LoaD CharStruct::CurMP,X to A
+    //  STore A to DisplayInfo::CurMP
+    //  Store Zero to CharStruct::CmdStatus,X	(also damagemod)
+    //  Clear A, then Shorten
+    //  Jump to SubRoutine CheckControlTargetActive
+    //  LoaD #$01 to A
+    //  STore A to FleeTickerActive	;can't start running until first atb
+    //  LoaD EncounterInfo::IntroFX to A
+    //  Branch to [NoCredits] if PLus
+    //  Store Zero to MenuData::MenuOpen
+    //  Return To Subroutine
+
+    //  [NoCredits]
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  Jump to SubRoutine GetTimerOffset	(Y = Timer offset)
+    //  LoaD EnableTimer::ATB,Y to A
+    //  Branch to [TimerOff] if EQuals
+    //  LoaD #$FF to A
+    //  STore A to DisplayInfo::CurrentChar
+    //  JuMP to NoCurrentChar
+
+    //  [TimerOff]
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine CallC1 	(C1 routine $00: open menu)
+
+    //  [WaitMenu3]
+    //  LoaD MenuDataC1::MenuOpen to A
+    //  Branch to WaitMenu3 if EQuals
+    //  Return To Subroutine
+
+    //  [ProcessMenuCommand]
+    //  Store Zero to ATBWaiting
+    //  Jump to SubRoutine ProcessMenuCommandData
+    //  LoaD #$FF to A	(no current char)
+    //  STore A to DisplayInfo::CurrentChar
+    //  Return To Subroutine
 }
 
 // Address: _190B
@@ -3606,18 +3628,19 @@ static void handleAtbMenu(void) {
 // Logic is a bit strange but doesn't seem like
 // they can ever be set to different values
 static void checkControlTargetActive(void) {
-//  STore Zero to ControllingA
-//         lda DisplayInfo::CurrentChar
-//  Transfer A to X
-//         lda ControlTarget,X
-//         beq Finish
-//  Transfer A to Y
-//         lda ActiveParticipants,Y
-//         beq Finish
-//         lda #$01
-//  STore A to ControllingA
-// Finish: STore A to ControllingB
-//  Return To Subroutine
+    //  STore Zero to ControllingA
+    //  LoaD to A DisplayInfo::CurrentChar
+    //  Transfer A to X
+    //  LoaD to A ControlTarget,X
+    //  Branch to [Finish] if EQuals
+    //  Transfer A to Y
+    //  LoaD to A ActiveParticipants,Y
+    //  Branch to [Finish] if EQuals
+    //  LoaD to A #$01
+    //  STore A to ControllingA
+
+    //  [Finish] STore A to ControllingB
+    //  Return To Subroutine
 }
 
 // Address: _1926
@@ -3626,347 +3649,375 @@ static void checkControlTargetActive(void) {
 // Also handles gear changes, removing control when needed,
 // consuming items when used, and action delays
 static void processMenuCommandData(void) {
-//         lda EncounterInfo::IntroFX
-//  Branch to next label if PLus		;check for credits demo
-//  Jump to SubRoutine SetupCreditsDemo
-//  [LBL] lda DisplayInfo::CurrentChar
-//  STore A to CurrentChar
-//         lda GearChanged
-//  Branch to next label if EQuals
-//  Store Zero to GearChanged
-//  Jump to SubRoutine ReplaceHands
-//  Jump to SubRoutine ApplyGear
-//  [LBL] lda DisplayInfo::CurrentChar
-//  Jump to SubRoutine CalculateCharOffset
-//         lda CharStruct::Status1,X
-//  AND A with #$C0	;dead/stone
-//         bne ClearControl
-//         lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$78	;sleep/para/charm/berserk
-//         bne ClearControl
-//         lda CharStruct::Status3,X
-//  AND A with #$10	;stop
-//         bne ClearControl
-//         lda CharStruct::Status4,X
-//  AND A with #$80	;erased
-//  Branch to next label if EQuals
-// ClearControl:
-//         lda DisplayInfo::CurrentChar
-//  Transfer A to X
-//  Store Zero to ControlTarget,X
-//  BRAnch to ClearMenuData
-//  [LBL] lda DisplayInfo::CurrentChar
-//  CoMPare A with MenuData::CurrentChar
-//  Branch to next label if EQuals
-//         lda EncounterInfo::IntroFX
-//         bmi :+		;branch if credits fight
-//         lda #$0D	;C1 Routine
-//  Jump to SubRoutine CallC1
-// WaitForever:
-//  BRAnch to WaitForever	;infinite loop?
-//  [LBL] lda DisplayInfo::CurrentChar
-//  Transfer A to X
-//         lda ControlTarget,X
-//         beq NoControlTarget
-//  Transfer A to Y
-//         lda ActiveParticipants,Y
-//         beq ClearMenuData
-//  INCrement ControlCommand,X
-//  SEt Carry flag
-//         lda ControlTarget,X
-//         sbc #$04
-//  STore A to $0E		;monster index of control target
-//  Transfer A to Y
-//         lda DisplayInfo::CurrentChar
-//  Transfer A to X
-//  CLear Carry
-//         lda f:_d0eedb,X	;size of CharControl struct
-//         adc MenuData::SelectedItem	;action 0-3
-//  Transfer A to X
-//         lda CharControl::Actions,X
-//  STore A to MonsterControlActions,Y
-//  SEt Carry flag
-//         lda $0E
-//  A Shift Left
-//  Transfer A to X
-//         lda MenuData::PartyTargets
-//  STore A to ForcedTarget::Party,X
-//         lda MenuData::MonsterTargets
-//  STore A to ForcedTarget::Monster,X
-// ClearMenuData:
-//         lda #$80
-//  STore A to MenuData::ActionFlag
-//  Store Zero to MenuData::Command
-//  Store Zero to MenuData::MonsterTargets
-//  Store Zero to MenuData::PartyTargets
-//  Store Zero to MenuData::SelectedItem
-//  Store Zero to MenuData::SecondActionFlag
-//  Store Zero to MenuData::SecondCommand
-//  Store Zero to MenuData::SecondMonsterTargets
-//  Store Zero to MenuData::SecondPartyTargets
-//  Store Zero to MenuData::SecondSelectedItem
-//  BRAnch to CopyCommands
-// NoControlTarget:
-//         lda ControllingB
-//         bne ClearMenuData	;controlling with no target
-// CopyCommands:
-//         lda DisplayInfo::CurrentChar
-//  Transfer A to X
-//  STore X to $2A
-//         ldx #$028A   	;650, size of CharSpells struct
-//  STore X to $2C
-//  Jump to SubRoutine Multiply_16bit	;not using the rom *650 table?
-//         Lengthen A
-//  CLear Carry
-//         lda $2E		;CurrentChar * 650
-//         adc #$2D34   	;CharSpells struct location
-//  STore A to TempSpellOffset
-//  Clear A, then Shorten
-//         ldx AttackerOffset
-//         lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$18	;charm/berserk
-//         bne CheckCommand
-//         lda MenuData::Command
-//  STore A to CharStruct::Command,X
-//         lda MenuData::MonsterTargets
-//  STore A to CharStruct::MonsterTargets,X
-//         lda MenuData::PartyTargets
-//  STore A to CharStruct::PartyTargets,X
-//         lda MenuData::SelectedItem
-//  STore A to CharStruct::SelectedItem,X
-//         lda MenuData::ActionFlag
-//  STore A to CharStruct::ActionFlag,X
-//  AND A with #$20	;magic
-//         beq NotXMagic
-//         lda MenuData::SelectedItem
-//  Transfer A to Y
-//         lda (TempSpellOffset),Y
-//  STore A to CharStruct::SelectedItem,X
-//         lda MenuData::ActionFlag
-//  AND A with #$08	;x-magic
-//         beq NotXMagic
-//         lda MenuData::SecondCommand
-//  STore A to CharStruct::SecondCommand,X
-//         lda MenuData::SecondMonsterTargets
-//  STore A to CharStruct::SecondMonsterTargets,X
-//         lda MenuData::SecondPartyTargets
-//  STore A to CharStruct::SecondPartyTargets,X
-//         lda MenuData::SecondSelectedItem
-//  Transfer A to Y
-//         lda (TempSpellOffset),Y
-//  STore A to CharStruct::SecondSelectedItem,X
-//         lda MenuData::SecondActionFlag
-//  STore A to CharStruct::SecondActionFlag,X
-//  BRAnch to CheckCommand
-// NotXMagic:
-//  Store Zero to CharStruct::SecondCommand,X
-//  Store Zero to CharStruct::SecondMonsterTargets,X
-//  Store Zero to CharStruct::SecondMonsterTargets,X	;**bug: PartyTargets
-//  Store Zero to CharStruct::SecondSelectedItem,X
-//  Store Zero to CharStruct::SecondActionFlag,X
-// CheckCommand:
-//         lda MenuData::Command
-//  STore A to $24
-//         lda #$08
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//         ldx $26		;command * 8
-//         ldy AttackerOffset
-//         lda f:BattleCmdProp+2,X
-//  STore A to CharStruct::CmdStatus,Y
-//         lda f:BattleCmdProp+3,X
-//  STore A to CharStruct::DamageMod,Y
-//         lda MenuData::Command
-//  CoMPare A with #$2C	;first magic command
-//         bcc NotMagicCommand
-//  CoMPare A with #$4E	;after last magic command
-//         bcs NotMagicCommand
-//         lda CharStruct::ActionFlag,Y
-//         OR A with #$01     	;costs MP
-//  STore A to CharStruct::ActionFlag,Y
-// NotMagicCommand:
-//         lda MenuData::Command
-//  Transfer A to X
-//         lda f:BattleCmdDelay,X
-//         bmi CalculateDelay
-//  PusH A
-//         lda MenuData::Command
-//  CoMPare A with #$11	;throw
-//         beq Item
-//  CoMPare A with #$20	;drink
-//         beq Item
-//  CoMPare A with #$1F	;mix
-//         bne NotItem
-// Mix:
-//         lda MenuData::SecondSelectedItem
-//  PusH A
-//  Transfer A to X
-//         lda InventoryItems,X
-//         ldx AttackerOffset
-//  STore A to CharStruct::SecondSelectedItem,X
-//  PulL A
-//  Jump to SubRoutine ConsumeItem
-// Item:
-//         lda MenuData::SelectedItem
-//  PusH A
-//  Transfer A to X
-//         lda InventoryItems,X
-//         ldx AttackerOffset
-//  STore A to CharStruct::SelectedItem,X
-//  PulL A
-//  Jump to SubRoutine ConsumeItem
-// NotItem:
-//  PulL A
-//         JuMP to Finish
-// CalculateDelay:
-//         lda MenuData::ActionFlag
-//  AND A with #$08	;XMagic
-//  Branch to next label if EQuals
-//         JuMP to MagicDelay
-//  [LBL] lda MenuData::ActionFlag
-//  AND A with #$40	;Item
-//         bne ItemDelay
-//         lda MenuData::ActionFlag
-//  AND A with #$20	;Magic
-//  Branch to next label if EQuals
-//         JuMP to MagicDelay
-//  [LBL] lda MenuData::ActionFlag
-//  AND A with #$10	;Weapon used as item
-//         beq WeaponAttackDelay
-//         JuMP to WeaponUseDelay
-// WeaponAttackDelay:	;despite the calculation, I don't think any weapons have delay values
-//  Store Zero to $0E
-//         lda DisplayInfo::CurrentChar
-//  STore A to $24
-//         lda #$54     ;84, size of GearStats struct
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//         ldy $26
-//         ldx AttackerOffset
-//         lda CharStruct::RHWeapon,X
-//  Branch to next label if EQuals
-//         lda RHWeapon::Targetting,Y
-//  AND A with #$03	;delay bits (delay/10)
-//  Transfer A to X
-//         lda f:AttackDelayTbl,X
-//  STore A to $0E		;attack delay
-// :       ldx AttackerOffset
-//         lda CharStruct::LHWeapon,X
-//  Branch to next label if EQuals
-//         lda LHWeapon,Y
-//  AND A with #$03	;delay bits (delay/10)
-//  Transfer A to X
-//  CLear Carry
-//         lda f:AttackDelayTbl,X
-//         adc $0E		;add other weapon's delay
-//  STore A to $0E
-//  [LBL] lda $0E		;attack delay
-//         JuMP to Finish
-// ItemDelay:
-//         lda MenuData::SelectedItem
-//  Transfer A to X
-//         lda InventoryItems,X
-//         ldx AttackerOffset
-//  STore A to CharStruct::SelectedItem,X
-//  SEt Carry flag
-//         sbc #$E0	;consumable item offset
-//         Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:ConsumableItemProp+2,X
-//  AND A with #$08
-//  Branch to next label if Not Equals
-//         lda MenuData::SelectedItem
-//  Jump to SubRoutine ConsumeItem
-//  [LBL] lda f:ConsumableItemProp,X
-//  AND A with #$03	;delay bits (delay/10)
-//  Transfer A to X
-//         lda f:AttackDelayTbl,X
-//  BRAnch to Finish
-// MagicDelay:
-//  Store Zero to $0E
-//         lda MenuData::SelectedItem
-//         Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:AttackProp,X
-//  AND A with #$03	;delay bits (delay/10)
-//  Transfer A to X
-//         lda f:AttackDelayTbl,X
-//  STore A to $0E		;attack delay
-//         lda MenuData::ActionFlag
-//  AND A with #$08	;X-Magic
-//         beq FinishMagic
-//         lda MenuData::SecondSelectedItem
-//         Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:AttackProp,X
-//  AND A with #$03	;delay bits (delay/10)
-//  Transfer A to X
-//  CLear Carry
-//         lda f:AttackDelayTbl,X
-//         adc $0E		;add other spell's delay
-//  STore A to $0E
-// FinishMagic:
-//         lda $0E		;attack delay
-//  BRAnch to Finish
-// WeaponUseDelay:
-//         lda DisplayInfo::CurrentChar
-//  STore A to $24
-//         lda #$54     	;84, size of GearStats struct
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//         ldy $26
-//         lda MenuData::SelectedItem
-//  Branch to next label if EQuals
-//         Lengthen A
-//  Transfer Y to A
-//  CLear Carry
-//         adc #$000C	;shifts offset from RHWeapon to LHWeapon
-//  Transfer A to Y
-//  Clear A, then Shorten
-//  [LBL] lda RHWeapon::ItemMagic,Y	;could be LHWeapon
-//  AND A with #$7F	;weapon magic to cast
-//         beq Finish
-//         Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:AttackProp,X
-//  AND A with #$03	;delay bits (delay/10)
-//  Transfer A to X
-//         lda f:AttackDelayTbl,X
-// Finish:
-//  PusH A
-//         lda DisplayInfo::CurrentChar
-//  Jump to SubRoutine GetTimerOffset	;Y AND A with $36 = timer offset
-//         ldx AttackerOffset
-//  PulL A
-//  Jump to SubRoutine HasteSlowMod	;adjusts delay
-//  STore A to CurrentTimer::ATB,Y	;time until action fires
-//         lda #$41		;flag indicating a queued action
-//  STore A to EnableTimer::ATB,Y
-//         lda #$80		;physical/other
-//  STore A to MenuData::ActionFlag
-//  Store Zero to MenuData::Command
-//  Store Zero to MenuData::CurrentChar
-//  Store Zero to MenuData::MonsterTargets
-//  Store Zero to MenuData::PartyTargets
-//  Store Zero to MenuData::SelectedItem
-//  Store Zero to MenuData+7
-//  Store Zero to MenuData::SecondActionFlag
-//  Store Zero to MenuData::SecondCommand
-//  Store Zero to MenuData+10
-//  Store Zero to MenuData::SecondMonsterTargets
-//  Store Zero to MenuData::SecondPartyTargets
-//  Store Zero to MenuData::SecondSelectedItem
-//  Return To Subroutine
+    //  LoaD EncounterInfo::IntroFX to A
+    //  Branch to next label if PLus		(check for credits demo)
+    //  Jump to SubRoutine SetupCreditsDemo
+
+    //  [LBL] LoaD DisplayInfo::CurrentChar
+    //  STore A to CurrentChar
+    //  LoaD GearChanged to A
+    //  Branch to next label if EQuals
+    //  Store Zero to GearChanged
+    //  Jump to SubRoutine ReplaceHands
+    //  Jump to SubRoutine ApplyGear
+
+    //  [LBL] LoaD DisplayInfo::CurrentChar
+    //  Jump to SubRoutine CalculateCharOffset
+    //  LoaD CharStruct::Status1,X to A
+    //  AND A with #$C0	(dead/stone)
+    //  Branch to [ClearControl] if Not Equals
+    //  LoaD CharStruct::Status2,X to A
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$78	(sleep/para/charm/berserk)
+    //  Branch to [ClearControl] if Not Equals
+    //  LoaD CharStruct::Status3,X to A
+    //  AND A with #$10	(stop)
+    //  Branch to [ClearControl] if Not Equals
+    //  LoaD CharStruct::Status4,X to A
+    //  AND A with #$80	(erased)
+    //  Branch to next label if EQuals
+
+    //  [ClearControl]
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  Transfer A to X
+    //  Store Zero to ControlTarget,X
+    //  BRAnch to ClearMenuData
+
+    //  [LBL] LoaD DisplayInfo::CurrentChar to A
+    //  CoMPare A with MenuData::CurrentChar
+    //  Branch to next label if EQuals
+    //  LoaD EncounterInfo::IntroFX to A
+    //  Branch to next label is MInus		(branch if credits fight)
+    //  LoaD #$0D to A	(C1 Routine)
+    //  Jump to SubRoutine CallC1
+
+    //  [WaitForever]
+    //  BRAnch to [WaitForever]	(infinite loop?)
+
+    //  [LBL] LoaD DisplayInfo::CurrentChar to A
+    //  Transfer A to X
+    //  LoaD ControlTarget,X to A
+    //  Branch to NoControlTarget if EQuals
+    //  Transfer A to Y
+    //  LoaD ActiveParticipants,Y to A
+    //  Branch to [ClearMenuData] if EQuals
+    //  INCrement ControlCommand,X
+    //  SEt Carry flag
+    //  LoaD ControlTarget,X to A
+    //  SuBtract #$04 from A with Carry
+    //  STore A to $0E		(monster index of control target)
+    //  Transfer A to Y
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  Transfer A to X
+    //  CLear Carry
+    //  LoaD f:_d0eedb,X to A	(size of CharControl struct)
+    //  ADd MenuData::SelectedItem to A with Carry	(action 0-3)
+    //  Transfer A to X
+    //  LoaD CharControl::Actions,X to A
+    //  STore A to MonsterControlActions,Y
+    //  SEt Carry flag
+    //  LoaD $0E to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD MenuData::PartyTargets to A
+    //  STore A to ForcedTarget::Party,X
+    //  LoaD MenuData::MonsterTargets to A
+    //  STore A to ForcedTarget::Monster,X
+
+    //  [ClearMenuData]
+    //  LoaD #$80 to A
+    //  STore A to MenuData::ActionFlag
+    //  Store Zero to MenuData::Command
+    //  Store Zero to MenuData::MonsterTargets
+    //  Store Zero to MenuData::PartyTargets
+    //  Store Zero to MenuData::SelectedItem
+    //  Store Zero to MenuData::SecondActionFlag
+    //  Store Zero to MenuData::SecondCommand
+    //  Store Zero to MenuData::SecondMonsterTargets
+    //  Store Zero to MenuData::SecondPartyTargets
+    //  Store Zero to MenuData::SecondSelectedItem
+    //  BRAnch to [CopyCommands]
+
+    //  [NoControlTarget]
+    //  LoaD ControllingB to A
+    //  Branch to ClearMenuData if Not Equals	(controlling with no target)
+
+    //  [CopyCommands]
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  Transfer A to X
+    //  STore X to $2A
+    //  LoaD #$028A to X   	(650, size of CharSpells struct)
+    //  STore X to $2C
+    //  Jump to SubRoutine Multiply_16bit	(not using the rom *650 table?)
+    //  Lengthen A
+    //  CLear Carry
+    //  LoaD $2E to A		(CurrentChar * 650)
+    //  ADd #$2D34 to A with Carry   	(CharSpells struct location)
+    //  STore A to TempSpellOffset
+    //  Clear A, then Shorten
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status2,X to A
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$18	;charm/berserk
+    //  Branch to CheckCommand if Not Equals
+    //  LoaD MenuData::Command to A
+    //  STore A to CharStruct::Command,X
+    //  LoaD MenuData::MonsterTargets to A
+    //  STore A to CharStruct::MonsterTargets,X
+    //  LoaD MenuData::PartyTargets to A
+    //  STore A to CharStruct::PartyTargets,X
+    //  LoaD MenuData::SelectedItem to A
+    //  STore A to CharStruct::SelectedItem,X
+    //  LoaD MenuData::ActionFlag to A
+    //  STore A to CharStruct::ActionFlag,X
+    //  AND A with #$20	;magic
+    //  Branch to [NotXMagic] if EQuals
+    //  LoaD MenuData::SelectedItem to A
+    //  Transfer A to Y
+    //  LoaD (TempSpellOffset),Y to A
+    //  STore A to CharStruct::SelectedItem,X
+    //  LoaD MenuData::ActionFlag to A
+    //  AND A with #$08	;x-magic
+    //  Branch to [NotXMagic] if EQuals
+    //  LoaD MenuData::SecondCommand to A
+    //  STore A to CharStruct::SecondCommand,X
+    //  LoaD MenuData::SecondMonsterTargets to A
+    //  STore A to CharStruct::SecondMonsterTargets,X
+    //  LoaD MenuData::SecondPartyTargets to A
+    //  STore A to CharStruct::SecondPartyTargets,X
+    //  LoaD MenuData::SecondSelectedItem to A
+    //  Transfer A to Y
+    //  LoaD (TempSpellOffset),Y to A
+    //  STore A to CharStruct::SecondSelectedItem,X
+    //  LoaD MenuData::SecondActionFlag to A
+    //  STore A to CharStruct::SecondActionFlag,X
+    //  BRAnch to CheckCommand
+
+    //  [NotXMagic]
+    //  Store Zero to CharStruct::SecondCommand,X
+    //  Store Zero to CharStruct::SecondMonsterTargets,X
+    //  Store Zero to CharStruct::SecondMonsterTargets,X	(**bug: PartyTargets)
+    //  Store Zero to CharStruct::SecondSelectedItem,X
+    //  Store Zero to CharStruct::SecondActionFlag,X
+
+    //  [CheckCommand]
+    //  LoaD MenuData::Command to A
+    //  STore A to $24
+    //  LoaD #$08 to A
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  LoaD $26 to X		(command * 8)
+    //  LoaD AttackerOffset to Y
+    //  LoaD f:BattleCmdProp+2,X to A
+    //  STore A to CharStruct::CmdStatus,Y
+    //  LoaD f:BattleCmdProp+3,X to A
+    //  STore A to CharStruct::DamageMod,Y
+    //  LoaD MenuData::Command to A
+    //  CoMPare A with #$2C	(first magic command)
+    //  Branch to [NotMagicCommand] if Carry Cleared
+    //  CoMPare A with #$4E	(after last magic command)
+    //  Branch to [NotMagicCommand] if Carry Set
+    //  LoaD CharStruct::ActionFlag,Y to A
+    //  OR A with #$01     	(costs MP)
+    //  STore A to CharStruct::ActionFlag,Y
+
+    //  [NotMagicCommand]
+    //  LoaD MenuData::Command to A
+    //  Transfer A to X
+    //  LoaD f:BattleCmdDelay,X to A
+    //  Branch to CalculateDelay if MInus
+    //  PusH A
+    //  LoaD MenuData::Command to A
+    //  CoMPare A with #$11	(throw)
+    //  Branch to [Item] if EQuals
+    //  CoMPare A with #$20	(drink)
+    //  Branch to [Item] if EQuals
+    //  CoMPare A with #$1F	(mix)
+    //  Branch to [NotItem] if Not Equals
+
+    //  [Mix]
+    //  LoaD MenuData::SecondSelectedItem to A
+    //  PusH A
+    //  Transfer A to X
+    //  LoaD InventoryItems,X to A
+    //  LoaD AttackerOffset to X
+    //  STore A to CharStruct::SecondSelectedItem,X
+    //  PulL A
+    //  Jump to SubRoutine ConsumeItem
+
+    //  [Item]
+    //  LoaD MenuData::SelectedItem to A
+    //  PusH A
+    //  Transfer A to X
+    //  LoaD InventoryItems,X to A
+    //  LoaD AttackerOffset to X
+    //  STore A to CharStruct::SelectedItem,X
+    //  PulL A
+    //  Jump to SubRoutine ConsumeItem
+
+    //  [NotItem]
+    //  PulL A
+    //  JuMP to [Finish]
+
+    //  [CalculateDelay]
+    //  LoaD MenuData::ActionFlag to A
+    //  AND A with #$08	;XMagic
+    //  Branch to next label if EQuals
+    //  JuMP to MagicDelay
+
+    //  [LBL] LoaD MenuData::ActionFlag
+    //  AND A with #$40	;Item
+    //  Branch to ItemDelay if Not Equals
+    //  LoaD MenuData::ActionFlag to A
+    //  AND A with #$20	;Magic
+    //  Branch to next label if EQuals
+    //  JuMP to MagicDelay
+
+    //  [LBL] LoaD MenuData::ActionFlag to A
+    //  AND A with #$10	;Weapon used as item
+    //  Branch to [WeaponAttackDelay] if EQuals
+    //  JuMP to WeaponUseDelay
+
+    //  [WeaponAttackDelay]	(despite the calculation, I don't think any weapons have delay values)
+    //  Store Zero to $0E
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  STore A to $24
+    //  LoaD #$54 to A     (84, size of GearStats struct)
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  LoaD $26 to Y
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::RHWeapon,X to A
+    //  Branch to next label if EQuals
+    //  LoaD RHWeapon::Targetting,Y to A
+    //  AND A with #$03	(delay bits; delay/10)
+    //  Transfer A to X
+    //  LoaD f:AttackDelayTbl,X to A
+    //  STore A to $0E		(attack delay)
+
+    //  [LBL] LoaD AttackerOffset to X
+    //  LoaD CharStruct::LHWeapon,X to A
+    //  Branch to next label if EQuals
+    //  LoaD LHWeapon,Y to A
+    //  AND A with #$03	(delay bits; delay/10)
+    //  Transfer A to X
+    //  CLear Carry
+    //  LoaD f:AttackDelayTbl,X to A
+    //  ADd $0E to A with Carry		(add other weapon's delay)
+    //  STore A to $0E
+
+    //  [LBL] lda $0E		(attack delay)
+    //  JuMP to Finish
+
+    //  [ItemDelay]
+    //  LoaD MenuData::SelectedItem to A
+    //  Transfer A to X
+    //  LoaD InventoryItems,X to A
+    //  LoaD AttackerOffset to X
+    //  STore A to CharStruct::SelectedItem,X
+    //  SEt Carry flag
+    //  SuBtract #$E0 from A with Carry	(consumable item offset)
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:ConsumableItemProp+2,X to A
+    //  AND A with #$08
+    //  Branch to next label if Not Equals
+    //  LoaD MenuData::SelectedItem to A
+    //  Jump to SubRoutine ConsumeItem
+
+    //  [LBL] lda f:ConsumableItemProp,X
+    //  AND A with #$03	(delay bits; delay/10)
+    //  Transfer A to X
+    //  LoaD f:AttackDelayTbl,X to A
+    //  BRAnch to Finish
+
+    //  [MagicDelay]
+    //  Store Zero to $0E
+    //  LoaD MenuData::SelectedItem to A
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:AttackProp,X to A
+    //  AND A with #$03	(delay bits; delay/10)
+    //  Transfer A to X
+    //  LoaD f:AttackDelayTbl,X to A
+    //  STore A to $0E		(attack delay)
+    //  LoaD MenuData::ActionFlag to A
+    //  AND A with #$08	;X-Magic
+    //  Branch to [FinishMagic] if EQuals
+    //  LoaD MenuData::SecondSelectedItem to A
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:AttackProp,X to A
+    //  AND A with #$03	(delay bits; delay/10)
+    //  Transfer A to X
+    //  CLear Carry
+    //  LoaD f:AttackDelayTbl,X to A
+    //  ADd $0E to A with Carry		(add other spell's delay)
+    //  STore A to $0E
+
+    //  [FinishMagic]
+    //  LoaD $0E to A		(attack delay)
+    //  BRAnch to [Finish]
+
+    //  [WeaponUseDelay]
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  STore A to $24
+    //  LoaD #$54 to A     	(84, size of GearStats struct)
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  LoaD $26 to Y
+    //  LoaD MenuData::SelectedItem to A
+    //  Branch to next label if EQuals
+    //  Lengthen A
+    //  Transfer Y to A
+    //  CLear Carry
+    //  ADd #$000C to A with Carry	(shifts offset from RHWeapon to LHWeapon)
+    //  Transfer A to Y
+    //  Clear A, then Shorten
+
+    //  [LBL] LoaD RHWeapon::ItemMagic,Y to A	(could be LHWeapon)
+    //  AND A with #$7F	;weapon magic to cast
+    //  Branch to [Finish] if EQuals
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:AttackProp,X to A
+    //  AND A with #$03	(delay bits; delay/10)
+    //  Transfer A to X
+    //  LoaD f:AttackDelayTbl,X to A
+
+    //  [Finish]
+    //  PusH A
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  Jump to SubRoutine GetTimerOffset	(Y AND A with $36 = timer offset)
+    //  LoaD AttackerOffset to X
+    //  PulL A
+    //  Jump to SubRoutine HasteSlowMod	(adjusts delay)
+    //  STore A to CurrentTimer::ATB,Y	(time until action fires)
+    //  LoaD #$41 to A		(flag indicating a queued action)
+    //  STore A to EnableTimer::ATB,Y
+    //  LoaD #$80 to A		(physical/other)
+    //  STore A to MenuData::ActionFlag
+    //  Store Zero to MenuData::Command
+    //  Store Zero to MenuData::CurrentChar
+    //  Store Zero to MenuData::MonsterTargets
+    //  Store Zero to MenuData::PartyTargets
+    //  Store Zero to MenuData::SelectedItem
+    //  Store Zero to MenuData+7
+    //  Store Zero to MenuData::SecondActionFlag
+    //  Store Zero to MenuData::SecondCommand
+    //  Store Zero to MenuData+10
+    //  Store Zero to MenuData::SecondMonsterTargets
+    //  Store Zero to MenuData::SecondPartyTargets
+    //  Store Zero to MenuData::SecondSelectedItem
+    //  Return To Subroutine
 }
 
 // Address: _1C36
@@ -3974,17 +4025,17 @@ static void processMenuCommandData(void) {
 // blanks out inventory slot if qty is now 0
 static void consumeItem(void) {
     // Transfer A to X
-    // lda InventoryQuantities,X
-    // dec
+    // LoaD InventoryQuantities,X to A
+    // DECrement A
     // STore A to InventoryQuantities,X
-    // bne Ret
+    // Branch to [Ret] if Not Equals
     // STore Zero to InventoryItems,X
     // STore Zero to InventoryTargetting,X
-    // lda #$5A
+    // LoaD #$5A to A
     // STore A to InventoryFlags,X
-    // lda #$AA
+    // LoaD #$AA to A
     // STore A to InventoryUsable,X
-    // Return to SubRoutine
+    // [Ret] Return to SubRoutine
 }
 
 // Address: _1C51
@@ -3993,10 +4044,10 @@ static void consumeItem(void) {
 // This range is used by C1 graphics code but
 // unsure what it does
 static void setupCreditsDemo(void) {
-    // lda #$80	;physical/other
+    // LoaD #$80 to A	(physical/other)
     // STore A to MenuData::ActionFlag
     // STore A to MenuData::MonsterTargets
-    // lda #$54	;job-specific animation (credits)
+    // LoaD #$54 to A	(job-specific animation (credits))
     // STore A to MenuData::Command
     // STore Zero to MenuData::PartyTargets
     // STore Zero to MenuData::SelectedItem
@@ -4013,171 +4064,181 @@ static void setupCreditsDemo(void) {
 // character has a status that
 // prevents them from taking Action
 static void checkDisablingStatus(void) (
-    // ldx AttackerOffset
-    // lda CharStruct::Status1,X
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Status1,X to A
     // OR A with CharStruct::AlwaysStatus1,X
-    // AND A with #$C2   	;dead/stone/zombie
-    // bne Ret
-    // lda CharStruct::Status2,X
+    // AND A with #$C2   	(dead/stone/zombie)
+    // Branch to [Ret] if Not Equals
+    // LoaD CharStruct::Status2,X to A
     // OR A with CharStruct::AlwaysStatus2,X
-    // AND A with #$78   	;sleep/para/Charm/Berserk
-    // bne Ret
-    // lda CharStruct::Status3,X
-    // AND A with #$10   	;stop
-    // bne Ret
-    // lda CharStruct::Status4,X
-    // AND A with #$84   	;erased/singing
-    // bne Ret
+    // AND A with #$78   	(sleep/para/Charm/Berserk)
+    // Branch to [Ret] if Not Equals
+    // LoaD CharStruct::Status3,X to A
+    // AND A with #$10   	(stop)
+    // Branch to [Ret] if Not Equals
+    // LoaD CharStruct::Status4,X to A
+    // AND A with #$84   	(erased/singing)
+    // Branch to [Ret] if Not Equals
     // Transfer Direct page to aCcumulator
-    // Return to SubRoutine
+    // [Ret] Return to SubRoutine
 )
 
 // Address: _1C9A
 // Make Berserk ability have Berserk Status
 static void applyBerserkStatus(void) {
-//         ldx AttackerOffset
-//         lda CharStruct::Passives2,X
-//  AND A with #$08   	;berserk
-//         beq Finish
-//         lda EncounterInfo::IntroFX
-//         bpl NotCredits
-// Finish:	tdc
-//  Return To Subroutine
-//         								;
-// NotCredits:
-//         lda CharStruct::AlwaysStatus2,X
-//         OR A with #$08   	;berserk
-//  STore A to CharStruct::AlwaysStatus2,X
-//  Return To Subroutine
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Passives2,X to A
+    //  AND A with #$08   	(berserk)
+    //  Branch to [Finish] if EQuals
+    //  LoaD EncounterInfo::IntroFX to A
+    //  Branch to [NotCredits] if PLus
+
+    //  [Finish] Transfer Direct page to aCcumulator
+    //  Return To Subroutine
+
+    //  [NotCredits]
+    //  LoaD CharStruct::AlwaysStatus2,X to A
+    //  OR A with #$08   	(berserk)
+    //  STore A to CharStruct::AlwaysStatus2,X
+    //  Return To Subroutine
 }
 
 // Address: _1CB3
 // Disables Magic and Commands when
 // Status or MP prevents their use
 static void disableCommandsMagic(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $16
-//         lda Void
-//  AND A with #$40     	;void
-//  Branch to next label if EQuals
-//         ldx #$0080
-//  STore X to $16		;disables magic
-//  [LBL] lda DisplayInfo::CurrentChar
-//  Jump to SubRoutine CalculateSpellOffset	;sets Y
-//         Lengthen A
-//  Transfer Direct page to aCcumulator
-//  STore A to $12
-//  STore A to $14
-//         ldx AttackerOffset
-//         lda CharStruct::CurMP,X
-//  STore A to $0E		;current mp
-//         lda CharStruct::Status3,X
-//         OR A with CharStruct::AlwaysStatus3,X
-//  STore A to $22		;status 3/4
-//         lda CharStruct::Status1,X
-//         OR A with CharStruct::AlwaysStatus1,X
-//  STore A to $10		;status 1/2
-//  AND A with #$0400	;mute
-//  Branch to next label if EQuals
-//         lda #$0080
-//  STore A to $12		;disables magic
-//  [LBL] lda CharStruct::Status1,X
-//         OR A with CharStruct::AlwaysStatus1,X
-//  AND A with #$0020	;toad
-//  Branch to next label if EQuals
-//         lda #$0080
-//  STore A to $14		;disables magic
-// :	tdc
-//  Transfer A to X
-// DisableSpells:
-//         lda CharSpells::Flags,Y
-//  AND A with #$0001	;skip mp/status checks
-//         bne NextSpell
-//         lda CharSpells::MP,Y
-//  AND A with #$00FF	;clear high part since it's an 8 bit field
-//  CoMPare A with $0E		;current mp
-//         beq CheckStatus
-//         bcc CheckStatus
-//         lda CharSpells::Flags,Y
-//         OR A with #$0080
-//  STore A to CharSpells::Flags,Y
-//  BRAnch to NextSpell
-// CheckStatus:
-//         lda CharSpells::Flags,Y
-//  AND A with #$FF7F	;clear bit 80h in flags, disabled bit?
-//  STore A to CharSpells::Flags,Y
-//         lda CharSpells::ID,Y
-//  AND A with #$00FF
-//  CoMPare A with #$0080	;blue magic
-//         bcs NextSpell
-//         lda CharSpells::Flags,Y
-//         OR A with $12		;from mute
-//         OR A with $14		;from toad
-//         OR A with $16		;from void
-//  STore A to CharSpells::Flags,Y
-//         lda $16
-//         bne NextSpell
-//         lda $12
-//         bne NextSpell
-//         lda $14
-//         beq NextSpell
-//         lda CharSpells::ID,Y
-//  AND A with #$00FF
-//  CoMPare A with #$0029	;toad spell
-//         bne NextSpell
-//         lda CharSpells::Flags,Y
-//  AND A with #$FF7F	;re-enable toad spell if toad status
-//  STore A to CharSpells::Flags,Y
-// NextSpell:
-//  INcrement Y
-//  INcrement X
-//  ComPare X with #$0082	;130 spell slots
-//         bne DisableSpells
-//  Clear A, then Shorten
-//         lda DisplayInfo::CurrentChar
-//  STore A to $24
-//         lda #$14	;20, size of CharCommands struct
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $0E
-//         ldy $26
-//         Lengthen A
-// DisableCommands:
-//         lda CharCommands::ID,Y
-//  AND A with #$00FF
-//  STore A to $12		;command id
-//         beq DisableCommand
-//  A Shift Left
-//  Transfer A to X
-//         lda f:BattleCmdDisableStatus,X
-//  AND A with $10		;status 1/2
-//         bne DisableCommand
-//         lda $12		;command id
-//  CoMPare A with #$0026	;show command
-//         beq EnableCommand
-//         lda $22		;status 3/4
-//  AND A with #$0100	;hidden
-//         beq EnableCommand
-// DisableCommand:
-//         lda CharCommands::Flags,Y
-//         OR A with #$0080	;disabled
-//  STore A to CharCommands::Flags,Y
-//  BRAnch to NextCommand
-// EnableCommand:
-//         lda CharCommands::Flags,Y
-//  AND A with #$FF7F	;enabled
-//  STore A to CharCommands::Flags,Y
-// NextCommand:
-//  INcrement Y
-//  INCrement $0E		;character index
-//         lda $0E
-//  CoMPare A with #$0004	;4 commands per character
-//         bne DisableCommands
-//  Clear A, then Shorten
-//  Return To Subroutine
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $16
+    //  LoaD Void to A
+    //  AND A with #$40     	(void)
+    //  Branch to next label if EQuals
+    //  LoaD #$0080 to X
+    //  STore X to $16		(disables magic)
+
+    //  [LBL] LoaD DisplayInfo::CurrentChar
+    //  Jump to SubRoutine CalculateSpellOffset	(sets Y)
+    //  Lengthen A
+    //  Transfer Direct page to aCcumulator
+    //  STore A to $12
+    //  STore A to $14
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::CurMP,X to A
+    //  STore A to $0E		(current mp)
+    //  LoaD CharStruct::Status3,X to A
+    //  OR A with CharStruct::AlwaysStatus3,X
+    //  STore A to $22		(status 3/4)
+    //  LoaD CharStruct::Status1,X to A
+    //  OR A with CharStruct::AlwaysStatus1,X
+    //  STore A to $10		(status 1/2)
+    //  AND A with #$0400	(mute)
+    //  Branch to next label if EQuals
+    //  LoaD #$0080 to A
+    //  STore A to $12		(disables magic)
+
+    //  [LBL] LoaD CharStruct::Status1,X
+    //  OR A with CharStruct::AlwaysStatus1,X
+    //  AND A with #$0020	(toad)
+    //  Branch to next label if EQuals
+    //  LoaD #$0080 to A
+    //  STore A to $14		(disables magic)
+    //  [LBL] Transfer Direct page to aCcumulator
+    //  Transfer A to X
+
+    //  [DisableSpells]
+    //  LoaD CharSpells::Flags,Y to A
+    //  AND A with #$0001	(skip mp/status checks)
+    //  Branch to [NextSpell] if Not Equals
+    //  LoaD CharSpells::MP,Y to A
+    //  AND A with #$00FF	(clear high part since it's an 8 bit field)
+    //  CoMPare A with $0E		(current mp)
+    //  Branch to [CheckStatus] if EQuals
+    //  Branch to [CheckStatus] if Carry Clear
+    //  LoaD CharSpells::Flags,Y to A
+    //  OR A with #$0080
+    //  STore A to CharSpells::Flags,Y
+    //  BRAnch to [NextSpell]
+
+    //  [CheckStatus]
+    //  LoaD CharSpells::Flags,Y to A
+    //  AND A with #$FF7F	(clear bit 80h in flags, disabled bit?)
+    //  STore A to CharSpells::Flags,Y
+    //  LoaD CharSpells::ID,Y to A
+    //  AND A with #$00FF
+    //  CoMPare A with #$0080	(blue magic)
+    //  Branch to [NextSpell] if Carry Set
+    //  LoaD CharSpells::Flags,Y to A
+    //  OR A with $12		(from mute)
+    //  OR A with $14		(from toad)
+    //  OR A with $16		(from void)
+    //  STore A to CharSpells::Flags,Y
+    //  LoaD $16 to A
+    //  Branch to [NextSpell] if Not Equals
+    //  LoaD $12 to A
+    //  Branch to [NextSpell] if Not Equals
+    //  LoaD $14 to A
+    //  Branch to [NextSpell] if EQuals
+    //  LoaD CharSpells::ID,Y to A
+    //  AND A with #$00FF
+    //  CoMPare A with #$0029	(toad spell)
+    //  Branch to [NextSpell] if Not Equals
+    //  LoaD CharSpells::Flags,Y to A
+    //  AND A with #$FF7F	(re-enable toad spell if toad status)
+    //  STore A to CharSpells::Flags,Y
+
+    //  [NextSpell]
+    //  INcrement Y
+    //  INcrement X
+    //  ComPare X with #$0082	(130 spell slots)
+    //  Branch to [DisableSpells] if Not Equals
+    //  Clear A, then Shorten
+    //  LoaD DisplayInfo::CurrentChar to A
+    //  STore A to $24
+    //  LoaD #$14	(20, size of CharCommands struct) to A
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $0E
+    //  LoaD $26 to Y
+    //  Lengthen A
+
+    //  [DisableCommands]
+    //  LoaD CharCommands::ID,Y to A
+    //  AND A with #$00FF
+    //  STore A to $12		(command id)
+    //  Branch to [DisableCommand] if EQuals
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD f:BattleCmdDisableStatus,X to A
+    //  AND A with $10		(status 1/2)
+    //  Branch to [DisableCommand] if Not Equals
+    //  LoaD $12		(command id) to A
+    //  CoMPare A with #$0026	(show command)
+    //  Branch to [EnableCommand] if EQuals
+    //  LoaD $22		(status 3/4) to A
+    //  AND A with #$0100	(hidden)
+    //  Branch to [EnableCommand] if EQuals
+
+    //  [DisableCommand]
+    //  LoaD CharCommands::Flags,Y to A
+    //  OR A with #$0080	(disabled)
+    //  STore A to CharCommands::Flags,Y
+    //  BRAnch to [NextCommand]
+
+    //  [EnableCommand]
+    //  LoaD CharCommands::Flags,Y to A
+    //  AND A with #$FF7F	(enabled)
+    //  STore A to CharCommands::Flags,Y
+
+    //  [NextCommand]
+    //  INcrement Y
+    //  INCrement $0E		(character index)
+    //  LoaD $0E to A
+    //  CoMPare A with #$0004	(4 commands per character)
+    //  Branch to DisableCommands if Not Equals
+    //  Clear A, then Shorten
+    //  Return To Subroutine
 }
 
 // Address: _1DC4
@@ -4186,55 +4247,60 @@ static void disableCommandsMagic(void) {
 // and set up their action when it is ready
 //  ** bug: should probably check for death too (this is why berserkers always attack when they get up)
 static void handleUncontrolledParty(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $3D		;char index, used in subroutines also
-//  STore X to $3F		;char offset
-// Loop:
-//         ldx $3D
-//         lda UncontrolledATB,X
-//         beq ActionReady
-//         ldx $3F
-//         lda CharStruct::Status3,X
-//  AND A with #$10	;stop
-//         bne Next
-//         lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$60	;sleep/paralyze
-//         bne Next
-//         ldx $3D
-//         dec UncontrolledATB,X
-//  BRAnch to Next
-// ActionReady:
-//         ldx $3F		;char offset
-//         lda #$01
-//  STore A to CharStruct::CmdCancelled,X
-//         lda CharStruct::Status1,X
-//         OR A with CharStruct::AlwaysStatus1,X
-//  AND A with #$02	;zombie
-//  Branch to next label if EQuals
-//  Jump to SubRoutine ZombieAction
-//  BRAnch to Next
-//  [LBL] lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$10	;charm
-//  Branch to next label if EQuals
-//  Jump to SubRoutine CharmAction
-//  BRAnch to Next
-//  [LBL] lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$08	;berserk
-//         beq Next
-//  Jump to SubRoutine BerserkAction
-// Next:
-//         ldx $3F		;char offset
-//  Jump to SubRoutine NextCharOffset
-//  STore X to $3F
-//  INCrement a:$003D	;char index ; TODO: dont know why this is being done?
-//         lda a:$003D
-//  CoMPare A with #$04	;4 characters
-//         bne Loop
-//  Return To Subroutine
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $3D		(char index, used in subroutines also)
+    //  STore X to $3F		(char offset)
+
+    //  [Loop]
+    //  LoaD $3D to X
+    //  LoaD UncontrolledATB,X to A
+    //  Branch to [ActionReady] if EQuals
+    //  LoaD $3F to X
+    //  LoaD CharStruct::Status3,X to A
+    //  AND A with #$10	(stop)
+    //  Branch to [Next] if Not Equals
+    //  LoaD CharStruct::Status2,X to A
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$60	(sleep/paralyze)
+    //  Branch to [Next] if Not Equals
+    //  LoaD $3D to X
+    //  DECrement UncontrolledATB,X
+    //  BRAnch to [Next]
+
+    //  [ActionReady]
+    //  LoaD $3F to X		(char offset)
+    //  LoaD #$01 to A
+    //  STore A to CharStruct::CmdCancelled,X
+    //  LoaD CharStruct::Status1,X to A
+    //  OR A with CharStruct::AlwaysStatus1,X
+    //  AND A with #$02	(zombie)
+    //  Branch to next label if EQuals
+    //  Jump to SubRoutine ZombieAction
+    //  BRAnch to [Next]
+
+    //  [LBL] lda CharStruct::Status2,X
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$10	(charm)
+    //  Branch to next label if EQuals
+    //  Jump to SubRoutine CharmAction
+    //  BRAnch to [Next]
+
+    //  [LBL] lda CharStruct::Status2,X
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$08	(berserk)
+    //  Branch to [Next] if EQuals
+    //  Jump to SubRoutine BerserkAction
+
+    //  [Next]
+    //  LoaD $3F to X		(char offset)
+    //  Jump to SubRoutine NextCharOffset
+    //  STore X to $3F
+    //  INCrement a:$003D	(char index ; TODO: dont know why this is being done?)
+    //  LoaD a:$003D to A
+    //  CoMPare A with #$04	(4 characters)
+    //  Branch to [Loop] if Not Equals
+    //  Return To Subroutine
 }
 
 // Address: _1E2F
@@ -4244,9 +4310,9 @@ static void handleUncontrolledParty(void) {
 // Sets up a fight command targetting
 // a Random party member
 static void zombieAction(void) {
-    // lda #$80
+    // LoaD #$80 to A
     // STore A to CharStruct::ActionFlag,X
-    // lda #$05	;fight
+    // LoaD #$05 to A	(fight)
     // STore A to CharStruct::Command,X
     // STore Zero to CharStruct::MonsterTargets,X
     // STore Zero to CharStruct::SelectedItem,X
@@ -4258,13 +4324,13 @@ static void zombieAction(void) {
     // PusH X
     // Transfer Direct page to aCcumulator
     // Transfer A to X
-    // lda #$03
-    // Jump to SubRoutine Random_X_A  ;0..3
+    // LoaD #$03 to A
+    // Jump to SubRoutine Random_X_A  (0..3)
     // Transfer A to X
     // Transfer Direct page to aCcumulator
     // Jump to SubRoutine SetBit_X
     // PulL X
-    // STore A to CharStruct::PartyTargets,X	;fight random party member
+    // STore A to CharStruct::PartyTargets,X	(fight random party member)
     // JuMP to QueueUncontrolledAction
 }
 
@@ -4281,7 +4347,7 @@ static void zombieAction(void) {
 static void charmAction(void) {
 //         lda CharStruct::EnableSpells,X
 //  AND A with #$0F			;white magic
-//         OR A with CharStruct::EnableSpells+1,X	;black AND A with time magic
+//  OR A with CharStruct::EnableSpells+1,X	;black AND A with time magic
 //         beq Fight
 //  Jump to SubRoutine Random_0_99
 //  CoMPare A with #$32	;50% chance of spell
@@ -4303,12 +4369,12 @@ static void charmAction(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
 //         lda #$03
-//  Jump to SubRoutine Random_X_A    ;0..3
+//  Jump to SubRoutine Random_X_A    (0..3)
 //  Transfer A to X
 //  Transfer Direct page to aCcumulator
 //  Jump to SubRoutine SetBit_X
 //  PulL X
-//  STore A to CharStruct::PartyTargets,X	;fight random party member
+//  STore A to CharStruct::PartyTargets,X	(fight random party member)
 //         JuMP to _QueueUncontrolledAction
 // Magic:
 //         lda $3D		;char index
@@ -4337,7 +4403,7 @@ static void charmAction(void) {
 //         ldx #$0012		;first white spell
 //         lda #$47		;last time spell
 //  Jump to SubRoutine Random_X_A  	;random white/black/time spell
-//         Lengthen A
+//  Lengthen A
 //         adc SpellOffsetRandom
 //  Transfer A to X
 //  Clear A, then Shorten
@@ -4347,7 +4413,7 @@ static void charmAction(void) {
 //  CoMPare A with #$46		;quick spell
 //         beq TryRandomSpell	;is no good either
 //  PusH A 			;holds known random spell
-//         Lengthen A
+//  Lengthen A
 //  Jump to SubRoutine ShiftMultiply_8
 //  Transfer A to X
 //  Clear A, then Shorten
@@ -4359,7 +4425,7 @@ static void charmAction(void) {
 //         lda TempTargetting
 //         bne CheckTargetting
 // TargetSelf:
-//         Lengthen A
+//  Lengthen A
 //         lda $3F			;Char Offset
 //  Jump to SubRoutine ShiftDivide_128	;char index (could've just loaded that)
 //  Transfer A to X
@@ -4484,7 +4550,7 @@ static void randomizeOrder(void) {
 //  Jump to SubRoutine GlobalTimers
 // :	   Transfer Direct page to aCcumulator
 //  Transfer A to X
-//         dec
+//  DECrement
 //         									;:
 //  [LBL] STore A to RandomOrder,X
 //  INcrement X
@@ -4583,12 +4649,12 @@ static void updateTimer(void) {
 //         bmi TimerActive  	;check the 80h timer flag
 //         lda CurrentTimer,X
 //         beq FlagTimer
-//         dec CurrentTimer,X
+//  DECrement CurrentTimer,X
 //         lda CurrentTimer,X
 //         bne TimerActive
 // FlagTimer:		;flag EnableTimer when CurrentTimer hits 0
 //         lda EnableTimer,X
-//         OR A with #$81
+//  OR A with #$81
 //  STore A to EnableTimer,X
 // TimerActive:
 //         lda $0C
@@ -4611,7 +4677,7 @@ static void globalTimers(void) {
 // DecTimer:
 //         lda GlobalTimer,X
 //         beq Triggered
-//         dec GlobalTimer,X
+//  DECrement GlobalTimer,X
 //  Store Zero to ProcessTimer,X
 //  BRAnch to :+
 // Triggered:
@@ -4688,7 +4754,7 @@ static void findEndedTimers(void) {
 //         lda RandomOrderIndex,X
 //  Transfer A to X
 //         lda RandomOrder,X
-//         Lengthen A
+//  Lengthen A
 //  Jump to SubRoutine ShiftMultiply_128
 //  Transfer A to X
 //  Clear A, then Shorten
@@ -4809,7 +4875,7 @@ static void timerEffectPoison(void) {
 //         lda InitialTimer::Poison,Y
 //  STore A to CurrentTimer::Poison,Y
 //  Jump to SubRoutine WipeDisplayStructures
-//         Lengthen A
+//  Lengthen A
 //         ldx AttackerOffset
 //         lda CharStruct::MaxHP,X
 //  Jump to SubRoutine ShiftDivide_16
@@ -4878,11 +4944,11 @@ static void timerEffectOld(void) {
 //  Store Zero to $0E
 // StatsLoop:		;applies to all 4 main stats
 //         lda CharStruct::BaseStr,X
-//         dec
+//  DECrement
 //  Branch to next label if EQuals		;**bug: wraps 0 stats to 255
 //  STore A to CharStruct::BaseStr,X
 //  [LBL] lda CharStruct::EquippedStr,X
-//         dec
+//  DECrement
 //  Branch to next label if EQuals
 //  STore A to CharStruct::EquippedStr,X
 //  [LBL] INcrement X
@@ -4896,11 +4962,11 @@ static void timerEffectOld(void) {
 //         bcc Ret
 //         ldx AttackerOffset
 //         lda CharStruct::Level,X
-//         dec
+//  DECrement
 //  Branch to next label if EQuals
 //  STore A to CharStruct::Level,X
 //  [LBL] lda CharStruct::MonsterAttack,X
-//         dec
+//  DECrement
 //         bpl Ret	;bug? only decreases attack if above 128
 //  STore A to CharStruct::MonsterAttack,X
 // [Ret] Return To Subroutine
@@ -4927,7 +4993,7 @@ static void timerEffectRegen(void) {
 //         lda CharStruct::Status1,X
 //  AND A with #$02	;zombie
 //         bne Ret
-//         Lengthen A
+//  Lengthen A
 //         lda $26
 //  Jump to SubRoutine ShiftDivide_16
 //  Transfer A to X
@@ -4944,7 +5010,7 @@ static void timerEffectRegen(void) {
 //  [LBL] STore A to CharStruct::CurHP,X
 //  Clear A, then Shorten
 //         lda $0F
-//         OR A with #$80       		;flag to display as healing
+//  OR A with #$80       		;flag to display as healing
 //  STore A to $0F
 //         lda TimerReadyChar::Regen
 //         ldx $0E
@@ -4986,7 +5052,7 @@ static void timerEffectSing(void) {
 //         ldx #$0180	;**bug: should be $0200 for first monster
 // ApplySong:
 //  STore X to $14		;char offset
-//         Lengthen A
+//  Lengthen A
 // Transfer X to A
 //  CLear Carry
 //         adc $12		;adjust offset by song stat
@@ -5075,11 +5141,11 @@ static void performAction(void) {
 //  STore A to CharStruct::CmdStatus,X
 //  Store Zero to CharStruct::DamageMod,X
 //         lda CharStruct::Status1,X
-//         OR A with CharStruct::AlwaysStatus1,X
+//  OR A with CharStruct::AlwaysStatus1,X
 //  AND A with #$02	;zombie
 //         bne Uncontrolled
 //         lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
+//  OR A with CharStruct::AlwaysStatus2,X
 //  AND A with #$18	;charm/berserk
 //         beq _ResetATB
 // Uncontrolled:
@@ -5109,7 +5175,7 @@ static void atbWait(void) {
 //  Branch to [Ret] if EQuals
 //         lda ATBWaitLeft
 //         beq DoneWaiting
-//         dec
+//  DECrement
 //  STore A to ATBWaitLeft
 //         bne Ret
 // DoneWaiting:
@@ -5194,7 +5260,7 @@ static void resetAtb(void) {
 //         beq EnableATB
 //         lda CurrentlyReacting
 //         bne EnableATB
-//         dec QuickTurns
+//  DECrement QuickTurns
 //         lda QuickTurns
 //         bne Quick
 //  PusH Y
@@ -5441,7 +5507,7 @@ static void monsterAtb(void) {
 //  STore A to CharStruct::ActionFlag,X
 //         ldx AttackerOffset
 //         lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
+//  OR A with CharStruct::AlwaysStatus2,X
 //  AND A with #$08	;berserk
 //         beq CheckCharm
 //         lda #$01
@@ -5454,7 +5520,7 @@ static void monsterAtb(void) {
 //         JuMP to GoFinish
 // CheckCharm:
 //         lda CharStruct::Status2,X
-//         OR A with CharStruct::AlwaysStatus2,X
+//  OR A with CharStruct::AlwaysStatus2,X
 //  AND A with #$10	;charm
 //         beq CheckFlirt
 // TryRandomAction:
@@ -5464,13 +5530,13 @@ static void monsterAtb(void) {
 //  Transfer Direct page to aCcumulator
 //  Transfer A to X
 //         lda #$03
-//  Jump to SubRoutine Random_X_A 	;0..3
+//  Jump to SubRoutine Random_X_A 	(0..3)
 //  Transfer A to X
 //  STore X to $0E
 //         lda MonsterIndex
 //  A Shift Left
 //  Transfer A to X
-//         Lengthen A
+//  Lengthen A
 //         lda BattleMonsterID,X
 //  Jump to SubRoutine ShiftMultiply_4
 //  CLear Carry
@@ -5539,7 +5605,7 @@ static void monsterAtb(void) {
 //         lda MonsterIndex
 //  A Shift Left
 //  Transfer A to X
-//         Lengthen A
+//  Lengthen A
 //  CLear Carry
 //         lda f:_d0eea5,X	;*1620, size of MonsterAI struct
 //         adc #MonsterAI
@@ -5562,7 +5628,7 @@ static void monsterAtb(void) {
 //  Jump to SubRoutine CheckAICondition
 //         lda AIConditionMet
 //         beq NextConditionSet
-//         Lengthen A
+//  Lengthen A
 //  CLear Carry
 //         lda AIConditionOffset
 //         adc #$0004		;next condition in set
@@ -5576,7 +5642,7 @@ static void monsterAtb(void) {
 //  CoMPare A with #$0A		;10 conditions max
 //         bne CheckAIConditions
 // AIActions:
-//         Lengthen A
+//  Lengthen A
 //  CLear Carry
 //         lda AIOffset
 //         adc #$00AA	;advances from Conditions to Actions
@@ -5604,7 +5670,7 @@ static void monsterAtb(void) {
 // Finish:
 //         ldx MonsterOffset16
 //         lda MonsterMagic,X
-//         Lengthen A
+//  Lengthen A
 //  Jump to SubRoutine ShiftMultiply_8
 //  Transfer A to X
 //  Clear A, then Shorten
