@@ -1011,7 +1011,7 @@ static void itemCommand(void) {
     //  Store Zero to GFXQueue::Flag,X
     //  LoaD #$FC to A		(exec graphics command)
     //  STore A to GFXQueue::Cmd,X
-    //  LoaD #$09 to A		(commAND A with 9: item use)
+    //  LoaD #$09 to A		(command 9: item use)
     //  STore A to GFXQueue::Type,X
     //  LoaD TempSpell to A
     //  STore A to GFXQueue::Data1,X
@@ -1095,7 +1095,7 @@ static void weaponItem(void) {
     //  Store Zero to GFXQueue::Flag,X
     //  LoaD #$FC to A	(exec graphics command)
     //  STore A to GFXQueue::Cmd,X
-    //  LoaD #$0A to A	(commAND A with 10: weapon used as item)
+    //  LoaD #$0A to A	(command 10: weapon used as item)
     //  STore A to GFXQueue::Type,X
     //  PulL A
     //  STore A to GFXQueue::Data1,X
@@ -1342,7 +1342,7 @@ static void simpleFight(void) {
     //  Store Zero to GFXQueue::Flag,X
     //  LoaD #$FC to A		(exec graphics command)
     //  STore A to GFXQueue::Cmd,X
-    //  LoaD #$01 to A		(ability/commAND A with animation)
+    //  LoaD #$01 to A		(ability/command animation)
     //  STore A to GFXQueue::Type,X
     //  LoaD #$04 to A		(fight)
     //  STore A to GFXQueue::Data1,X
@@ -2625,206 +2625,227 @@ static void commandTable21(void) {
 // Address: _11B2
 // Command $23 (Gaia/Terrain)
 static void commandTable22(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda Level
-//  Jump to SubRoutine Random_X_A 	;0..Level
-//  CoMPare A with #$0B
-//  Branch to next label if Carry Set
-//  Transfer Direct page to aCcumulator          	;<11, 0
-//  BRAnch to Chosen
-// :	cmp #$15
-//  Branch to next label if Carry Set
-//         lda #$01     	;<21, 1
-//  BRAnch to Chosen
-// :	cmp #$33
-//  Branch to next label if Carry Set
-//         lda #$02     	;<50, 2
-//  BRAnch to Chosen
-//  [LBL] lda #$03     	;otherwise 3
-// Chosen:
-//  STore A to $0E		;terrain spell slot 0-3
-//         lda TerrainType
-//  Jump to SubRoutine ShiftMultiply_4
-//  CLear Carry
-//         adc $0E
-//  Transfer A to X
-//         lda f:TerrainAttackTbl,X
-//  STore A to TempSpell
-//         lda TempSpell	;pointless load?
-//         Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//  [LBL] lda f:SpecialAbilityAttackProp,X
-//  STore A to Temp,Y
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$0008	;copy 8 bytes spell data
-//  Branch to previous label if Not Equals
-//  Store Zero to PartyTargets
-//  Store Zero to MonsterTargets
-//         lda Temp		;targetting byte
-//         bne Targetting
-//         lda AttackerIndex	;default to attacker
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine SetBit_X
-//  STore A to PartyTargets
-//  BRAnch to TargetSet
-// Targetting:
-//  AND A with #$08	;target enemy by default
-//         bne TargetEnemy
-//         lda Temp
-//  AND A with #$40	;target all
-//         bne TargetAllParty
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$03
-//  Jump to SubRoutine Random_X_A 	;0..3 random party
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine SetBit_X
-//  STore A to PartyTargets
-//  BRAnch to TargetSet
-// TargetAllParty:
-//         lda #$F0
-//  STore A to PartyTargets
-//  BRAnch to TargetSet
-// TargetEnemy:
-//         lda Temp
-//  AND A with #$40	;target all
-//         bne TargetAllEnemy
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$07	;0..7 random monster
-//  Jump to SubRoutine Random_X_A
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine SetBit_X
-//  STore A to MonsterTargets
-//  BRAnch to TargetSet
-// TargetAllEnemy:
-//         lda #$FF
-//  STore A to MonsterTargets
-// TargetSet:
-//  Store Zero to TempAttachedSpell
-//  Store Zero to TempSkipNaming
-//         lda #$01
-//  STore A to TempIsEffect
-//         JuMP to CastSpell
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD Level to A
+    //  Jump to SubRoutine Random_X_A 	(0..Level)
+    //  CoMPare A with #$0B
+    //  Branch to next label if Carry Set
+    //  Transfer Direct page to aCcumulator          	(<11, 0)
+    //  BRAnch to [Chosen]
+
+    //  [LBL] CoMPare A with #$15
+    //  Branch to next label if Carry Set
+    //  LoaD #$01 to A     	(<21, 1)
+    //  BRAnch to [Chosen]
+
+    //  [LBL] CoMPare A with #$33
+    //  Branch to next label if Carry Set
+    //  LoaD #$02 to A     	(<50, 2)
+    //  BRAnch to [Chosen]
+
+    //  [LBL] LoaD #$03 to A     	(otherwise 3)
+
+    //  [Chosen]
+    //  STore A to $0E		(terrain spell slot 0-3)
+    //  LoaD TerrainType to A
+    //  Jump to SubRoutine ShiftMultiply_4
+    //  CLear Carry
+    //  ADd $0E to A with Carry
+    //  Transfer A to X
+    //  LoaD f:TerrainAttackTbl,X to A
+    //  STore A to TempSpell
+    //  LoaD TempSpell to A	(pointless load?)
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+
+    //  [LBL] lda f:SpecialAbilityAttackProp,X
+    //  STore A to Temp,Y
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$0008	(copy 8 bytes spell data)
+    //  Branch to previous label if Not Equals
+    //  Store Zero to PartyTargets
+    //  Store Zero to MonsterTargets
+    //  LoaD Temp to A		(targetting byte)
+    //  Branch to [Targetting] if Not Equals
+    //  LoaD AttackerIndex to A	(default to attacker)
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine SetBit_X
+    //  STore A to PartyTargets
+    //  BRAnch to [TargetSet]
+
+    //  [Targetting]
+    //  AND A with #$08	(target enemy by default)
+    //  Branch to [TargetEnemy] if Not Equals
+    //  LoaD Temp to A
+    //  AND A with #$40	(target all)
+    //  Branch to [TargetAllParty] if Not Equals
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$03 to A
+    //  Jump to SubRoutine Random_X_A 	(0..3 random party)
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine SetBit_X
+    //  STore A to PartyTargets
+    //  BRAnch to [TargetSet]
+
+    //  [TargetAllParty]
+    //  LoaD #$F0 to A
+    //  STore A to PartyTargets
+    //  BRAnch to [TargetSet]
+
+    //  [TargetEnemy]
+    //  LoaD Temp to A
+    //  AND A with #$40	;target all
+    //  Branch to [TargetAllEnemy] if Not Equals
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$07 to A	(0..7 random monster)
+    //  Jump to SubRoutine Random_X_A
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine SetBit_X
+    //  STore A to MonsterTargets
+    //  BRAnch to [TargetSet]
+
+    //  [TargetAllEnemy]
+    //  LoaD #$FF to A
+    //  STore A to MonsterTargets
+
+    //  [TargetSet]
+    //  Store Zero to TempAttachedSpell
+    //  Store Zero to TempSkipNaming
+    //  LoaD #$01 to A
+    //  STore A to TempIsEffect
+    //  JuMP to CastSpell
 }
 
 // Address: _125E
 // Command $25 (Hide)
 static void commandTable24(void) {
-//         ldx AttackerOffset
-//         lda CharStruct::Status4,X
-//         OR A with #$01	;hidden
-//  STore A to CharStruct::Status4,X
-//         lda #$25	;hide ability name
-//  Jump to SubRoutine GFXCmdAttackNameA
-//         lda #$24	;hide ability anim
-//  Jump to SubRoutine GFXCmdAbilityAnim
-//         lda ProcSequence
-//  Transfer A to X
-//  Store Zero to AtkType,X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//  INCrement UnknownReaction
-//  Jump to SubRoutine FinishCommandNullTargets
-//         lda AttackerIndex
-//  STore A to $24
-//         lda #$14	;20, size of CharCommands struct
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//         ldx $26
-// FindHideCommands:
-//         lda CharCommands::ID,X
-//  CoMPare A with #$25	;hide command
-//         beq Found
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$0004	;4 command slots
-//         bne FindHideCommands
-//  Branch to [Ret] if EQuals
-// Found:	lda #$26	;show command
-//  STore A to CharCommands::ID,X
-//         lda #$08	;target enemy?
-//  STore A to CharCommands::Targetting,X
-//  INcrement X
-//  INcrement Y
-//  BRAnch to FindHideCommands
-// [Ret] Return To Subroutine
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status4,X to A
+    //  OR A with #$01	(hidden)
+    //  STore A to CharStruct::Status4,X
+    //  LoaD #$25 to A	(ability name)
+    //  Jump to SubRoutine GFXCmdAttackNameA
+    //  LoaD #$24 to A	(ability anim)
+    //  Jump to SubRoutine GFXCmdAbilityAnim
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  Store Zero to AtkType,X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  INCrement UnknownReaction
+    //  Jump to SubRoutine FinishCommandNullTargets
+    //  LoaD AttackerIndex to A
+    //  STore A to $24
+    //  LoaD #$14 to A	(20, size of CharCommands struct)
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  LoaD $26 to X
+
+    //  [FindHideCommands]
+    //  LoaD CharCommands::ID,X to A
+    //  CoMPare A with #$25	(hide command)
+    //  Branch to [Found] if EQuals
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$0004	(4 command slots)
+    //  Branch to [FindHideCommands] if Not Equals
+    //  Branch to [Ret] if EQuals
+
+    //  [Found]LoaD #$26 to A	(show command)
+    //  STore A to CharCommands::ID,X
+    //  LoaD #$08 to A	(target enemy?)
+    //  STore A to CharCommands::Targetting,X
+    //  INcrement X
+    //  INcrement Y
+    //  BRAnch to [FindHideCommands]
+
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _12B3
 // Command $26 (Show)
 static void commandTable25(void) {
-//         ldx AttackerOffset
-//         lda CharStruct::Status4,X
-//  AND A with #$FE	;clear hidden
-//  STore A to CharStruct::Status4,X
-//         lda #$26	;show ability name
-//  Jump to SubRoutine GFXCmdAttackNameA
-//         lda #$25	;show ability anim
-//  Jump to SubRoutine GFXCmdAbilityAnim
-//         lda ProcSequence
-//  Transfer A to X
-//  Store Zero to AtkType,X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//  INCrement UnknownReaction
-//  Jump to SubRoutine FinishCommandNullTargets
-//         lda AttackerIndex
-//  STore A to $24
-//         lda #$14	;20, size of CharCommands struct
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//         ldx $26
-// FindShowCommands:
-//         lda CharCommands::ID,X
-//  CoMPare A with #$26	;show command
-//         beq Found
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$0004	;4 command slots
-//         bne FindShowCommands
-//  Branch to [Ret] if EQuals
-// Found:
-//         lda #$25
-//  STore A to CharCommands::ID,X
-//  Store Zero to CharCommands::Targetting,X
-//  INcrement X
-//  INcrement Y
-//  BRAnch to FindShowCommands
-// [Ret] Return To Subroutine
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status4,X to A
+    //  AND A with #$FE	(clear hidden)
+    //  STore A to CharStruct::Status4,X
+
+    //  LoaD #$26 to A	(ability name)
+    //  Jump to SubRoutine GFXCmdAttackNameA
+
+    //  LoaD #$25 to A	(ability anim)
+    //  Jump to SubRoutine GFXCmdAbilityAnim
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  Store Zero to AtkType,X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  INCrement UnknownReaction
+    //  Jump to SubRoutine FinishCommandNullTargets
+    //  LoaD AttackerIndex to A
+    //  STore A to $24
+    //  LoaD #$14 to A	(20, size of CharCommands struct)
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  LoaD $26 to X
+
+    //  [FindShowCommands]
+    //  LoaD CharCommands::ID,X to A
+    //  CoMPare A with #$26	;show command
+    //  Branch to [Found] if EQuals
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$0004	(4 command slots)
+    //  Branch to [FindShowCommands] if Not Equals
+    //  Branch to [Ret] if EQuals
+
+    //  [Found]
+    //  LoaD #$25 to A
+    //  STore A to CharCommands::ID,X
+    //  Store Zero to CharCommands::Targetting,X
+    //  INcrement X
+    //  INcrement Y
+    //  BRAnch to FindShowCommands
+
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _1306
 // Command $29 (Flirt)
 static void commandTable28(void) {
-    // lda #$29	;flirt ability
+    // LoaD #$29 to A	(flirt ability)
     // Jump to SubRoutine CopyAbilityInfo
     // Jump to SubRoutine GetTargets
     // Jump to SubRoutine CheckRetarget
     // Jump to SubRoutine BuildTargetBitmask
-    // lda #$29	;ability name
+
+    // LoaD #$29 to A	(ability name)
     // Jump to SubRoutine GFXCmdAttackNameA
-    // lda #$28	;ability anim
+
+    // LoaD #$28 to A	(ability anim)
     // Jump to SubRoutine GFXCmdAbilityAnim
     // Jump to SubRoutine MagicAtkTypeSingleTarget
     // Jump to SubRoutine FinishCommand
     // Jump to SubRoutine GFXCmdDamageNumbers
-    // lda MessageBoxOffset
+    // LoaD MessageBoxOffset to A
     // Transfer A to X
-    // lda #$27	;message
+
+    // LoaD #$27 to A	(message)
     // STore A to MessageBoxes,X
     // JuMP to GFXCmdMessage
 }
@@ -2832,90 +2853,95 @@ static void commandTable28(void) {
 // Address: _1333
 // Command $2A (Dance)
 static void commandTable29(void) {
-//  Store Zero to ProcSequence	;reset command sequence (no procs)
-//  Store Zero to NextGFXQueueSlot
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$03
-//  Jump to SubRoutine Random_X_A		;0..3 random dance
-//  STore A to TempDance
-//         ldx AttackerOffset
-//         lda CharStruct::ArmorProperties,X
-//  AND A with #$04		;sword dance up
-//         beq DanceCheck
-//  Jump to SubRoutine Random_0_99
-//         Logical Shift Right A
-//         bcs NotSwordDance	;50% chance of sword dance
-//         lda #$03		;sword dance
-//  STore A to TempDance
-//  BRAnch to DanceCheck
-// NotSwordDance:
-//  Jump to SubRoutine Random_0_99
-//         Logical Shift Right A
-//  Store Zero to TempDance
-//         rol TempDance		;50% chance of 0 or 1
-// DanceCheck:
-//         lda TempDance
-//  CoMPare A with #$03		;sword dance
-//         beq SwordDance
-//  Jump to SubRoutine GetTargets
-//  Jump to SubRoutine CheckRetarget
-//  Jump to SubRoutine BuildTargetBitmask
-//  Jump to SubRoutine CheckMultiTarget
-//  CLear Carry
-//         lda TempDance
-//         adc #$79		;offset to dance strings
-//  STore A to Temp+1		;string id / ability id
-//  Store Zero to Temp		;string table
-//  Jump to SubRoutine GFXCmdAttackNameFromTemp
-//         lda #$29		;dance anim
-//  Jump to SubRoutine GFXCmdAbilityAnim
-//  Jump to SubRoutine SelectCurrentProcSequence
-//         lda Temp+1		;ability id
-//  Jump to SubRoutine CopyROMMagicInfo
-//  Jump to SubRoutine MagicAtkTypeSingleTarget
-//  Jump to SubRoutine FinishCommand
-//         JuMP to GFXCmdDamageNumbers
-// SwordDance:
-//         lda #$7D		;sword dance ability
-//  STore A to Temp+1		;string id / ability id
-//  Store Zero to Temp		;string table
-//  Jump to SubRoutine GFXCmdAttackNameFromTemp
-//         lda #$29		;dance anim
-//  Jump to SubRoutine GFXCmdAbilityAnim
-//         lda ProcSequence
-//  Transfer A to X
-//         lda #$7F		;do nothing
-//  STore A to AtkType,X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//  Jump to SubRoutine FinishCommandNullTargets
-//  Jump to SubRoutine GFXCmdDamageNumbers
-//         ldx AttackerOffset
-//         lda CharStruct::DamageMod,X
-//         OR A with #$D0		;auto hit, damage*2, M*2
-//  STore A to CharStruct::DamageMod,X
-//         JuMP to SimpleFight
+    //  Store Zero to ProcSequence	(reset command sequence ;no procs)
+    //  Store Zero to NextGFXQueueSlot
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$03 to A
+    //  Jump to SubRoutine Random_X_A		(0..3 random dance)
+    //  STore A to TempDance
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::ArmorProperties,X to A
+    //  AND A with #$04		(sword dance up)
+    //  BRAnch to [DanceCheck] if EQuals
+    //  Jump to SubRoutine Random_0_99
+    //  Logical Shift Right A
+    //  BRAnch to [NotSwordDance] if Carry Set	(50% chance of sword dance)
+    //  LoaD #$03 to A		(sword dance)
+    //  STore A to TempDance
+    //  BRAnch to [DanceCheck]
+
+    //  [NotSwordDance]
+    //  Jump to SubRoutine Random_0_99
+    //  Logical Shift Right A
+    //  Store Zero to TempDance
+    //  ROtate TempDance Left		(50% chance of 0 or 1)
+
+    //  [DanceCheck]
+    //  LoaD TempDance to A
+    //  CoMPare A with #$03		(sword dance)
+    //  BRAnch to [SwordDance] if EQuals
+    //  Jump to SubRoutine GetTargets
+    //  Jump to SubRoutine CheckRetarget
+    //  Jump to SubRoutine BuildTargetBitmask
+    //  Jump to SubRoutine CheckMultiTarget
+    //  CLear Carry
+    //  LoaD TempDance to A
+    //  ADd #$79 to A with Carry		(offset to dance strings)
+    //  STore A to Temp+1		(string id / ability id)
+    //  Store Zero to Temp		(string table)
+    //  Jump to SubRoutine GFXCmdAttackNameFromTemp
+    //  LoaD #$29 to A		(dance anim)
+    //  Jump to SubRoutine GFXCmdAbilityAnim
+    //  Jump to SubRoutine SelectCurrentProcSequence
+    //  LoaD Temp+1 to A		(ability id)
+    //  Jump to SubRoutine CopyROMMagicInfo
+    //  Jump to SubRoutine MagicAtkTypeSingleTarget
+    //  Jump to SubRoutine FinishCommand
+    //  JuMP to GFXCmdDamageNumbers
+
+    //  [SwordDance]
+    //  LoaD #$7D to A		(sword dance ability)
+    //  STore A to Temp+1		(string id / ability id)
+    //  Store Zero to Temp		(string table)
+    //  Jump to SubRoutine GFXCmdAttackNameFromTemp
+
+    //  LoaD #$29 to A		(dance anim)
+    //  Jump to SubRoutine GXCmdAbilityAnim
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  LoaD #$7F to A		(do nothing)
+    //  STore A to AtkType,X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  Jump to SubRoutine FinishCommandNullTargets
+    //  Jump to SubRoutine GFXCmdDamageNumbers
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::DamageMod,X to A
+    //  OR A with #$D0		(auto hit, damage*2, M*2)
+    //  STore A to CharStruct::DamageMod,X
+    //  JuMP to SimpleFight
 }
 
 // Address: _13CE
 // Command $2B (Mimic)
 static void commandTable2A(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//         ldx AttackerOffset
-//  [LBL] lda SavedAction,Y
-//  STore A to CharStruct::ActionFlag,X
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$000A	;copy 10 bytes action data
-//  Branch to previous label if Not Equals
-//         ldx AttackerOffset
-//         lda CharStruct::ActionFlag,X
-//  AND A with #$FE	;clear "costs mp" bit
-//  STore A to CharStruct::ActionFlag,X
-//         lda CharStruct::Command,X
-//         JuMP to DispatchCommand_CommandReady
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  LoaD AttackerOffset to X
+
+    //  [LBL] lda SavedAction,Y
+    //  STore A to CharStruct::ActionFlag,X
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$000A	;copy 10 bytes action data
+    //  Branch to previous label if Not Equals
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::ActionFlag,X to A
+    //  AND A with #$FE	;clear "costs mp" bit
+    //  STore A to CharStruct::ActionFlag,X
+    //  LoaD CharStruct::Command,X to A
+    //  JuMP to DispatchCommand_CommandReady
 }
 
 // Address: _13EF
@@ -2929,15 +2955,15 @@ static void commandTable2F(void) {
     // STore Zero to GFXQueue::Type,X
     // STore Zero to GFXQueue::Data1,X
     // STore Zero to GFXQueue::Data2,X
-    // lda ProcSequence
+    // LoaD ProcSequence to A
     // Transfer A to X
     // STore Zero to AtkType,X
     // STore Zero to MultiTarget,X
     // STore Zero to TargetType,X
     // Jump to SubRoutine FinishCommandNullTargets
-    // lda MessageBoxOffset
+    // LoaD MessageBoxOffset to A
     // Transfer A to X
-    // lda #$28	;message to display
+    // LoaD #$28 to A	(message to display)
     // STore A to MessageBoxes,X
     // JuMP to GFXCmdMessage
 }
@@ -2946,7 +2972,7 @@ static void commandTable2F(void) {
 // Command $52
 // Jump with a different name
 static void commandTable30(void) {
-    // lda #$52	;commAND A with name
+    // LoaD #$52 to A	(command name)
     // Jump to SubRoutine GFXCmdAttackNameA
     // JuMP to CommandTable0C::Anim
 }
@@ -2958,50 +2984,53 @@ static void commandTable30(void) {
 // can be called mid-routine for other effects like
 // Earthquake
 static void commandTable31(void) {
-//         lda #$4B	;wind slash spell effect
-//  STore A to TempEffect
-// WeaponEffectCommand:	;called here for other weapon effects
-//  Store Zero to $0E		;hand
-//  Store Zero to NextGFXQueueSlot
-//         ldx AttackerOffset
-//         lda CharStruct::RHWeapon,X
-//  Branch to next label if Not Equals
-//         lda #$80	;left hand
-//  STore A to $0E
-// :	jsr FindOpenGFXQueueSlot
-//  Store Zero to GFXQueue::Flag
-//         lda #$FC	;exec graphics command
-//  STore A to GFXQueue::Cmd
-//         lda #$01	;ability/commAND A with anim
-//  STore A to GFXQueue::Type
-//         lda #$04	;fight
-//  STore A to GFXQueue::Data1
-//         lda $0E		;hAND A with (0 for RH, 80 for LH)
-//  STore A to GFXQueue::Data2
-//         lda #$7E	;always miss
-//  STore A to AtkType
-//  Store Zero to MultiTarget
-//  Store Zero to TargetType
-//  Store Zero to CommandTargetBitmask
-//  Store Zero to CommandTargetBitmask+1
-//  INCrement ProcSequence
-//  Jump to SubRoutine GFXCmdDamageNumbers
-//         lda #$FF
-//  STore A to a:wMonsterTargets	;**optimize: wasted bytes
-//  Store Zero to a:wPartyTargets
-//         lda TempEffect
-//  STore A to TempSpell
-//         lda #$01
-//  STore A to TempIsEffect
-//  STore A to TempSkipNaming
-//  Store Zero to TempAttachedSpell
-//  Jump to SubRoutine CastSpell
-//         ldx AttackerOffset
-//         lda CharStruct::Command,X
-//  CoMPare A with #$0C	;capture/mug
-//         bne Ret	;removes return address from stack for capture
-//  PulL X 		;likely unreachable since capture cancels procs
-// [Ret] Return To Subroutine
+    //  LoaD #$4B to A	(wind slash spell effect)
+    //  STore A to TempEffect
+
+    //  [WeaponEffectCommand]	(called here for other weapon effects)
+    //  Store Zero to $0E		(hand)
+    //  Store Zero to NextGFXQueueSlot
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::RHWeapon,X to A
+    //  Branch to next label if Not Equals
+    //  LoaD #$80 to A	(left hand)
+    //  STore A to $0E
+
+    //  [LBL] Jump to SubRoutine FindOpenGFXQueueSlot
+    //  Store Zero to GFXQueue::Flag
+    //  LoaD #$FC to A	(exec graphics command)
+    //  STore A to GFXQueue::Cmd
+    //  LoaD #$01 to A	(ability/command anim)
+    //  STore A to GFXQueue::Type
+    //  LoaD #$04 to A	(fight)
+    //  STore A to GFXQueue::Data1
+    //  LoaD $0E to A		(hand (0 for RH, 80 for LH))
+    //  STore A to GFXQueue::Data2
+    //  LoaD #$7E to A	(always miss)
+    //  STore A to AtkType
+    //  Store Zero to MultiTarget
+    //  Store Zero to TargetType
+    //  Store Zero to CommandTargetBitmask
+    //  Store Zero to CommandTargetBitmask+1
+    //  INCrement ProcSequence
+    //  Jump to SubRoutine GFXCmdDamageNumbers
+    //  LoaD #$FF to A
+    //  STore A to a:wMonsterTargets	(**optimize: wasted bytes)
+    //  Store Zero to a:wPartyTargets
+    //  LoaD TempEffect to A
+    //  STore A to TempSpell
+    //  LoaD #$01 to A
+    //  STore A to TempIsEffect
+    //  STore A to TempSkipNaming
+    //  Store Zero to TempAttachedSpell
+    //  Jump to SubRoutine CastSpell
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Command,X to A
+    //  CoMPare A with #$0C	(capture/mug)
+    //  Branch to [Ret] if Not Equals	(removes return address from stack for capture)
+    //  PulL X 		(likely unreachable since capture cancels procs)
+
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _1490
@@ -3009,21 +3038,21 @@ static void commandTable31(void) {
 // Job-specific attack animation
 // likely for credits demo?
 static void commandTable32(void) {
-    // ldx AttackerOffset
+    // LoaD AttackerOffset to X
     // CLear Carry flag
-    // lda CharStruct::Job,X
-    // ADd #$30
+    // LoaD CharStruct::Job,X to A
+    // ADd #$30 to A with Carry
     // Jump to SubRoutine GFXCmdAbilityAnim
-    // lda #$7F	;null attack
+    // LoaD #$7F to A	(null attack)
     // STore A to AtkType
     // STore Zero to MultiTarget
     // STore Zero to TargetType
-    // lda #$08	;first monster
+    // LoaD #$08 to A	(first monster)
     // STore A to CommandTargetBitmask
     // STore A to TargetBitmask
     // STore Zero to CommandTargetBitmask+1
     // STore Zero to TargetBitmask+1
-    // inc UnknownReaction
+    // INCrement UnknownReaction
     // Return to SubRoutine
 }
 
@@ -3033,258 +3062,260 @@ static void commandTable32(void) {
 // Attacks twice per hAND A with if
 // hand's weapon has this command proc
 static void commandTable33(void) {
-//  Store Zero to ProcSequence	;cancels any other procs
-//  Store Zero to NextGFXQueueSlot
-//         ldx AttackerOffset
-//         lda CharStruct::MonsterTargets,X
-//  STore A to MonsterTargets
-//         lda CharStruct::PartyTargets,X
-//  STore A to PartyTargets
-//  Jump to SubRoutine CheckRetarget
-//         ldx AttackerOffset
-//         lda PartyTargets
-//  STore A to CharStruct::PartyTargets,X
-//         lda MonsterTargets
-//  STore A to CharStruct::MonsterTargets,X
-//  PusH A
-//  AND A with #$F0
-//         Logical Shift Right A
-//         Logical Shift Right A
-//         Logical Shift Right A
-//         Logical Shift Right A
-//         OR A with CharStruct::PartyTargets,X
-//  STore A to TempTargetBitmask
-//  PulL A
-//  AND A with #$0F
-//  A Shift Left
-//  A Shift Left
-//  A Shift Left
-//  A Shift Left
-//  STore A to TempTargetBitmask+1
-//         lda AttackerIndex
-//  Transfer A to X
-//         lda f:_d0ed85,X	;size of one character's gear structs
-//  Transfer A to X
-//  STore X to $0E			;GearStruct offset
-//         ldx AttackerOffset
-//         lda CharStruct::RHWeapon,X
-//         bne RH
-//         JuMP to LH
-// RH:	jsr SelectCurrentProcSequence
-//  STore Y to $14
-//  Store Zero to $12
-//         ldx $0E
-// :      	lda RHWeapon,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $12
-//         lda $12
-//  CoMPare A with #$0C		;copy 12 bytes weapon data
-//  Branch to previous label if Not Equals
-//  Jump to SubRoutine FindOpenGFXQueueSlot
-//  Store Zero to GFXQueue::Flag,X
-//         lda #$FC		;exec graphics command
-//  STore A to GFXQueue::Cmd,X
-//         lda #$01		;ability/commAND A with animation
-//  STore A to GFXQueue::Type,X
-//         lda #$04		;fight
-//  STore A to GFXQueue::Data1,X
-//  Store Zero to GFXQueue::Data2,X	;right hand, no msword
-//         ldx $0E			;GearStruct offset
-//         lda RHWeapon::AtkType,X
-//  PusH A
-//         lda ProcSequence
-//  Transfer A to X
-//  PulL A
-//  STore A to AtkType,X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//         lda ProcSequence
-//  A Shift Left
-//  Transfer A to X
-//         lda TempTargetBitmask
-//  STore A to CommandTargetBitmask,X
-//         lda TempTargetBitmask+1
-//  STore A to CommandTargetBitmask+1,X
-//  INCrement ProcSequence
-//  Jump to SubRoutine GFXCmdDamageNumbers
-//  Jump to SubRoutine SelectCurrentProcSequence
-//  STore Y to $14
-//  Store Zero to $12
-//         ldx $0E			;GearStruct offset
-//         lda RHWeapon::Properties,X
-//  AND A with #$02		;commAND A with instead of attack
-//         beq LH
-//         lda RHWeapon::Param3,X
-//  CoMPare A with #$55		;this command
-//         bne LH
-//  [LBL] lda RHWeapon,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $12
-//         lda $12
-//  CoMPare A with #$0C		;copy 12 bytes data for 2nd attack
-//  Branch to previous label if Not Equals
-//         lda #$80
-//  STore A to ActionAnimShift	;flag for later anim manipulation
-//  Jump to SubRoutine FindOpenGFXQueueSlot
-//  Store Zero to GFXQueue::Flag,X
-//  Store Zero to GFXQueue::Cmd,X
-//  Store Zero to GFXQueue::Type,X
-//  Store Zero to GFXQueue::Data1,X
-//  Store Zero to GFXQueue::Data2,X
-//         ldx $0E			;GearStruct offset
-//         lda RHWeapon::AtkType,X
-//  PusH A
-//         lda ProcSequence
-//  Transfer A to X
-//  PulL A
-//  STore A to AtkType,X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//         lda ProcSequence
-//  A Shift Left
-//  Transfer A to X
-//         lda TempTargetBitmask
-//  STore A to CommandTargetBitmask,X
-//         lda TempTargetBitmask+1
-//  STore A to CommandTargetBitmask+1,X
-//  INCrement ProcSequence
-//  Jump to SubRoutine GFXCmdDamageNumbers
-// LH:       ldx AttackerOffset
-//         lda CharStruct::LHWeapon,X
-//  Branch to next label if Not Equals
-//         JuMP to Ret
-// :Jump to SubRoutine SelectCurrentProcSequence
-//  STore Y to $12
-//  Store Zero to $14
-//         ldx $0E			;GearStruct offset
-// :   	lda LHWeapon,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $14
-//         lda $14
-//  CoMPare A with #$0C		;copy 12 bytes weapon data
-//  Branch to previous label if Not Equals
-//         ldx $0E			;GearStruct offset
-//         lda ProcSequence
-//  Transfer A to Y
-//         lda LHWeapon::AtkType,X
-//  STore A to AtkType,Y
-//  Jump to SubRoutine FindOpenGFXQueueSlot
-//  Store Zero to GFXQueue::Flag,X
-//         lda #$FC		;exec graphics command
-//  STore A to GFXQueue::Cmd,X
-//         lda #$01		;command/ability anim
-//  STore A to GFXQueue::Type,X
-//         lda #$04		;fight
-//  STore A to GFXQueue::Data1,X
-//         lda #$80		;left hand, no msword
-//  STore A to GFXQueue::Data2,X
-//         lda ProcSequence
-//  Transfer A to X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//         lda ProcSequence
-//  A Shift Left
-//  Transfer A to X
-//         lda TempTargetBitmask
-//  STore A to CommandTargetBitmask,X
-//         lda TempTargetBitmask+1
-//  STore A to CommandTargetBitmask+1,X
-//  INCrement ProcSequence
-//  Jump to SubRoutine GFXCmdDamageNumbers
-//  Jump to SubRoutine SelectCurrentProcSequence
-//  STore Y to $12
-//  Store Zero to $14
-//         ldx $0E
-//         lda LHWeapon::Properties,X
-//  AND A with #$02		;commAND A with instead of attack
-//  Branch to [Ret] if EQuals
-//         lda LHWeapon::Param3,X
-//  CoMPare A with #$55		;this command
-//         bne Ret
-//  [LBL] lda LHWeapon,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $14
-//         lda $14
-//  CoMPare A with #$0C		;copy 12 bytes weapon data for 2nd atk
-//  Branch to previous label if Not Equals
-//         lda ActionAnimShift
-//         OR A with #$40
-//  STore A to ActionAnimShift
-//         ldx $0E
-//         lda ProcSequence
-//  Transfer A to Y
-//         lda LHWeapon::AtkType,X
-//  STore A to AtkType,Y
-//  Jump to SubRoutine FindOpenGFXQueueSlot
-//  Store Zero to GFXQueue::Flag,X
-//  Store Zero to GFXQueue::Cmd,X
-//  Store Zero to GFXQueue::Type,X
-//  Store Zero to GFXQueue::Data1,X
-//  Store Zero to GFXQueue::Data2,X
-//         lda ProcSequence
-//  Transfer A to X
-//  Store Zero to MultiTarget,X
-//  Store Zero to TargetType,X
-//         lda ProcSequence
-//  A Shift Left
-//  Transfer A to X
-//         lda TempTargetBitmask
-//  STore A to CommandTargetBitmask,X
-//         lda TempTargetBitmask+1
-//  STore A to CommandTargetBitmask+1,X
-//  INCrement ProcSequence
-//  Jump to SubRoutine GFXCmdDamageNumbers
-// [Ret] Return To Subroutine
+    //  Store Zero to ProcSequence	;cancels any other procs
+    //  Store Zero to NextGFXQueueSlot
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::MonsterTargets,X to A
+    //  STore A to MonsterTargets
+    //  LoaD CharStruct::PartyTargets,X to A
+    //  STore A to PartyTargets
+    //  Jump to SubRoutine CheckRetarget
+    //  LoaD AttackerOffset to X
+    //  LoaD PartyTargets to A
+    //  STore A to CharStruct::PartyTargets,X
+    //  LoaD MonsterTargets to A
+    //  STore A to CharStruct::MonsterTargets,X
+    //  PusH A
+    //  AND A with #$F0
+    //  Logical Shift Right A x4
+    //  OR A with CharStruct::PartyTargets,X
+    //  STore A to TempTargetBitmask
+    //  PulL A
+    //  AND A with #$0F
+    //  A Shift Left x4
+    //  STore A to TempTargetBitmask+1
+    //  LoaD AttackerIndex to A
+    //  Transfer A to X
+    //  LoaD f:_d0ed85,X to A	(size of one character's gear structs)
+    //  Transfer A to X
+    //  STore X to $0E			(GearStruct offset)
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::RHWeapon,X to A
+    //  Branch to [RH] if Not Equals
+    //  JuMP to [LH]
+
+    //  [RH] Jump to SubRoutine SelectCurrentProcSequence
+    //  STore Y to $14
+    //  Store Zero to $12
+    //  LoaD $0E to X
+
+    //  [LBL] LoaD RHWeapon,X to A
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $12
+    //  LoaD $12 to A
+    //  CoMPare A with #$0C		(copy 12 bytes weapon data)
+    //  Branch to previous label if Not Equals
+    //  Jump to SubRoutine FindOpenGFXQueueSlot
+    //  Store Zero to GFXQueue::Flag,X
+    //  LoaD #$FC to A		(exec graphics command)
+    //  STore A to GFXQueue::Cmd,X
+    //  LoaD #$01 to A		(ability/command animation)
+    //  STore A to GFXQueue::Type,X
+    //  LoaD #$04 to A		(fight)
+    //  STore A to GFXQueue::Data1,X
+    //  Store Zero to GFXQueue::Data2,X	;right hand, no msword
+    //  LoaD $0E to X			(GearStruct offset)
+    //  LoaD RHWeapon::AtkType,X to A
+    //  PusH A
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  PulL A
+    //  STore A to AtkType,X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  LoaD ProcSequence to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD TempTargetBitmask to A
+    //  STore A to CommandTargetBitmask,X
+    //  LoaD TempTargetBitmask+1 to A
+    //  STore A to CommandTargetBitmask+1,X
+    //  INCrement ProcSequence
+    //  Jump to SubRoutine GFXCmdDamageNumbers
+    //  Jump to SubRoutine SelectCurrentProcSequence
+    //  STore Y to $14
+    //  Store Zero to $12
+    //  LoaD $0E to X			(GearStruct offset)
+    //  LoaD RHWeapon::Properties,X to A
+    //  AND A with #$02		(command instead of attack)
+    //  Branch to [LH] if EQuals
+    //  LoaD RHWeapon::Param3,X to A
+    //  CoMPare A with #$55		(this command)
+    //  Branch to [LH] if Not Equals
+
+    //  [LBL] lda RHWeapon,X
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $12
+    //  LoaD $12 to A
+    //  CoMPare A with #$0C		(copy 12 bytes data for 2nd attack)
+    //  Branch to previous label if Not Equals
+    //  LoaD #$80 to A
+    //  STore A to ActionAnimShift	(flag for later anim manipulation)
+    //  Jump to SubRoutine FindOpenGFXQueueSlot
+    //  Store Zero to GFXQueue::Flag,X
+    //  Store Zero to GFXQueue::Cmd,X
+    //  Store Zero to GFXQueue::Type,X
+    //  Store Zero to GFXQueue::Data1,X
+    //  Store Zero to GFXQueue::Data2,X
+    //  LoaD $0E to X			(GearStruct offset)
+    //  LoaD RHWeapon::AtkType,X to A
+    //  PusH A
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  PulL A
+    //  STore A to AtkType,X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  LoaD ProcSequence to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD TempTargetBitmask to A
+    //  STore A to CommandTargetBitmask,X
+    //  LoaD TempTargetBitmask+1 to A
+    //  STore A to CommandTargetBitmask+1,X
+    //  INCrement ProcSequence
+    //  Jump to SubRoutine GFXCmdDamageNumbers
+
+    //  [LH] LoaD AttackerOffset to X
+    //  LoaD CharStruct::LHWeapon,X to A
+    //  Branch to next label if Not Equals
+    //  JuMP to [Ret]
+
+    //  [LBL] Jump to SubRoutine SelectCurrentProcSequence
+    //  STore Y to $12
+    //  Store Zero to $14
+    //  LoaD $0E to X			(GearStruct offset)
+
+    //  [LBL] LoaD LHWeapon,X to A
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $14
+    //  LoaD $14 to A
+    //  CoMPare A with #$0C		(copy 12 bytes weapon data)
+    //  Branch to previous label if Not Equals
+    //  LoaD $0E to X			(GearStruct offset)
+    //  LoaD ProcSequence to A
+    //  Transfer A to Y
+    //  LoaD LHWeapon::AtkType,X to A
+    //  STore A to AtkType,Y
+    //  Jump to SubRoutine FindOpenGFXQueueSlot
+    //  Store Zero to GFXQueue::Flag,X
+    //  LoaD #$FC to A		(exec graphics command)
+    //  STore A to GFXQueue::Cmd,X
+    //  LoaD #$01 to A		(command/ability anim)
+    //  STore A to GFXQueue::Type,X
+    //  LoaD #$04 to A		(fight)
+    //  STore A to GFXQueue::Data1,X
+    //  LoaD #$80 to A		(left hand, no msword)
+    //  STore A to GFXQueue::Data2,X
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  LoaD ProcSequence to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD TempTargetBitmask to A
+    //  STore A to CommandTargetBitmask,X
+    //  LoaD TempTargetBitmask+1 to A
+    //  STore A to CommandTargetBitmask+1,X
+    //  INCrement ProcSequence
+    //  Jump to SubRoutine GFXCmdDamageNumbers
+    //  Jump to SubRoutine SelectCurrentProcSequence
+    //  STore Y to $12
+    //  Store Zero to $14
+    //  LoaD $0E to X
+    //  LoaD LHWeapon::Properties,X to A
+    //  AND A with #$02		;command instead of attack
+    //  Branch to [Ret] if EQuals
+    //  LoaD LHWeapon::Param3,X to A
+    //  CoMPare A with #$55		(this command)
+    //  Branch to [Ret] if Not Equals
+
+    //  [LBL] LoaD LHWeapon,X
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $14
+    //  LoaD $14 to A
+    //  CoMPare A with #$0C		(copy 12 bytes weapon data for 2nd atk)
+    //  Branch to previous label if Not Equals
+    //  LoaD ActionAnimShift to A
+    //  OR A with #$40
+    //  STore A to ActionAnimShift
+    //  LoaD $0E to X
+    //  LoaD ProcSequence to A
+    //  Transfer A to Y
+    //  LoaD LHWeapon::AtkType,X to A
+    //  STore A to AtkType,Y
+    //  Jump to SubRoutine FindOpenGFXQueueSlot
+    //  Store Zero to GFXQueue::Flag,X
+    //  Store Zero to GFXQueue::Cmd,X
+    //  Store Zero to GFXQueue::Type,X
+    //  Store Zero to GFXQueue::Data1,X
+    //  Store Zero to GFXQueue::Data2,X
+    //  LoaD ProcSequence to A
+    //  Transfer A to X
+    //  Store Zero to MultiTarget,X
+    //  Store Zero to TargetType,X
+    //  LoaD ProcSequence to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD TempTargetBitmask to A
+    //  STore A to CommandTargetBitmask,X
+    //  LoaD TempTargetBitmask+1 to A
+    //  STore A to CommandTargetBitmask+1,X
+    //  INCrement ProcSequence
+    //  Jump to SubRoutine GFXCmdDamageNumbers
+
+    //  [Ret] Return To Subroutine
 }
 
 // Address: _16A2
 // Command $56
 // Earthquake weapon effect
 static void commandTable34(void) {
-    // lda #$4A	;earthquake
+    // LoaD #$4A to A	(earthquake)
     // STore A to TempEffect
     // JuMP to CommandTable31::WeaponEffectCommand
 }
 
 // Address: _16AA
 static void copyAbilityInfo(void) {
-//  PusH A
-//  Jump to SubRoutine SelectCurrentProcSequence
-//  PulL A
-//         Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//  Store Zero to $0A
-//  [LBL] lda f:BattleCmdProp,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $0A
-//         lda $0A
-//  CoMPare A with #$05     ;copy first 5 bytes
-//  Branch to previous label if Not Equals
-//  INcrement Y          ;skip 4 on destination
-//  INcrement Y
-//  INcrement Y
-//  INcrement Y
-//  [LBL] lda f:BattleCmdProp,X
-//  STore A to AttackInfo,Y
-//  INcrement X
-//  INcrement Y
-//  INCrement $0A
-//         lda $0A
-//  CoMPare A with #$08      ;copy remaining 3 bytes
-//  Branch to previous label if Not Equals
-//  Return To Subroutine
+    //  PusH A
+    //  Jump to SubRoutine SelectCurrentProcSequence
+    //  PulL A
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  Store Zero to $0A
+    //  [LBL] lda f:BattleCmdProp,X
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $0A
+    //  LoaD $0A to A
+    //  CoMPare A with #$05     ;copy first 5 bytes
+    //  Branch to previous label if Not Equals
+    //  INcrement Y          ;skip 4 on destination
+    //  INcrement Y
+    //  INcrement Y
+    //  INcrement Y
+    //  [LBL] lda f:BattleCmdProp,X
+    //  STore A to AttackInfo,Y
+    //  INcrement X
+    //  INcrement Y
+    //  INCrement $0A
+    //  LoaD $0A to A
+    //  CoMPare A with #$08      ;copy remaining 3 bytes
+    //  Branch to previous label if Not Equals
+    //  Return To Subroutine
 }
 
 // Address: _16E1
@@ -3294,9 +3325,9 @@ static void gfXCmdAbilityAnim(void) {
     // PusH A
     // Jump to SubRoutine FindOpenGFXQueueSlot
     // STore Zero to GFXQueue::Flag,X
-    // lda #$FC	;exec graphics command
+    // LoaD #$FC to A	(exec graphics command)
     // STore A to GFXQueue::Cmd,X
-    // lda #$01	;ability/commAND A with anim
+    // LoaD #$01 to A	(ability/command anim)
     // STore A to GFXQueue::Type,X
     // PulL A
     // STore A to GFXQueue::Data1,X
@@ -3309,7 +3340,7 @@ static void gfXCmdAbilityAnim(void) {
 // creates Action $00,FC,04,01,<A>
 static void gfxCmdAttackNameA(void) {
     // STore A to Temp+1
-    // lda #$01
+    // LoaD #$01 to A
     // STore A to Temp
     // JuMP to GFXCmdAttackNameFromTemp
 }
@@ -3741,7 +3772,7 @@ static void processMenuCommandData(void) {
 //         lda #$08
 //  STore A to $25
 //  Jump to SubRoutine Multiply_8bit
-//         ldx $26		;commAND A with * 8
+//         ldx $26		;command * 8
 //         ldy AttackerOffset
 //         lda f:BattleCmdProp+2,X
 //  STore A to CharStruct::CmdStatus,Y
@@ -4117,14 +4148,14 @@ static void disableCommandsMagic(void) {
 // DisableCommands:
 //         lda CharCommands::ID,Y
 //  AND A with #$00FF
-//  STore A to $12		;commAND A with id
+//  STore A to $12		;command id
 //         beq DisableCommand
 //  A Shift Left
 //  Transfer A to X
 //         lda f:BattleCmdDisableStatus,X
 //  AND A with $10		;status 1/2
 //         bne DisableCommand
-//         lda $12		;commAND A with id
+//         lda $12		;command id
 //  CoMPare A with #$0026	;show command
 //         beq EnableCommand
 //         lda $22		;status 3/4
