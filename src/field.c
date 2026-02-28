@@ -78,6 +78,35 @@ static void func_c01ec5(void);
 static void func_c01f57(void);
 static void func_c01fb4(void);
 static void func_c01fff(void);
+static void func_c0201f(void);
+static void func_c0203f(void);
+static void func_c02137(void);
+static void func_c022fb(void);
+static void drawPlayerSprite(void);
+static void loadOverlayGfx(void);
+static void loadOverlayProp(void);
+static void loadOverlaySprites(void);
+static void updateOverlay(void);
+static void execNPCScript(void);
+static void checkNPCEvents(void);
+static void func_c0324b(void);
+static void func_c03289(void);
+static void updateObjects(void);
+static void canNPCMoveToTile(void);
+static void moveTowardsParty(void);
+static void moveAwayFromParty(void);
+static void drawHiryuu(void);
+static void drawObjectSprites(void);
+static void updateObjectPositions(void);
+static void getPointerToObjLayout(void);
+static void clearObjLayout(void);
+static void addObjectToObjLayout(void);
+static void removeObjectToObjLayout(void);
+static void getObjectInObjLayout(void);
+static void getTileZ(void);
+static void loadNPCGfx(void);
+static void getPointerToNPCProperties(void);
+static void LoadNPCs(void);
 static void showCutsceneFromField(uint8_t id);
 static void func_c044e3(void);
 static void func_c0450a(void);
@@ -424,6 +453,87 @@ static void func_c01f57(void) {}
 static void func_c01fb4(void) {}
 
 static void func_c01fff(void) {}
+
+static void func_c0201f(void) {}
+
+static void func_c0203f(void) {}
+
+static void func_c02137(void) {}
+
+static void func_c022fb(void) {}
+
+// update party sprite
+static void drawPlayerSprite(void) {}
+
+static void loadOverlayGfx(void) {}
+
+static void loadOverlayProp(void) {}
+
+static void loadOverlaySprites(void) {}
+
+static void updateOverlay(void) {}
+
+// Address: _2f95
+static void execNPCScript(void) {}
+
+// Address: _317b
+static void checkNPCEvents(void) {}
+
+static void func_c0324b(void) {}
+
+static void func_c03289(void) {}
+
+// Address: _32ab
+static void updateObjects(void) {}
+
+// Address: _34eb
+// x: direction
+// a: movement direction (out, zero if can't move)
+static void canNPCMoveToTile(void) {}
+
+// Address: _351c
+static void moveTowardsParty(void) {}
+
+// Address: _3555
+static void moveAwayFromParty(void) {}
+
+// Address: 358e
+static void drawHiryuu(void) {}
+
+// Address: 39b3
+static void drawObjectSprites(void) {}
+
+// Address: 3bac
+static void updateObjectPositions(void) {}
+
+// Address: 3cbb
+static void getPointerToObjLayout(void) {}
+
+// Address: 3cd3
+static void clearObjLayout(void) {}
+
+// Address: 3ce0
+static void addObjectToObjLayout(void) {}
+
+// Address: 3cf8
+static void removeObjectToObjLayout(void) {}
+
+// Address: 3d0b
+static void getObjectInObjLayout(void) {}
+
+// Address: 3d15
+// get tile z-level (unused)
+// a: tile index, z-level (out)
+static void getTileZ(void) {}
+
+// Address: 3d28
+static void loadNPCGfx(void) {}
+
+// Address: 3e98
+static void getPointerToNPCProperties(void) {}
+
+// Address: 3eaa
+static void LoadNPCs(void) {}
 
 static void showCutsceneFromField(uint8_t id) {}
 
