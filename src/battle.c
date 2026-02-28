@@ -5513,14 +5513,14 @@ static uint8_t dur180mod(uint8_t base) {
 // Duration = 110 - Attacker's Magic Power, min 30
 // TODO: Update formula with Magic Power
 static uint8_t dur110mod(void) {
-//     sec
-//     lda #$6E	;110
-//     sbc MagicPower
-//  Bracn to next label if Carry Clear
-//  CoMPare A with #$1E	;min 30
-//     bcs :++
-//  [LBL] lda #$1E	;min 30
-// :	rts
+    //  SEt Carry flag
+    //  LoaD #$6E to A
+    //  SuBtract MagicPower from A with Carry
+    //  Brach to next label if Carry Clear
+    //  CoMPare A with #$1E	(min 30)
+    //  Branch to second next label if Carry Set
+    //  [LBL] Load #$1E to A	(min 30)
+    //  [LBL] Return To Subroutine
     uint8_t total = 110;
 
     if (total < 30) return 30;
@@ -5541,244 +5541,263 @@ static uint8_t dur110mod(void) {
 // Queues up a monster's action when
 // their ATB is ready
 static void monsterAtb(void) {
-//         lda #$01
-//  STore A to AISkipDeadCheck
-//  SEt Carry flag
-//         lda AttackerIndex
-//         sbc #$04
-//  STore A to MonsterIndex
-//  Jump to SubRoutine ShiftMultiply_16
-//  Transfer A to X
-//  STore X to MonsterOffset16
-//  A Shift Left
-//  Transfer A to X
-//  STore X to MonsterOffset32
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//  STore Y to TempCharm
-//         ldx MonsterOffset16
-//         lda #$FF
-//  [LBL] STore A to MonsterMagic,X
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$0010	;init 16 byte monster magic struct
-//  Branch to previous label if Not Equals
-//         							;
-//         lda MonsterIndex
-//  A Shift Left
-//  Transfer A to X
-//         lda f:_d0ee95,X
-//  STore A to $0E
-//         lda f:_d0ee95+1,X
-//  STore A to $0F
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//         ldx $0E		;MonsterIndex *100
-//         lda #$FF
-//  [LBL] STore A to MonsterAIScript,X
-//  INcrement X
-//  INcrement Y
-//  ComPare Y with #$0064	;init 100 bytes to $FF
-//  Branch to previous label if Not Equals
-//         lda AttackerIndex
-//  Jump to SubRoutine CalculateCharOffset
-//         ldx AttackerOffset
-//         lda #$2C       	;magic
-//  STore A to CharStruct::Command,X
-//         lda #$21	;magic + costs mp
-//  STore A to CharStruct::ActionFlag,X
-//         ldx AttackerOffset
-//         lda CharStruct::Status2,X
-//  OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$08	;berserk
-//         beq CheckCharm
-//         lda #$01
-//  STore A to CharStruct::CmdCancelled,X
-//         lda #$80	;monster fight
-//  STore A to AIBuffer
-//         lda #$FF	;end of list
-//  STore A to AIBuffer+1
-//  Jump to SubRoutine DispatchAICommands
-//         JuMP to GoFinish
-// CheckCharm:
-//         lda CharStruct::Status2,X
-//  OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$10	;charm
-//         beq CheckFlirt
-// TryRandomAction:
-//         ldx AttackerOffset
-//         lda #$01
-//  STore A to CharStruct::CmdCancelled,X
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$03
-//  Jump to SubRoutine Random_X_A 	(0..3)
-//  Transfer A to X
-//  STore X to $0E
-//         lda MonsterIndex
-//  A Shift Left
-//  Transfer A to X
-//  Lengthen A
-//         lda BattleMonsterID,X
-//  Jump to SubRoutine ShiftMultiply_4
-//  CLear Carry
-//         adc $0E		;random number 0..3
-//  Transfer A to X 		;offset into control actions table
-//  Clear A, then Shorten
-//         lda f:MonsterControl,X
-//  CoMPare A with #$FF
-//         beq TryRandomAction	;no action in this slot, try again
-//  STore A to AIBuffer
-//         lda #$FF	;end of list
-//  STore A to AIBuffer+1
-//  INCrement TempCharm
-//  Jump to SubRoutine DispatchAICommands
-//  BRAnch to GoFinish
-// CheckFlirt:								;
-//         lda CharStruct::CmdStatus,X
-//  AND A with #$08	;flirt
-//         beq CheckControl
-//         lda #$51	;throbbing command
-//  STore A to CharStruct::Command,X
-//         lda #$80	;other
-//  STore A to CharStruct::ActionFlag,X
-//  BRAnch to GoFinish
-// CheckControl:
-//         lda CharStruct::Status4,X
-//  AND A with #$20	;control
-//         bne Control
-//         lda CharStruct::Status2,X
-//  AND A with #$40	;sleep
-//         bne Sleep
-//  BRAnch to Normal
-// Control:
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//  [LBL] lda ControlTarget,Y
-//  CoMPare A with AttackerIndex
-//         beq FoundController
-//  INcrement Y
-//  BRAnch to :-
-// FoundController:
-//         lda ControlCommand,Y
-//         bne _ControlCommand
-// Sleep:	;or controlled without a command
-//  Store Zero to CharStruct::Command,X
-//         lda #$80	;action complete?
-//  STore A to CharStruct::ActionFlag,X
-//  BRAnch to GoFinish
-// _ControlCommand:
-//  Transfer Direct page to aCcumulator
-//  STore A to ControlCommand,Y
-//         lda MonsterIndex
-//  Transfer A to X
-//         lda MonsterControlActions,X
-//  STore A to AIBuffer
-//         lda #$FF	;end of list
-//  STore A to AIBuffer+1
-//  Jump to SubRoutine DispatchAICommands
-// GoFinish:
-//         JuMP to Finish
-// Normal:
-//         lda MonsterIndex
-//  Transfer A to X
-//         lda AIActiveConditionSet,X
-//  STore A to AICurrentActiveCondSet
-//         lda MonsterIndex
-//  A Shift Left
-//  Transfer A to X
-//  Lengthen A
-//  CLear Carry
-//         lda f:_d0eea5,X	;*1620, size of MonsterAI struct
-//         adc #MonsterAI
-//  STore A to AIOffset
-//  Clear A, then Shorten
-//  Store Zero to AICurrentCheckedSet
-// CheckAIConditions:
-//         lda AICurrentCheckedSet
-//  Transfer A to X
-//         lda f:_d0eec9,X	;size of a MonsterAI condition
-//  Transfer A to Y
-//  STore Y to AIConditionOffset
-//  Store Zero to AICheckIndex
-// CheckSingleCondition:
-//         ldy AIConditionOffset
-//         lda (AIOffset),Y
-//         beq AIActions		;0 always succeeds
-//  CoMPare A with #$FE		;indicates end of condition set
-//         beq AIActions
-//  Jump to SubRoutine CheckAICondition
-//         lda AIConditionMet
-//         beq NextConditionSet
-//  Lengthen A
-//  CLear Carry
-//         lda AIConditionOffset
-//         adc #$0004		;next condition in set
-//  STore A to AIConditionOffset
-//  Clear A, then Shorten
-//  INCrement AICheckIndex
-//  BRAnch to CheckSingleCondition
-// NextConditionSet:	;failed a condition in this set, check next set of conditions
-//  INCrement AICurrentCheckedSet
-//         lda AICurrentCheckedSet
-//  CoMPare A with #$0A		;10 conditions max
-//         bne CheckAIConditions
-// AIActions:
-//  Lengthen A
-//  CLear Carry
-//         lda AIOffset
-//         adc #$00AA	;advances from Conditions to Actions
-//  STore A to AIOffset
-//  Clear A, then Shorten
-//         lda AICurrentActiveCondSet
-//  CoMPare A with AICurrentCheckedSet
-//         beq ConditionOK	;matches so don't need to change things
-//         lda MonsterIndex
-//  Transfer A to X
-//         lda AICurrentCheckedSet
-//  STore A to AIActiveConditionSet,X	;checked cond is now current
-//         lda MonsterIndex
-//  A Shift Left
-//  Transfer A to Y
-//         lda AICurrentCheckedSet
-//  A Shift Left
-//  Transfer A to X
-//         lda f:_d0eeb5,X
-//  STore A to AICurrentOffset,Y
-//         lda f:_d0eeb5+1,X
-//  STore A to AICurrentOffset+1,Y
-// ConditionOK:
-//  Jump to SubRoutine ProcessAIScript
-// Finish:
-//         ldx MonsterOffset16
-//         lda MonsterMagic,X
-//  Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:AttackProp,X
-//  AND A with #$03       	;delay values
-//  Transfer A to X
-//         lda f:AttackDelayTbl,X
-//  PusH A
-//         lda AttackerIndex
-//  Jump to SubRoutine GetTimerOffset
-//  PulL A
-//  STore A to CurrentTimer::ATB,Y    ;**bug? doesn't adjust for haste/slow
-//         lda #$41	;pending action
-//  STore A to EnableTimer::ATB,Y
-//         lda MonsterIndex
-//  A Shift Left
-//  Transfer A to X
-//  Store Zero to ForcedTarget::Party,X
-//  Store Zero to ForcedTarget::Monster,X
-//  Return To Subroutine
+    //  LoaD #$01 to A
+    //  STore A to AISkipDeadCheck
+    //  SEt Carry flag
+    //  LoaD AttackerIndex to A
+    //  SuBtract #$04 from A with Carry
+    //  STore A to MonsterIndex
+    //  Jump to SubRoutine ShiftMultiply_16
+    //  Transfer A to X
+    //  STore X to MonsterOffset16
+    //  A Shift Left
+    //  Transfer A to X
+    //  STore X to MonsterOffset32
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  STore Y to TempCharm
+    //  LoaD MonsterOffset16 to X
+    //  LoaD #$FF to A
+
+    //  [LBL] STore A to MonsterMagic,X
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$0010	(init 16 byte monster magic struct)
+    //  Branch to previous label if Not Equals
+
+    //  LoaD MonsterIndex to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD f:_d0ee95,X to A
+    //  STore A to $0E
+    //  LoaD f:_d0ee95+1,X to A
+    //  STore A to $0F
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  LoaD $0E		(MonsterIndex *100)
+    //  LoaD #$FF to A
+
+    //  [LBL] STore A to MonsterAIScript,X
+    //  INcrement X
+    //  INcrement Y
+    //  ComPare Y with #$0064	(init 100 bytes to $FF)
+    //  Branch to previous label if Not Equals
+    //  LoaD AttackerIndex to A
+    //  Jump to SubRoutine CalculateCharOffset
+    //  LoaD AttackerOffset to X
+    //  LoaD #$2C to A       	(magic)
+    //  STore A to CharStruct::Command,X
+    //  LoaD #$21 to A	(magic + costs mp)
+    //  STore A to CharStruct::ActionFlag,X
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status2,X to A
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$08	(berserk)
+    //  Branch to [CheckCharm] if EQuals
+    //  LoaD #$01 to A
+    //  STore A to CharStruct::CmdCancelled,X
+    //  LoaD #$80 to A	(monster fight)
+    //  STore A to AIBuffer
+    //  LoaD #$FF to A	(end of list)
+    //  STore A to AIBuffer+1
+    //  Jump to SubRoutine DispatchAICommands
+    //  JuMP to GoFinish
+
+    //  [CheckCharm]
+    //  LoaD CharStruct::Status2,X to A
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$10	(charm)
+    //  Branch to CheckFlirt if EQuals
+
+    //  [TryRandomAction]
+    //  LoaD AttackerOffset to X
+    //  LoaD #$01 to A
+    //  STore A to CharStruct::CmdCancelled,X
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$03 to A
+    //  Jump to SubRoutine Random_X_A 	(0..3)
+    //  Transfer A to X
+    //  STore X to $0E
+    //  LoaD MonsterIndex to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  Lengthen A
+    //  LoaD BattleMonsterID,X to A
+    //  Jump to SubRoutine ShiftMultiply_4
+    //  CLear Carry
+    //  Add $0E to A with Carry		(random number 0..3)
+    //  Transfer A to X 		(offset into control actions table)
+    //  Clear A, then Shorten
+    //  LoaD f:MonsterControl,X to A
+    //  CoMPare A with #$FF to A
+    //  Branch to TryRandomAction if EQuals	(no action in this slot, try again)
+    //  STore A to AIBuffer
+    //  LoaD #$FF to A	(end of list)
+    //  STore A to AIBuffer+1
+    //  INCrement TempCharm
+    //  Jump to SubRoutine DispatchAICommands
+    //  BRAnch to [GoFinish]
+
+    //  [CheckFlirt]
+    //  LoaD CharStruct::CmdStatus,X to A
+    //  AND A with #$08	[flirt]
+    //  Branch to [CheckControl] if EQuals
+    //  LoaD #$51 to A	[throbbing command]
+    //  STore A to CharStruct::Command,X
+    //  LoaD #$80 to A	[other]
+    //  STore A to CharStruct::ActionFlag,X
+    //  BRAnch to [GoFinish]
+
+    //  [CheckControl]
+    //  LoaD CharStruct::Status4,X to A
+    //  AND A with #$20	(control)
+    //  Branch to [Control] if Not Equals
+    //  LoaD CharStruct::Status2,X to A
+    //  AND A with #$40	(sleep)
+    //  Branch to [Sleep] if Not Equals
+    //  BRAnch to [Normal]
+
+    //  [Control]
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+
+    //  [LBL] LoaD ControlTarget,Y to A
+    //  CoMPare A with AttackerIndex
+    //  Branch to [FoundController] if EQuals
+    //  INcrement Y
+    //  BRAnch to previous label
+
+    //  [FoundController]
+    //  LoaD ControlCommand,Y to A
+    //  Branch to [_ControlCommand] if Not Equals
+    //  [Sleep]	(or controlled without a command)
+    //  Store Zero to CharStruct::Command,X
+    //  LoaD #$80 to A	(action complete?)
+    //  STore A to CharStruct::ActionFlag,X
+    //  BRAnch to [GoFinish]
+
+    //  [_ControlCommand]
+    //  Transfer Direct page to aCcumulator
+    //  STore A to ControlCommand,Y
+    //  LoaD MonsterIndex to A
+    //  Transfer A to X
+    //  LoaD MonsterControlActions,X to A
+    //  STore A to AIBuffer
+    //  LoaD #$FF to A	(end of list)
+    //  STore A to AIBuffer+1
+    //  Jump to SubRoutine DispatchAICommands
+
+    //  [GoFinish]
+    //  JuMP to Finish
+
+    //  [Normal]
+    //  LoaD MonsterIndex to A
+    //  Transfer A to X
+    //  LoaD AIActiveConditionSet,X to A
+    //  STore A to AICurrentActiveCondSet
+    //  LoaD MonsterIndex to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  Lengthen A
+    //  CLear Carry
+    //  LoaD f:_d0eea5,X to A	(*1620, size of MonsterAI struct)
+    //  ADd #MonsterAI to A with Carry
+    //  STore A to AIOffset
+    //  Clear A, then Shorten
+    //  Store Zero to AICurrentCheckedSet
+
+    //  [CheckAIConditions]
+    //  LoaD AICurrentCheckedSet to A
+    //  Transfer A to X
+    //  LoaD f:_d0eec9,X to A	(size of a MonsterAI condition)
+    //  Transfer A to Y
+    //  STore Y to AIConditionOffset
+    //  Store Zero to AICheckIndex
+
+    //  [CheckSingleCondition]
+    //  LoaD AIConditionOffset to Y
+    //  LoaD (AIOffset),Y to A
+    //  Branch to [AIActions] if Equals		(0 always succeeds)
+    //  CoMPare A with #$FE		(indicates end of condition set)
+    //  Branch to [AIActions] if EQuals
+    //  Jump to SubRoutine CheckAICondition
+    //  LoaD AIConditionMet to A
+    //  Branch to NextConditionSet if EQuals
+    //  Lengthen A
+    //  CLear Carry
+    //  LoaD AIConditionOffset to A
+    //  ADd #$0004 to A with Carry		(next condition in set)
+    //  STore A to AIConditionOffset
+    //  Clear A, then Shorten
+    //  INCrement AICheckIndex
+    //  BRAnch to CheckSingleCondition
+
+    //  [NextConditionSet]	(failed a condition in this set, check next set of conditions)
+    //  INCrement AICurrentCheckedSet
+    //  LoaD AICurrentCheckedSet to A
+    //  CoMPare A with #$0A		(10 conditions max)
+    //  Branch to CheckAIConditions if Not Equals
+
+    //  [AIActions]
+    //  Lengthen A
+    //  CLear Carry
+    //  LoaD AIOffset to A
+    //  ADd #$00AA to A with Carry	(advances from Conditions to Actions)
+    //  STore A to AIOffset
+    //  Clear A, then Shorten
+    //  LoaD AICurrentActiveCondSet to A
+    //  CoMPare A with AICurrentCheckedSet
+    //  Branch to [ConditionOK] if EQuals	(matches so don't need to change things)
+    //  LoaD MonsterIndex to A
+    //  Transfer A to X
+    //  LoaD AICurrentCheckedSet to A
+    //  STore A to AIActiveConditionSet,X	(checked cond is now current)
+    //  LoaD MonsterIndex to A
+    //  A Shift Left
+    //  Transfer A to Y
+    //  LoaD AICurrentCheckedSet to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  LoaD f:_d0eeb5,X to A
+    //  STore A to AICurrentOffset,Y
+    //  LoaD f:_d0eeb5+1,X to A
+    //  STore A to AICurrentOffset+1,Y
+
+    //  [ConditionOK]
+    //  Jump to SubRoutine ProcessAIScript
+
+    //  [Finish]
+    //  LoaD MonsterOffset16 to X
+    //  LoaD MonsterMagic,X to A
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:AttackProp,X to A
+    //  AND A with #$03       	(delay values)
+    //  Transfer A to X
+    //  LoaD f:AttackDelayTbl,X to A
+    //  PusH A
+    //  LoaD AttackerIndex to A
+    //  Jump to SubRoutine GetTimerOffset
+    //  PulL A
+    //  STore A to CurrentTimer::ATB,Y    (**bug? doesn't adjust for haste/slow)
+    //  LoaD #$41	;pending action to A
+    //  STore A to EnableTimer::ATB,Y
+    //  LoaD MonsterIndex to A
+    //  A Shift Left
+    //  Transfer A to X
+    //  Store Zero to ForcedTarget::Party,X
+    //  Store Zero to ForcedTarget::Monster,X
+    //  Return To Subroutine
 }
 
 static void checkAICondition(void) {
     //  CoMPare A with #$13         ($12 is last valid condition)
     //  Branch to next label if Carry Clear
     //  Transfer DireCt page to A   (always succeed	if invalid)
+
     //  [LBL] STore A to $0E		(condition to check)
     //  Accumulator Shift Left
     //  Transfer A to X
@@ -5807,6 +5826,7 @@ static void checkAICondition(void) {
     //  LoaD CharStruct::Status1,X to A
     //  AND A with #$C0     (dead or stone)
     //  Branch to [NotDead] if EQuals
+    
     //  [Dead] LoaD $0E to A
     //  Compare A with #$0F (condition: dead)
     //  Branch to [Jump] if EQuals
