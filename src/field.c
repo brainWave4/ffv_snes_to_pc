@@ -17,6 +17,34 @@
 #include "sound.h"
 
 static void fieldLoop(void);
+static void fieldNMI(void);
+static void fieldIRQ(void);
+static void execTriggerScript(void);
+static void checkTriggers(void);
+static void checkVehicle(void);
+static void func_c00853(void);
+static void boardChoco(void);
+static void landChoco(void);
+static void boardBlkChoco(void);
+static void boardHiryuu(void);
+static void landBlkChoco(void);
+static void landHiryuu(void);
+static void boardSub(void);
+static void landSub(void);
+static void func_c009c6(void);
+static void func_c009f7(void);
+static void func_c00a11(void);
+static void boardShip(void);
+static void landShip(void);
+static void boardAirship(void);
+static void landAirship(void);
+static void func_c00c9f(void);
+static void func_c00d3d(void);
+static void checkTresure(void);
+static void giveGil(void);
+static void calcGil(void);
+static void checkPlayerMovementWorld(void);
+static void func_c0103a(void);
 static void showCutsceneFromField(uint8_t id);
 static void func_c044e3(void);
 static void func_c0450a(void);
@@ -213,6 +241,68 @@ void start(void) {
 
 // Field Main Loop
 static void fieldLoop(void) {}
+
+static void fieldNMI(void) {}
+
+static void fieldIRQ(void) {}
+
+// execute trigger script
+// +X: trigger script index * 2
+static void execTriggerScript(void) {}
+
+// Address: _061a
+static void checkTriggers(void) {}
+
+// Address: _073e
+static void checkVehicle(void) {}
+
+// Address: _0853
+static void func_c00853(void) {}
+
+static void boardChoco(void) {}
+
+static void landChoco(void) {}
+
+static void boardBlkChoco(void) {}
+
+static void boardHiryuu(void) {}
+
+static void landBlkChoco(void) {}
+
+static void landHiryuu(void) {}
+
+static void boardSub(void) {}
+
+static void landSub(void) {}
+
+static void func_c009c6(void) {}
+
+static void func_c009f7(void) {}
+
+static void func_c00a11(void) {}
+
+static void boardShip(void) {}
+
+static void landShip(void) {}
+
+static void boardAirship(void) {}
+
+static void landAirship(void) {}
+
+static void func_c00c9f(void) {}
+
+static void func_c00d3d(void) {}
+
+static void checkTresure(void) {}
+
+// Address: _0efe
+static void giveGil(void) {}
+
+static void calcGil(void) {}
+
+static void checkPlayerMovementWorld(void) {}
+
+static void func_c0103a(void) {}
 
 static void showCutsceneFromField(uint8_t id) {}
 
