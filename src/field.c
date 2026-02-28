@@ -45,6 +45,39 @@ static void giveGil(void);
 static void calcGil(void);
 static void checkPlayerMovementWorld(void);
 static void func_c0103a(void);
+static void func_c0104a(void);
+static void func_c01055(void);
+static void func_c010c8(void);
+static void func_c0112d(void);
+static void getWorldTileTransparantUnderwater(void);
+static void checkPlayerMovementSub(void);
+static void updateDestZLevel(void);
+static void updateCurZLevel(void);
+static void doTileDamage(void);
+static void doPoisonDamage(void);
+static void poisonMosaic(void);
+static void updateCurPriority(void);
+static void updateDestPriority(void);
+static void checkDoor(void);
+static void checkFindPits(void);
+static void calcParallaxScroll(void);
+static void checkPartyCanMove(void);
+static void func_c016b7(void);
+static void func_c016da(void);
+static void updateLocalTilesWorld(void);
+static void updateLocalTilesNorm(void);
+static void getTilePropertiesCur(void);
+static void func_c01a1d(void);
+static void func_c01ae4(void);
+static void updateTopChar(void);
+static void updatePlayerGfx(void);
+static void copyPlayerGfx(void);
+static void copyAltGfx(void);
+static void func_c01e64(void);
+static void func_c01ec5(void);
+static void func_c01f57(void);
+static void func_c01fb4(void);
+static void func_c01fff(void);
 static void showCutsceneFromField(uint8_t id);
 static void func_c044e3(void);
 static void func_c0450a(void);
@@ -303,6 +336,94 @@ static void calcGil(void) {}
 static void checkPlayerMovementWorld(void) {}
 
 static void func_c0103a(void) {}
+
+static void func_c0104a(void) {}
+
+static void func_c01055(void) {}
+
+static void func_c010c8(void) {}
+
+// check if there is a vehicle at the current position
+// return 0 if not, 1 if there is a vehicle
+// $23 is a pointer to vehicle data
+static void func_c0112d(void) {}
+
+// Address: _119a
+static void getWorldTileTransparantUnderwater(void) {}
+
+static void checkPlayerMovementSub(void) {}
+
+// update party z-level (destination tile)
+static void updateDestZLevel(void) {}
+
+// update party z-level (current tile)
+static void updateCurZLevel(void) {}
+
+static void doTileDamage(void) {}
+
+static void doPoisonDamage(void) {}
+
+static void poisonMosaic(void) {}
+
+// update party sprite priority (current tile)
+static void updateCurPriority(void) {}
+
+// update party sprite priority (destination tile)
+static void updateDestPriority(void) {}
+
+static void checkDoor(void) {}
+
+static void checkFindPits(void) {}
+
+// 0 = return $c0 (1x)
+// 1 = return $c0 >> 1 (0.5x)
+// 2 = return $c0 << 1 (2x)
+// 3 = return zero (no scroll)
+static void calcParallaxScroll(void) {}
+
+static void checkPartyCanMove(void) {}
+
+static void func_c016b7(void) {}
+
+static void func_c016da(void) {}
+
+// Address: _1733
+static void updateLocalTilesWorld(void) {}
+
+// Address: _17e8
+static void updateLocalTilesNorm(void) {}
+
+// Address: _19f1
+// get tile properties at current tile (unused)
+static void getTilePropertiesCur(void) {}
+
+static void func_c01a1d(void) {}
+
+static void func_c01ae4(void) {}
+
+// Address: _1cd7
+static void updateTopChar(void) {}
+
+// Address: _1ce2
+static void updatePlayerGfx(void) {}
+
+// Address: _1d1e
+// copy to vram
+static void copyPlayerGfx(void) {}
+
+// Address: _1e14
+// copy to vram
+static void copyAltGfx(void) {}
+
+static void func_c01e64(void) {}
+
+static void func_c01ec5(void) {}
+
+static void func_c01f57(void) {}
+
+static void func_c01fb4(void) {}
+
+static void func_c01fff(void) {}
 
 static void showCutsceneFromField(uint8_t id) {}
 
