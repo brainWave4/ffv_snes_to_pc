@@ -4345,148 +4345,161 @@ static void zombieAction(void) {
 //	- picks a random known white/black/time spell and
 //    casts with inverted targetting
 static void charmAction(void) {
-//         lda CharStruct::EnableSpells,X
-//  AND A with #$0F			;white magic
-//  OR A with CharStruct::EnableSpells+1,X	;black AND A with time magic
-//         beq Fight
-//  Jump to SubRoutine Random_0_99
-//  CoMPare A with #$32	;50% chance of spell
-//         bcc Magic
-// Fight:
-//         ldx $3F		;char offset
-//         lda #$80
-//  STore A to CharStruct::ActionFlag,X
-//         lda #$05	;fight
-//  STore A to CharStruct::Command,X
-//  Store Zero to CharStruct::MonsterTargets,X
-//  Store Zero to CharStruct::SelectedItem,X
-//  Store Zero to CharStruct::SecondActionFlag,X
-//  Store Zero to CharStruct::SecondCommand,X
-//  Store Zero to CharStruct::SecondMonsterTargets,X
-//  Store Zero to CharStruct::SecondPartyTargets,X
-//  Store Zero to CharStruct::SecondSelectedItem,X
-//  PusH X
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$03
-//  Jump to SubRoutine Random_X_A    (0..3)
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine SetBit_X
-//  PulL X
-//  STore A to CharStruct::PartyTargets,X	(fight random party member)
-//         JuMP to _QueueUncontrolledAction
-// Magic:
-//         lda $3D		;char index
-//  Transfer A to X
-//  STore X to $2A
-//         ldx #$028A ; TODO: fixme .sizeof(CharSpells)	;650, size of CharSpells struct
-//  STore X to $2C
-//  Jump to SubRoutine Multiply_16bit    ;**optimize: use rom table instead
-//         ldx $2E
-//  STore X to SpellOffsetRandom
-//  Store Zero to $0E
-// FindAnySpell:		;checks if any spells are learned
-//         lda CharSpells::ID+18,X	;starts at first white spell
-//  CoMPare A with #$46		;Quick spell
-//         beq NextSpell
-//  CoMPare A with #$FF		;empty spell slot
-//         bne TryRandomSpell
-// NextSpell:
-//  INcrement X
-//  INCrement $0E
-//         lda $0E
-//  CoMPare A with #$36
-//         bne FindAnySpell
-//  BRAnch to Fight		;no spells, hit something instead
-// TryRandomSpell:
-//         ldx #$0012		;first white spell
-//         lda #$47		;last time spell
-//  Jump to SubRoutine Random_X_A  	;random white/black/time spell
-//  Lengthen A
-//         adc SpellOffsetRandom
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda CharSpells::ID,X
-//  CoMPare A with #$FF		;empty spell slot
-//         beq TryRandomSpell	;keep trying until we hit a known spell
-//  CoMPare A with #$46		;quick spell
-//         beq TryRandomSpell	;is no good either
-//  PusH A 			;holds known random spell
-//  Lengthen A
-//  Jump to SubRoutine ShiftMultiply_8
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda f:AttackProp,X
-//  STore A to TempTargetting	;temp area
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//  STore Y to $16			;target bits
-//         lda TempTargetting
-//         bne CheckTargetting
-// TargetSelf:
-//  Lengthen A
-//         lda $3F			;Char Offset
-//  Jump to SubRoutine ShiftDivide_128	;char index (could've just loaded that)
-//  Transfer A to X
-//  Clear A, then Shorten
-//  Jump to SubRoutine SetBit_X     	;target self if no targetting info
-//  STore A to $16
-//  BRAnch to TargetReady
-// CheckTargetting:
-//  AND A with #$40		;hits all
-//         bne TargetsAll
-//         lda TempTargetting
-//  AND A with #$08		;targets enemy by default
-//         bne TargetsEnemy
-// TargetsOther:			;assumed to normally target party, now targets monsters
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$07
-//  Jump to SubRoutine Random_X_A	     	;random monster 0..7
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine SetBit_X
-//  STore A to $17			;monster target
-//  BRAnch to TargetReady
-// TargetsEnemy:			;normally targets enemy, now targets party
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//         lda #$03
-//  Jump to SubRoutine Random_X_A    	;random party 0..3
-//  Transfer A to X
-//  Transfer Direct page to aCcumulator
-//  Jump to SubRoutine SetBit_X
-//  STore A to $16			;party target
-//  BRAnch to TargetReady
-// TargetsAll:
-//         lda TempTargetting
-//  AND A with #$08		;targets enemy by default
-//  Branch to next label if Not Equals
-//         lda #$FF
-//  STore A to $17
-//  BRAnch to TargetReady
-//  [LBL] lda #$F0		;target all party members
-//  STore A to $16
-// TargetReady:
-//         ldx $3F			;char Offset
-//  PulL A 			;random known spell
-//  STore A to CharStruct::SelectedItem,X
-//         lda $16			;party targets
-//  STore A to CharStruct::PartyTargets,X
-//         lda $17			;monster targets
-//  STore A to CharStruct::MonsterTargets,X
-//         lda #$21		;magic + costs mp
-//  STore A to CharStruct::ActionFlag,X
-//         lda #$2C		;first magic command
-//  STore A to CharStruct::Command,X
-//  Store Zero to CharStruct::SecondActionFlag,X
-//  Store Zero to CharStruct::SecondCommand,X
-//  Store Zero to CharStruct::SecondMonsterTargets,X
-//  Store Zero to CharStruct::SecondPartyTargets,X
-//  Store Zero to CharStruct::SecondSelectedItem,X
-// _QueueUncontrolledAction:
-//         JuMP to QueueUncontrolledAction
+    //  LoaD CharStruct::EnableSpells,X to A
+    //  AND A with #$0F			(white magic)
+    //  OR A with CharStruct::EnableSpells+1,X	(black and time magic)
+    //  Branch to [Fight] if EQuals
+    //  Jump to SubRoutine Random_0_99
+    //  CoMPare A with #$32	(50% chance of spell)
+    //  Branch to [Magic] if Carry Clear
+
+    //  [Fight]
+    //  LoaD $3F to X		(char offset)
+    //  LoaD #$80 to A
+    //  STore A to CharStruct::ActionFlag,X
+    //  LoaD #$05 to A	(fight)
+    //  STore A to CharStruct::Command,X
+    //  Store Zero to CharStruct::MonsterTargets,X
+    //  Store Zero to CharStruct::SelectedItem,X
+    //  Store Zero to CharStruct::SecondActionFlag,X
+    //  Store Zero to CharStruct::SecondCommand,X
+    //  Store Zero to CharStruct::SecondMonsterTargets,X
+    //  Store Zero to CharStruct::SecondPartyTargets,X
+    //  Store Zero to CharStruct::SecondSelectedItem,X
+    //  PusH X
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$03 to A
+    //  Jump to SubRoutine Random_X_A    (0..3)
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine SetBit_X
+    //  PulL X
+    //  STore A to CharStruct::PartyTargets,X	(fight random party member)
+    //  JuMP to _QueueUncontrolledAction
+
+    //  [Magic]
+    //  LoaD $3D to A		(char index)
+    //  Transfer A to X
+    //  STore X to $2A
+    //  LoaD #$028A to X    (TODO: fixme .sizeof(CharSpells);	650, size of CharSpells struct)
+    //  STore X to $2C
+    //  Jump to SubRoutine Multiply_16bit    (**optimize: use rom table instead)
+    //  LoaD $2E to X
+    //  STore X to SpellOffsetRandom
+    //  Store Zero to $0E
+
+    //  [FindAnySpell]		(checks if any spells are learned)
+    //  LoaD CharSpells::ID+18,X to A	(starts at first white spell)
+    //  CoMPare A with #$46		(Quick spell)
+    //  Branch to NextSpell if EQuals
+    //  CoMPare A with #$FF		(empty spell slot)
+    //  Branch to [TryRandomSpell] if Not Equals
+
+    //  [NextSpell]
+    //  INcrement X
+    //  INCrement $0E
+    //  LoaD $0E to A
+    //  CoMPare A with #$36
+    //  Branch to FindAnySpell if Not Equals
+    //  BRAnch to Fight		(no spells, hit something instead)
+
+    //  [TryRandomSpell]
+    //  LoaD #$0012 to X		(first white spell)
+    //  LoaD #$47 to A		(last time spell)
+    //  Jump to SubRoutine Random_X_A  	(random white/black/time spell)
+    //  Lengthen A
+    //  ADd SpellOffsetRandom to A with Carry
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD CharSpells::ID,X to A
+    //  CoMPare A with #$FF		(empty spell slot)
+    //  Branch to [TryRandomSpell] if EQuals	(keep trying until we hit a known spell)
+    //  CoMPare A with #$46		(quick spell)
+    //  Branch to [TryRandomSpell] if EQuals	(is no good either)
+    //  PusH A 			(holds known random spell)
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_8
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD f:AttackProp,X to A
+    //  STore A to TempTargetting	(temp area)
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  STore Y to $16			(target bits)
+    //  LoaD TempTargetting to A
+    //  Branch to [CheckTargetting] if Not Equals
+
+    //  [TargetSelf]
+    //  Lengthen A
+    //  LoaD $3F to A			(Char Offset)
+    //  Jump to SubRoutine ShiftDivide_128	(char index; could've just loaded that)
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  Jump to SubRoutine SetBit_X     	(target self if no targetting info)
+    //  STore A to $16
+    //  BRAnch to TargetReady
+
+    //  [CheckTargetting]
+    //  AND A with #$40		(hits all)
+    //  Branch to [TargetsAll] if Not Equals
+    //  LoaD TempTargetting to A
+    //  AND A with #$08		(targets enemy by default)
+    //  Branch to [TargetsEnemy] if Not Equals
+
+    //  [TargetsOther]			(assumed to normally target party, now targets monsters)
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$07 to A
+    //  Jump to SubRoutine Random_X_A	     	(random monster 0..7)
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine SetBit_X
+    //  STore A to $17			(monster target)
+    //  BRAnch to TargetReady
+
+    //  [TargetsEnemy]			(normally targets enemy, now targets party)
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  LoaD #$03 to A
+    //  Jump to SubRoutine Random_X_A    	(random party 0..3)
+    //  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Jump to SubRoutine SetBit_X
+    //  STore A to $16			(party target)
+    //  BRAnch to [TargetReady]
+
+    //  [TargetsAll]
+    //  LoaD TempTargetting to A
+    //  AND A with #$08		(targets enemy by default)
+    //  Branch to next label if Not Equals
+    //  LoaD #$FF to A
+    //  STore A to $17
+    //  BRAnch to [TargetReady]
+
+    //  [LBL] LoaD #$F0		(target all party members)
+    //  STore A to $16
+
+    //  [TargetReady]:
+    //  LoaD $3F to X 		(char Offset)
+    //  PulL A 			(random known spell)
+    //  STore A to CharStruct::SelectedItem,X
+    //  LoaD $16 to A			(party targets)
+    //  STore A to CharStruct::PartyTargets,X
+    //  LoaD $17 to A			(monster targets)
+    //  STore A to CharStruct::MonsterTargets,X
+    //  LoaD #$21 to A		(magic + costs mp)
+    //  STore A to CharStruct::ActionFlag,X
+    //  LoaD #$2C to A		(first magic command)
+    //  STore A to CharStruct::Command,X
+    //  Store Zero to CharStruct::SecondActionFlag,X
+    //  Store Zero to CharStruct::SecondCommand,X
+    //  Store Zero to CharStruct::SecondMonsterTargets,X
+    //  Store Zero to CharStruct::SecondPartyTargets,X
+    //  Store Zero to CharStruct::SecondSelectedItem,X
+
+    //  [_QueueUncontrolledAction]
+    //  JuMP to QueueUncontrolledAction
 }
 
 // Address: _1F80
@@ -4496,9 +4509,9 @@ static void charmAction(void) {
 // Sets up a fight command targetting a
 // random party member
 static void berserkAction(void) {
-    // lda #$80
+    // LoaD #$80 to A
     // STore A to CharStruct::ActionFlag,X
-    // lda #$05	;fight
+    // LoaD #$05 to A	(fight)
     // STore A to CharStruct::Command,X
     // STore Zero to CharStruct::PartyTargets,X
     // STore Zero to CharStruct::SelectedItem,X
@@ -4510,8 +4523,8 @@ static void berserkAction(void) {
     // PusH X
     // Transfer Direct page to aCcumulator
     // Transfer A to X
-    // lda #$07
-    // Jump to SubRoutine Random_X_A	;0..7 random monster
+    // LoaD #$07 to A
+    // Jump to SubRoutine Random_X_A	(0..7 random monster)
     // Transfer A to X
     // Transfer Direct page to aCcumulator
     // Jump to SubRoutine SetBit_X
@@ -4525,106 +4538,113 @@ static void berserkAction(void) {
 // on the next ATB tick, and reset their
 // uncontrolled ATB for their next turn
 static void queueUncontrolledAction(void) {
-    //     lda $3D		;char index
-    //     Jump to SubRoutine ResetATB   	;also sets Y = timer offset
-    //     lda $3D
-    //     Transfer A to X
-    //     lda CurrentTimer::ATB,Y
-    //     cmp #$7F
-    //     bcc :+
-    //     lda #$7F	;max ATB 127
-    // :   STore A to UncontrolledATB,X
-    //     lda #$01	;action on next ATB tick
-    //     STore A to CurrentTimer::ATB,Y
-    //     lda #$41    	;waiting for delayed action
-    //     STore A to EnableTimer::ATB,Y
-    //     Return to SubRoutine
+    //  LoaD $3D to A		(char index)
+    //  Jump to SubRoutine ResetATB   	(also sets Y = timer offset)
+    //  LoaD $3D to A
+    //  Transfer A to X
+    //  LoaD CurrentTimer::ATB,Y to A
+    //  CoMPare A with #$7F
+    //  Brach to next label if Carry Clear
+    //  LoaD #$7F to A	    (max ATB 127)
+
+    //  [LBL] STore A to UncontrolledATB,X
+    //  LoaD #$01 to A	    (action on next ATB tick)
+    //  STore A to CurrentTimer::ATB,Y
+    //  LoaD #$41 to A    	(waiting for delayed action)
+    //  STore A to EnableTimer::ATB,Y
+    //  Return to SubRoutine
 }
 
 // Address: _1FD2
 // Randomizes a table of combatant numbers,
 // also initializes global timers
 static void randomizeOrder(void) {
-//         lda CurrentlyReacting
-//  Branch to next label if Not Equals
-//  Jump to SubRoutine GlobalTimers
-// :	   Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  DECrement
-//         									;:
-//  [LBL] STore A to RandomOrder,X
-//  INcrement X
-//  ComPare X with #$000C
-//  Branch to previous label if Not Equals
-//         									;.
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y 			;slot for writing
-// _RandomizeOrder:
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X 			;slot for reading
-//         lda #$0B
-//  Jump to SubRoutine Random_X_A		;0..11
-//  STore A to $0E
-//         ldx #$0000
-//         									;:
-// CheckValueInUse:		;see if we've used this number yet
-//         lda $0E
-//  CoMPare A with RandomOrder,X
-//         beq _Next		;already used, try another
-//  INcrement X
-//  ComPare X with #$000C
-//         bne CheckValueInUse
-//         									;.
-//  STore A to RandomOrder,Y	;if not, save it
-//  INcrement Y 			;AND A with select next writing slot
-//         									;:
-//  _Next:
-//  ComPare Y with #$000C		;12 combatant slots
-//         bne _RandomizeOrder
-//         									;.
-//  Return To Subroutine
+    //  LoaD CurrentlyReacting to A
+    //  Branch to next label if Not Equals
+    //  Jump to SubRoutine GlobalTimers
+
+    //  [LBL] Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  DECrement
+
+    //  [LBL] STore A to RandomOrder,X
+    //  INcrement X
+    //  ComPare X with #$000C
+    //  Branch to previous label if Not Equals
+
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y 			(slot for writing)
+
+    //  [_RandomizeOrder]
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X 			(slot for reading)
+    //  LoaD #$0B to A
+    //  Jump to SubRoutine Random_X_A		(0..11)
+    //  STore A to $0E
+    //  LoaD #$0000 to X
+
+    //  [CheckValueInUse]		(see if we've used this number yet)
+    //  LoaD $0E to A
+    //  CoMPare A with RandomOrder,X
+    //  Brach to [_Next] if EQuals		(already used, try another)
+    //  INcrement X
+    //  ComPare X with #$000C
+    //  Brach to [CheckValueInUse] if Not Equals
+
+    //  STore A to RandomOrder,Y	(if not, save it)
+    //  INcrement Y 			    (and select next writing slot)
+
+    //  [_Next]
+    //  ComPare Y with #$000C		(12 combatant slots)
+    //  Brach to [_RandomizeOrder] if Not Equals
+
+    //  Return To Subroutine
 }
 
 // Address: _200B
 // Updates Status/ATB timers for all combatants
 // may skip updates depending on stop/etc.
 static void updateTimers(void) {
-//  Jump to SubRoutine GlobalTimers
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $0A     		;char index
-// Loop:	tdc
-//  Transfer A to Y
-//  STore Y to $0C     		;timer index
-//         lda $0A
-//  Jump to SubRoutine GetTimerOffset
-//  Transfer Y to X 			;X = Timer Offset
-//         ldy $0A
-//         lda ActiveParticipants,Y
-//         beq NextChar
-//         lda PauseTimerChecks,Y
-//         bne NextChar
-//         lda CurrentlyReacting
-//  Branch to next label if Not Equals
-//         lda QuickTimeFrozen,Y
-//         bne NextChar
-// :Jump to SubRoutine UpdateTimer 	;first timer is stop
-//         lda $08			;check if stop active
-//         bne NextChar  		;don't process other timers if stopped
-//         ldy #$0008  		;process 8 more status timers
-// :Jump to SubRoutine UpdateTimer
-//         dey
-//  Branch to previous label if Not Equals
-//  Jump to SubRoutine UpdateTimer 	;one more status timer (paralyze)
-//         lda $08			;check if paralyze active
-//         bne NextChar
-//  Jump to SubRoutine UpdateTimer  	;advance ATB timer if not paralyzed
-// NextChar:
-//  INCrement $0A     		;next char index
-//         lda $0A
-//  CoMPare A with #$0C		;12 combatants
-//         bne Loop
-//  Return To Subroutine
+    //  Jump to SubRoutine GlobalTimers
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $0A     		(char index)
+
+    //  [Loop] Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  STore Y to $0C     		(timer index)
+    //  LoaD $0A to A
+    //  Jump to SubRoutine GetTimerOffset
+    //  Transfer Y to X 			(X = Timer Offset)
+    //  LoaD $0A to Y
+    //  LoaD ActiveParticipants,Y to A
+    //  Brach to [NextChar] to EQuals
+    //  LoaD PauseTimerChecks,Y to A
+    //  Brach to [NextChar] if Not Equals
+    //  LoaD CurrentlyReacting to A
+    //  Branch to next label if Not Equals
+    //  LoaD QuickTimeFrozen,Y to A
+    //  Brach to [NextChar] if Not Equals
+    //  [LBL] Jump to SubRoutine UpdateTimer 	(first timer is stop)
+    //  LoaD $08 to A			(check if stop active)
+    //  Brach to [NextChar] if Not Equals  		(don't process other timers if stopped)
+    //  LoaD #$0008 to Y  		(process 8 more status timers)
+
+    //  [LBL] Jump to SubRoutine UpdateTimer
+    //  DEcrement Y
+    //  Branch to previous label if Not Equals
+    //  Jump to SubRoutine UpdateTimer 	(one more status timer for paralyze)
+    //  LoaD $08 to A			(check if paralyze active)
+    //  Brach to [NextChar] if Not Equals
+    //  Jump to SubRoutine UpdateTimer  	(advance ATB timer if not paralyzed)
+
+    //  [NextChar]
+    //  INCrement $0A     		(next char index)
+    //  LoaD $0A to A
+    //  CoMPare A with #$0C		(12 combatants)
+    //  Brach to [Loop] if Not Equals
+
+    //  Return To Subroutine
 }
 
 // Advances a status/atb timer if
@@ -4635,61 +4655,68 @@ static void updateTimers(void) {
 //  - X = timer offset
 // Output: $08 = timer triggered
 static void updateTimer(void) {
-//  Store Zero to $08    	;timer triggered flag
-//  PusH Y
-//         ldy $0C		;timer index
-//         lda ProcessTimer,Y	;should process this timer this tick?
-//         beq Finish
-//  ComPare Y with #$000A	;ProcessTimer::ATB
-//  Branch to next label if EQuals
-//         lda CurrentlyReacting
-//         bne Finish
-//  [LBL] lda EnableTimer,X	;is it enabled?
-//         beq Finish
-//         bmi TimerActive  	;check the 80h timer flag
-//         lda CurrentTimer,X
-//         beq FlagTimer
-//  DECrement CurrentTimer,X
-//         lda CurrentTimer,X
-//         bne TimerActive
-// FlagTimer:		;flag EnableTimer when CurrentTimer hits 0
-//         lda EnableTimer,X
-//  OR A with #$81
-//  STore A to EnableTimer,X
-// TimerActive:
-//         lda $0C
-//  Branch to next label if Not Equals		;doesn't branch anywhere regardless
-// :INCrement $08    	;timer triggered flag
-// Finish:
-//  PulL Y 		;restore original Y
-//  INcrement X 		;next timer (in offset)
-//  INCrement $0C		;next timer index
-//  Return To Subroutine
+    //  Store Zero to $08    	(timer triggered flag)
+    //  PusH Y
+    //  LoaD $0C to Y		(timer index)
+    //  LoaD ProcessTimer,Y to A	(should process this timer this tick?)
+    //  Branch to [Finish] if EQuals
+    //  ComPare Y with #$000A	(ProcessTimer::ATB)
+    //  Branch to next label if EQuals
+    //  LoaD CurrentlyReacting to A
+    //  Branch to [Finish] if Not Equals
+
+    //  [LBL] LoaD EnableTimer,X	(is it enabled?)
+    //  Branch to [Finish] if EQuals
+    //  Branch to TimerActive if MInus	(check the 80h timer flag)
+    //  LoaD CurrentTimer,X to A
+    //  Branch to [FlagTimer] if EQuals
+    //  DECrement CurrentTimer,X
+    //  LoaD CurrentTimer,X to A
+    //  Branch to [TimerActive] if Not Equals
+
+    //  [FlagTimer]		(flag EnableTimer when CurrentTimer hits 0)
+    //  LoaD EnableTimer,X to A
+    //  OR A with #$81
+    //  STore A to EnableTimer,X
+
+    //  [TimerActive]
+    //  LoaD $0C to A
+    //  Branch to next label if Not Equals		(doesn't branch anywhere regardless)
+    //  [LBL] INCrement $08    	(timer triggered flag)
+
+    //  [Finish]
+    //  PulL Y 		(restore original Y)
+    //  INcrement X 		(next timer in offset)
+    //  INCrement $0C		(next timer index)
+    //  Return To Subroutine
 }
 
+// Address: _2090
 // Decreases global status timers,
 // then flags and reset those that trigger
 // sets ProcessTimer to indicate that status
 // should be updated this tick
 static void globalTimers(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-// DecTimer:
-//         lda GlobalTimer,X
-//         beq Triggered
-//  DECrement GlobalTimer,X
-//  Store Zero to ProcessTimer,X
-//  BRAnch to :+
-// Triggered:
-//         lda #$01
-//  STore A to ProcessTimer,X		;flag timer for processing
-//         lda f:TimerDurTbl,X		;reset timer from rom
-//  STore A to GlobalTimer,X
-//         							;:
-//  [LBL] INcrement X
-//  ComPare X with #$000B			;11 timers
-//         bne DecTimer
-//  Return To Subroutine
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+
+    //  [DecTimer]
+    //  LoaD GlobalTimer,X to A
+    //  Branch to Triggered if EQuals
+    //  DECrement GlobalTimer,X
+    //  Store Zero to ProcessTimer,X
+    //  BRAnch to next label
+
+    //  [Triggered]
+    //  LoaD #$01 to A
+    //  STore A to ProcessTimer,X		(flag timer for processing)
+    //  LoaD f:TimerDurTbl,X to A		(reset timer from rom)
+    //  STore A to GlobalTimer,X
+
+    //  [LBL] INcrement X
+    //  ComPare X with #$000B			(11 timers)
+    //  Branch to DecTimer if Not Equals
+    //  Return To Subroutine
 }
 
 // Attempts to find one character for
@@ -4701,111 +4728,124 @@ static void globalTimers(void) {
 // the last character checked for each timer so
 // it's somewhat fair
 static void findEndedTimers(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $08			;timer index
-//  Transfer A to Y
-//  [LBL] STore A to TimerEnded,Y
-//  INcrement Y
-//  ComPare Y with #$000B
-//  Branch to previous label if Not Equals
-// TimerLoop:	;for each timer, loop finds the first character for whom that timer ended, checking in a "random" order
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $0A			;char count
-//         ldx $08			;timer index
-//         lda RandomOrderIndex,X
-//  PusH A 			;original RandomOrderIndex
-// CharLoop:	;searches characters in a "random" order
-//         ldx $08			;timer index
-//         lda RandomOrderIndex,X
-//  Transfer A to X
-//         lda RandomOrder,X
-//  STore A to $0C			;char index
-//  Transfer A to X
-//         lda PauseTimerChecks,X
-//         bne NextChar
-//         lda CurrentlyReacting
-//  Branch to next label if Not Equals
-//         lda QuickTimeFrozen,X
-//         bne NextChar
-//  [LBL] lda $0C			;char index
-//  Jump to SubRoutine GetTimerOffset      ;Y = Timer Offset
-//  Transfer Y to A
-//  CLear Carry
-//         adc $08
-//  Transfer A to X 			;timer offset + index
-//         lda EnableTimer,X
-//         bpl NextChar		;80h must be set to contiue
-//         lda $0C
-//  Transfer A to Y
-//         lda ActiveParticipants,Y
-//         beq NextChar
-//         lda $08			;timer index
-//  CoMPare A with #$01		;poison
-//         beq PoisonCountRegen
-//  CoMPare A with #$03		;countdown
-//         beq PoisonCountRegen
-//  CoMPare A with #$07		;regen
-//         bne EndTimer
-// PoisonCountRegen:	;skips ending timer for these status if they're also erased/hidden/jumping
-//  PusH X 		;timer offset + index
-//         ldx $08
-//         lda RandomOrderIndex,X
-//  Transfer A to X
-//         lda RandomOrder,X
-//  Lengthen A
-//  Jump to SubRoutine ShiftMultiply_128
-//  Transfer A to X
-//  Clear A, then Shorten
-//         lda CharStruct::Status4,X
-//  AND A with #$81	;erased or hidden
-//         bne NextCharPLX
-//         lda CharStruct::CmdStatus,X
-//  AND A with #$10	;jumping
-//         beq EndTimerPLX
-// NextCharPLX:
-//  PulL X
-//  BRAnch to NextChar
-// EndTimerPLX:
-//  PulL X 		;timer offset + index
-// EndTimer:		;sets flag that timer has ended, so effects can be applied later
-//  PulL A
-//         lda EnableTimer,X
-//  AND A with #$7E	;clear $81
-//  STore A to EnableTimer,X
-//         ldx $08		;timer index
-//  PusH X
-//         lda #$01	;flag that we found someone timer ended for
-//  STore A to TimerEnded,X
-//         lda RandomOrderIndex,X
-//  Transfer A to X
-//         lda RandomOrder,X
-//  PulL X 		;timer index
-//  STore A to TimerReadyChar,X	;which character had their timer end
-//  BRAnch to NextTimer	;don't check any more characters for this timer
-// NextChar:	;this character's timer didn't end or isn't eligable,
-//         	;keep looking until all have been checked or one is found
-//         ldx $08		;timer index
-//  INCrement RandomOrderIndex,X
-//         lda RandomOrderIndex,X
-//  CoMPare A with #$0C	;reset index at 12
-//  Branch to next label if Not Equals
-//  Store Zero to RandomOrderIndex,X
-// :INCrement $0A        	;char count
-//         lda $0A
-//  CoMPare A with #$0C	;12 chars
-//  Branch to next label if EQuals
-//         JuMP to CharLoop
-// :PulL A 		;original RandomOrderIndex
-//  STore A to RandomOrderIndex,X
-// NextTimer:
-//  INCrement $08        	;next timer index
-//         lda $08
-//  CoMPare A with #$0B	;11 timers
-//  Branch to [Ret] if EQuals
-//         JuMP to TimerLoop
-// [Ret] Return To Subroutine
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $08			(timer index)
+    //  Transfer A to Y
+
+    //  [LBL] STore A to TimerEnded,Y
+    //  INcrement Y
+    //  ComPare Y with #$000B
+    //  Branch to previous label if Not Equals
+
+    //  [TimerLoop]	(for each timer, loop finds the first character for whom that timer ended, checking in a "random" order)
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $0A			(char count)
+    //  LoaD $08 to X			(timer index)
+    //  LoaD RandomOrderIndex,X to A
+    //  PusH A 			(original RandomOrderIndex)
+
+    //  [CharLoop]  (searches characters in a "random" order)
+    //  LoaD $08 to X			(timer index)
+    //  LoaD RandomOrderIndex,X to A
+    //  Transfer A to X
+    //  LoaD RandomOrder,X to A
+    //  STore A to $0C			(char index)
+    //  Transfer A to X
+    //  LoaD PauseTimerChecks,X to A
+    //  Branch to [NextChar] if Not Equals
+    //  LoaD CurrentlyReacting to A
+    //  Branch to next label if Not Equals
+    //  LoaD QuickTimeFrozen,X to A
+    //  Branch to [NextChar] if Not Equals
+
+    //  [LBL] LoaD $0C to A			(char index)
+    //  Jump to SubRoutine GetTimerOffset      (Y = Timer Offset)
+    //  Transfer Y to A
+    //  CLear Carry
+    //  ADd $08 to A with Carry
+    //  Transfer A to X 			(timer offset + index)
+    //  LoaD EnableTimer,X to A
+    //  Branch to [NextChar] with PLus		(80h must be set to contiue)
+    //  LoaD $0C to A
+    //  Transfer A to Y
+    //  LoaD ActiveParticipants,Y to A
+    //  Branch to [NextChar] if EQuals
+    //  LoaD $08 to A			(timer index)
+    //  CoMPare A with #$01		(poison)
+    //  Branch to [PoisonCountRegen] if EQuals
+    //  CoMPare A with #$03		(countdown)
+    //  Branch to [PoisonCountRegen] if EQuals
+    //  CoMPare A with #$07		(regen)
+    //  Branch to [EndTimer] if Not Equals
+
+    //  [PoisonCountRegen]	(skips ending timer for these status if they're also erased/hidden/jumping)
+    //  PusH X 		(timer offset + index)
+    //  LoaD $08 to X
+    //  LoaD RandomOrderIndex,X to A
+    //  Transfer A to X
+    //  LoaD RandomOrder,X to A
+    //  Lengthen A
+    //  Jump to SubRoutine ShiftMultiply_128
+    //  Transfer A to X
+    //  Clear A, then Shorten
+    //  LoaD CharStruct::Status4,X to A
+    //  AND A with #$81	(erased or hidden)
+    //  Branch to [NextCharPLX] if Not Equals
+    //  LoaD CharStruct::CmdStatus,X to A
+    //  AND A with #$10	(jumping)
+    //  Branch to [EndTimerPLX] if EQuals
+
+    //  [NextCharPLX]
+    //  PulL X
+    //  BRAnch to NextChar
+
+    //  [EndTimerPLX]
+    //  PulL X 		(timer offset + index)
+
+    //  [EndTimer]		(sets flag that timer has ended, so effects can be applied later)
+    //  PulL A
+    //  LoaD EnableTimer,X to A
+    //  AND A with #$7E	(clear $81)
+    //  STore A to EnableTimer,X
+    //  LoaD $08 to X		(timer index)
+    //  PusH X
+    //  LoaD #$01 to A	(flag that we found someone timer ended for)
+    //  STore A to TimerEnded,X
+    //  LoaD RandomOrderIndex,X to A
+    //  Transfer A to X
+    //  LoaD RandomOrder,X to A
+    //  PulL X 		(timer index)
+    //  STore A to TimerReadyChar,X	(which character had their timer end)
+    //  BRAnch to [NextTimer]	(don't check any more characters for this timer)
+
+    //  [NextChar]	(this character's timer didn't end or isn't eligable,
+    //         	     keep looking until all have been checked or one is found)
+    //  LoaD $08 to X		(timer index)
+    //  INCrement RandomOrderIndex,X
+    //  LoaD RandomOrderIndex,X to A
+    //  CoMPare A with #$0C	(reset index at 12)
+    //  Branch to next label if Not Equals
+    //  Store Zero to RandomOrderIndex,X
+
+    //  [LBL] INCrement $0A        	(char count)
+    //  LoaD $0A to A
+    //  CoMPare A with #$0C	(12 chars)
+    //  Branch to next label if EQuals
+    //  JuMP to CharLoop
+
+    //  [LBL] PulL A 		(original RandomOrderIndex)
+    //  STore A to RandomOrderIndex,X
+
+    //  [NextTimer]
+    //  INCrement $08        	(next timer index)
+    //  LoaD $08 to A
+    //  CoMPare A with #$0B	(11 timers)
+    //  Branch to [Ret] if EQuals
+    //  JuMP to TimerLoop
+
+    //  [Ret] Return To Subroutine
 }
 
 static void applyTimerEffects(void) {
@@ -4821,7 +4861,7 @@ static void applyTimerEffects(void) {
 //  CoMPare A with #$0C		;12 chars
 //  Branch to next label if Not Equals
 //  Store Zero to RandomOrderIndex,X
-// :	    lda TimerReadyChar,X
+//  [LBL]  lda TimerReadyChar,X
 //  Jump to SubRoutine GetTimerOffset    	;sets Y to timer offset
 //         lda TimerReadyChar,X
 //  Jump to SubRoutine CalculateCharOffset
@@ -4916,7 +4956,7 @@ static void timerEffectCountdown(void) {
 //  Branch to [Ret] if EQuals
 //         lda #$07	;C1 routine: condemn death animation
 //  Jump to SubRoutine CallC1
-// Ret:	   Return to SubRoutine
+// Ret [LBL] Return to SubRoutine
 }
 
 static void timerEffectMute(void) {
@@ -5220,7 +5260,7 @@ static void resetAtbAll(void) {
 //         lda $0E
 //  CoMPare A with #$0C		;12 participants
 //         bne ResetATBLoop
-//         									;.
+
 //  Return To Subroutine
 }
 
@@ -5434,8 +5474,8 @@ static uint8_t dur110mod(void) {
 //     sec
 //     lda #$6E	;110
 //     sbc MagicPower
-//     bcc :+
-//     cmp #$1E	;min 30
+//  Bracn to next label if Carry Clear
+//  CoMPare A with #$1E	;min 30
 //     bcs :++
 //  [LBL] lda #$1E	;min 30
 // :	rts
