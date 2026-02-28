@@ -107,18 +107,67 @@ static void getTileZ(void);
 static void loadNPCGfx(void);
 static void getPointerToNPCProperties(void);
 static void LoadNPCs(void);
+static void greyscalePalette(void);
+static void func_c0406b(void);
+static void copyDataToVram(void);
+static void func_c04107(void);
+static void func_c041f1(void);
+static void func_c0420a(void);
 static void showCutsceneFromField(uint8_t id);
-static void func_c044e3(void);
-static void func_c0450a(void);
-static void func_c04528(void);
-static void func_c048dd(void);
-static void func_c048ed(void);
-static void func_c048fa(void);
-static void func_c0490a(void);
-static void func_c0491d(void);
-static void loadMapNoFade(void);
+static void initMapBank(void);
+static void initVehicles(void);
+static void initCharNames(void);
+static void openMenu(void);
+static void func_c0456b(void);
+static void func_c04583(void);
+static void playSong(void);
+static void playSound(void);
+static void playSfx(void);
+static void updateScreenMosaic(void);
+static void func_c046c4(void);
+static void func_c04741(void);
+static void func_c04798(void);
+static void func_c047aa(void);
+static void func_c047f7(void);
+static void func_c04834(void);
+static void initNPCFlags(void);
+static void initEventFlags(void);
+static void initNewCharData(void);
+static void resetRam_0000_to_1D00(void);
+static void resetRam_0B00_to_1D00(void);
+static void func_c04931(void);
+static void initColorAddition(void);
+static void initColorSubtraction(void);
+static void updateFixedColor(void);
+static void setFixedColorParams(void);
+static void initFadeIn(void);
+static void initFadeOut(void);
+static void func_c04a7a(void);
+static void func_c04aad(void);
+static void waitForKeypress(void);
+static void tfrVehicleGfx(void);
+static void tfrWorldGfx(void);
+static void updateScrollingRegisters(void);
+static void updateCtrl(void);
+static void resetSprites(void);
+static void hideSpritesInCutscenes(void);
+static void tfrVram(void);
+static void disableInterrupts(void);
+static void enableInterrupts(void);
+static void clearVramForCutscenes(void);
+static void fillVram(void);
+static void tfrSprites(void);
+static void tfrPallets(void);
+static void func_c04d8e(void);
+static void waitVram(void);
 static void initInterrupts(void);
 static void initHardware(void);
+static void generateRandom(void);
+static void crystalShatterAnim(void);
+static void loadMap(void);
+static void loadMapNoFade(void);
+static void reloadMap(void);
+static void loadParentMap(void);
 static void execEvent(void);
 
 // These adresses are loaded before
@@ -193,7 +242,7 @@ void start(void) {
     initHardware();
 
     // Jump to SubRoutine _c0490a
-    func_c0490a();
+    resetRam_0000_to_1D00();
 
     // LoaD #3 to Accumulator
     // STore A to $0134
@@ -203,7 +252,7 @@ void start(void) {
     execMenu();
 
     // Jump to SubRoutine _c044e3
-    func_c044e3();
+    initMapBank();
 
     // Jump to SubRoutine InitHardware
     initHardware();
@@ -218,15 +267,15 @@ void start(void) {
     if (addr_7e0139 == 0) {
         // [NewGame]
         // Jump to SubRoutine _c048fa
-        func_c048fa();
+        initNewCharData();
         // Jump to SubRoutine _c048ed
-        func_c048ed();
+        initEventFlags();
         // Jump to SubRoutine _c048dd
-        func_c048dd();
+        initNPCFlags();
         // Jump to SubRoutine _c04528
-        func_c04528();
+        initCharNames();
         // Jump to SubRoutine _c0450a
-        func_c0450a();
+        initVehicles();
         
         // Load #1 to A
         // Store A to $bd
@@ -263,7 +312,7 @@ void start(void) {
         // (restore saved game)
 
         // Jump to SubRoutine _c0491d
-        func_c0491d();
+        resetRam_0B00_to_1D00();
 
         // LoaD $0af9 to A
         // Store A to $0b60
@@ -497,66 +546,188 @@ static void moveTowardsParty(void) {}
 // Address: _3555
 static void moveAwayFromParty(void) {}
 
-// Address: 358e
+// Address: _358e
 static void drawHiryuu(void) {}
 
-// Address: 39b3
+// Address: _39b3
 static void drawObjectSprites(void) {}
 
-// Address: 3bac
+// Address: _3bac
 static void updateObjectPositions(void) {}
 
-// Address: 3cbb
+// Address: _3cbb
 static void getPointerToObjLayout(void) {}
 
-// Address: 3cd3
+// Address: _3cd3
 static void clearObjLayout(void) {}
 
-// Address: 3ce0
+// Address: _3ce0
 static void addObjectToObjLayout(void) {}
 
-// Address: 3cf8
+// Address: _3cf8
 static void removeObjectToObjLayout(void) {}
 
-// Address: 3d0b
+// Address: _3d0b
 static void getObjectInObjLayout(void) {}
 
-// Address: 3d15
+// Address: _3d15
 // get tile z-level (unused)
 // a: tile index, z-level (out)
 static void getTileZ(void) {}
 
-// Address: 3d28
+// Address: _3d28
 static void loadNPCGfx(void) {}
 
-// Address: 3e98
+// Address: _3e98
 static void getPointerToNPCProperties(void) {}
 
-// Address: 3eaa
+// Address: _3eaa
 static void LoadNPCs(void) {}
+
+// Address: 4008
+static void greyscalePalette(void) {}
+
+static void func_c0406b(void) {}
+
+// Address: _40d8
+static void copyDataToVram(void) {}
+
+static void func_c04107(void) {}
+
+static void func_c041f1(void) {}
+
+static void func_c0420a(void) {}
 
 static void showCutsceneFromField(uint8_t id) {}
 
-static void func_c044e3(void) {}
+// Address: _44e3
+static void initMapBank(void) {}
 
-static void func_c0450a(void) {}
+// Address: _450a
+static void initVehicles(void) {}
 
-static void func_c04528(void) {}
+// Address: _4528
+static void initCharNames(void) {}
 
-static void func_c048dd(void) {}
+static void openMenu(void) {}
 
-static void func_c048ed(void) {}
+static void func_c0456b(void) {}
 
-static void func_c048fa(void) {}
+static void func_c04583(void) {}
 
-static void func_c0490a(void) {}
+static void playSong(void) {}
 
-static void func_c0491d(void) {}
+// Address: _4635
+static void playSound(void) {}
 
-static void loadMapNoFade(void) {}
+// play sound effect
+// A: sound effect
+static void playSfx(void) {}
+
+// Address: _4653
+static void updateScreenMosaic(void) {}
+
+static void func_c046c4(void) {}
+
+static void func_c04741(void) {}
+
+static void func_c04798(void) {}
+
+static void func_c047aa(void) {}
+
+static void func_c047f7(void) {}
+
+static void func_c04834(void) {}
+
+static void initNPCFlags(void) {}
+
+static void initEventFlags(void) {}
+
+static void initNewCharData(void) {}
+
+static void resetRam_0000_to_1D00(void) {}
+
+static void resetRam_0B00_to_1D00(void) {}
+
+static void func_c04931(void) {}
+
+// Address: _49d7
+static void initColorAddition(void) {}
+
+// Address: _49e9
+static void initColorSubtraction(void) {}
+
+// Address: _49ff
+static void updateFixedColor(void) {}
+
+// Address: _4a44
+static void setFixedColorParams(void) {}
+
+static void initFadeIn(void) {}
+
+static void initFadeOut(void) {}
+
+static void func_c04a7a(void) {}
+
+static void func_c04aad(void) {}
+
+// Address: _4ac1
+static void waitForKeypress(void) {}
+
+// copy vehicle graphics to vram (3bpp)
+// +$30: source address (+$db0000)
+// +$33: vram address
+//  $35: tile count
+static void tfrVehicleGfx(void) {}
+
+static void tfrWorldGfx(void) {}
+
+// Address: _4bc0
+static void updateScrollingRegisters(void) {}
+
+static void updateCtrl(void) {}
+
+static void resetSprites(void) {}
+
+// Address: _4cad
+static void hideSpritesInCutscenes(void) {}
+
+static void tfrVram(void) {}
+
+static void disableInterrupts(void) {}
+
+static void enableInterrupts(void) {}
+
+// Address: _4d06
+static void clearVramForCutscenes(void) {}
+
+static void fillVram(void) {}
+
+static void tfrSprites(void) {}
+
+static void tfrPallets(void) {}
+
+static void func_c04d8e(void) {}
+
+// Hex to Dec
+
+static void waitVram(void) {}
 
 static void initInterrupts(void) {}
 
 static void initHardware(void) {}
+
+static void generateRandom(void) {}
+
+static void crystalShatterAnim(void) {}
+
+static void loadMap(void) {}
+
+static void loadMapNoFade(void) {}
+
+static void reloadMap(void) {}
+
+// Address: _548f
+static void loadParentMap(void) {}
 
 static void execEvent(void) {}
