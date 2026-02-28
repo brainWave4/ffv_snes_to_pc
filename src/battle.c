@@ -4849,34 +4849,38 @@ static void findEndedTimers(void) {
 }
 
 static void applyTimerEffects(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to ProcessingTimer
-// Loop:
-//         ldx ProcessingTimer
-//         lda TimerEnded,X
-//         beq NextTimer
-//  INCrement RandomOrderIndex,X
-//         lda RandomOrderIndex,X
-//  CoMPare A with #$0C		;12 chars
-//  Branch to next label if Not Equals
-//  Store Zero to RandomOrderIndex,X
-//  [LBL]  lda TimerReadyChar,X
-//  Jump to SubRoutine GetTimerOffset    	;sets Y to timer offset
-//         lda TimerReadyChar,X
-//  Jump to SubRoutine CalculateCharOffset
-//         lda ProcessingTimer
-//         beq TimerEffect    	;timer 0 is stop, skips below check
-//         lda EnableTimer,Y	;bits 80h AND A with 01 are cleared prev
-//         bne NextTimer    	;skip effect if any other bits set
-// TimerEffect:
-//  Jump to SubRoutine DispatchTimerEffect
-// NextTimer:
-//  INCrement ProcessingTimer
-//         lda ProcessingTimer
-//  CoMPare A with #$0B		;11 timers
-//         bne Loop
-//  Return To Subroutine
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to ProcessingTimer
+
+    //  [Loop]
+    //  LoaD ProcessingTimer to X
+    //  LoaD TimerEnded,X to A
+    //  Branch to [NextTimer] if EQuals
+    //  INCrement RandomOrderIndex,X
+    //  LoaD RandomOrderIndex,X to A
+    //  CoMPare A with #$0C		(12 chars)
+    //  Branch to next label if Not Equals
+    //  Store Zero to RandomOrderIndex,X
+
+    //  [LBL] LoaD TimerReadyChar,X to A
+    //  Jump to SubRoutine GetTimerOffset    	(sets Y to timer offset)
+    //  LoaD TimerReadyChar,X to A
+    //  Jump to SubRoutine CalculateCharOffset
+    //  LoaD ProcessingTimer to A
+    //  Branch to [TimerEffect] if EQuals    	(timer 0 is stop, skips below check)
+    //  LoaD EnableTimer,Y to A	(bits 80h AND A with 01 are cleared prev)
+    //  Branch to [NextTimer] Not Equals    	(skip effect if any other bits set)
+
+    //  [TimerEffect]
+    //  Jump to SubRoutine DispatchTimerEffect
+
+    //  [NextTimer]
+    //  INCrement ProcessingTimer
+    //  LoaD ProcessingTimer to A
+    //  CoMPare A with #$0B		(11 timers)
+    //  Branch to [Loop] Not Equals
+    //  Return To Subroutine
 }
 
 // Uses a jump table to call an
@@ -4884,16 +4888,16 @@ static void applyTimerEffects(void) {
 // Params:
 // - Y = timer offset (used in the effect routines)
 static void dispatchTimerEffect(void) {
-    // lda ProcessingTimer
+    // LoaD ProcessingTimer to A
     // A Shift Left
     // Transfer A to X
-    // lda f:TimerEffectJumpTable,X
+    // LoaD f:TimerEffectJumpTable,X to A
     // STore A to $08
-    // lda f:TimerEffectJumpTable+1,X
+    // LoaD f:TimerEffectJumpTable+1,X to A
     // STore A to $09
-    // lda #$c2 ; Load from bank C2
+    // LoaD #$c2 to A
     // STore A to $0A
-    // jml [$0008]
+    // JuMp to Long address [$0008]
 
     // TimerEffectJumpTable
     // .word $21E3, $21EE, $222A, $2235, $224E, $2259, $2264, $22AD, $2319, $237C, $238F
@@ -4901,431 +4905,469 @@ static void dispatchTimerEffect(void) {
 
 // Address: _21E3
 static void timerEffectStop(void) {
-    // ldx AttackerOffset
-    // lda CharStruct::Status3,X
-    // AND A with #$EF	;clear stop
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Status3,X to A
+    // AND A with #$EF	(clear stop)
     // STore A to CharStruct::Status3,X
     // Return to SubRoutine
 }
 
 // Address: _21EE
 static void timerEffectPoison(void) {
-//         lda #$01
-//  STore A to EnableTimer::Poison,Y
-//         lda InitialTimer::Poison,Y
-//  STore A to CurrentTimer::Poison,Y
-//  Jump to SubRoutine WipeDisplayStructures
-//  Lengthen A
-//         ldx AttackerOffset
-//         lda CharStruct::MaxHP,X
-//  Jump to SubRoutine ShiftDivide_16
-//  Branch to next label if Not Equals
-//  INCrement 				;min 1 damage
-//  [LBL] STore A to $0E				;poison tick damage
-//  SEt Carry flag
-//         lda CharStruct::CurHP,X
-//         sbc $0E				;poison tick damage
-//  Branch to next label if Carry Set
-//  Transfer Direct page to aCcumulator 				;min 0 hp
-//  [LBL] STore A to CharStruct::CurHP,X
-//  Clear A, then Shorten
-//         lda TimerReadyChar::Poison
-//         ldx $0E				;poison tick damage
-//  STore X to TempDisplayDamage
-//  Jump to SubRoutine CopyDisplayDamage
-//         lda #$09	;C1 routine: display regen/poison damage
-//         JuMP to CallC1
+    //  LoaD #$01 To A
+    //  STore A to EnableTimer::Poison,Y
+    //  LoaD InitialTimer::Poison,Y to A
+    //  STore A to CurrentTimer::Poison,Y
+    //  Jump to SubRoutine WipeDisplayStructures
+    //  Lengthen A
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::MaxHP,X to A
+    //  Jump to SubRoutine ShiftDivide_16
+    //  Branch to next label if Not Equals
+    //  INCrement 				(min 1 damage)
+
+    //  [LBL] STore A to $0E				(poison tick damage)
+    //  SEt Carry flag
+    //  LoaD CharStruct::CurHP,X to A
+    //  SuBtract $0E from A with Carry				(poison tick damage)
+    //  Branch to next label if Carry Set
+    //  Transfer Direct page to aCcumulator 				(min 0 hp)
+
+    //  [LBL] STore A to CharStruct::CurHP,X
+    //  Clear A, then Shorten
+    //  LoaD TimerReadyChar::Poison to A
+    //  LoaD $0E to X				(poison tick damage)
+    //  STore X to TempDisplayDamage
+    //  Jump to SubRoutine CopyDisplayDamage
+    //  LoaD #$09 to A	(C1 routine: display regen/poison damage)
+    //  JuMP to CallC1
 }
 
 static void timerEffectReflect(void) {
-    // ldx AttackerOffset
-    // lda CharStruct::Status3,X
-    // AND A with #$7F	;clear reflect
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Status3,X to A
+    // AND A with #$7F	(clear reflect)
     // STore A to CharStruct::Status3,X
     // Return to SubRoutine
 }
 
 static void timerEffectCountdown(void) {
-//         ldx AttackerOffset
-//         lda CharStruct::Status1,X
-//  AND A with #$02	;zombie
-//         bne Ret
-//         lda TimerReadyChar::Countdown
-//  Jump to SubRoutine KillCharacter
-//         lda MonsterDead
-//  Branch to [Ret] if EQuals
-//         lda #$07	;C1 routine: condemn death animation
-//  Jump to SubRoutine CallC1
-// Ret [LBL] Return to SubRoutine
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status1,X to A
+    //  AND A with #$02	(zombie)
+    //  Branch to Ret if Not Equals
+    //  LoaD TimerReadyChar::Countdown to A
+    //  Jump to SubRoutine KillCharacter
+    //  LoaD MonsterDead to A
+    //  Branch to [Ret] if EQuals
+    //  LoaD #$07 to A	(C1 routine: condemn death animation)
+    //  Jump to SubRoutine CallC1
+    //  [Ret] Return to SubRoutine
 }
 
 static void timerEffectMute(void) {
-    // ldx AttackerOffset
-    // lda CharStruct::Status2,X
-    // AND A with #$FB	;clear mute
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Status2,X to A
+    // AND A with #$FB	(clear mute)
     // STore A to CharStruct::Status2,X
     // Return to SubRoutine
 }
 
 static void timerEffectHPLeak(void) {
-    // ldx AttackerOffset
-    // lda CharStruct::Status4,X
-    // AND A with #$F7	;clear hp leak
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Status4,X to A
+    // AND A with #$F7	(clear hp leak)
     // STore A to CharStruct::Status4,X
     // Return to SubRoutine
 }
 
 static void timerEffectOld(void) {
-//         lda #$01
+//  LoaD #$01 to A
 //  STore A to EnableTimer::Old,Y
-//         lda InitialTimer::Old,Y
+//  LoaD InitialTimer::Old,Y to A
 //  STore A to CurrentTimer::Old,Y
-//         ldx AttackerOffset
+//  LoaD AttackerOffset to X
 //  Store Zero to $0E
-// StatsLoop:		;applies to all 4 main stats
-//         lda CharStruct::BaseStr,X
+
+//  [StatsLoop]		(applies to all 4 main stats)
+//  LoaD CharStruct::BaseStr,X to A
 //  DECrement
-//  Branch to next label if EQuals		;**bug: wraps 0 stats to 255
+//  Branch to next label if EQuals		(**bug: wraps 0 stats to 255)
 //  STore A to CharStruct::BaseStr,X
-//  [LBL] lda CharStruct::EquippedStr,X
+
+//  [LBL] LoaD CharStruct::EquippedStr,X to A
 //  DECrement
 //  Branch to next label if EQuals
 //  STore A to CharStruct::EquippedStr,X
+
 //  [LBL] INcrement X
 //  INCrement $0E
-//         lda $0E
-//  CoMPare A with #$04	;4 stats
-//         bne StatsLoop
-//         ldx ProcessingTimer
-//         lda TimerReadyChar,X
-//  CoMPare A with #$04	;monster check
-//         bcc Ret
-//         ldx AttackerOffset
-//         lda CharStruct::Level,X
+//  LoaD $0E to A
+//  CoMPare A with #$04	(4 stats)
+//  Branch to [StatsLoop] if Not Equals
+//  LoaD ProcessingTimer to X
+//  LoaD TimerReadyChar,X to A
+//  CoMPare A with #$04	(monster check)
+//  Branch to [Ret] if Carry Clear
+//  LoaD AttackerOffset to X
+//  LoaD CharStruct::Level,X to A
 //  DECrement
 //  Branch to next label if EQuals
 //  STore A to CharStruct::Level,X
-//  [LBL] lda CharStruct::MonsterAttack,X
+
+//  [LBL] LoaD CharStruct::MonsterAttack,X to A
 //  DECrement
-//         bpl Ret	;bug? only decreases attack if above 128
+//  Branch to [Ret] if PLus	(bug? only decreases attack if above 128)
 //  STore A to CharStruct::MonsterAttack,X
-// [Ret] Return To Subroutine
+
+//  [Ret] Return To Subroutine
 }
 
 static void timerEffectRegen(void) {
-//         lda #$01
-//  STore A to EnableTimer::Regen,Y
-//         lda InitialTimer::Regen,Y
-//  CoMPare A with #$1E
-//  Branch to next label if Carry Set
-//         lda #$1E	;max 30 ticks if it was slower
-//  STore A to InitialTimer::Regen,Y
-//  [LBL] STore A to CurrentTimer::Regen,Y
-//  Jump to SubRoutine WipeDisplayStructures
-//         ldx AttackerOffset
-//  Jump to SubRoutine CopyStatsWithBonuses
-//         lda Level
-//  STore A to $24
-//         lda Vitality
-//  STore A to $25
-//  Jump to SubRoutine Multiply_8bit
-//         ldx AttackerOffset
-//         lda CharStruct::Status1,X
-//  AND A with #$02	;zombie
-//         bne Ret
-//  Lengthen A
-//         lda $26
-//  Jump to SubRoutine ShiftDivide_16
-//  Transfer A to X
-//  Branch to next label if Not Equals
-//  INCrement 		;min 1
-//  [LBL] STore A to $0E
-//         ldx AttackerOffset
-//  CLear Carry
-//         adc CharStruct::CurHP,X
-//  Branch to next label if Carry Set
-//  CoMPare A with CharStruct::MaxHP,X
-//  Branch to next label if Carry Clear+
-//  [LBL] lda CharStruct::MaxHP,X	;cap at maxhp
-//  [LBL] STore A to CharStruct::CurHP,X
-//  Clear A, then Shorten
-//         lda $0F
-//  OR A with #$80       		;flag to display as healing
-//  STore A to $0F
-//         lda TimerReadyChar::Regen
-//         ldx $0E
-//  STore X to TempDisplayDamage
-//  Jump to SubRoutine CopyDisplayDamage
-//         lda #$09	;C1 routine: display regen/poison damage
-//  Jump to SubRoutine CallC1
-// [Ret] Return To Subroutine
+    //  LoaD #$01 to A
+    //  STore A to EnableTimer::Regen,Y
+    //  LoaD InitialTimer::Regen,Y to A
+    //  CoMPare A with #$1E
+    //  Branch to next label if Carry Set
+    //  LoaD #$1E to A	(max 30 ticks if it was slower)
+    //  STore A to InitialTimer::Regen,Y
+
+    //  [LBL] STore A to CurrentTimer::Regen,Y
+    //  Jump to SubRoutine WipeDisplayStructures
+    //  LoaD AttackerOffset to X
+    //  Jump to SubRoutine CopyStatsWithBonuses
+    //  LoaD Level to A
+    //  STore A to $24
+    //  LoaD Vitality to A
+    //  STore A to $25
+    //  Jump to SubRoutine Multiply_8bit
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Status1,X to A
+    //  AND A with #$02	(zombie)
+    //  Branch to [Ret] if Not Equals
+    //  Lengthen A
+    //  LoaD $26 to A
+    //  Jump to SubRoutine ShiftDivide_16
+    //  Transfer A to X
+    //  Branch to next label if Not Equals
+    //  INCrement 		(min 1)
+
+    //  [LBL] STore A to $0E
+    //  LoaD AttackerOffset to X
+    //  CLear Carry
+    //  ADd CharStruct::CurHP,X to A with Carry
+    //  Branch to next label if Carry Set
+    //  CoMPare A with CharStruct::MaxHP,X
+    //  Branch to next label if Carry Clear
+
+    //  [LBL] LoaD CharStruct::MaxHP,X to A	(cap at maxhp)
+
+    //  [LBL] STore A to CharStruct::CurHP,X
+    //  Clear A, then Shorten
+    //  LoaD $0F to A
+    //  OR A with #$80       		(flag to display as healing)
+    //  STore A to $0F
+    //  LoaD TimerReadyChar::Regen to A
+    //  LoaD $0E to X
+    //  STore X to TempDisplayDamage
+    //  Jump to SubRoutine CopyDisplayDamage
+    //  LoaD #$09 to A	(C1 routine: display regen/poison damage)
+    //  Jump to SubRoutine CallC1
+
+    //  [Ret] Return To Subroutine
 }
 
 static void timerEffectSing(void) {
-//         lda #$01
-//  STore A to EnableTimer::Sing,Y
-//         lda InitialTimer::Sing,Y
-//  STore A to CurrentTimer::Sing,Y
-//  Transfer Direct page to aCcumulator
-//  Transfer A to Y
-//         ldx AttackerOffset
-//         lda CharStruct::Song,X
-//  Branch to [Ret] if EQuals
-// FindSong:		;Y = song stat index
-//  A Shift Left
-//  Branch to next label if Carry Set
-//  INcrement Y
-//  BRAnch to FindSong
-// :STore Y to $12		;song stat index
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  STore X to $0E		;target
-//         lda #$04
-//  STore A to $10		;after last target
-//         lda TimerReadyChar::Sing
-//  CoMPare A with #$04	;monster check? monsters can sing?
-//         bcc ApplySong
-//         lda #$04
-//  STore A to $0E		;target
-//         lda #$0C
-//  STore A to $10		;last target +1
-//         ldx #$0180	;**bug: should be $0200 for first monster
-// ApplySong:
-//  STore X to $14		;char offset
-//  Lengthen A
-// Transfer X to A
-//  CLear Carry
-//         adc $12		;adjust offset by song stat
-//  Transfer A to X
-//  Clear A, then Shorten
-// CharLoop:
-//         ldy $0E		;target
-//         lda ActiveParticipants,Y
-//         beq Next
-//  CLear Carry
-//         lda CharStruct::BonusStr,X	;different stats depending on X
-//  INCrement
-//  CoMPare A with #$64	;don't apply changes at 100 AND A with up
-//         bcs Next
-//  STore A to CharStruct::BonusStr,X
-// Next:
-//  Jump to SubRoutine NextCharOffset
-//  STore X to $14		;char offset
-//  INCrement $0E		;next target
-//         lda $0E
-//  CoMPare A with $10		;last target +1
-//         bne CharLoop
-// [Ret] Return To Subroutine
+    //  LoaD #$01 to A
+    //  STore A to EnableTimer::Sing,Y
+    //  LoaD InitialTimer::Sing,Y to A
+    //  STore A to CurrentTimer::Sing,Y
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to Y
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::Song,X to A
+    //  Branch to [Ret] if EQuals
+
+    //  [FindSong]		(Y = song stat index)
+    //  A Shift Left
+    //  Branch to next label if Carry Set
+    //  INcrement Y
+    //  BRAnch to [FindSong]
+
+    //  [LBL] STore Y to $12		(song stat index)
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  STore X to $0E		(target)
+    //  LoaD #$04 to A
+    //  STore A to $10		(afer last target)
+    //  LoaD TimerReadyChar::Sing to A
+    //  CoMPare A with #$04	(monster check? monsters can sing?)
+    //  Branch to ApplySong if Clear Carry
+    //  LoaD #$04 to A
+    //  STore A to $0E		(target)
+    //  LoaD #$0C to A
+    //  STore A to $10		(last target +1)
+    //  LoaD #$0180 to X	(**bug: should be $0200 for first monster)
+
+    //  [ApplySong]
+    //  STore X to $14 to X		(char offset)
+    //  Lengthen A
+    //  Transfer X to A
+    //  CLear Carry
+    //  ADd $12 to A with Carry		(adjust offset by song stat)
+    //  Transfer A to X
+    //  Clear A, then Shorten
+
+    //  [CharLoop]
+    //  LoaD $0E to Y		(target)
+    //  LoaD ActiveParticipants,Y to A
+    //  Branch to [Next] if EQuals
+    //  CLear Carry
+    //  LoaD CharStruct::BonusStr,X to A	(different stats depending on X)
+    //  INCrement
+    //  CoMPare A with #$64	(don't apply changes at 100 and up)
+    //  Branch to [Next] if Carry Set
+    //  STore A to CharStruct::BonusStr,X
+
+    //  [Next]
+    //  Jump to SubRoutine NextCharOffset
+    //  STore X to $14		(char offset)
+    //  INCrement $0E		(next targett)
+    //  LoaD $0E to A
+    //  CoMPare A with $10		(last target +1)
+    //  Branch to CharLoop if Not Equals
+
+    //  [Ret] Return To Subroutine
 }
 
 static void timerEffectParalyze(void) {
-    // ldx AttackerOffset
-    // lda CharStruct::Status2,X
-    // AND A with #$DF	;clear paralyze
+    // LoaD AttackerOffset to X
+    // LoaD CharStruct::Status2,X to A
+    // AND A with #$DF	(clear paralyze)
     // STore A to CharStruct::Status2,X
-    // ldx ProcessingTimer
-    // lda TimerReadyChar,X
+    // LoaD ProcessingTimer to X
+    // LoaD TimerReadyChar,X to A
     // JuMP to ResetATB
 }
 
 static void timerEffectATB(void) {
-//  Jump to SubRoutine CheckBattleEnd
-//         lda BattleOver
-//         bne GoRet
-//         lda TimerReadyChar::ATB
-//  STore A to AttackerIndex
-//  Jump to SubRoutine GetTimerOffset
-//  Transfer Y to X
-//         lda EnableTimer::Paralyze,X
-//         bne GoRet
-//         lda EnableTimer::ATB,X
-//  Branch to next label if EQuals
-//         JuMP to PerformAction      	;action is ready, do it
-//  [LBL] lda TimerReadyChar::ATB
-//  CoMPare A with #$04	;monster check
-//         bcs Monster
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-// SearchTurnQueue:	;find character in turn queue
-//         lda ATBReadyQueue,X
-//  CoMPare A with TimerReadyChar::ATB
-//         beq GoRet	;character already in turn queue
-//  INcrement X
-//  ComPare X with #$0004
-//         bne SearchTurnQueue
-//         lda TimerReadyChar::ATB
-//  Jump to SubRoutine CheckDisablingStatus
-//         bne GoRet
-//         ldx ATBReadyCount
-//         lda TimerReadyChar::ATB
-//  STore A to ATBReadyQueue,X
-//  INCrement ATBReadyCount
-// GoRet:	jmp Ret
-// Monster:
-//  Jump to SubRoutine MonsterATB
-// [Ret] Return To Subroutine
+    //  Jump to SubRoutine CheckBattleEnd
+    //  LoaD BattleOver to A
+    //  Branch to [GoRet] if Not Equals
+    //  LoaD TimerReadyChar::ATB
+    //  STore A to AttackerIndex
+    //  Jump to SubRoutine GetTimerOffset
+    //  Transfer Y to X
+    //  LoaD EnableTimer::Paralyze,X
+    //  Branch to [GoRet]
+    //  LoaD EnableTimer::ATB,X
+    //  Branch to next label if EQuals
+    //  JuMP to PerformAction      	(action is ready, do it)
+
+    //  [LBL] lda TimerReadyChar::ATB
+    //  CoMPare A with #$04	(monster check)
+    //  Branch to [Monster] if Carry Set
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+
+    //  [SearchTurnQueue]	(find character in turn queue)
+    //  LoaD ATBReadyQueue,X
+    //  CoMPare A with TimerReadyChar::ATB
+    //  Branch to [GoRet] if EQuals	(character already in turn queue)
+    //  INcrement X
+    //  ComPare X with #$0004
+    //  Branch to [SearchTurnQueue] if Not Equals
+    //  LoaD TimerReadyChar::ATB
+    //  Jump to SubRoutine CheckDisablingStatus
+    //  Branch to [GoRet] if Not Equals
+    //  LoaD ATBReadyCount
+    //  LoaD TimerReadyChar::ATB
+    //  STore A to ATBReadyQueue,X
+    //  INCrement ATBReadyCount
+
+    //  [GoRet]	JuMP to [Ret]
+
+    //  [Monster] Jump to SubRoutine MonsterATB
+
+    //  [Ret] Return To Subroutine
 }
 
 // Called when character's turn is up,
 // perform their queued action
 static void performAction(void) {
-//  Jump to SubRoutine ProcessTurn
-//         lda DelayedFight
-//         bne Ret
-//         lda AttackerIndex
-//  CoMPare A with #$04	;monster check
-//         bcs _ResetATB
-//         ldx AttackerOffset
-//         lda CharStruct::CmdStatus,X
-//  AND A with #$E0	;clear many flags (jump/flirt/others?)
-//  STore A to CharStruct::CmdStatus,X
-//  Store Zero to CharStruct::DamageMod,X
-//         lda CharStruct::Status1,X
-//  OR A with CharStruct::AlwaysStatus1,X
-//  AND A with #$02	;zombie
-//         bne Uncontrolled
-//         lda CharStruct::Status2,X
-//  OR A with CharStruct::AlwaysStatus2,X
-//  AND A with #$18	;charm/berserk
-//         beq _ResetATB
-// Uncontrolled:
-//         lda AttackerIndex
-//  Jump to SubRoutine GetTimerOffset
-//  Transfer Direct page to aCcumulator
-//  STore A to EnableTimer::ATB,Y
-//  INCrement
-//  STore A to CurrentTimer::ATB,Y
-//         lda AttackerIndex
-//  Transfer A to X
-//         lda UncontrolledATB,X
-//  AND A with #$7F	;max 127
-//  STore A to UncontrolledATB,X
-// _ResetATB:
-//  INCrement CheckQuick
-//         lda AttackerIndex
-//  Jump to SubRoutine ResetATB
-//  Store Zero to CheckQuick
-// [Ret] Return To Subroutine
+    //  Jump to SubRoutine ProcessTurn
+    //  LoaD DelayedFight to A
+    //  Branch to [Ret] if Not Equals
+    //  LoaD AttackerIndex to A
+    //  CoMPare A with #$04	;monster check
+    //  Branch to [_ResetATB] if Carry Set
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::CmdStatus,X to A
+    //  AND A with #$E0	;clear many flags (jump/flirt/others?)
+    //  STore A to CharStruct::CmdStatus,X
+    //  Store Zero to CharStruct::DamageMod,X
+    //  LoaD CharStruct::Status1,X to A
+    //  OR A with CharStruct::AlwaysStatus1,X
+    //  AND A with #$02	;zombie
+    //  Branch to [Uncontrolled] if Not Equals
+    //  LoaD CharStruct::Status2,X to A
+    //  OR A with CharStruct::AlwaysStatus2,X
+    //  AND A with #$18	;charm/berserk
+    //  Branch to [_ResetATB] if EQuals
+
+    //  [Uncontrolled]
+    //  LoaD AttackerIndex to A
+    //  Jump to SubRoutine GetTimerOffset
+    //  Transfer Direct page to aCcumulator
+    //  STore A to EnableTimer::ATB,Y
+    //  INCrement
+    //  STore A to CurrentTimer::ATB,Y
+    //  LoaD AttackerIndex to A
+    //  Transfer A to X
+    //  LoaD UncontrolledATB,X to A
+    //  AND A with #$7F	;max 127
+    //  STore A to UncontrolledATB,X
+
+    //  [_ResetATB]
+    //  INCrement CheckQuick
+    //  LoaD AttackerIndex to A
+    //  Jump to SubRoutine ResetATB
+    //  Store Zero to CheckQuick
+
+    //  [Ret] Return To Subroutine
 }
 
 // Waits when a character's turn arrives
 // (amount depending on battle speed setting)
 static void atbWait(void) {
-//         lda ATBWaiting
-//  Branch to [Ret] if EQuals
-//         lda ATBWaitLeft
-//         beq DoneWaiting
-//  DECrement
-//  STore A to ATBWaitLeft
-//         bne Ret
-// DoneWaiting:
-//  Transfer Direct page to aCcumulator
-//  STore A to ATBWaiting
-// [Ret] Return To Subroutine
+    //  LoaD ATBWaiting to A
+    //  Branch to [Ret] if EQuals
+    //  LoaD ATBWaitLeft to A
+    //  Branch to [DoneWaiting] if EQuals
+    //  DECrement
+    //  STore A to ATBWaitLeft
+    //  Branch to [Ret] if Not Equals
+
+    //  [DoneWaiting]
+    //  Transfer Direct page to aCcumulator
+    //  STore A to ATBWaiting
+
+    //  [Ret] Return To Subroutine
 }
 
 // Updates ATB for all combatants and
 // sets them active if present
 static void resetAtbAll(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
-//  Transfer A to Y
-//  STore X to $0E			;char index
-// ResetATBLoop:
-//         lda $0E
-//  Jump to SubRoutine ResetATB
-//         lda $0E
-//  Jump to SubRoutine CalculateCharOffset
-//         lda $0E
-//  CoMPare A with #$04		;monster check
-//         bcs Monster
-//         ldx AttackerOffset
-//         lda CharStruct::CharRow,X
-//  AND A with #$40		;not present
-//         beq SetActive
-//         bne Next
-// Monster:
-//  SEt Carry flag
-//         lda $0E
-//         sbc #$04
-//  Transfer A to X 			;monster index
-//         lda InitialMonsters,X
-//         beq Next
-// SetActive:
-//         ldx $0E
-//         lda #$01
-//  STore A to ActiveParticipants,X
-// Next:
-//  INCrement $0E			;char index
-//         lda $0E
-//  CoMPare A with #$0C		;12 participants
-//         bne ResetATBLoop
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
+    //  Transfer A to Y
+    //  STore X to $0E			(char index)
 
-//  Return To Subroutine
+    //  [ResetATBLoop]
+    //  LoaD $0E to A
+    //  Jump to SubRoutine ResetATB
+    //  LoaD $0E to A
+    //  Jump to SubRoutine CalculateCharOffset
+    //  LoaD $0E to A
+    //  CoMPare A with #$04		(monster check)
+    //  Branch to Monster if Carry Set
+    //  LoaD AttackerOffset to X
+    //  LoaD CharStruct::CharRow,X to A
+    //  AND A with #$40		(not present)
+    //  Branch to [SetActive] if EQuals
+    //  Branch to [Next] if Not Equals
+
+    //  [Monster]
+    //  SEt Carry flag
+    //  LoaD $0E to A
+    //  SuBtract #$04 from A with Carry
+    //  Transfer A to X 			(monster index)
+    //  LoaD InitialMonsters,X to A
+    //  Branch to [Next] if EQuals
+
+    //  [SetActive]
+    //  LoaD $0E to X
+    //  LoaD #$01 to A
+    //  STore A to ActiveParticipants,X
+
+    //  [Next]
+    //  INCrement $0E			(char index)
+    //  LoaD $0E to A
+    //  CoMPare A with #$0C		(12 participants)
+    //  Branch to [ResetATBLoop] if Not Equals
+
+    //  Return To Subroutine
 }
 
 // Initialize ATB (A: character index 0-12)
 static void resetAtb(void) {
-//  PusH A
-//  Jump to SubRoutine GetTimerOffset	;Y AND A with $36 = timer offset
-//  PulL A
-//  Jump to SubRoutine CalculateCharOffset
-//  Jump to SubRoutine CopyStatsWithBonuses
-//         lda CharStruct::EqWeight,X
-//  Jump to SubRoutine ShiftDivide_8	;weight/8
-//  CLear Carry
-//         adc #$78     		;+120
-//  SEt Carry flag
-//         sbc Agility    	;-agi
-//  Branch to next label if EQuals
-//  Branch to next label if Carry Set+
-//  [LBL] lda #$01     		;min 1
-// :Jump to SubRoutine HasteSlowMod
-//  STore A to CurrentTimer::ATB,Y
-//         lda EncounterInfo::IntroFX
-//         bpl NotCredits		;80h indicates a credits demo battle
-//         ldx AttackerOffset
-//  ComPare X with #$0200		;monster
-//         bcs CreditsMonster
-//         lda #$01		;party member gets turn immediately
-//  BRAnch to CreditsParty
-// CreditsMonster:
-//         lda #$FF		;monster turn as late as possible
-// CreditsParty:
-//  STore A to CurrentTimer::ATB,Y
-// NotCredits:
-//         lda CheckQuick
-//         beq EnableATB
-//         lda QuickTurns
-//         beq EnableATB
-//         lda CurrentlyReacting
-//         bne EnableATB
-//  DECrement QuickTurns
-//         lda QuickTurns
-//         bne Quick
-//  PusH Y
-//  Jump to SubRoutine ClearQuick
-//  PulL Y
-//  BRAnch to EnableATB
-// Quick:										;:
-//         lda #$01
-//  STore A to CurrentTimer::ATB,Y
-// EnableATB:
-//         lda #$01
-//  STore A to EnableTimer::ATB,Y
-//  Return To Subroutine
+    //  PusH A
+    //  Jump to SubRoutine GetTimerOffset	(Y AND A with $36 = timer offset)
+    //  PulL A
+    //  Jump to SubRoutine CalculateCharOffset
+    //  Jump to SubRoutine CopyStatsWithBonuses
+    //  LoaD CharStruct::EqWeight,X to A
+    //  Jump to SubRoutine ShiftDivide_8	(weight/8)
+    //  CLear Carry
+    //  ADd #$78 to A with Carry     		(+120)
+    //  SEt Carry flag
+    //  SuBtract Agility from A with Carry    	(-agi)
+    //  Branch to next label if EQuals
+    //  Branch to next label if Carry Set
+
+    //  [LBL] LoaD #$01 to A     		(min 1)
+
+    //  [LBL] Jump to SubRoutine HasteSlowMod
+    //  STore A to CurrentTimer::ATB,Y
+    //  LoaD EncounterInfo::IntroFX to A
+    //  Branch to [NotCredits] if PLus		(80h indicates a credits demo battle)
+    //  LoaD AttackerOffset to X
+    //  ComPare X with #$0200		(monster)
+    //  Branch to [CreditsMonster] if Carry Set
+    //  LoaD #$01 to A		(party member gets turn immediately)
+    //  BRAnch to [CreditsParty]
+
+    //  [CreditsMonster]
+    //  LoaD #$FF to A		(monster turn as late as possible)
+
+    //  [CreditsParty]
+    //  STore A to CurrentTimer::ATB,Y
+
+    //  [NotCredits]
+    //  LoaD CheckQuick to A
+    //  Branch to [EnableATB] if EQuals
+    //  LoaD QuickTurns to A
+    //  Branch to [EnableATB] if EQuals
+    //  LoaD CurrentlyReacting to A
+    //  Branch to [EnableATB] if Not Equals
+    //  DECrement QuickTurns
+    //  LoaD QuickTurns to A
+    //  Branch to [Quick] if Not Equals
+    //  PusH Y
+    //  Jump to SubRoutine ClearQuick
+    //  PulL Y
+    //  BRAnch to [EnableATB]
+
+    //  [Quick]
+    //  LoaD #$01 to A
+    //  STore A to CurrentTimer::ATB,Y
+
+    //  [EnableATB]
+    //  LoaD #$01 to A
+    //  STore A to EnableTimer::ATB,Y
+    //  Return To Subroutine
 }
 
 // Unfreezes time for everyone
 static void clearQuick(void) {
-//  Transfer Direct page to aCcumulator
-//  Transfer A to X
+    //  Transfer Direct page to aCcumulator
+    //  Transfer A to X
 
-//  [LBL] STore Zero to QuickTimeFrozen,X
-//  INcrement X
-//  ComPare X with #$000C		;12 combatants
-//  Branch to previous label if Not Equals
-//  Return To Subroutine
+    //  [LBL] STore Zero to QuickTimeFrozen,X
+    //  INcrement X
+    //  ComPare X with #$000C		(12 combatants)
+    //  Branch to previous label if Not Equals
+    //  Return To Subroutine
 }
 
 // Stop Timer (X: #timer; A: Target index 0-12)
@@ -5348,12 +5390,12 @@ static void startTimer(void) {
     // Jump to SubRoutine CalculateCharOffset
     // Jump to SubRoutine CopyStatsWithBonuses
     // PulL X
-    // Jump to SubRoutine GetTimerDuration	;also sets up Y
-    // ldx AttackerOffset	;not actually attacker, in this case
+    // Jump to SubRoutine GetTimerDuration	(also sets up Y)
+    // LoaD AttackerOffset to X	(not actually attacker, in this case)
     // Jump to SubRoutine HasteSlowMod
     // STore A to CurrentTimer,Y
     // STore A to InitialTimer,Y
-    // lda #$01
+    // LoaD #$01 to A
     // STore A to EnableTimer,Y
     // STore Zero to StatusFixedDur
     // Return to SubRoutine
@@ -5394,7 +5436,7 @@ static void getTimerDuration(void) {
 
 }
 
-// (X): Y = X + $36 Timer Offset)
+// (X): Y = X + $36 (Timer Offset)
 static void addTimerOffsetY(void) {
     // Transfer X to A
     // Lengthen A
