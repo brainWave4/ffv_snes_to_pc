@@ -408,6 +408,80 @@ static void eventCmd_ab(void);
 static void findItemSlot(void);
 static void eventCmd_ba(void);
 static void eventCmd_bb(void);
+static void eventCmd_bc(void);
+static void eventCmd_a8(void);
+static void eventCmd_a9(void);
+static void getPtrToCharData(void);
+static void func_c0c19d(void);
+static void eventCmd_c2(void);
+static void eventCmd_d2(void);
+static void eventCmd_c9(void);
+static void eventCmd_b4(void);
+static void eventCmd_d4(void);
+static void eventCmd_b5(void);
+static void eventCmd_d5(void);
+static void eventCmd_76(void);
+static void eventCmd_78(void);
+static void eventCmd_77(void);
+static void eventCmd_f1(void);
+static void eventCmd_f0(void);
+static void eventCmd_d6(void);
+static void eventCmd_e0(void);
+static void eventCmd_e1(void);
+static void eventCmd_e3(void);
+static void func_c0c43f(void);
+static void eventCmd_f4(void);
+static void eventCmd_f3(void);
+static void eventCmd_7c(void);
+static void eventCmd_d8(void);
+static void eventCmd_d3(void);
+static void removeCurObjFromObjLayout(void);
+static void eventCmd_d1(void);
+static void eventCmd_d7(void);
+static void eventCmd_7d(void);
+static void eventCmd_c5(void);
+static void eventCmd_b8(void);
+static void eventCmd_b9(void);
+static void eventCmd_7e(void);
+static void eventCmd_c3(void);
+static void eventCmd_c4(void);
+static void eventCmd_be(void);
+static void eventCmd_c1(void);
+static void eventCmd_b1(void);
+static void func_c0c6de(void);
+static void eventCmd_b2(void);
+static void eventCmd_b3(void);
+static void eventCmd_a0(void);
+static void eventCmd_a2(void);
+static void eventCmd_a4(void);
+static void eventCmd_a3(void);
+static void eventCmd_a5(void);
+static void clearEventFlag_256_511(void);
+static void eventCmd_c8(void);
+static void initObjectMovement(void);
+static void func_c0c7f9(void);
+static void func_c0c932(void);
+static void initCameraMovement(void);
+static void giveSpell(void);
+static void getNPCFlag(void);
+static void eventCmd_ca(void);
+static void eventCmd_cb(void);
+static void setBattleFlag(void);
+static void clearBattleFlag(void);
+static void getTrasureFlag(void);
+static void setTreasureFlag(void);
+static void getEventFlag00xx(void);
+static void setEventFlag01xx(void);
+static void getFlagIndex(void);
+static void checkRandomBattlesSub(void);
+static void checkRandomBattlesWorld(void);
+static void updateRandomForBattles(void);
+static void func_c0cc6d(void);
+static void battleBlurSub(void);
+static void battleBlurWorld(void);
+static void battleBlur(void);
+static void randomBattle(void);
+static void reset(void);
 
 // These adresses are loaded before
 // having valued stored there
@@ -1587,3 +1661,264 @@ static void eventCmd_ba(void) {}
 // Address: _c00f
 // Set status
 static void eventCmd_bb(void) {}
+
+// Address: _c02d
+static void eventCmd_bc(void) {}
+
+// Address: _c04b
+// Modify HP
+static void eventCmd_a8(void) {}
+
+// Address: _c0e0
+// Modify MP
+static void eventCmd_a9(void) {}
+
+// Address: _c164
+static void getPtrToCharData(void) {}
+
+static void func_c0c19d(void) {}
+
+// Address: _c1aa
+// Hide vehicle
+static void eventCmd_c2(void) {}
+
+// Address: _c1bb
+// Show vehicle
+static void eventCmd_d2(void) {}
+
+// Address: _c1ed
+// Resume Suspended Song
+static void eventCmd_c9(void) {}
+
+// Address: _c212
+// Play Song
+static void eventCmd_b4(void) {}
+
+// Play Song (specify volume)
+static void eventCmd_d4(void) {}
+
+// Address: _c25a
+// Play Sound Effect
+static void eventCmd_b5(void) {}
+
+// Address: _c266
+// Play Sound Effect (specify volume)
+static void eventCmd_d5(void) {}
+
+// Address: _c27c
+// Set scroll speed to normal
+static void eventCmd_76(void) {}
+
+// Address: _c282
+// Set scroll speed to slow
+static void eventCmd_78(void) {}
+
+// Address: _c28a
+// Set scroll speed to fast
+static void eventCmd_77(void) {}
+
+// Address: _c292
+// Jump forward randomly
+static void eventCmd_f1(void) {}
+
+// Address: _c2af
+// Show Y/N Dialog
+static void eventCmd_f0(void) {}
+
+// Address: _c362
+// Change vehicle
+static void eventCmd_d6(void) {}
+
+// Address: _c3d3
+// load map (fade out/in)
+static void eventCmd_e0(void) {}
+
+// Address: _c3f7
+// load map (no fade)
+static void eventCmd_e1(void) {}
+
+// Address: _c418
+// load map (fade out only)
+static void eventCmd_e3(void) {}
+
+static void func_c0c43f(void) {}
+
+// Address: _c4e0
+// change background (relative)
+static void eventCmd_f4(void) {}
+
+// Address: _c504
+// change background (absolute)
+static void eventCmd_f3(void) {}
+
+// Address: _c56f
+// disable timer
+static void eventCmd_7c(void) {}
+
+// Address: _c57a
+// set object position (relative)
+static void eventCmd_d8(void) {}
+
+// Address: _c5c4
+// set object position (absolute)
+static void eventCmd_d3(void) {}
+
+// Address: _c5e4
+static void removeCurObjFromObjLayout(void) {}
+
+// Address: _c5fb
+// Start timer
+static void eventCmd_d1(void) {}
+
+// Address: _c623
+// Start timer (speed up music)
+static void eventCmd_d7(void) {}
+
+// Address: _c64b
+static void eventCmd_7d(void) {}
+
+// Address: _c65a
+// Flash screen
+static void eventCmd_c5(void) {}
+
+// Address: _c67d
+// Color addition
+static void eventCmd_b8(void) {}
+
+// Address: _c692
+// Color subtraction
+static void eventCmd_b9(void) {}
+
+// Address: _c6a7
+// Stop fade
+static void eventCmd_7e(void) {}
+
+// Address: _c6ac
+// Fade in
+static void eventCmd_c3(void) {}
+
+// Address: _c6b7
+// Fade out
+static void eventCmd_c4(void) {}
+
+// Address: _c6c4
+// Shake screen
+static void eventCmd_be(void) {}
+
+// Address: _c6cb
+static void eventCmd_c1(void) {}
+
+// Address: _c6d4
+// Set party sprite graphic
+static void eventCmd_b1(void) {}
+
+static void func_c0c6de(void) {}
+
+// Address: _c70b
+// Wait xx frames
+static void eventCmd_b2(void) {}
+
+// Address: _c71c
+// Wait xx * 15 frames
+static void eventCmd_b3(void) {}
+
+// Address: _c735
+// Show npc dialog
+static void eventCmd_a0(void) {}
+
+// Address: _c758
+// Set event flag (0-255)
+static void eventCmd_a2(void) {}
+
+// Address: _c76a
+// Set event flag (256-511)
+static void eventCmd_a4(void) {}
+
+// Address: _c77c
+// Clear event flag (0-255)
+static void eventCmd_a3(void) {}
+
+// Address: _c78e
+// Clear event flag (256-511)
+static void eventCmd_a5(void) {}
+
+// Address: _c796
+static void clearEventFlag_256_511(void) {}
+
+// Address: _c7a4
+// Show dialog
+static void eventCmd_c8(void) {}
+
+// Address: _c7c8
+static void initObjectMovement(void) {}
+
+static void func_c0c7f9(void) {}
+
+static void func_c0c932(void) {}
+
+// Address: _c98a
+static void initCameraMovement(void) {}
+
+// Address: _c9a5
+static void giveSpell(void) {}
+
+// Address: _c9c1
+static void getNPCFlag(void) {}
+
+// Address: _c9ce
+// Set NPC flag
+static void eventCmd_ca(void) {}
+
+// Address: _c9e4
+// Clear NPC flag
+static void eventCmd_cb(void) {}
+
+// Address: _c9fa
+static void setBattleFlag(void) {}
+
+// Address: _ca08
+static void clearBattleFlag(void) {}
+
+// Address: _ca16
+static void getTrasureFlag(void) {}
+
+// Address: _ca21
+static void setTreasureFlag(void) {}
+
+// Address: _ca2f
+static void getEventFlag00xx(void) {}
+
+// Address: _ca3c
+static void setEventFlag01xx(void) {}
+
+// Address: _ca49
+static void getFlagIndex(void) {}
+
+// Address: _ca69
+static void checkRandomBattlesSub(void) {}
+
+// Address: _cb11
+static void checkRandomBattlesWorld(void) {}
+
+// Address: _cc52
+static void updateRandomForBattles(void) {}
+
+static void func_c0cc6d(void) {}
+
+static void battleBlurSub(void) {}
+
+static void battleBlurWorld(void) {}
+
+static void battleBlur(void) {}
+
+// Address: _ccf0
+static void randomBattle(void) {}
+
+// Address: _cec0
+static void reset(void) {}
+
+// Address: _cee0 jumps long to c01f00
+
+// Address: _cee4 jumps long to c01f04
+
+// Remaining addresses below are all data
