@@ -299,6 +299,115 @@ static void func_c09cac(void);
 static void updateTimer(void);
 static void speedUpMusicWithTimer(void);
 static void execEvent(void);
+static void nextEventCmd(void);
+static void terminateEvent(void);
+static void func_c0a365(void);
+static void func_c0a380(void);
+static void func_c0a3c9(void);
+static void func_c0a40a(void);
+static void func_c0a449(void);
+static void func_c0a45f(void);
+static void eventCmd_bf(void);
+static void eventCmd_bf1a(void);
+static void eventCmd_bf18(void);
+static void func_c0a7be(void);
+static void eventCmd_bf19(void);
+static void eventCmd_bf15(void);
+static void func_c0a933(void);
+static void eventCmd_bf14(void);
+static void func_c0aa0e(void);
+static void eventCmd_bf13(void);
+static void eventCmd_bf12(void);
+static void func_c0ab8e(void);
+static void func_c0abb5(void);
+static void eventCmd_bf0f(void);
+static void eventCmd_bf10(void);
+static void eventCmd_bf07(void);
+static void eventCmd_bf08(void);
+static void eventCmd_bf09(void);
+static void eventCmd_bf0a(void);
+static void func_c0ac80(void);
+static void func_c0ac8b(void);
+static void func_c0acb1(void);
+static void func_c0acdd(void);
+static void func_c0ad01(void);
+static void func_c0ad28(void);
+static void func_c0ad54(void);
+static void func_c0ad86(void);
+static void func_c0ada0(void);
+static void func_c0adb7(void);
+static void func_c0add6(void);
+static void func_c0ae0b(void);
+static void func_c0ae32(void);
+static void eventCmd_bf00(void);
+static void eventCmd_bf01(void);
+static void eventCmd_bf16(void);
+static void eventCmd_bf02(void);
+static void eventCmd_bf11(void);
+static void eventCmd_bf05(void);
+static void func_c0b240(void);
+static void eventCmd_bf04(void);
+static void func_c0b2a5(void);
+static void func_c0b35c(void);
+static void func_c0b371(void);
+static void func_c0b3cd(void);
+static void eventCmd_bf06(void);
+static void func_c0b594(void);
+static void eventCmd_bf0b(void);
+static void func_c0b5fd(void);
+static void eventCmd_bf17(void);
+static void eventCmd_bf03(void);
+static void func_c0b750(void);
+static void func_c0b75e(void);
+static void func_c0b791(void);
+static void eventCmd_bf0c(void);
+static void eventCmd_bf0e(void);
+static void eventCmd_bf0d(void);
+static void func_c0b854(void);
+static void eventCmd_ea(void);
+static void eventCmd_eb(void);
+static void eventCmd_e9(void);
+static void eventCmd_e7(void);
+static void eventCmd_e6(void);
+static void eventCmd_e4(void);
+static void eventCmd_e5(void);
+static void eventCmd_dd(void);
+static void eventCmd_da(void);
+static void func_c0b9f5(void);
+static void eventCmd_79(void);
+static void eventCmd_db(void);
+static void eventCmd_d9(void);
+static void changeColorPalette(void);
+static void eventCmd_b6(void);
+static void eventCmd_ae(void);
+static void eventCmd_a6(void);
+static void eventCmd_a7(void);
+static void eventCmd_7b(void);
+static void eventCmd_7f(void);
+static void eventCmd_ad(void);
+static void calcInnPrice(void);
+static void eventCmd_ac(void);
+static void eventCmd_c0(void);
+static void func_c0bc9f(void);
+static void eventCmd_d0(void);
+static void eventCmd_70(void);
+static void eventCmd_dc(void);
+static void eventCmd_7a(void);
+static void eventCmd_a1(void);
+static void eventCmd_e8(void);
+static void eventCmd_bd(void);
+static void eventCmd_e2(void);
+static void eventBattle(void);
+static void eventCmd_b7(void);
+static void eventCmd_c6(void);
+static void eventCmd_af(void);
+static void eventCmd_b0(void);
+static void calcGilForEvent(void);
+static void eventCmd_aa(void);
+static void eventCmd_ab(void);
+static void findItemSlot(void);
+static void eventCmd_ba(void);
+static void eventCmd_bb(void);
 
 // These adresses are loaded before
 // having valued stored there
@@ -1151,3 +1260,330 @@ static void updateTimer(void) {}
 static void speedUpMusicWithTimer(void) {}
 
 static void execEvent(void) {}
+
+static void nextEventCmd(void) {}
+
+static void terminateEvent(void) {}
+
+static void func_c0a365(void) {}
+
+static void func_c0a380(void) {}
+
+static void func_c0a3c9(void) {}
+
+static void func_c0a40a(void) {}
+
+static void func_c0a449(void) {}
+
+static void func_c0a45f(void) {}
+
+// Address: _a672
+static void eventCmd_bf(void) {}
+
+// Address: _a685
+static void eventCmd_bf1a(void) {}
+
+// Address: _a766
+static void eventCmd_bf18(void) {}
+
+static void func_c0a7be(void) {}
+
+// Address: _a7c9
+static void eventCmd_bf19(void) {}
+
+// Address: _a86d
+static void eventCmd_bf15(void) {}
+
+static void func_c0a933(void) {}
+
+// Address: _a98b
+static void eventCmd_bf14(void) {}
+
+static void func_c0aa0e(void) {}
+
+// Address: _ab49
+static void eventCmd_bf13(void) {}
+
+// Address: _ab65
+static void eventCmd_bf12(void) {}
+
+static void func_c0ab8e(void) {}
+
+static void func_c0abb5(void) {}
+
+// Address: _ac01
+// Show epilogue cutscene
+static void eventCmd_bf0f(void) {}
+
+// Address: _ac1c
+// Show game stats (unknown cave psychic)
+static void eventCmd_bf10(void) {}
+
+// Address: _ac37
+static void eventCmd_bf07(void) {}
+
+// Address: _ac4a
+static void eventCmd_bf08(void) {}
+
+// Address: _ac65
+static void eventCmd_bf09(void) {}
+
+// Address: _ac71
+static void eventCmd_bf0a(void) {}
+
+static void func_c0ac80(void) {}
+
+static void func_c0ac8b(void) {}
+
+static void func_c0acb1(void) {}
+
+static void func_c0acdd(void) {}
+
+static void func_c0ad01(void) {}
+
+static void func_c0ad28(void) {}
+
+static void func_c0ad54(void) {}
+
+static void func_c0ad86(void) {}
+
+static void func_c0ada0(void) {}
+
+static void func_c0adb7(void) {}
+
+static void func_c0add6(void) {}
+
+static void func_c0ae0b(void) {}
+
+static void func_c0ae32(void) {}
+
+// Address: _b044
+// Game Over
+static void eventCmd_bf00(void) {}
+
+// Address: _b04c
+// Load parent map
+static void eventCmd_bf01(void) {}
+
+// Address: _b052
+static void eventCmd_bf16(void) {}
+
+// Address: _b0a7
+// Crystal Shatters
+static void eventCmd_bf02(void) {}
+
+// Address: _b10b
+static void eventCmd_bf11(void) {}
+
+// Address: _b185
+static void eventCmd_bf05(void) {}
+
+static void func_c0b240(void) {}
+
+// Address: _b259
+static void eventCmd_bf04(void) {}
+
+static void func_c0b2a5(void) {}
+
+static void func_c0b35c(void) {}
+
+static void func_c0b371(void) {}
+
+static void func_c0b3cd(void) {}
+
+// Address: _b548
+static void eventCmd_bf06(void) {}
+
+static void func_c0b594(void) {}
+
+// Address: _b5b1
+// Tower of Walse sinking
+static void eventCmd_bf0b(void) {}
+
+static void func_c0b5fd(void) {}
+
+// Address: _b60e
+static void eventCmd_bf17(void) {}
+
+// Address: _b6b0
+static void eventCmd_bf03(void) {}
+
+static void func_c0b750(void) {}
+
+static void func_c0b75e(void) {}
+
+static void func_c0b791(void) {}
+
+// Address: _b834
+static void eventCmd_bf0c(void) {}
+
+// Address: _b83a
+static void eventCmd_bf0e(void) {}
+
+// Address: _b848
+static void eventCmd_bf0d(void) {}
+
+static void func_c0b854(void) {}
+
+// Address: _b8a0
+// Show map title
+static void eventCmd_ea(void) {}
+
+// Address: _b8b7
+// Transfer Galuf's stats to Krile
+static void eventCmd_eb(void) {}
+
+// Address: _b8c8
+// Load character stats (ending)
+static void eventCmd_e9(void) {}
+
+// Address: _b991
+static void eventCmd_e7(void) {}
+
+// Address: _b9cf
+// Greyscale color palettes
+static void eventCmd_e6(void) {}
+
+// Address: _b9d5
+// Wait for spc-2
+static void eventCmd_e4(void) {}
+
+// Address: _b9dd
+// Wait for spc-3
+static void eventCmd_e5(void) {}
+
+// Address: _b9e5
+// Set character data
+static void eventCmd_dd(void) {}
+
+// Address: _b9ef
+static void eventCmd_da(void) {}
+
+static void func_c0b9f5(void) {}
+
+// Address: _ba98
+// Show mini-map
+static void eventCmd_79(void) {}
+
+// Address: _ba9e
+// Update party graphic
+static void eventCmd_db(void) {}
+
+// Address: _baa8
+// Change color palette
+static void eventCmd_d9(void) {}
+
+// Address: _baae
+static void changeColorPalette(void) {}
+
+// Address: _bad9
+// Show cutscene
+static void eventCmd_b6(void) {}
+
+// Address: _bae1
+// Pixelate the screen
+static void eventCmd_ae(void) {}
+
+// Address: _baef
+// Set battle flag
+static void eventCmd_a6(void) {}
+
+// Address: _baf7
+// Clear battle flag
+static void eventCmd_a7(void) {}
+
+// Address: _baff
+static void eventCmd_7b(void) {}
+
+// Address: _bb24
+static void eventCmd_7f(void) {}
+
+// Address: _bb4c
+// Inn
+static void eventCmd_ad(void) {}
+
+// Address: _bc51
+static void calcInnPrice(void) {}
+
+// Address: _bc64
+// Give magic spell
+static void eventCmd_ac(void) {}
+
+// Address: _bc6c
+// Set window mask circle diameter
+static void eventCmd_c0(void) {}
+
+static void func_c0bc9f(void) {}
+
+// Address: _bcb4
+// Spc command
+static void eventCmd_d0(void) {}
+
+// Address: _bcce
+// Wait
+static void eventCmd_70(void) {}
+
+// Address: _bcf5
+// Tutorial menu
+static void eventCmd_dc(void) {}
+
+// Address: _bd0d
+// Name change menu
+static void eventCmd_7a(void) {}
+
+// Address: _bd1e
+// Shop
+static void eventCmd_a1(void) {}
+
+// Address: _bd36
+// Character stats battle (ending)
+static void eventCmd_e8(void) {}
+
+// Address: _bd8d
+// Event battle
+static void eventCmd_bd(void) {}
+
+// Address: _bdbc
+// Event battle (can lose)
+static void eventCmd_e2(void) {}
+
+// Address: _bde6
+static void eventBattle(void) {}
+
+// Address: _be62
+// Add/remove character
+static void eventCmd_b7(void) {}
+
+// Address: _bee9
+// Give job
+static void eventCmd_c6(void) {}
+
+// Address: _bf07
+// Give gil
+static void eventCmd_af(void) {}
+
+// Address: _bf10
+// Take gil
+static void eventCmd_b0(void) {}
+
+// Address: _bf3f
+static void calcGilForEvent(void) {}
+
+// Address: _bf92
+// Add item to inventory
+static void eventCmd_aa(void) {}
+
+// Address: _bfc0
+// Remove item to inventory
+static void eventCmd_ab(void) {}
+
+// Address: _bfdd
+static void findItemSlot(void) {}
+
+// Address: _bff1
+// Remove status
+static void eventCmd_ba(void) {}
+
+// Address: _c00f
+// Set status
+static void eventCmd_bb(void) {}
