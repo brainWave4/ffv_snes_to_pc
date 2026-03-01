@@ -168,6 +168,78 @@ static void loadMap(void);
 static void loadMapNoFade(void);
 static void reloadMap(void);
 static void loadParentMap(void);
+static void func_c054a7(void);
+static void func_c054f6(void);
+static void loadWorldMap(void);
+static void loadWorldMapPalette(void);
+static void loadSubMap(void);
+static void func_c057f9(void);
+static void initAutoScroll(void);
+static void loadMapLayout(void);
+static void loadMapPalette(void);
+static void loadMapGfx(void);
+static void func_c05adb(void);
+static void loadMapProps(void);
+static void initMapColorMathSettings(void);
+static void func_c05bf4(void);
+static void func_c05bf8(void);
+static void func_c05c01(void);
+static void loadTreasureChests(void);
+static void updateWindowMaskCircle(void);
+static void func_c05d54(void);
+static void func_c05d87(void);
+static void copyTileLayoutToVram(void);
+static void func_c05e61(void);
+static void func_c05ee5(void);
+static void func_c05f3e(void);
+static void func_c05f8d(void);
+static void pitfallFadeOutAnim(void);
+static void fadeOutMap(void);
+static void pitfallFadeInAnim(void);
+static void fadeInMap(void);
+static void func_c0612b(void);
+static void func_c06134(void);
+static void func_c061d7(void);
+static void func_c062bc(void);
+static void func_c0630a(void);
+static void func_c0637e(void);
+static void func_c063d4(void);
+static void func_c06465(void);
+static void func_c064bb(void);
+static void func_c06513(void);
+static void func_c065a3(void);
+static void showMiniMap(void);
+static void func_c06731(void);
+static void func_c06755(void);
+static void func_c0679c(void);
+static void func_c067ec(void);
+static void func_c06831(void);
+static void loadWorldTilemap(void);
+static void loadSubTilemap(void);
+static void fillTilemap(void);
+static void loadWorldTileset(void);
+static void loadSubTileset(void);
+static void func_c06b99(void);
+static void func_c06bac(void);
+static void initBgScrollPos(void);
+static void func_c06c4a(void);
+static void func_c06c6a(void);
+static void func_c06c9d(void);
+static void func_c06cd4(void);
+static void func_c06d0c(void);
+static void func_c06de9(void);
+static void horizontalScrolling(void);
+static void verticalScrolling(void);
+static void modBgTilemap(void);
+static void func_c0703e(void);
+static void func_c0707d(void);
+static void func_c07221(void);
+static void func_c0722f(void);
+static void func_c07241(void);
+static void showDialog(void);
+static void getDialogPtr(void);
+static void loadDialogText(void);
+static void func_c08451(void);
 static void execEvent(void);
 
 // These adresses are loaded before
@@ -729,5 +801,161 @@ static void reloadMap(void) {}
 
 // Address: _548f
 static void loadParentMap(void) {}
+
+static void func_c054a7(void) {}
+
+static void func_c054f6(void) {}
+
+static void loadWorldMap(void) {}
+
+static void loadWorldMapPalette(void) {}
+
+static void loadSubMap(void) {}
+
+static void func_c057f9(void) {}
+
+// Address: _580e
+static void initAutoScroll(void) {}
+
+// Address: _5875
+static void loadMapLayout(void) {}
+
+// Address: _58db
+static void loadMapPalette(void) {}
+
+// Address: _591a
+static void loadMapGfx(void) {}
+
+static void func_c05adb(void) {}
+
+// Address: _5af6
+static void loadMapProps(void) {}
+
+// Address: _5b2d
+static void initMapColorMathSettings(void) {}
+
+static void func_c05bf4(void) {}
+
+static void func_c05bf8(void) {}
+
+static void func_c05c01(void) {}
+
+// Address: _5cbd
+static void loadTreasureChests(void) {}
+
+// Address: _5d30
+static void updateWindowMaskCircle(void) {}
+
+static void func_c05d54(void) {}
+
+static void func_c05d87(void) {}
+
+// Address: _5e2b
+static void copyTileLayoutToVram(void) {}
+
+static void func_c05e61(void) {}
+
+static void func_c05ee5(void) {}
+
+static void func_c05f3e(void) {}
+
+static void func_c05f8d(void) {}
+
+static void pitfallFadeOutAnim(void) {}
+
+static void fadeOutMap(void) {}
+
+static void pitfallFadeInAnim(void) {}
+
+static void fadeInMap(void) {}
+
+static void func_c0612b(void) {}
+
+static void func_c06134(void) {}
+
+static void func_c061d7(void) {}
+
+static void func_c062bc(void) {}
+
+static void func_c0630a(void) {}
+
+static void func_c0637e(void) {}
+
+static void func_c063d4(void) {}
+
+static void func_c06465(void) {}
+
+static void func_c064bb(void) {}
+
+static void func_c06513(void) {}
+
+static void func_c065a3(void) {}
+
+static void showMiniMap(void) {}
+
+static void func_c06731(void) {}
+
+static void func_c06755(void) {}
+
+static void func_c0679c(void) {}
+
+static void func_c067ec(void) {}
+
+static void func_c06831(void) {}
+
+static void loadWorldTilemap(void) {}
+
+static void loadSubTilemap(void) {}
+
+static void fillTilemap(void) {}
+
+static void loadWorldTileset(void) {}
+
+static void loadSubTileset(void) {}
+
+static void func_c06b99(void) {}
+
+static void func_c06bac(void) {}
+
+// Address: _6bdb
+static void initBgScrollPos(void) {}
+
+static void func_c06c4a(void) {}
+
+static void func_c06c6a(void) {}
+
+static void func_c06c9d(void) {}
+
+static void func_c06cd4(void) {}
+
+static void func_c06d0c(void) {}
+
+static void func_c06de9(void) {}
+
+// Address: _6df5
+static void horizontalScrolling(void) {}
+
+// Address: _6e7a
+static void verticalScrolling(void) {}
+
+static void modBgTilemap(void) {}
+
+static void func_c0703e(void) {}
+
+static void func_c0707d(void) {}
+
+static void func_c07221(void) {}
+
+static void func_c0722f(void) {}
+
+static void func_c07241(void) {}
+
+static void showDialog(void) {}
+
+static void getDialogPtr(void) {}
+
+static void loadDialogText(void) {}
+
+static void func_c08451(void) {}
 
 static void execEvent(void) {}
