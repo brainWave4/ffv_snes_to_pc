@@ -240,6 +240,64 @@ static void showDialog(void);
 static void getDialogPtr(void);
 static void loadDialogText(void);
 static void func_c08451(void);
+static void func_c08459(void);
+static void func_c08466(void);
+static void func_c08477(void);
+static void func_c08493(void);
+static void func_c084af(void);
+static void func_c084e9(void);
+static void func_c08508(void);
+static void func_c0850d(void);
+static void func_c08512(void);
+static void getSpellName(void);
+static void getItemName(void);
+static void getGilAmount(void);
+static void func_c08b53(void);
+static void func_c08ba4(void);
+static void func_c08bd3(void);
+static void func_c08be4(void);
+static void func_c08c2e(void);
+static void func_c08c7b(void);
+static void func_c08c92(void);
+static void func_c08d0e(void);
+static void func_c08d3b(void);
+static void func_c08e08(void);
+static void func_c08e23(void);
+static void func_c08ed3(void);
+static void loadFontGfx(void);
+static void func_c08f54(void);
+static void drawYesNoIndicator(void);
+static void showYesNoWindow(void);
+static void func_c090ad(void);
+static void showGPWindow(void);
+static void func_c091ed(void);
+static void showMapTitle(void);
+static void initMapTitle(void);
+static void drawMapTitleWindow(void);
+static void hideMapTitleWindow(void);
+static void func_c09440(void);
+static void func_c094a8(void);
+static void func_c09618(void);
+static void func_c0964c(void);
+static void func_c09695(void);
+static void func_c09704(void);
+static void func_c09772(void);
+static void func_c0975f(void);
+static void updatePaletteAnim(void);
+static void func_c097e2(void);
+static void func_c0980d(void);
+static void func_c09838(void);
+static void func_c09865(void);
+static void func_c098e2(void);
+static void initPaletteAnim(void);
+static void func_c0996d(void);
+static void updateMapAnim(void);
+static void initMapAnim(void);
+static void loadAnimTileGfx(void);
+static void func_c09c3d(void);
+static void func_c09cac(void);
+static void updateTimer(void);
+static void speedUpMusicWithTimer(void);
 static void execEvent(void);
 
 // These adresses are loaded before
@@ -957,5 +1015,139 @@ static void getDialogPtr(void) {}
 static void loadDialogText(void) {}
 
 static void func_c08451(void) {}
+
+static void func_c08459(void) {}
+
+static void func_c08466(void) {}
+
+static void func_c08477(void) {}
+
+static void func_c08493(void) {}
+
+static void func_c084af(void) {}
+
+static void func_c084e9(void) {}
+
+static void func_c08508(void) {}
+
+static void func_c0850d(void) {}
+
+static void func_c08512(void) {}
+
+// Address: _8a5f gets kanji from $1e
+
+// Address: _8a6a gets kanji from $1f
+
+// Address: _8a85
+static void getSpellName(void) {}
+
+// Address: _8ab7
+static void getItemName(void) {}
+
+// Address: _8aea
+static void getGilAmount(void) {}
+
+static void func_c08b53(void) {}
+
+static void func_c08ba4(void) {}
+
+static void func_c08bd3(void) {}
+
+static void func_c08be4(void) {}
+
+static void func_c08c2e(void) {}
+
+static void func_c08c7b(void) {}
+
+static void func_c08c92(void) {}
+
+static void func_c08d0e(void) {}
+
+static void func_c08d3b(void) {}
+
+static void func_c08e08(void) {}
+
+static void func_c08e23(void) {}
+
+static void func_c08ed3(void) {}
+
+// Address: _8f01
+static void loadFontGfx(void) {}
+
+static void func_c08f54(void) {}
+
+// Address: _8f78
+static void drawYesNoIndicator(void) {}
+
+// Address: _8fed
+static void showYesNoWindow(void) {}
+
+static void func_c090ad(void) {}
+
+// Address: _9133
+static void showGPWindow(void) {}
+
+static void func_c091ed(void) {}
+
+static void showMapTitle(void) {}
+
+static void initMapTitle(void) {}
+
+static void drawMapTitleWindow(void) {}
+
+static void hideMapTitleWindow(void) {}
+
+static void func_c09440(void) {}
+
+static void func_c094a8(void) {}
+
+static void func_c09618(void) {}
+
+static void func_c0964c(void) {}
+
+static void func_c09695(void) {}
+
+static void func_c09704(void) {}
+
+static void func_c09772(void) {}
+
+static void func_c0975f(void) {}
+
+// Address: _9799
+static void updatePaletteAnim(void) {}
+
+static void func_c097e2(void) {}
+
+static void func_c0980d(void) {}
+
+static void func_c09838(void) {}
+
+static void func_c09865(void) {}
+
+static void func_c098e2(void) {}
+
+// Address: _990d
+static void initPaletteAnim(void) {}
+
+static void func_c0996d(void) {}
+
+// Address: _9a00
+static void updateMapAnim(void) {}
+
+// Address: _9a96
+static void initMapAnim(void) {}
+
+// Address: _9b01
+static void loadAnimTileGfx(void) {}
+
+static void func_c09c3d(void) {}
+
+static void func_c09cac(void) {}
+
+// Address: _a18b
+static void updateTimer(void) {}
+
+// Address: _a1c1
+static void speedUpMusicWithTimer(void) {}
 
 static void execEvent(void) {}
