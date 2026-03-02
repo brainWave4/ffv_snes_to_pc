@@ -190,6 +190,23 @@ static void saveToSlot(void);
 static void loadFromSlot(void);
 static void func_c2bf7d(void);
 static void func_c2bf89(void);
+static void func_c2bf9d(void);
+static void func_c2bfcd(void);
+static void func_c2bfd4(void);
+static void func_c2bff4(void);
+static void func_c2c003(void);
+static void func_c2c041(void);
+static void func_c2c046(void);
+static void func_c2c05e(void);
+static void func_c2c069(void);
+static void func_c2c06c(void);
+static void func_c2c071(void);
+static void func_c2c0bd(void);
+static void func_c2c0c0(void);
+static void func_c2c0e2(void);
+static void func_c2c0ed(void);
+static void func_c2c0f7(void);
+static void func_c2c146(void);
 static void func_c2c162(void);
 static void func_c2c16a(void);
 static void func_c2d230(void);
@@ -1390,6 +1407,40 @@ static void func_c2bf7d(void) {
 
 // Unstarted
 static void func_c2bf89(void) {}
+
+static void func_c2bf9d(void) {}
+
+static void func_c2bfcd(void) {}
+
+static void func_c2bfd4(void) {}
+
+static void func_c2bff4(void) {}
+
+static void func_c2c003(void) {}
+
+static void func_c2c041(void) {}
+
+static void func_c2c046(void) {}
+
+static void func_c2c05e(void) {}
+
+static void func_c2c069(void) {}
+
+static void func_c2c06c(void) {}
+
+static void func_c2c071(void) {}
+
+static void func_c2c0bd(void) {}
+
+static void func_c2c0c0(void) {}
+
+static void func_c2c0e2(void) {}
+
+static void func_c2c0ed(void) {}
+
+static void func_c2c0f7(void) {}
+
+static void func_c2c146(void) {}
 
 // Unstarted
 static void func_c2c162(void) {
