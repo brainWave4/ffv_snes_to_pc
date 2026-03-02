@@ -155,6 +155,82 @@ static void aiCondition10(void);
 static void aiCondition11(void);
 static void aiCondition12(void);
 
+static void getAiTarget(void);
+static void aiTarget00(void);
+static void aiTarget01(void);
+static void aiTarget02(void);
+static void aiTarget03(void);
+static void aiTarget04(void);
+static void aiTarget05(void);
+static void aiTarget06(void);
+static void aiTarget07(void);
+static void aiTarget08(void);
+static void aiTarget09(void);
+static void aiTarget0a(void);
+static void aiTarget0b(void);
+static void aiTarget0c(void);
+static void aiTarget0d(void);
+static void aiTarget0e(void);
+static void aiTarget0f(void);
+static void aiTarget10(void);
+static void aiTarget11(void);
+static void aiTarget12(void);
+static void aiTarget13(void);
+static void aiTarget14(void);
+static void aiTarget15(void);
+static void aiTarget16(void);
+static void aiTarget17(void);
+static void aiTarget18(void);
+static void aiTarget19(void);
+static void aiTarget1a(void);
+static void aiTarget1b(void);
+static void aiTarget1c(void);
+static void aiTarget1d(void);
+static void aiTarget1e(void);
+static void aiTarget1f(void);
+static void aiTarget20(void);
+static void aiTarget21(void);
+static void aiTarget22(void);
+static void aiTarget23(void);
+static void aiTarget24(void);
+static void aiTarget25(void);
+static void aiTarget26(void);
+static void aiTarget27(void);
+static void aiTarget28(void);
+static void aiTarget29(void);
+static void aiTarget2a(void);
+static void aiTarget2b(void);
+static void aiTarget2c(void);
+static void aiTarget2d(void);
+static void aiTarget2e(void);
+static void aiTarget2f(void);
+static void aiTarget30(void);
+static void aiTarget31(void);
+static void aiTarget32(void);
+static void checkTargetValid(void);
+
+static void processAiScript(void);
+static void dispatchAiCommands(void);
+static void aiCastNormalSpell(void);
+static void aiChoose1of3(void);
+static void aiShowMonster(void);
+static void aiSetTarget(void);
+static void aiSetVar(void);
+static void aiSetEventFlag(void);
+static void aiSetStatsToggleStatus(void);
+static void aiCopyCommand(void);
+static void aiSpellTarget(void);
+static void handleReactions(void);
+static void checkReactionConditions(void);
+static void saveActionData(void);
+static void restoreActionData(void);
+static void reactionPauseTimerChecks(void);
+static void unpauseTimerChecks(void);
+static void processReaction(void);
+
+static void loadStatsEquipAi(void);
+static void startTimerFromTemp(void);
+
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
 
@@ -6490,3 +6566,171 @@ static void aiCondition12(void) {
 
     // [Fail] Return to SubRoutine
 }
+
+// Address: _2C27
+static void getAiTarget(void) {}
+
+static void aiTarget00(void) {}
+
+static void aiTarget01(void) {}
+
+static void aiTarget02(void) {}
+
+static void aiTarget03(void) {}
+
+static void aiTarget04(void) {}
+
+static void aiTarget05(void) {}
+
+static void aiTarget06(void) {}
+
+static void aiTarget07(void) {}
+
+static void aiTarget08(void) {}
+
+static void aiTarget09(void) {}
+
+static void aiTarget0a(void) {}
+
+static void aiTarget0b(void) {}
+
+static void aiTarget0c(void) {}
+
+static void aiTarget0d(void) {}
+
+static void aiTarget0e(void) {}
+
+static void aiTarget0f(void) {}
+
+static void aiTarget10(void) {}
+
+static void aiTarget11(void) {}
+
+static void aiTarget12(void) {}
+
+static void aiTarget13(void) {}
+
+static void aiTarget14(void) {}
+
+static void aiTarget15(void) {}
+
+static void aiTarget16(void) {}
+
+static void aiTarget17(void) {}
+
+static void aiTarget18(void) {}
+
+static void aiTarget19(void) {}
+
+static void aiTarget1a(void) {}
+
+static void aiTarget1b(void) {}
+
+static void aiTarget1c(void) {}
+
+static void aiTarget1d(void) {}
+
+static void aiTarget1e(void) {}
+
+static void aiTarget1f(void) {}
+
+static void aiTarget20(void) {}
+
+static void aiTarget21(void) {}
+
+static void aiTarget22(void) {}
+
+static void aiTarget23(void) {}
+
+static void aiTarget24(void) {}
+
+static void aiTarget25(void) {}
+
+static void aiTarget26(void) {}
+
+static void aiTarget27(void) {}
+
+static void aiTarget28(void) {}
+
+static void aiTarget29(void) {}
+
+static void aiTarget2a(void) {}
+
+static void aiTarget2b(void) {}
+
+static void aiTarget2c(void) {}
+
+static void aiTarget2d(void) {}
+
+static void aiTarget2e(void) {}
+
+static void aiTarget2f(void) {}
+
+static void aiTarget30(void) {}
+
+static void aiTarget31(void) {}
+
+static void aiTarget32(void) {}
+
+// Address: _3127
+static void checkTargetValid(void) {}
+
+// Address: _313B
+static void processAiScript(void) {}
+
+// Address: _3210
+static void dispatchAiCommands(void) {}
+
+// Address: _329C
+static void aiCastNormalSpell(void) {}
+
+// Address: _334D
+static void aiChoose1of3(void) {}
+
+// Address: _336E
+static void aiShowMonster(void) {}
+
+// Address: _33EC
+static void aiSetTarget(void) {}
+
+// Address: _346F
+static void aiSetVar(void) {}
+
+// Address: _347B
+static void aiSetEventFlag(void) {}
+
+// Address: _348A
+static void aiSetStatsToggleStatus(void) {}
+
+// Address: _34D9
+static void aiCopyCommand(void) {}
+
+// Address: _3504
+static void aiSpellTarget(void) {}
+
+// Address: _35E3
+static void handleReactions(void) {}
+
+// Address: _3C10
+static void checkReactionConditions(void) {}
+
+// Address: _3C7F
+static void saveActionData(void) {}
+
+// Address: _3D08
+static void restoreActionData(void) {}
+
+// Address: _3D9C
+static void reactionPauseTimerChecks(void) {}
+
+// Address: _3DBB
+static void unpauseTimerChecks(void) {}
+
+// Address: _3DC7
+static void processReaction(void) {}
+
+// Address: _3EA2
+static void loadStatsEquipAi(void) {}
+
+// Address: _41A3
+static void startTimerFromTemp(void) {}
