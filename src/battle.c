@@ -230,6 +230,49 @@ static void processReaction(void);
 
 static void loadStatsEquipAi(void);
 static void startTimerFromTemp(void);
+static void setupInventoryMagic(void);
+static void getItemUsableA(void);
+static void startPartyPoisonTimers(void);
+static void fightCommand(void);
+static void processTurn(void);
+static void shiftActionAnims(void);
+static void dispatchCommand(void);
+static void dispatchCommandReady(void);
+static void restoreStatsAfterRelease(void);
+static void checkRetarget(void);
+static void checkValidTargetsExist(void);
+static void checkLearnBlue(void);
+static void startBattle(void);
+static void checkOneTimeEncounters(void);
+static void advanceStartingAtb(void);
+
+static void initBattle(void);
+static void checkAmbushes(void);
+static void setupBackAttack(void);
+static void setupPreemptive(void);
+static void adjustAtb(void);
+static void setupBattleMusic(void);
+
+static void endBattle(void);
+static void resetStats(void);
+static void mergeItemDupes(void);
+static void updateFieldData(void);
+static void getLootExp(void);
+static void checkHideAP(void);
+static void dropMonsterLoot(void);
+static void levelUp(void);
+static void applyHPMPPassives(void);
+static void divideExp(void);
+static void gfxCmdMessageClearAnim(void);
+
+static void mainBattleLoop(void);
+static void copyHPMPStatus(void);
+static void updateMonsterList(void);
+static void checkBattleEnd(void);
+static void updateMonsterRows(void);
+static void castSpell(void);
+static void castMultiHitSpell(void);
+static void prepSummon(void);
 
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
@@ -6734,3 +6777,122 @@ static void loadStatsEquipAi(void) {}
 
 // Address: _41A3
 static void startTimerFromTemp(void) {}
+
+// Address: _41AF
+static void setupInventoryMagic(void) {}
+
+// Address: _455E
+static void getItemUsableA(void) {}
+
+// Address: _45D5
+static void startPartyPoisonTimers(void) {}
+
+// Address: _45FF
+static void fightCommand(void) {}
+
+// Address: _48BD
+static void processTurn(void) {}
+
+// Address: _4923
+static void shiftActionAnims(void) {}
+
+// Address: _4968
+static void dispatchCommand(void) {}
+
+static void dispatchCommandReady(void) {}
+
+// Address: _4A2F
+static void restoreStatsAfterRelease(void) {}
+
+// Address: _4AFE
+static void checkRetarget(void) {}
+
+// Address: _4BD7
+static void checkValidTargetsExist(void) {}
+
+// Address: _4C10
+static void checkLearnBlue(void) {}
+
+// Address: _4CE0
+static void startBattle(void) {}
+
+// Address: _4E25
+static void checkOneTimeEncounters(void) {}
+
+// Address: _4E9F
+static void advanceStartingAtb(void) {}
+
+// Address: _4F0A
+static void initBattle(void) {}
+
+// Address: _4F7A
+static void checkAmbushes(void) {}
+
+// Address: _4FEA
+static void setupBackAttack(void) {}
+
+// Address: _5001
+static void setupPreemptive(void) {}
+
+// Address: _501D
+static void adjustAtb(void) {}
+
+// Address: _505C
+static void setupBattleMusic(void) {}
+
+// Address: _5070
+static void endBattle(void) {}
+
+// Address: _515C
+static void resetStats(void) {}
+
+// Address: _51C2
+static void mergeItemDupes(void) {}
+
+// Address: _51F4
+static void updateFieldData(void) {}
+
+// Address: _52A2
+static void getLootExp(void) {}
+
+// Address: _5974
+static void checkHideAP(void) {}
+
+// Address: _569A
+static void dropMonsterLoot(void) {}
+
+// Address: _56EC
+static void levelUp(void) {}
+
+// Address: _57C7
+static void applyHPMPPassives(void) {}
+
+// Address: _57E6
+static void divideExp(void) {}
+
+// Address: _5847
+static void gfxCmdMessageClearAnim(void) {}
+
+// Address: _5872
+static void mainBattleLoop(void) {}
+
+// Address: _5921
+static void copyHPMPStatus(void) {}
+
+// Address: _5A41
+static void updateMonsterList(void) {}
+
+// Address: _5AB4
+static void checkBattleEnd(void) {}
+
+// Address: _5B6C
+static void updateMonsterRows(void) {}
+
+// Address: _5CE1
+static void castSpell(void) {}
+
+// Address: _5F75
+static void castMultiHitSpell(void) {}
+
+// Address: _60A3
+static void prepSummon(void) {}
