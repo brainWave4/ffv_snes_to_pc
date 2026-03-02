@@ -275,16 +275,88 @@ static void func_c2d0b2(void);
 static void func_c2d210(void);
 static void func_c2d230(void);
 static void func_c2d25b(void);
+static void func_c2d298(void);
+static void func_c2d2db(void);
 static void func_c2d304(void);
 static void func_c2d34c(void);
 static void func_c2d37b(void);
+static void func_c2d388(void);
 static void func_c2d3db(void);
+static void func_c2d42e(void);
 static void updateWindowColor(void);
 static void func_c2d45f(void);
-static void updateMonoStereoSetting(void);
+static void func_c2d492(void);
+static void func_c2d4b4(void);
+static void func_c2d4c5(void);
+static void func_c2d4db(void);
+static void func_c2d503(void);
+static void func_c2d533(void);
+static void func_c2d54a(void);
+static void func_c2d554(void);
+static void func_c2d55d(void);
+static void func_c2d571(void);
+static void func_c2d588(void);
+static void func_c2d59d(void);
+static void func_c2d5d3(void);
+static void func_c2d5db(void);
+static void func_c2d5ef(void);
+static void func_c2d60b(void);
+static void func_c2d658(void);
+static void func_c2d662(void);
+static void func_c2d6a4(void);
+static void setFontColor(void);
+static void func_c2d717(void);
+static void func_c2d760(void);
+static void func_c2d7ca(void);
+static void func_c2d7d8(void);
+static void func_c2d7f6(void);
+static void func_c2d802(void);
+static void func_c2d80d(void);
+static void func_c2d837(void);
+static void getAvailableAbilities(void);
+static void buildListFromRAMBits(void);
+static void func_c2d8e4(void);
+static void func_c2d93f(void);
+static void menuCmd_GalufToKrile(void);
+static void func_c2d9ab(void);
 static void func_c2d9fb(void);
+static void func_c2da16(void);
+static void func_c2da9d(void);
+static void func_c2daa4(void);
+static void func_c2dada(void);
+static void func_c2daef(void);
+static void func_c2db66(void);
+static void func_c2db92(void);
+static void func_c2dbbd(void);
+static void func_c2dbce(void);
+static void func_c2dbe8(void);
+static void func_c2dbf9(void);
+static void func_c2dc0a(void);
+static void func_c2dc1b(void);
+static void func_c2dcd2(void);
+static void func_c2dcfe(void);
+static void func_c2dd0f(void);
+static void func_c2dd20(void);
+static void func_c2dd5a(void);
+static void func_c2dd6b(void);
+static void func_c2dd8e(void);
+static void func_c2dda8(void);
+static void func_c2ddb5(void);
+static void func_c2ddc6(void);
+static void func_c2ddd7(void);
+static void func_c2de3e(void);
+static void func_c2dec7(void);
+static void func_c2df4d(void);
+static void func_c2df7f(void);
+static void func_c2e002(void);
+static void func_c2e050(void);
+static void func_c2e0a8(void);
+static void func_c2e0b0(void);
+static void func_c2e0b8(void);
+static void func_c2e0c0(void);
 static void func_c2e0c8(void);
 static void func_c2f588(void);
+static void updateMonoStereoSetting(void);
 static void updateJoypadInput(void);
 static void func_c2fedo(void);
 static void setControllerSettingsBattle(void);
@@ -1776,6 +1848,10 @@ static void func_c2d25b(void) {
     // Return To Subroutine
 }
 
+static void func_c2d298(void) {}
+
+static void func_c2d2db(void) {}
+
 // Q: What does DEC addr mean?
 static void func_c2d304(void) {
     // PusH data Bank register
@@ -1859,6 +1935,8 @@ static void func_c2d37b(void) {
     // ReTurn to Subroutine
 }
 
+static void func_c2d388(void) {}
+
 // TODO: Move sets to data
 static void func_c2d3db(void) {
     // PusH data Bank
@@ -1903,6 +1981,8 @@ static void func_c2d3db(void) {
     // PulL data Bank
     // ReTurn to Subroutine
 }
+
+static void func_c2d42e(void) {}
 
 // Address: _d447
 // Unstarted
@@ -1962,24 +2042,77 @@ static void func_c2d45f(void) {
     // ReTurn to Subroutine
 }
 
-// Address: _f5a9
-// Unstarted
-static void updateMonoStereoSetting(void) {
-    // PusH Processor status
-    // Shorten A
+static void func_c2d492(void) {}
 
-    // Load f:$000973 to A
-    // And A with #$02
-    // Logical Shift A Right
-    // CLear Carry flag
-    // Add #$f3 to A
-    //  - $f3 is stereo; $f4 is mono
-    // Store A to f:$001d00
-    // Jump to Subroutine Long ExecSound_ext
+static void func_c2d4b4(void) {}
 
-    // PulL Processor status
-    // ReTurn to Subroutine
-}
+static void func_c2d4c5(void) {}
+
+static void func_c2d4db(void) {}
+
+static void func_c2d503(void) {}
+
+static void func_c2d533(void) {}
+
+static void func_c2d54a(void) {}
+
+static void func_c2d554(void) {}
+
+static void func_c2d55d(void) {}
+
+static void func_c2d571(void) {}
+
+static void func_c2d588(void) {}
+
+static void func_c2d59d(void) {}
+
+static void func_c2d5d3(void) {}
+
+static void func_c2d5db(void) {}
+
+static void func_c2d5ef(void) {}
+
+static void func_c2d60b(void) {}
+
+static void func_c2d658(void) {}
+
+static void func_c2d662(void) {}
+
+static void func_c2d6a4(void) {}
+
+// Address: _d6dc
+static void setFontColor(void) {}
+
+static void func_c2d717(void) {}
+
+static void func_c2d760(void) {}
+
+static void func_c2d7ca(void) {}
+
+static void func_c2d7d8(void) {}
+
+static void func_c2d7f6(void) {}
+
+static void func_c2d802(void) {}
+
+static void func_c2d80d(void) {}
+
+static void func_c2d837(void) {}
+
+// Address: _d851
+static void getAvailableAbilities(void) {}
+
+// Address: _d8b1
+static void buildListFromRAMBits(void) {}
+
+static void func_c2d8e4(void) {}
+
+static void func_c2d93f(void) {}
+
+// Address: _d958
+static void menuCmd_GalufToKrile(void) {}
+
+static void func_c2d9ab(void) {}
 
 // TODO: Move bytes
 static void func_c2d9fb(void) {
@@ -2000,10 +2133,97 @@ static void func_c2d9fb(void) {
     // ReTurn to Subroutine
 }
 
+static void func_c2da16(void) {}
+
+static void func_c2da9d(void) {}
+
+static void func_c2daa4(void) {}
+
+static void func_c2dada(void) {}
+
+static void func_c2daef(void) {}
+
+static void func_c2db66(void) {}
+
+static void func_c2db92(void) {}
+
+static void func_c2dbbd(void) {}
+
+static void func_c2dbce(void) {}
+
+static void func_c2dbe8(void) {}
+
+static void func_c2dbf9(void) {}
+
+static void func_c2dc0a(void) {}
+
+static void func_c2dc1b(void) {}
+
+static void func_c2dcd2(void) {}
+
+static void func_c2dcfe(void) {}
+
+static void func_c2dd0f(void) {}
+
+static void func_c2dd20(void) {}
+
+static void func_c2dd5a(void) {}
+
+static void func_c2dd6b(void) {}
+
+static void func_c2dd8e(void) {}
+
+static void func_c2dda8(void) {}
+
+static void func_c2ddb5(void) {}
+
+static void func_c2ddc6(void) {}
+
+static void func_c2ddd7(void) {}
+
+static void func_c2de3e(void) {}
+
+static void func_c2dec7(void) {}
+
+static void func_c2df4d(void) {}
+
+static void func_c2df7f(void) {}
+
+static void func_c2e002(void) {}
+
+static void func_c2e050(void) {}
+
+static void func_c2e0a8(void) {}
+
+static void func_c2e0b0(void) {}
+
+static void func_c2e0b8(void) {}
+
+static void func_c2e0c0(void) {}
+
 static void func_c2e0c8(void) {}
 
 // Unstarted
 static void func_c2f588(void) {}
+
+// Address: _f5a9
+// Unstarted
+static void updateMonoStereoSetting(void) {
+    // PusH Processor status
+    // Shorten A
+
+    // Load f:$000973 to A
+    // And A with #$02
+    // Logical Shift A Right
+    // CLear Carry flag
+    // Add #$f3 to A
+    //  - $f3 is stereo; $f4 is mono
+    // Store A to f:$001d00
+    // Jump to Subroutine Long ExecSound_ext
+
+    // PulL Processor status
+    // ReTurn to Subroutine
+}
 
 // Address: _fe5b
 // Unstarted
