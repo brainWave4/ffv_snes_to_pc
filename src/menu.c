@@ -21,11 +21,11 @@ static void dma(void);
 static void waitForVblank(void);
 static void initMenu(void);
 static void resetSpriteData(void);
-static void func_a18a(void);
-static void func_a1cf(void);
-static void func_a1f0(void);
-static void func_a23b(void);
-static void func_a247(void);
+static void func_c2a18a(void);
+static void func_c2a1cf(void);
+static void func_c2a1f0(void);
+static void func_c2a23b(void);
+static void func_c2a247(void);
 static void getNextInput(void);
 static void getPressedBtnIdx(void);
 static void menuState14(void);
@@ -38,178 +38,178 @@ static void menuState10Down(void);
 static void menuState10Left(void);
 static void menuState10Right(void);
 static void menuState0D(void);
-static void func_a4f3(void);
-static void func_a519(void);
-static void func_a54a(void);
-static void func_a55f(void);
-static void func_a5b5(void);
-static void func_a5e6(void);
-static void func_a607(void);
-static void func_a618(void);
-static void func_a67a(void);
-static void func_a693(void);
-static void func_a6b9(void);
-static void func_a6de(void);
-static void func_a6fc(void);
-static void func_a780(void);
-static void func_a79c(void);
-static void func_a7fc(void);
-static void func_a81d(void);
-static void func_a826(void);
-static void func_a848(void);
-static void func_a85a(void);
-static void func_a878(void);
-static void func_a892(void);
-static void func_a8cb(void);
-static void func_a8f0(void);
-static void func_a8fa(void);
-static void func_a91c(void);
-static void func_a925(void);
-static void func_a935(void);
-static void func_a948(void);
-static void func_a958(void);
-static void func_a965(void);
-static void func_a96c(void);
-static void func_a96f(void);
-static void func_a9d9(void);
-static void func_a9fd(void);
-static void func_aa12(void);
-static void func_aa35(void);
-static void func_aa4e(void);
-static void func_aa6e(void);
-static void func_aa89(void);
-static void func_aabb(void);
-static void func_aad1(void);
-static void func_aae9(void);
-static void func_ab19(void);
-static void func_ab20(void);
-static void func_ab36(void);
-static void func_ab4c(void);
-static void func_ab91(void);
-static void func_aba0(void);
-static void func_abb2(void);
-static void func_abc1(void);
-static void func_abd1(void);
-static void func_abdb(void);
-static void func_abdf(void);
-static void func_abf2(void);
-static void func_ac01(void);
-static void func_ac0e(void);
-static void func_ac1e(void);
-static void func_ac5e(void);
-static void func_ac90(void);
-static void func_acc3(void);
-static void func_acd6(void);
-static void func_acff(void);
-static void func_ad3e(void);
-static void func_ad5b(void);
-static void func_adb0(void);
-static void func_adcc(void);
-static void func_addf(void);
-static void func_ae11(void);
-static void func_ae31(void);
-static void func_ae47(void);
-static void func_ae4b(void);
-static void func_ae5c(void);
-static void func_ae6b(void);
-static void func_ae6f(void);
-static void func_af1b(void);
-static void func_af87(void);
-static void func_af91(void);
-static void func_b04f(void);
-static void func_b079(void);
-static void func_b0d6(void);
-static void func_b106(void);
-static void func_b154(void);
-static void func_b16e(void);
-static void func_b19a(void);
-static void func_b1ca(void);
-static void func_b1ec(void);
-static void func_b257(void);
-static void func_b25b(void);
-static void func_b25e(void);
-static void func_b2bd(void);;
-static void func_b2fb(void);
+static void func_c2a4f3(void);
+static void func_c2a519(void);
+static void func_c2a54a(void);
+static void func_c2a55f(void);
+static void func_c2a5b5(void);
+static void func_c2a5e6(void);
+static void func_c2a607(void);
+static void func_c2a618(void);
+static void func_c2a67a(void);
+static void func_c2a693(void);
+static void func_c2a6b9(void);
+static void func_c2a6de(void);
+static void func_c2a6fc(void);
+static void func_c2a780(void);
+static void func_c2a79c(void);
+static void func_c2a7fc(void);
+static void func_c2a81d(void);
+static void func_c2a826(void);
+static void func_c2a848(void);
+static void func_c2a85a(void);
+static void func_c2a878(void);
+static void func_c2a892(void);
+static void func_c2a8cb(void);
+static void func_c2a8f0(void);
+static void func_c2a8fa(void);
+static void func_c2a91c(void);
+static void func_c2a925(void);
+static void func_c2a935(void);
+static void func_c2a948(void);
+static void func_c2a958(void);
+static void func_c2a965(void);
+static void func_c2a96c(void);
+static void func_c2a96f(void);
+static void func_c2a9d9(void);
+static void func_c2a9fd(void);
+static void func_c2aa12(void);
+static void func_c2aa35(void);
+static void func_c2aa4e(void);
+static void func_c2aa6e(void);
+static void func_c2aa89(void);
+static void func_c2aabb(void);
+static void func_c2aad1(void);
+static void func_c2aae9(void);
+static void func_c2ab19(void);
+static void func_c2ab20(void);
+static void func_c2ab36(void);
+static void func_c2ab4c(void);
+static void func_c2ab91(void);
+static void func_c2aba0(void);
+static void func_c2abb2(void);
+static void func_c2abc1(void);
+static void func_c2abd1(void);
+static void func_c2abdb(void);
+static void func_c2abdf(void);
+static void func_c2abf2(void);
+static void func_c2ac01(void);
+static void func_c2ac0e(void);
+static void func_c2ac1e(void);
+static void func_c2ac5e(void);
+static void func_c2ac90(void);
+static void func_c2acc3(void);
+static void func_c2acd6(void);
+static void func_c2acff(void);
+static void func_c2ad3e(void);
+static void func_c2ad5b(void);
+static void func_c2adb0(void);
+static void func_c2adcc(void);
+static void func_c2addf(void);
+static void func_c2ae11(void);
+static void func_c2ae31(void);
+static void func_c2ae47(void);
+static void func_c2ae4b(void);
+static void func_c2ae5c(void);
+static void func_c2ae6b(void);
+static void func_c2ae6f(void);
+static void func_c2af1b(void);
+static void func_c2af87(void);
+static void func_c2af91(void);
+static void func_c2b04f(void);
+static void func_c2b079(void);
+static void func_c2b0d6(void);
+static void func_c2b106(void);
+static void func_c2b154(void);
+static void func_c2b16e(void);
+static void func_c2b19a(void);
+static void func_c2b1ca(void);
+static void func_c2b1ec(void);
+static void func_c2b257(void);
+static void func_c2b25b(void);
+static void func_c2b25e(void);
+static void func_c2b2bd(void);;
+static void func_c2b2fb(void);
 static void rowAButtonPressed(void);
-static void func_b3db(void);
-static void func_b3e9(void);
+static void func_c2b3db(void);
+static void func_c2b3e9(void);
 static void rowBButtonPressed(void);
-static void func_b429(void);
-static void func_b480(void);
-static void func_b48f(void);
-static void func_b4a8(void);
-static void func_b4d7(void);
-static void func_b511(void);
-static void func_b521(void);
-static void func_b5ea(void);
-static void func_b676(void);
-static void func_b6b9(void);
-static void func_b74b(void);
-static void func_b752(void);
-static void func_b796(void);
-static void func_b7a0(void);
-static void func_b7ad(void);
-static void func_b7fc(void);
-static void func_b811(void);
-static void func_b845(void);
-static void func_b84d(void);
-static void func_b879(void);
-static void func_b87c(void);
-static void func_b8ae(void);
-static void func_b91d(void);
-static void func_b922(void);
-static void func_b948(void);
-static void func_b955(void);
-static void func_b993(void);
-static void func_b998(void);
-static void func_ba05(void);
-static void func_ba0a(void);
-static void func_ba63(void);
-static void func_ba7d(void);
-static void func_bbfa(void);
-static void func_bc27(void);
-static void func_bc2a(void);
-static void func_bc2d(void);
-static void func_bc48(void);
-static void func_bc5e(void);
-static void func_bcd9(void);
-static void func_bce0(void);
-static void func_bd3d(void);
-static void func_bd47(void);
-static void func_bda5(void);
-static void func_bdb5(void);
-static void func_bdc6(void);
-static void func_bdf3(void);
-static void func_bdf6(void);
-static void func_be2e(void);
-static void func_be64(void);
-static void func_bec8(void);
-static void func_becd(void);
-static void func_bef4(void);
+static void func_c2b429(void);
+static void func_c2b480(void);
+static void func_c2b48f(void);
+static void func_c2b4a8(void);
+static void func_c2b4d7(void);
+static void func_c2b511(void);
+static void func_c2b521(void);
+static void func_c2b5ea(void);
+static void func_c2b676(void);
+static void func_c2b6b9(void);
+static void func_c2b74b(void);
+static void func_c2b752(void);
+static void func_c2b796(void);
+static void func_c2b7a0(void);
+static void func_c2b7ad(void);
+static void func_c2b7fc(void);
+static void func_c2b811(void);
+static void func_c2b845(void);
+static void func_c2b84d(void);
+static void func_c2b879(void);
+static void func_c2b87c(void);
+static void func_c2b8ae(void);
+static void func_c2b91d(void);
+static void func_c2b922(void);
+static void func_c2b948(void);
+static void func_c2b955(void);
+static void func_c2b993(void);
+static void func_c2b998(void);
+static void func_c2ba05(void);
+static void func_c2ba0a(void);
+static void func_c2ba63(void);
+static void func_c2ba7d(void);
+static void func_c2bbfa(void);
+static void func_c2bc27(void);
+static void func_c2bc2a(void);
+static void func_c2bc2d(void);
+static void func_c2bc48(void);
+static void func_c2bc5e(void);
+static void func_c2bcd9(void);
+static void func_c2bce0(void);
+static void func_c2bd3d(void);
+static void func_c2bd47(void);
+static void func_c2bda5(void);
+static void func_c2bdb5(void);
+static void func_c2bdc6(void);
+static void func_c2bdf3(void);
+static void func_c2bdf6(void);
+static void func_c2be2e(void);
+static void func_c2be64(void);
+static void func_c2bec8(void);
+static void func_c2becd(void);
+static void func_c2bef4(void);
 static void saveToSlot(void);
 static void loadFromSlot(void);
-static void func_bf7d(void);
-static void func_bf89(void);
-static void func_c162(void);
-static void func_c16a(void);
-static void func_d230(void);
-static void func_d25b(void);
-static void func_d304(void);
-static void func_d34c(void);
-static void func_d37b(void);
-static void func_d3db(void);
+static void func_c2bf7d(void);
+static void func_c2bf89(void);
+static void func_c2c162(void);
+static void func_c2c16a(void);
+static void func_c2d230(void);
+static void func_c2d25b(void);
+static void func_c2d304(void);
+static void func_c2d34c(void);
+static void func_c2d37b(void);
+static void func_c2d3db(void);
 static void updateWindowColor(void);
-static void func_d45f(void);
+static void func_c2d45f(void);
 static void updateMonoStereoSetting(void);
-static void func_d9fb(void);
-static void func_e0c8(void);
-static void func_f588(void);
+static void func_c2d9fb(void);
+static void func_c2e0c8(void);
+static void func_c2f588(void);
 static void updateJoypadInput(void);
-static void func_fedo(void);
+static void func_c2fedo(void);
 static void setControllerSettingsBattle(void);
 static void setControllerSettingsField(void);
 void updateJoypadConfig(void);
-static void func_ffc2(void);
+static void func_c2ffc2(void);
 
 // Address: $7e0500 - $7e0aff
 Save current_save;
@@ -251,21 +251,21 @@ static uint16_t addr_7e420c;
 //   making the function public.
 
 // _a006
-// Branches to func_a00a(..)
+// Branches to func_c2a00a(..)
 // Could have called it directly by
 //   making the function public.
 
 // _a008
-// Branches to func_a00f(..)
+// Branches to func_c2a00f(..)
 // Could have called it directly by
 //   making the function public.
 
-void func_a00a(void) {
+void func_c2a00a(void) {
     setControllerSettingsBattle();
     updateJoypadInput();
 }
 
-void func_a00f(void) {
+void func_c2a00f(void) {
     setControllerSettingsField();
     updateJoypadInput();
 }
@@ -325,7 +325,7 @@ void execMenu(void) {
 }
 
 // CommonReturn
-//  - Jump SubRoutine to func_b2bd(..)
+//  - Jump SubRoutine to func_c2b2bd(..)
 //  - Then move onto _a030
 //     - Essentially does nothing
 //  - Could've called the first function directly
@@ -371,7 +371,7 @@ static void shop(void) {
 // Unstarted
 static void initMenuSettings(void) {
     // Jump to SubRoutine _a1f0
-    func_a1f0();
+    func_c2a1f0();
 
     // Jump to SubRoutine _ff7d
     updateJoypadConfig();
@@ -437,7 +437,7 @@ static void showMenu(void) {
     // Lengthen A
 
     // Jump to SubRoutine _c2c16a
-    //  - func_c16a(..)
+    //  - func_c2c16a(..)
     // Jump to SubRoutine _c2a16e
     //  - resetSpriteData(..)
 
@@ -560,7 +560,7 @@ static void initMenu(void) {
     //  - Perhaps addr_1f00 is an array of pointers to functions?
 
     // Store Zero to $8e
-    //  - Here, $8e is also involved in func_a1cf(...)
+    //  - Here, $8e is also involved in func_c2a1cf(...)
     addr_7e008e = 0;
 
     // Shorten Accumulator to 8-bit
@@ -595,22 +595,22 @@ static void initMenu(void) {
     addr_7e0048 = 0;
 
     // Jump to subroutine _a18a
-    func_a18a();
+    func_c2a18a();
 
     // Jump to subroutine _d230
-    func_d230();
+    func_c2d230();
 
     // Jump to subroutine _d37b
-    func_d37b();
+    func_c2d37b();
 
     // Jump to subroutine _d3db
-    func_d3db();
+    func_c2d3db();
 
     // Jump to subroutine _a247
-    func_a247();
+    func_c2a247();
 
     // Jump to subroutine _a1cf
-    func_a1cf();
+    func_c2a1cf();
 
     // Jump to subroutine _ff7d
     updateJoypadConfig();
@@ -674,7 +674,7 @@ static void resetSpriteData(void) {
 }
 
 // TODO: Loops, Byte copying
-static void func_a18a(void) {
+static void func_c2a18a(void) {
     // Push data Bank register
     // Push Processor status register
     // Shorten Accumulator to 8-bit
@@ -739,7 +739,7 @@ static void func_a18a(void) {
 }
 
 // TODO: Loop
-static void func_a1cf(void) {
+static void func_c2a1cf(void) {
     // PusH data Bank register
     // PusH Processor status register
     // Lengthen Accumulator (A) to 16-bit
@@ -765,11 +765,11 @@ static void func_a1cf(void) {
 }
 
 // Unstarted
-static void func_a1f0(void) {}
+static void func_c2a1f0(void) {}
 
 // Unstarted
 // This function seems to upload text.
-static void func_a23b(void) {
+static void func_c2a23b(void) {
     // Store A to ($e0 + y)
     //  - A and Y are inputs
     // CLear Carry flag
@@ -782,7 +782,7 @@ static void func_a23b(void) {
 }
 
 // Unstarted
-static void func_a247(void) {
+static void func_c2a247(void) {
     // PusH Processor status register
     // Lengthen A
     // Load #$d000 (53248) to X
@@ -794,7 +794,7 @@ static void func_a247(void) {
     // Load $8e to Y
     // Load #$0000 to A (Weapon Properties)
     // Jump Subroute to _c2a23b
-    //  - calls func_a23b(...)
+    //  - calls func_c2a23b(...)
     // Load #$01c0 (448) to X
     // Store X to $e2
     // Load #$0600 (1536) to A (Armor Properties)
@@ -969,304 +969,304 @@ static void menuState10Right(void) {}
 // Name change
 static void menuState0D(void) {}
 
-static void func_a4f3(void) {}
+static void func_c2a4f3(void) {}
 
-static void func_a519(void) {}
+static void func_c2a519(void) {}
 
-static void func_a54a(void) {}
+static void func_c2a54a(void) {}
 
-static void func_a55f(void) {}
+static void func_c2a55f(void) {}
 
-static void func_a5b5(void) {}
+static void func_c2a5b5(void) {}
 
-static void func_a5e6(void) {}
+static void func_c2a5e6(void) {}
 
-static void func_a607(void) {}
+static void func_c2a607(void) {}
 
-static void func_a618(void) {}
+static void func_c2a618(void) {}
 
-static void func_a67a(void) {}
+static void func_c2a67a(void) {}
 
-static void func_a693(void) {}
+static void func_c2a693(void) {}
 
-static void func_a6b9(void) {}
+static void func_c2a6b9(void) {}
 
-static void func_a6de(void) {}
+static void func_c2a6de(void) {}
 
-static void func_a6fc(void) {}
+static void func_c2a6fc(void) {}
 
-static void func_a780(void) {}
+static void func_c2a780(void) {}
 
-static void func_a79c(void) {}
+static void func_c2a79c(void) {}
 
-static void func_a7fc(void) {}
+static void func_c2a7fc(void) {}
 
-static void func_a81d(void) {}
+static void func_c2a81d(void) {}
 
-static void func_a826(void) {}
+static void func_c2a826(void) {}
 
-static void func_a848(void) {}
+static void func_c2a848(void) {}
 
-static void func_a85a(void) {}
+static void func_c2a85a(void) {}
 
-static void func_a878(void) {}
+static void func_c2a878(void) {}
 
-static void func_a892(void) {}
+static void func_c2a892(void) {}
 
-static void func_a8cb(void) {}
+static void func_c2a8cb(void) {}
 
-static void func_a8f0(void) {}
+static void func_c2a8f0(void) {}
 
-static void func_a8fa(void) {}
+static void func_c2a8fa(void) {}
 
-static void func_a91c(void) {}
+static void func_c2a91c(void) {}
 
-static void func_a925(void) {}
+static void func_c2a925(void) {}
 
-static void func_a935(void) {}
+static void func_c2a935(void) {}
 
-static void func_a948(void) {}
+static void func_c2a948(void) {}
 
-static void func_a958(void) {}
+static void func_c2a958(void) {}
 
-static void func_a965(void) {}
+static void func_c2a965(void) {}
 
-static void func_a96c(void) {}
+static void func_c2a96c(void) {}
 
-static void func_a96f(void) {}
+static void func_c2a96f(void) {}
 
-static void func_a9d9(void) {}
+static void func_c2a9d9(void) {}
 
-static void func_a9fd(void) {}
+static void func_c2a9fd(void) {}
 
-static void func_aa12(void) {}
+static void func_c2aa12(void) {}
 
-static void func_aa35(void) {}
+static void func_c2aa35(void) {}
 
-static void func_aa4e(void) {}
+static void func_c2aa4e(void) {}
 
-static void func_aa6e(void) {}
+static void func_c2aa6e(void) {}
 
-static void func_aa89(void) {}
+static void func_c2aa89(void) {}
 
-static void func_aabb(void) {}
+static void func_c2aabb(void) {}
 
-static void func_aad1(void) {}
+static void func_c2aad1(void) {}
 
-static void func_aae9(void) {}
+static void func_c2aae9(void) {}
 
-static void func_ab19(void) {}
+static void func_c2ab19(void) {}
 
-static void func_ab20(void) {}
+static void func_c2ab20(void) {}
 
-static void func_ab36(void) {}
+static void func_c2ab36(void) {}
 
-static void func_ab4c(void) {}
+static void func_c2ab4c(void) {}
 
-static void func_ab91(void) {}
+static void func_c2ab91(void) {}
 
-static void func_aba0(void) {}
+static void func_c2aba0(void) {}
 
-static void func_abb2(void) {}
+static void func_c2abb2(void) {}
 
-static void func_abc1(void) {}
+static void func_c2abc1(void) {}
 
-static void func_abd1(void) {}
+static void func_c2abd1(void) {}
 
-static void func_abdb(void) {}
+static void func_c2abdb(void) {}
 
-static void func_abdf(void) {}
+static void func_c2abdf(void) {}
 
-static void func_abf2(void) {}
+static void func_c2abf2(void) {}
 
-static void func_ac01(void) {}
+static void func_c2ac01(void) {}
 
-static void func_ac0e(void) {}
+static void func_c2ac0e(void) {}
 
-static void func_ac1e(void) {}
+static void func_c2ac1e(void) {}
 
-static void func_ac5e(void) {}
+static void func_c2ac5e(void) {}
 
-static void func_ac90(void) {}
+static void func_c2ac90(void) {}
 
-static void func_acc3(void) {}
+static void func_c2acc3(void) {}
 
-static void func_acd6(void) {}
+static void func_c2acd6(void) {}
 
-static void func_acff(void) {}
+static void func_c2acff(void) {}
 
-static void func_ad3e(void) {}
+static void func_c2ad3e(void) {}
 
-static void func_ad5b(void) {}
+static void func_c2ad5b(void) {}
 
-static void func_adb0(void) {}
+static void func_c2adb0(void) {}
 
-static void func_adcc(void) {}
+static void func_c2adcc(void) {}
 
-static void func_addf(void) {}
+static void func_c2addf(void) {}
 
-static void func_ae11(void) {}
+static void func_c2ae11(void) {}
 
-static void func_ae31(void) {}
+static void func_c2ae31(void) {}
 
-static void func_ae47(void) {}
+static void func_c2ae47(void) {}
 
-static void func_ae4b(void) {}
+static void func_c2ae4b(void) {}
 
-static void func_ae5c(void) {}
+static void func_c2ae5c(void) {}
 
-static void func_ae6b(void) {}
+static void func_c2ae6b(void) {}
 
-static void func_ae6f(void) {}
+static void func_c2ae6f(void) {}
 
-static void func_af1b(void) {}
+static void func_c2af1b(void) {}
 
-static void func_af87(void) {}
+static void func_c2af87(void) {}
 
-static void func_af91(void) {}
+static void func_c2af91(void) {}
 
-static void func_b04f(void) {}
+static void func_c2b04f(void) {}
 
-static void func_b079(void) {}
+static void func_c2b079(void) {}
 
-static void func_b0d6(void) {}
+static void func_c2b0d6(void) {}
 
-static void func_b106(void) {}
+static void func_c2b106(void) {}
 
-static void func_b154(void) {}
+static void func_c2b154(void) {}
 
-static void func_b16e(void) {}
+static void func_c2b16e(void) {}
 
-static void func_b19a(void) {}
+static void func_c2b19a(void) {}
 
-static void func_b1ca(void) {}
+static void func_c2b1ca(void) {}
 
-static void func_b1ec(void) {}
+static void func_c2b1ec(void) {}
 
-static void func_b257(void) {}
+static void func_c2b257(void) {}
 
-static void func_b25b(void) {}
+static void func_c2b25b(void) {}
 
-static void func_b25e(void) {}
+static void func_c2b25e(void) {}
 
 // Unstarted
-static void func_b2bd(void) {}
+static void func_c2b2bd(void) {}
 
-static void func_b2fb(void) {}
+static void func_c2b2fb(void) {}
 
 // Address: _b302
 static void rowAButtonPressed(void) {}
 
-static void func_b3db(void) {}
+static void func_c2b3db(void) {}
 
-static void func_b3e9(void) {}
+static void func_c2b3e9(void) {}
 
 // Address: _b40c
 static void rowBButtonPressed(void) {}
 
-static void func_b429(void) {}
+static void func_c2b429(void) {}
 
-static void func_b480(void) {}
+static void func_c2b480(void) {}
 
-static void func_b48f(void) {}
+static void func_c2b48f(void) {}
 
-static void func_b4a8(void) {}
+static void func_c2b4a8(void) {}
 
-static void func_b4d7(void) {}
+static void func_c2b4d7(void) {}
 
-static void func_b511(void) {}
+static void func_c2b511(void) {}
 
-static void func_b521(void) {}
+static void func_c2b521(void) {}
 
-static void func_b5ea(void) {}
+static void func_c2b5ea(void) {}
 
-static void func_b676(void) {}
+static void func_c2b676(void) {}
 
-static void func_b6b9(void) {}
+static void func_c2b6b9(void) {}
 
-static void func_b74b(void) {}
+static void func_c2b74b(void) {}
 
-static void func_b752(void) {}
+static void func_c2b752(void) {}
 
-static void func_b796(void) {}
+static void func_c2b796(void) {}
 
-static void func_b7a0(void) {}
+static void func_c2b7a0(void) {}
 
-static void func_b7ad(void) {}
+static void func_c2b7ad(void) {}
 
-static void func_b7fc(void) {}
+static void func_c2b7fc(void) {}
 
-static void func_b811(void) {}
+static void func_c2b811(void) {}
 
-static void func_b845(void) {}
+static void func_c2b845(void) {}
 
-static void func_b84d(void) {}
+static void func_c2b84d(void) {}
 
-static void func_b879(void) {}
+static void func_c2b879(void) {}
 
-static void func_b87c(void) {}
+static void func_c2b87c(void) {}
 
-static void func_b8ae(void) {}
+static void func_c2b8ae(void) {}
 
-static void func_b91d(void) {}
+static void func_c2b91d(void) {}
 
-static void func_b922(void) {}
+static void func_c2b922(void) {}
 
-static void func_b948(void) {}
+static void func_c2b948(void) {}
 
-static void func_b955(void) {}
+static void func_c2b955(void) {}
 
-static void func_b993(void) {}
+static void func_c2b993(void) {}
 
-static void func_b998(void) {}
+static void func_c2b998(void) {}
 
-static void func_ba05(void) {}
+static void func_c2ba05(void) {}
 
-static void func_ba0a(void) {}
+static void func_c2ba0a(void) {}
 
-static void func_ba63(void) {}
+static void func_c2ba63(void) {}
 
-static void func_ba7d(void) {}
+static void func_c2ba7d(void) {}
 
-static void func_bbfa(void) {}
+static void func_c2bbfa(void) {}
 
-static void func_bc27(void) {}
+static void func_c2bc27(void) {}
 
-static void func_bc2a(void) {}
+static void func_c2bc2a(void) {}
 
-static void func_bc2d(void) {}
+static void func_c2bc2d(void) {}
 
-static void func_bc48(void) {}
+static void func_c2bc48(void) {}
 
-static void func_bc5e(void) {}
+static void func_c2bc5e(void) {}
 
-static void func_bcd9(void) {}
+static void func_c2bcd9(void) {}
 
-static void func_bce0(void) {}
+static void func_c2bce0(void) {}
 
-static void func_bd3d(void) {}
+static void func_c2bd3d(void) {}
 
-static void func_bd47(void) {}
+static void func_c2bd47(void) {}
 
-static void func_bda5(void) {}
+static void func_c2bda5(void) {}
 
-static void func_bdb5(void) {}
+static void func_c2bdb5(void) {}
 
-static void func_bdc6(void) {}
+static void func_c2bdc6(void) {}
 
-static void func_bdf3(void) {}
+static void func_c2bdf3(void) {}
 
-static void func_bdf6(void) {}
+static void func_c2bdf6(void) {}
 
-static void func_be2e(void) {}
+static void func_c2be2e(void) {}
 
-static void func_be64(void) {}
+static void func_c2be64(void) {}
 
-static void func_bec8(void) {}
+static void func_c2bec8(void) {}
 
-static void func_becd(void) {}
+static void func_c2becd(void) {}
 
-static void func_bef4(void) {}
+static void func_c2bef4(void) {}
 
 // Address: _bef7
 // Unstarted
@@ -1276,7 +1276,7 @@ static void saveToSlot(void) {
 
     // INCrement value in $09c2
     // Jump to SubRoutine _c2bf7d
-    //  - func_bf7d(..)
+    //  - func_c2bf7d(..)
     //  - get pointer to save slot in sram
     // PusH X
     // Transfer A to Y
@@ -1293,7 +1293,7 @@ static void saveToSlot(void) {
     // Store Y to $fc
 
     // Jump to SubRoutine _c2f588
-    //  - func_f588(..)
+    //  - func_c2f588(..)
     // PulL X
     // STore A to ($307ff0 + X)
 
@@ -1305,7 +1305,7 @@ static void saveToSlot(void) {
     // STore A to $307fe0
 
     // Jump to SubRoutine _c2e0c8
-    //  - func_e0c8(..)
+    //  - func_c2e0c8(..)
 
     // PulL Process status register
     // Return To Subroutine
@@ -1317,7 +1317,7 @@ static void loadFromSlot(void) {
     // Load $55 to A
     // CoMPare A with #$01
     // Jump to _c2bf89 if Not Equal
-    //  - func_bf89(..)
+    //  - func_c2bf89(..)
 
     // Load $2d13 to A
     // Branch to [@bf47] if Not Equal
@@ -1326,7 +1326,7 @@ static void loadFromSlot(void) {
     //  - saveToSlot(..)
 
     // Jump to SubRoutine to _c2b2bd
-    //  - func_b2bd(..)
+    //  - func_c2b2bd(..)
 
     // Load #$0b to A
     // Jump to SubRoutine to _c2a06b
@@ -1334,7 +1334,7 @@ static void loadFromSlot(void) {
     //  - Input: A
 
     // [@bf47] Jump to SubRoutine _c2a1f0
-    //  - func_a1f0(..)
+    //  - func_c2a1f0(..)
     //  - init config settings
 
     // Load $094a to A
@@ -1343,7 +1343,7 @@ static void loadFromSlot(void) {
     // Lengthen A
 
     // Jump to SubRoutine _c2bf7d
-    //  - func_bf7d(..)
+    //  - func_c2bf7d(..)
     //  - get pointer to save slot in sram
     // Transfer A to X
     // LoaD #$0500 to Y
@@ -1378,7 +1378,7 @@ static void loadFromSlot(void) {
 
 // Unstarted
 // Get Pointer to Save Slot in SRAM
-static void func_bf7d(void) {
+static void func_c2bf7d(void) {
     // Load $6f to A
     // And A with #$0003 (save slot)
     // A Shift Left
@@ -1389,10 +1389,10 @@ static void func_bf7d(void) {
 }
 
 // Unstarted
-static void func_bf89(void) {}
+static void func_c2bf89(void) {}
 
 // Unstarted
-static void func_c162(void) {
+static void func_c2c162(void) {
     // Load $5b to A
     // CLear Carry flag
     // ADd #$04 to A (with Carry)
@@ -1401,7 +1401,7 @@ static void func_c162(void) {
 
 // Unstarted
 // TODO: MVN
-static void func_c16a(void) {
+static void func_c2c16a(void) {
     // PusH data Bank
     // LoaD $43 (menu state) to A
     // A aND with #$00ff
@@ -1433,13 +1433,13 @@ static void func_c16a(void) {
 
     // PulL data Bank
     // Jump to SubRoutine _c2a18a
-    //  - func_a18a(..)
+    //  - func_c2a18a(..)
 
     // Return To Subroutine
 }
 
 // Unstarted
-static void func_d230(void) {
+static void func_c2d230(void) {
     // [LBL d230] PusH data Bank register
     // PusH Process status register
 
@@ -1470,7 +1470,7 @@ static void func_d230(void) {
 }
 
 // Unstarted
-static void func_d25b(void) {
+static void func_c2d25b(void) {
     // Load $8e to X
     
     // [LBL d25d] PusH X onto stack
@@ -1485,7 +1485,7 @@ static void func_d25b(void) {
     // Load ($c0eccb + x) to A
     // Pull value from stack to X
     // Jump to SubRoutine _c2d304
-    //  - call func_d304(...)
+    //  - call func_c2d304(...)
     // Pull to A
     // CLear Carry flag
     // ADd #$000a to A
@@ -1494,7 +1494,7 @@ static void func_d25b(void) {
     // Branch to [LBL d25d] if Not Equal
     
     // Jump to SubRoutine _c2d34c
-    //  - call func_d34c(...)
+    //  - call func_c2d34c(...)
     // Load #$b9a0 to X
     // Load #$9080 to Y
     // Load #$003f to A
@@ -1503,7 +1503,7 @@ static void func_d25b(void) {
 }
 
 // Q: What does DEC addr mean?
-static void func_d304(void) {
+static void func_c2d304(void) {
     // PusH data Bank register
     // PusH Processor status register
     // Store $e8 to A
@@ -1543,7 +1543,7 @@ static void func_d304(void) {
 }
 
 // Q: What does DEC addr mean?
-static void func_d34c(void) {
+static void func_c2d34c(void) {
     // Load $8e to X
     // [@d34e] PusH X
     // Transfer X to A
@@ -1572,13 +1572,13 @@ static void func_d34c(void) {
 }
 
 // Unstarted
-static void func_d37b(void) {
+static void func_c2d37b(void) {
     // PusH data Bank
     // PusH Processor status
     // Lengthen A
 
     // Load #$efe2 to X
-    // Jump to SubRoute func_d9fb(...)
+    // Jump to SubRoute func_c2d9fb(...)
 
     // PulL Processor status
     // PulL data Bank
@@ -1586,13 +1586,13 @@ static void func_d37b(void) {
 }
 
 // TODO: Move sets to data
-static void func_d3db(void) {
+static void func_c2d3db(void) {
     // PusH data Bank
     // PusH Processor status
     // Lengthen A
 
     // STore Zero to $7e
-    // [@d3e1] Jump to SubRoutine func_d45f(...)
+    // [@d3e1] Jump to SubRoutine func_c2d45f(...)
     // LoaD $7e to A
     // Increment A
     // Store A to $7e
@@ -1614,7 +1614,7 @@ static void func_d3db(void) {
     // LoaD #$001f to A
     // MVN #$c3, #$7e
 
-    // Jump to SubRoutine func_d42e(..)
+    // Jump to SubRoutine func_c2d42e(..)
     // LoaD #$eff4 to X
     // LoaD #$4300 to Y
     // LoaD #$0006 to A
@@ -1651,13 +1651,13 @@ static void updateWindowColor(void) {
 }
 
 // Unstarted
-static void func_d45f(void) {
+static void func_c2d45f(void) {
     // PusH data Bank
     // PusH Processor status
     // Shorten A
 
     // Jump to SubRoutine _c2d4c5
-    //  - func_d4c5(..)
+    //  - func_c2d4c5(..)
     // LoaD $80 to X
     // Load ($0500 + X) to A
     // And A with #$07
@@ -1673,14 +1673,14 @@ static void func_d45f(void) {
 
     // [@d47e] eXchange higher and lower Bytes in A
     // Jump to SubRoutine _c2d492
-    //  - func_d492(..)
+    //  - func_c2d492(..)
     // BRAnch to [@d48f]
 
     // [@d484] LoaD #$f807 to X
     //  - grayscale battle character palette ???
     // Lengthen A
     // Jump to SubRoutine _c2d4b4
-    //  - func_d4b4(..)
+    //  - func_c2d4b4(..)
     // MVN #$c0, #$7e
 
     // PulL Processor status
@@ -1708,7 +1708,7 @@ static void updateMonoStereoSetting(void) {
 }
 
 // TODO: Move bytes
-static void func_d9fb(void) {
+static void func_c2d9fb(void) {
     // Load ($c00000 + X) to A
     //  - X is an input
     // Store A to f:$002116
@@ -1726,10 +1726,10 @@ static void func_d9fb(void) {
     // ReTurn to Subroutine
 }
 
-static void func_e0c8(void) {}
+static void func_c2e0c8(void) {}
 
 // Unstarted
-static void func_f588(void) {}
+static void func_c2f588(void) {}
 
 // Address: _fe5b
 // Unstarted
@@ -1785,7 +1785,7 @@ static void updateJoypadInput(void) {
     // [@feaa] Load ($14 + X) to A
     // STore A to $0e
     // Jump to SubRoutine _c2fed0
-    //  - func_fedo(..)
+    //  - func_c2fedo(..)
     // LoaD $12 to A
     // A Shift Left
     // Transfer A to X
@@ -1808,7 +1808,7 @@ static void updateJoypadInput(void) {
     // ReTurn to Subroutine
 }
 
-static void func_fedo(void) {}
+static void func_c2fedo(void) {}
 
 // Address: _ff56
 // Unstarted
@@ -1872,7 +1872,7 @@ void updateJoypadConfig(void) {
     // Transfer Y to X
 
     // [@ff99] Load ($0975 + y) to A (joypad config)
-    // Jump SubRoutine to func_ffc2(...)
+    // Jump SubRoutine to func_c2ffc2(...)
     // Store A to ($26 + x)
     // INcrement Y
     // INcrement X by 2
@@ -1899,7 +1899,7 @@ void updateJoypadConfig(void) {
 }
 
 // Unstarted
-static void func_ffc2(void) {
+static void func_c2ffc2(void) {
     // PusH X
     // And A with #$00fc
     // eXchange higher and lower Bytes of A
