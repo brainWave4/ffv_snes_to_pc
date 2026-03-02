@@ -446,6 +446,37 @@ static void func_c2f4ef(void);
 static void func_c2f561(void);
 static void func_c2f588(void);
 static void updateMonoStereoSetting(void);
+static void func_c2f5c0(void);
+static void func_c2f63d(void);
+static void func_c2f6af(void);
+static void func_c2f6d6(void);
+static void func_c2f709(void);
+static void updateConfigSettings(void);
+static void func_c2f7a6(void);
+static void func_c2f7fc(void);
+static void func_c2f810(void);
+static void func_c2f869(void);
+static void func_c2f8b1(void);
+static void func_c2f90b(void);
+static void func_c2f932(void);
+static void func_c2f949(void);
+static void func_c2f984(void);
+static void func_c2f9d6(void);
+static void func_c2fa75(void);
+static void func_c2fa92(void);
+static void func_c2faad(void);
+static void copySpriteDataToVRAM(void);
+static void func_c2faf0(void);
+static void menuNMI(void);
+static void menuIRQ(void);
+static void func_c2fc2f(void);
+static void func_c2fcb1(void);
+static void func_c2fd09(void);
+static void func_c2fd2e(void);
+static void func_c2fd75(void);
+static void func_c2fdca(void);
+static void func_c2fe05(void);
+static void func_c2fe41(void);
 static void updateJoypadInput(void);
 static void func_c2fedo(void);
 static void setControllerSettingsBattle(void);
@@ -2508,6 +2539,72 @@ static void updateMonoStereoSetting(void) {
     // PulL Processor status
     // ReTurn to Subroutine
 }
+
+static void func_c2f5c0(void) {}
+
+static void func_c2f63d(void) {}
+
+static void func_c2f6af(void) {}
+
+static void func_c2f6d6(void) {}
+
+static void func_c2f709(void) {}
+
+// Address: f71c
+static void updateConfigSettings(void) {}
+
+static void func_c2f7a6(void) {}
+
+static void func_c2f7fc(void) {}
+
+static void func_c2f810(void) {}
+
+static void func_c2f869(void) {}
+
+static void func_c2f8b1(void) {}
+
+static void func_c2f90b(void) {}
+
+static void func_c2f932(void) {}
+
+static void func_c2f949(void) {}
+
+static void func_c2f984(void) {}
+
+static void func_c2f9d6(void) {}
+
+static void func_c2fa75(void) {}
+
+static void func_c2fa92(void) {}
+
+static void func_c2faad(void) {}
+
+// Address: _fad4
+static void copySpriteDataToVRAM(void) {}
+
+static void func_c2faf0(void) {}
+
+// Address: _fb0c
+static void menuNMI(void) {}
+
+// Address: _fc2e
+static void menuIRQ(void) {}
+
+static void func_c2fc2f(void) {}
+
+static void func_c2fcb1(void) {}
+
+static void func_c2fd09(void) {}
+
+static void func_c2fd2e(void) {}
+
+static void func_c2fd75(void) {}
+
+static void func_c2fdca(void) {}
+
+static void func_c2fe05(void) {}
+
+static void func_c2fe41(void) {}
 
 // Address: _fe5b
 // Unstarted
