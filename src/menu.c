@@ -209,6 +209,70 @@ static void func_c2c0f7(void);
 static void func_c2c146(void);
 static void func_c2c162(void);
 static void func_c2c16a(void);
+static void func_c2c1a6(void);
+static void loadMenuTilemap(void);
+static void func_c2c1f7(void);
+static void func_c2c1fd(void);
+static void func_c2c242(void);
+static void menuTilemapCmd00(void);
+static void menuTilemapCmd01(void);
+static void menuTilemapCmd05(void);
+static void func_c2c272(void);
+static void func_c2c27b(void);
+static void func_c2c28c(void);
+static void menuTilemapCmd02(void);
+static void func_c2c2cc(void);
+static void menuTilemapCmd03(void);
+static void menuTilemapCmd_drawMenuText(void);
+static void menuState08(void);
+static void menuState09(void);
+static void func_c2c3d2(void);
+static void func_c2c3fd(void);
+static void func_c2c419(void);
+static void menuState0c(void);
+static void func_c2c4da(void);
+static void func_c2c51d(void);
+static void func_c2c544(void);
+static void func_c2c551(void);
+static void menuState0b(void);
+static void func_c2c59c(void);
+static void menuState0a(void);
+static void menuState07(void);
+static void func_c2c6ba(void);
+static void func_c2c6e9(void);
+static void menuState06(void);
+static void func_c2c73d(void);
+static void func_c2c780(void);
+static void func_c2c7bd(void);
+static void menuState05(void);
+static void menuState04(void);
+static void func_c2c8de(void);
+static void func_c2c941(void);
+static void func_c2c954(void);
+static void menuState03(void);
+static void func_c2caa5(void);
+static void func_c2cac8(void);
+static void func_c2cb8c(void);
+static void func_c2cb95(void);
+static void func_c2cbe1(void);
+static void func_c2cbf1(void);
+static void func_c2cbf8(void);
+static void func_c2cc9e(void);
+static void menuState_job(void);
+static void func_c2cd08(void);
+static void updateSelectedJobPalette(void);
+static void updateCurrentCharData(void);
+static void updateJobSprite(void);
+static void updateCharSprite(void);
+static void updateJobStatsAbilities(void);
+static void getAvailableJobs(void);
+static void menuState_ability(void);
+static void func_c2cfa4(void);
+static void func_c2cfbd(void);
+static void menuState_main(void);
+static void func_c2d04c(void);
+static void func_c2d0b2(void);
+static void func_c2d210(void);
 static void func_c2d230(void);
 static void func_c2d25b(void);
 static void func_c2d304(void);
@@ -1488,6 +1552,165 @@ static void func_c2c16a(void) {
 
     // Return To Subroutine
 }
+
+static void func_c2c1a6(void) {}
+
+static void loadMenuTilemap(void) {}
+
+static void func_c2c1f7(void) {}
+
+static void func_c2c1fd(void) {}
+
+static void func_c2c242(void) {}
+
+// Address: _c25f
+// Clear tilemap buffer
+static void menuTilemapCmd00(void) {}
+
+// Address: _c261
+// Fill tilemap bufer
+static void menuTilemapCmd01(void) {}
+
+// Address: _c26d
+// Set Tilemap location
+static void menuTilemapCmd05(void) {}
+
+static void func_c2c272(void) {}
+
+static void func_c2c27b(void) {}
+
+static void func_c2c28c(void) {}
+
+// Address: _c2a4
+// Fill Bg
+static void menuTilemapCmd02(void) {}
+
+static void func_c2c2cc(void) {}
+
+// Address: _c2e8
+static void menuTilemapCmd03(void) {}
+
+// Address: _c32d
+// Draw Menu Text
+static void menuTilemapCmd_drawMenuText(void) {}
+
+// Address: _c34a
+static void menuState08(void) {}
+
+// Address: _c36f
+static void menuState09(void) {}
+
+static void func_c2c3d2(void) {}
+
+static void func_c2c3fd(void) {}
+
+static void func_c2c419(void) {}
+
+// Address: _c442
+static void menuState0c(void) {}
+
+static void func_c2c4da(void) {}
+
+static void func_c2c51d(void) {}
+
+static void func_c2c544(void) {}
+
+static void func_c2c551(void) {}
+
+// Address: _c56b
+static void menuState0b(void) {}
+
+static void func_c2c59c(void) {}
+
+// Address: _c5b9
+static void menuState0a(void) {}
+
+// Address: _c5c8
+static void menuState07(void) {}
+
+static void func_c2c6ba(void) {}
+
+static void func_c2c6e9(void) {}
+
+// Address: _c6f7
+// Shop
+static void menuState06(void) {}
+
+static void func_c2c73d(void) {}
+
+static void func_c2c780(void) {}
+
+static void func_c2c7bd(void) {}
+
+// Address: _c803
+static void menuState05(void) {}
+
+// Address: _c8a0
+static void menuState04(void) {}
+
+static void func_c2c8de(void) {}
+
+static void func_c2c941(void) {}
+
+static void func_c2c954(void) {}
+
+// Address: _ca37
+static void menuState03(void) {}
+
+static void func_c2caa5(void) {}
+
+static void func_c2cac8(void) {}
+
+static void func_c2cb8c(void) {}
+
+static void func_c2cb95(void) {}
+
+static void func_c2cbe1(void) {}
+
+static void func_c2cbf1(void) {}
+
+static void func_c2cbf8(void) {}
+
+static void func_c2cc9e(void) {}
+
+// Address: _cccb
+static void menuState_job(void) {}
+
+static void func_c2cd08(void) {}
+
+// Address: _cd57
+static void updateSelectedJobPalette(void) {}
+
+// Address: _cdc6
+static void updateCurrentCharData(void) {}
+
+// Address: _cde3
+static void updateJobSprite(void) {}
+
+// Address: _ce5d
+static void updateCharSprite(void) {}
+
+// Address: _ce9e
+static void updateJobStatsAbilities(void) {}
+
+// Address: _cecc
+static void getAvailableJobs(void) {}
+
+// Address: _ceec
+static void menuState_ability(void) {}
+
+static void func_c2cfa4(void) {}
+
+static void func_c2cfbd(void) {}
+
+// Address: _cfdc
+static void menuState_main(void) {}
+
+static void func_c2d04c(void) {}
+
+static void func_c2d0b2(void) {}
+
+static void func_c2d210(void) {}
 
 // Unstarted
 static void func_c2d230(void) {
