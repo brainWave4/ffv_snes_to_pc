@@ -355,6 +355,95 @@ static void func_c2e0b0(void);
 static void func_c2e0b8(void);
 static void func_c2e0c0(void);
 static void func_c2e0c8(void);
+static void playSoundEffect(void);
+static void func_c2e0f7(void);
+static void func_c2e178(void);
+static void func_c2e18f(void);
+static void func_c2e1a6(void);
+static void func_c2e211(void);
+static void func_c2e286(void);
+static void func_c2e2ce(void);
+static void func_c2e328(void);
+static void func_c2e367(void);
+static void func_c2e3a6(void);
+static void func_c2e3e3(void);
+static void func_c2e3f3(void);
+static void drawSpellName(void);
+static void drawItemName(void);
+static void func_c2e464(void);
+static void getCharJobData(void);
+static void getPtrCharJobData(void);
+static void func_c2e4c7(void);
+static void func_c2e4df(void);
+static void func_c2e4e1(void);
+static void func_c2e4ed(void);
+static void func_c2e552(void);
+static void func_c2e57f(void);
+static void drawText(void);
+static void getDakuten(void);
+static void func_c2e610(void);
+static void func_c2e653(void);
+static void func_c2e658(void);
+static void func_c2e65b(void);
+static void func_c2e66f(void);
+static void func_c2e67c(void);
+static void updateCursorSprite(void);
+static void func_c2e6d6(void);
+static void updateSpellLevels(void);
+static void setSpellLevels(void);
+static void updateCharProps(void);
+static void func_c2e7b3(void);
+static void func_c2e7cc(void);
+static void func_c2e879(void);
+static void getJobInnateAbilities(void);
+static void func_c2e933(void);
+static void func_c2e973(void);
+static void func_c2e9ce(void);
+static void func_c2eaac(void);
+static void func_c2eaee(void);
+static void func_c2eb82(void);
+static void func_c2ebbd(void);
+static void applyStatBonus(void);
+static void func_c2ec76(void);
+static void func_c2ecd9(void);
+static void func_c2ecf3(void);
+static void func_c2ed5e(void);
+static void func_c2ed87(void);
+static void func_c2edb5(void);
+static void func_c2edd3(void);
+static void func_c2ee03(void);
+static void func_c2ee1b(void);
+static void func_c2ee63(void);
+static void func_c2ee94(void);
+static void func_c2eec8(void);
+static void func_c2eee7(void);
+static void func_c2eefd(void);
+static void func_c2ef16(void);
+static void func_c2ef89(void);
+static void func_c2ef9f(void);
+static void func_c2efc5(void);
+static void func_c2efe3(void);
+static void giveSpell(void);
+static void func_c2f01d(void);
+static void func_c2f03e(void);
+static void func_c2f070(void);
+static void func_c2f0e6(void);
+static void func_c2f10e(void);
+static void drawShopTypeName(void);
+static void loadShopProps(void);
+static void getItemPrice(void);
+static void func_c2f2cd(void);
+static void func_c2f2fb(void);
+static void func_c2f32a(void);
+static void func_c2f39c(void);
+static void func_c2f3d1(void);
+static void func_c2f3dd(void);
+static void func_c2f3f6(void);
+static void func_c2f450(void);
+static void func_c2f463(void);
+static void func_c2f4d4(void);
+static void func_c2f4ef(void);
+static void func_c2f561(void);
 static void func_c2f588(void);
 static void updateMonoStereoSetting(void);
 static void updateJoypadInput(void);
@@ -2202,6 +2291,201 @@ static void func_c2e0b8(void) {}
 static void func_c2e0c0(void) {}
 
 static void func_c2e0c8(void) {}
+
+// Address: _e0d9
+static void playSoundEffect(void) {}
+
+static void func_c2e0f7(void) {}
+
+static void func_c2e178(void) {}
+
+static void func_c2e18f(void) {}
+
+static void func_c2e1a6(void) {}
+
+static void func_c2e211(void) {}
+
+static void func_c2e286(void) {}
+
+static void func_c2e2ce(void) {}
+
+static void func_c2e328(void) {}
+
+static void func_c2e367(void) {}
+
+static void func_c2e3a6(void) {}
+
+static void func_c2e3e3(void) {}
+
+static void func_c2e3f3(void) {}
+
+// Address: _e42c
+static void drawSpellName(void) {}
+
+// Address: _e44e
+static void drawItemName(void) {}
+
+static void func_c2e464(void) {}
+
+// Address: _e47d
+static void getCharJobData(void) {}
+
+// Address: _e4b2
+static void getPtrCharJobData(void) {}
+
+static void func_c2e4c7(void) {}
+
+static void func_c2e4df(void) {}
+
+static void func_c2e4e1(void) {}
+
+static void func_c2e4ed(void) {}
+
+static void func_c2e552(void) {}
+
+static void func_c2e57f(void) {}
+
+// Address: _e59d
+static void drawText(void) {}
+
+// Address: _e5ed
+static void getDakuten(void) {}
+
+static void func_c2e610(void) {}
+
+static void func_c2e653(void) {}
+
+static void func_c2e658(void) {}
+
+static void func_c2e65b(void) {}
+
+static void func_c2e66f(void) {}
+
+static void func_c2e67c(void) {}
+
+// Address: _e6ab
+static void updateCursorSprite(void) {}
+
+static void func_c2e6d6(void) {}
+
+// Address: _e6e0
+static void updateSpellLevels(void) {}
+
+// Address: _e765
+static void setSpellLevels(void) {}
+
+// Address: _e76c
+static void updateCharProps(void) {}
+
+static void func_c2e7b3(void) {}
+
+static void func_c2e7cc(void) {}
+
+static void func_c2e879(void) {}
+
+// Address: _e916
+static void getJobInnateAbilities(void) {}
+
+static void func_c2e933(void) {}
+
+static void func_c2e973(void) {}
+
+static void func_c2e9ce(void) {}
+
+static void func_c2eaac(void) {}
+
+static void func_c2eaee(void) {}
+
+static void func_c2eb82(void) {}
+
+static void func_c2ebbd(void) {}
+
+// Address: _ec54
+static void applyStatBonus(void) {}
+
+static void func_c2ec76(void) {}
+
+static void func_c2ecd9(void) {}
+
+static void func_c2ecf3(void) {}
+
+static void func_c2ed5e(void) {}
+
+static void func_c2ed87(void) {}
+
+static void func_c2edb5(void) {}
+
+static void func_c2edd3(void) {}
+
+static void func_c2ee03(void) {}
+
+static void func_c2ee1b(void) {}
+
+static void func_c2ee63(void) {}
+
+static void func_c2ee94(void) {}
+
+static void func_c2eec8(void) {}
+
+static void func_c2eee7(void) {}
+
+static void func_c2eefd(void) {}
+
+static void func_c2ef16(void) {}
+
+static void func_c2ef89(void) {}
+
+static void func_c2ef9f(void) {}
+
+static void func_c2efc5(void) {}
+
+static void func_c2efe3(void) {}
+
+// Address: _f00b
+static void giveSpell(void) {}
+
+static void func_c2f01d(void) {}
+
+static void func_c2f03e(void) {}
+
+static void func_c2f070(void) {}
+
+static void func_c2f0e6(void) {}
+
+static void func_c2f10e(void) {}
+
+// Address: _f15b
+static void drawShopTypeName(void) {}
+
+// Address: _f18f
+static void loadShopProps(void) {}
+
+// Address: _f29f
+static void getItemPrice(void) {}
+
+static void func_c2f2cd(void) {}
+
+static void func_c2f2fb(void) {}
+
+static void func_c2f32a(void) {}
+
+static void func_c2f39c(void) {}
+
+static void func_c2f3d1(void) {}
+
+static void func_c2f3dd(void) {}
+
+static void func_c2f3f6(void) {}
+
+static void func_c2f450(void) {}
+
+static void func_c2f463(void) {}
+
+static void func_c2f4d4(void) {}
+
+static void func_c2f4ef(void) {}
+
+static void func_c2f561(void) {}
 
 // Unstarted
 static void func_c2f588(void) {}
