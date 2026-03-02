@@ -128,7 +128,64 @@ static void func_b1ec(void);
 static void func_b257(void);
 static void func_b25b(void);
 static void func_b25e(void);
-static void func_b2bd(void);
+static void func_b2bd(void);;
+static void func_b2fb(void);
+static void rowAButtonPressed(void);
+static void func_b3db(void);
+static void func_b3e9(void);
+static void rowBButtonPressed(void);
+static void func_b429(void);
+static void func_b480(void);
+static void func_b48f(void);
+static void func_b4a8(void);
+static void func_b4d7(void);
+static void func_b511(void);
+static void func_b521(void);
+static void func_b5ea(void);
+static void func_b676(void);
+static void func_b6b9(void);
+static void func_b74b(void);
+static void func_b752(void);
+static void func_b796(void);
+static void func_b7a0(void);
+static void func_b7ad(void);
+static void func_b7fc(void);
+static void func_b811(void);
+static void func_b845(void);
+static void func_b84d(void);
+static void func_b879(void);
+static void func_b87c(void);
+static void func_b8ae(void);
+static void func_b91d(void);
+static void func_b922(void);
+static void func_b948(void);
+static void func_b955(void);
+static void func_b993(void);
+static void func_b998(void);
+static void func_ba05(void);
+static void func_ba0a(void);
+static void func_ba63(void);
+static void func_ba7d(void);
+static void func_bbfa(void);
+static void func_bc27(void);
+static void func_bc2a(void);
+static void func_bc2d(void);
+static void func_bc48(void);
+static void func_bc5e(void);
+static void func_bcd9(void);
+static void func_bce0(void);
+static void func_bd3d(void);
+static void func_bd47(void);
+static void func_bda5(void);
+static void func_bdb5(void);
+static void func_bdc6(void);
+static void func_bdf3(void);
+static void func_bdf6(void);
+static void func_be2e(void);
+static void func_be64(void);
+static void func_bec8(void);
+static void func_becd(void);
+static void func_bef4(void);
 static void saveToSlot(void);
 static void loadFromSlot(void);
 static void func_bf7d(void);
@@ -1094,6 +1151,122 @@ static void func_b25e(void) {}
 
 // Unstarted
 static void func_b2bd(void) {}
+
+static void func_b2fb(void) {}
+
+// Address: _b302
+static void rowAButtonPressed(void) {}
+
+static void func_b3db(void) {}
+
+static void func_b3e9(void) {}
+
+// Address: _b40c
+static void rowBButtonPressed(void) {}
+
+static void func_b429(void) {}
+
+static void func_b480(void) {}
+
+static void func_b48f(void) {}
+
+static void func_b4a8(void) {}
+
+static void func_b4d7(void) {}
+
+static void func_b511(void) {}
+
+static void func_b521(void) {}
+
+static void func_b5ea(void) {}
+
+static void func_b676(void) {}
+
+static void func_b6b9(void) {}
+
+static void func_b74b(void) {}
+
+static void func_b752(void) {}
+
+static void func_b796(void) {}
+
+static void func_b7a0(void) {}
+
+static void func_b7ad(void) {}
+
+static void func_b7fc(void) {}
+
+static void func_b811(void) {}
+
+static void func_b845(void) {}
+
+static void func_b84d(void) {}
+
+static void func_b879(void) {}
+
+static void func_b87c(void) {}
+
+static void func_b8ae(void) {}
+
+static void func_b91d(void) {}
+
+static void func_b922(void) {}
+
+static void func_b948(void) {}
+
+static void func_b955(void) {}
+
+static void func_b993(void) {}
+
+static void func_b998(void) {}
+
+static void func_ba05(void) {}
+
+static void func_ba0a(void) {}
+
+static void func_ba63(void) {}
+
+static void func_ba7d(void) {}
+
+static void func_bbfa(void) {}
+
+static void func_bc27(void) {}
+
+static void func_bc2a(void) {}
+
+static void func_bc2d(void) {}
+
+static void func_bc48(void) {}
+
+static void func_bc5e(void) {}
+
+static void func_bcd9(void) {}
+
+static void func_bce0(void) {}
+
+static void func_bd3d(void) {}
+
+static void func_bd47(void) {}
+
+static void func_bda5(void) {}
+
+static void func_bdb5(void) {}
+
+static void func_bdc6(void) {}
+
+static void func_bdf3(void) {}
+
+static void func_bdf6(void) {}
+
+static void func_be2e(void) {}
+
+static void func_be64(void) {}
+
+static void func_bec8(void) {}
+
+static void func_becd(void) {}
+
+static void func_bef4(void) {}
 
 // Address: _bef7
 // Unstarted
