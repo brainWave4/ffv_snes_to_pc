@@ -28,6 +28,106 @@ static void func_a23b(void);
 static void func_a247(void);
 static void getNextInput(void);
 static void getPressedBtnIdx(void);
+static void menuState14(void);
+static void menuState0e(void);
+static void menuState0f(void);
+static void initTutorialScript(void);
+static void menuState15(void);
+static void menuState10Up(void);
+static void menuState10Down(void);
+static void menuState10Left(void);
+static void menuState10Right(void);
+static void menuState0D(void);
+static void func_a4f3(void);
+static void func_a519(void);
+static void func_a54a(void);
+static void func_a55f(void);
+static void func_a5b5(void);
+static void func_a5e6(void);
+static void func_a607(void);
+static void func_a618(void);
+static void func_a67a(void);
+static void func_a693(void);
+static void func_a6b9(void);
+static void func_a6de(void);
+static void func_a6fc(void);
+static void func_a780(void);
+static void func_a79c(void);
+static void func_a7fc(void);
+static void func_a81d(void);
+static void func_a826(void);
+static void func_a848(void);
+static void func_a85a(void);
+static void func_a878(void);
+static void func_a892(void);
+static void func_a8cb(void);
+static void func_a8f0(void);
+static void func_a8fa(void);
+static void func_a91c(void);
+static void func_a925(void);
+static void func_a935(void);
+static void func_a948(void);
+static void func_a958(void);
+static void func_a965(void);
+static void func_a96c(void);
+static void func_a96f(void);
+static void func_a9d9(void);
+static void func_a9fd(void);
+static void func_aa12(void);
+static void func_aa35(void);
+static void func_aa4e(void);
+static void func_aa6e(void);
+static void func_aa89(void);
+static void func_aabb(void);
+static void func_aad1(void);
+static void func_aae9(void);
+static void func_ab19(void);
+static void func_ab20(void);
+static void func_ab36(void);
+static void func_ab4c(void);
+static void func_ab91(void);
+static void func_aba0(void);
+static void func_abb2(void);
+static void func_abc1(void);
+static void func_abd1(void);
+static void func_abdb(void);
+static void func_abdf(void);
+static void func_abf2(void);
+static void func_ac01(void);
+static void func_ac0e(void);
+static void func_ac1e(void);
+static void func_ac5e(void);
+static void func_ac90(void);
+static void func_acc3(void);
+static void func_acd6(void);
+static void func_acff(void);
+static void func_ad3e(void);
+static void func_ad5b(void);
+static void func_adb0(void);
+static void func_adcc(void);
+static void func_addf(void);
+static void func_ae11(void);
+static void func_ae31(void);
+static void func_ae47(void);
+static void func_ae4b(void);
+static void func_ae5c(void);
+static void func_ae6b(void);
+static void func_ae6f(void);
+static void func_af1b(void);
+static void func_af87(void);
+static void func_af91(void);
+static void func_b04f(void);
+static void func_b079(void);
+static void func_b0d6(void);
+static void func_b106(void);
+static void func_b154(void);
+static void func_b16e(void);
+static void func_b19a(void);
+static void func_b1ca(void);
+static void func_b1ec(void);
+static void func_b257(void);
+static void func_b25b(void);
+static void func_b25e(void);
 static void func_b2bd(void);
 static void saveToSlot(void);
 static void loadFromSlot(void);
@@ -772,6 +872,225 @@ static void getPressedBtnIdx(void) {
     // PulL Processor
     // Return To Subroutine
 }
+
+// Address: _a358
+// Pause (tutorial)
+static void menuState14(void) {}
+
+// Address: _a36a
+// A button pressed
+static void menuState0e(void) {}
+
+// Address: _a378
+// B button pressed
+static void menuState0f(void) {}
+
+// Address: _a394
+static void initTutorialScript(void) {}
+
+// Address: _a441
+// Exit menu (tutorial)
+static void menuState15(void) {}
+
+// Address: _a45e
+// Move cursor up
+static void menuState10Up(void) {}
+
+// Address: _a466
+// Move cursor down
+static void menuState10Down(void) {}
+
+// Address: _a46e
+// Move cursor left
+static void menuState10Left(void) {}
+
+// Address: _a476
+// Move cursor right
+static void menuState10Right(void) {}
+
+// Address: _a4f0
+// Name change
+static void menuState0D(void) {}
+
+static void func_a4f3(void) {}
+
+static void func_a519(void) {}
+
+static void func_a54a(void) {}
+
+static void func_a55f(void) {}
+
+static void func_a5b5(void) {}
+
+static void func_a5e6(void) {}
+
+static void func_a607(void) {}
+
+static void func_a618(void) {}
+
+static void func_a67a(void) {}
+
+static void func_a693(void) {}
+
+static void func_a6b9(void) {}
+
+static void func_a6de(void) {}
+
+static void func_a6fc(void) {}
+
+static void func_a780(void) {}
+
+static void func_a79c(void) {}
+
+static void func_a7fc(void) {}
+
+static void func_a81d(void) {}
+
+static void func_a826(void) {}
+
+static void func_a848(void) {}
+
+static void func_a85a(void) {}
+
+static void func_a878(void) {}
+
+static void func_a892(void) {}
+
+static void func_a8cb(void) {}
+
+static void func_a8f0(void) {}
+
+static void func_a8fa(void) {}
+
+static void func_a91c(void) {}
+
+static void func_a925(void) {}
+
+static void func_a935(void) {}
+
+static void func_a948(void) {}
+
+static void func_a958(void) {}
+
+static void func_a965(void) {}
+
+static void func_a96c(void) {}
+
+static void func_a96f(void) {}
+
+static void func_a9d9(void) {}
+
+static void func_a9fd(void) {}
+
+static void func_aa12(void) {}
+
+static void func_aa35(void) {}
+
+static void func_aa4e(void) {}
+
+static void func_aa6e(void) {}
+
+static void func_aa89(void) {}
+
+static void func_aabb(void) {}
+
+static void func_aad1(void) {}
+
+static void func_aae9(void) {}
+
+static void func_ab19(void) {}
+
+static void func_ab20(void) {}
+
+static void func_ab36(void) {}
+
+static void func_ab4c(void) {}
+
+static void func_ab91(void) {}
+
+static void func_aba0(void) {}
+
+static void func_abb2(void) {}
+
+static void func_abc1(void) {}
+
+static void func_abd1(void) {}
+
+static void func_abdb(void) {}
+
+static void func_abdf(void) {}
+
+static void func_abf2(void) {}
+
+static void func_ac01(void) {}
+
+static void func_ac0e(void) {}
+
+static void func_ac1e(void) {}
+
+static void func_ac5e(void) {}
+
+static void func_ac90(void) {}
+
+static void func_acc3(void) {}
+
+static void func_acd6(void) {}
+
+static void func_acff(void) {}
+
+static void func_ad3e(void) {}
+
+static void func_ad5b(void) {}
+
+static void func_adb0(void) {}
+
+static void func_adcc(void) {}
+
+static void func_addf(void) {}
+
+static void func_ae11(void) {}
+
+static void func_ae31(void) {}
+
+static void func_ae47(void) {}
+
+static void func_ae4b(void) {}
+
+static void func_ae5c(void) {}
+
+static void func_ae6b(void) {}
+
+static void func_ae6f(void) {}
+
+static void func_af1b(void) {}
+
+static void func_af87(void) {}
+
+static void func_af91(void) {}
+
+static void func_b04f(void) {}
+
+static void func_b079(void) {}
+
+static void func_b0d6(void) {}
+
+static void func_b106(void) {}
+
+static void func_b154(void) {}
+
+static void func_b16e(void) {}
+
+static void func_b19a(void) {}
+
+static void func_b1ca(void) {}
+
+static void func_b1ec(void) {}
+
+static void func_b257(void) {}
+
+static void func_b25b(void) {}
+
+static void func_b25e(void) {}
 
 // Unstarted
 static void func_b2bd(void) {}
