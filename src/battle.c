@@ -273,6 +273,169 @@ static void updateMonsterRows(void);
 static void castSpell(void);
 static void castMultiHitSpell(void);
 static void prepSummon(void);
+static void getPartyTargetOffset(void);
+static void hasteSlowMod(void);
+static void killChar(void);
+static void checkPartyDeath(void);
+static void checkMonsterDeath(void);
+static void checkForDeath(void);
+static void setupAndLaunchAttack(void);
+static void dispatchAttack(void);
+static void clearAttackData(void);
+static void copyAttackParams(void);
+static void applyDamage(void);
+static void getDamageDisplayOffset(void);
+
+static void attackType00(void);
+static void attackType01(void);
+static void attackType02(void);
+static void attackType03(void);
+static void attackType04(void);
+static void attackType05(void);
+static void attackType06(void);
+static void attackType07(void);
+static void attackType08(void);
+static void attackType09(void);
+static void attackType0A(void);
+static void attackType0B(void);
+static void attackType0C(void);
+static void attackType0D(void);
+static void attackType0E(void);
+static void attackType0F(void);
+static void attackType10(void);
+static void attackType11(void);
+static void attackType12(void);
+static void attackType13(void);
+static void attackType14(void);
+static void attackType15(void);
+static void attackType16(void);
+static void attackType17(void);
+static void attackType18(void);
+static void attackType19(void);
+static void attackType1A(void);
+static void attackType1B(void);
+static void attackType1C(void);
+static void attackType1D(void);
+static void attackType1E(void);
+static void attackType1F(void);
+static void attackType20(void);
+static void attackType21(void);
+static void attackType22(void);
+static void attackType23(void);
+static void attackType24(void);
+static void attackType25(void);
+static void attackType26(void);
+static void attackType27(void);
+static void attackType28(void);
+static void attackType29(void);
+static void attackType2A(void);
+static void attackType2B(void);
+static void attackType2C(void);
+static void attackType2D(void);
+static void attackType2E(void);
+static void attackType2F(void);
+static void attackType30(void);
+static void attackType31(void);
+static void attackType32(void);
+static void attackType33(void);
+static void attackType34(void);
+static void attackType35(void);
+static void attackType36(void);
+static void attackType37(void);
+static void attackType38(void);
+static void attackType39(void);
+static void attackType3A(void);
+static void attackType3B(void);
+static void attackType3C(void);
+static void attackType3D(void);
+static void attackType3E(void);
+static void attackType3F(void);
+static void attackType40(void);
+static void attackType41(void);
+static void attackType42(void);
+static void attackType43(void);
+static void attackType44(void);
+static void attackType45(void);
+static void attackType46(void);
+static void attackType47(void);
+static void attackType48(void);
+static void attackType49(void);
+static void attackType4B(void);
+static void attackType4C(void);
+static void attackType4D(void);
+static void attackType4E(void);
+static void attackType4F(void);
+static void attackType50(void);
+static void attackType51(void);
+static void attackType52(void);
+static void attackType53(void);
+static void attackType54(void);
+static void attackType55(void);
+static void attackType56(void);
+static void attackType57(void);
+static void attackType58(void);
+static void attackType59(void);
+static void attackType5A(void);
+static void attackType5B(void);
+static void attackType5C(void);
+static void attackType5D(void);
+static void attackType5E(void);
+static void attackType5F(void);
+static void attackType60(void);
+static void attackType61(void);
+static void attackType62(void);
+static void attackType63(void);
+static void attackType64(void);
+static void attackType65(void);
+static void attackType66(void);
+static void attackType68(void);
+static void attackType67(void);
+static void attackType69(void);
+static void attackType6A(void);
+static void attackType6B(void);
+static void attackType6C(void);
+static void attackType6D(void);
+static void attackType6E(void);
+static void attackType6F(void);
+static void attackType70(void);
+static void attackType71(void);
+static void attackType72(void);
+static void attackType73(void);
+static void attackType74(void);
+static void attackType75(void);
+
+static void hitCalcLevelMEvade(void);
+static void setHitParam1TargetEvade(void);
+static void setHit100TargetEvade(void);
+static void setHit100HalfTargetEvade(void);
+static void setHitParam1HalfTargetEvade(void);
+static void setHitParam1TargetMEvade(void);
+static void hitCalcSteal(void);
+static void checkAegis(void);
+static void multiTargetHitPercent(void);
+static void checkSpecialEvade(void);
+static void danceHitMod(void);
+static void targetMHitMod(void);
+static void targetPHitMod(void);
+static void attackerStatusPHitMod(void);
+static void checkTargetImage(void);
+static void checkVoid(void);
+static void checkFloat(void);
+static void checkForHit(void);
+static void checkForPHit(void);
+static void checkHitByCreatureType(void);
+static void checkLevel(void);
+static void hitMagicCondAutohit(void);
+static void hitPhysical(void);
+static void hitMagic(void);
+static void hitPhysicalMagic(void);
+static void magicDamage(void);
+static void flareDamage(void);
+static void magicDamageRand(void);
+static void magicDamagePhysical(void);
+
+static void swordDamage(void);
+static void fistDamage(void);
 
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
@@ -6896,3 +7059,484 @@ static void castMultiHitSpell(void) {}
 
 // Address: _60A3
 static void prepSummon(void) {}
+
+// Address: _614E
+static void getPartyTargetOffset(void) {}
+
+// Address: _6163
+static void hasteSlowMod(void) {}
+
+// Address: _618A
+static void killChar(void) {}
+
+// Address: _6257
+static void checkPartyDeath(void) {}
+
+// Address: _6265
+static void checkMonsterDeath(void) {}
+
+// Address: _6272
+static void checkForDeath(void) {}
+
+// Address: _6408
+static void setupAndLaunchAttack(void) {}
+
+// Address: _64B2
+static void dispatchAttack(void) {}
+
+// Address: _6523
+static void clearAttackData(void) {}
+
+// Address: _653A
+static void copyAttackParams(void) {}
+
+// Address: _654D
+static void applyDamage(void) {}
+
+// Address: _685C
+static void getDamageDisplayOffset(void) {}
+
+// Address: _686C
+static void attackType00(void) {}
+
+// Address: _6870
+static void attackType01(void) {}
+
+// Address: _6898
+static void attackType02(void) {}
+
+// Address: _68E2
+static void attackType03(void) {}
+
+// Address: _68F7
+static void attackType04(void) {}
+
+// Address: _690C
+static void attackType05(void) {}
+
+// Address: _6921
+static void attackType06(void) {}
+
+// Address: _694A
+static void attackType07(void) {}
+
+// Address: _6971
+static void attackType08(void) {}
+
+// Address: _6993
+static void attackType09(void) {}
+
+// Address: _69B5
+static void attackType0A(void) {}
+
+// Address: _69DB
+static void attackType0B(void) {}
+
+// Address: _6A07
+static void attackType0C(void) {}
+
+// Address: _6A3C
+static void attackType0D(void) {}
+
+// Address: _6A65
+static void attackType0E(void) {}
+
+// Address: _6A76
+static void attackType0F(void) {}
+
+// Address: _6A81
+static void attackType10(void) {}
+
+// Address: _6A8E
+static void attackType11(void) {}
+
+// Address: _6AC4
+static void attackType12(void) {}
+
+// Address: _6ACF
+static void attackType13(void) {}
+
+// Address: _6ADD
+static void attackType14(void) {}
+
+// Address: _6AEB
+static void attackType15(void) {}
+
+// Address: _6AF6
+static void attackType16(void) {}
+
+// Address: _6B01
+static void attackType17(void) {}
+
+// Address: _6B32
+static void attackType18(void) {}
+
+// Address: _6B35
+static void attackType19(void) {}
+
+// Address: _6B52
+static void attackType1A(void) {}
+
+// Address: _6B7D
+static void attackType1B(void) {}
+
+// Address: _6BFC
+static void attackType1C(void) {}
+
+// Address: _6C17
+static void attackType1D(void) {}
+
+// Address: _6CE4
+static void attackType1E(void) {}
+
+// Address: _6CEF
+static void attackType1F(void) {}
+
+// Address: _6D2E
+static void attackType20(void) {}
+
+// Address: _6D4B
+static void attackType21(void) {}
+
+// Address: _6D5B
+static void attackType22(void) {}
+
+// Address: _6D83
+static void attackType23(void) {}
+
+// Address: _6DAB
+static void attackType24(void) {}
+
+// Address: _6DB4
+static void attackType25(void) {}
+
+// Address: _6DBD
+static void attackType26(void) {}
+
+// Address: _6DD7
+static void attackType27(void) {}
+
+// Address: _6DED
+static void attackType28(void) {}
+
+// Address: _6E12
+static void attackType29(void) {}
+
+// Address: _6E2D
+static void attackType2A(void) {}
+
+// Address: _6E4C
+static void attackType2B(void) {}
+
+// Address: _6E5E
+static void attackType2C(void) {}
+
+// Address: _6E72
+static void attackType2D(void) {}
+
+// Address: _6E9B
+static void attackType2E(void) {}
+
+// Address: _6EB1
+static void attackType2F(void) {}
+
+// Address: _6EBC
+static void attackType30(void) {}
+
+// Address: _6EE1
+static void attackType31(void) {}
+
+// Address: _6F1E
+static void attackType32(void) {}
+
+// Address: _6F58
+static void attackType33(void) {}
+
+// Address: _6F84
+static void attackType34(void) {}
+
+// Address: _6FA8
+static void attackType35(void) {}
+
+// Address: _6FC9
+static void attackType36(void) {}
+
+// Address: _6FF9
+static void attackType37(void) {}
+
+// Address: _7020
+static void attackType38(void) {}
+
+// Address: _703E
+static void attackType39(void) {}
+
+// Address: _7053
+static void attackType3A(void) {}
+
+// Address: _7074
+static void attackType3B(void) {}
+
+// Address: _709D
+static void attackType3C(void) {}
+
+// Address: _70C4
+static void attackType3D(void) {}
+
+// Address: _70DB
+static void attackType3E(void) {}
+
+// Address: _70EC
+static void attackType3F(void) {}
+
+// Address: _7119
+static void attackType40(void) {}
+
+// Address: _7134
+static void attackType41(void) {}
+
+// Address: _7140
+static void attackType42(void) {}
+
+// Address: _7150
+static void attackType43(void) {}
+
+// Address: _71B9
+static void attackType44(void) {}
+
+// Address: _71D7
+static void attackType45(void) {}
+
+// Address: _71F5
+static void attackType46(void) {}
+
+// Address: _71FB
+static void attackType47(void) {}
+
+// Address: _720D
+static void attackType48(void) {}
+
+// Address: _7255
+static void attackType49(void) {}
+
+// Address: _7266
+static void attackType4B(void) {}
+
+// Address: _728D
+static void attackType4C(void) {}
+
+// Address: _729B
+static void attackType4D(void) {}
+
+// Address: _72B2
+static void attackType4E(void) {}
+
+// Address: _72DB
+static void attackType4F(void) {}
+
+// Address: _7300
+static void attackType50(void) {}
+
+// Address: _7319
+static void attackType51(void) {}
+
+// Address: _735E
+static void attackType52(void) {}
+
+// Address: _7379
+static void attackType53(void) {}
+
+// Address: _7384
+static void attackType54(void) {}
+
+// Address: _738F
+static void attackType55(void) {}
+
+// Address: _7398
+static void attackType56(void) {}
+
+// Address: _73A3
+static void attackType57(void) {}
+
+// Address: _73C0
+static void attackType58(void) {}
+
+// Address: _73F0
+static void attackType59(void) {}
+
+// Address: _7407
+static void attackType5A(void) {}
+
+// Address: _740E
+static void attackType5B(void) {}
+
+// Address: _7419
+static void attackType5C(void) {}
+
+// Address: _7427
+static void attackType5D(void) {}
+
+// Address: _743D
+static void attackType5E(void) {}
+
+// Address: _745C
+static void attackType5F(void) {}
+
+// Address: _7476
+static void attackType60(void) {}
+
+// Address: _7562
+static void attackType61(void) {}
+
+// Address: _7662
+static void attackType62(void) {}
+
+// Address: _76CE
+static void attackType63(void) {}
+
+// Address: _7774
+static void attackType64(void) {}
+
+// Address: _77A4
+static void attackType65(void) {}
+
+// Address: _77B6
+static void attackType66(void) {}
+
+// Address: _77E0
+static void attackType68(void) {}
+
+// Address: _77E5
+static void attackType67(void) {}
+
+// Address: _77E9
+static void attackType69(void) {}
+
+// Address: _78BC
+static void attackType6A(void) {}
+
+// Address: _78DD
+static void attackType6B(void) {}
+
+// Address: _78EE
+static void attackType6C(void) {}
+
+// Address: _78FA
+static void attackType6D(void) {}
+
+// Address: _791B
+static void attackType6E(void) {}
+
+// Address: _794D
+static void attackType6F(void) {}
+
+// Address: _7956
+static void attackType70(void) {}
+
+// Address: _7964
+static void attackType71(void) {}
+
+// Address: _7AD9
+static void attackType72(void) {}
+
+// Address: _7AFA
+static void attackType73(void) {}
+
+// Address: _7B1E
+static void attackType74(void) {}
+
+static void attackType75(void) {}
+
+// Address: _7C0D
+static void hitCalcLevelMEvade(void) {}
+
+// Address: _7C3B
+static void setHitParam1TargetEvade(void) {}
+
+// Address: _7C47
+static void setHit100TargetEvade(void) {}
+
+// Address: _7C53
+static void setHit100HalfTargetEvade(void) {}
+
+// Address: _7C60 is duplicate of _7C3B / setHitParam1TargetEvade(void)
+
+// Address: _7C6C
+static void setHitParam1HalfTargetEvade(void) {}
+
+// Address: _7C79
+static void setHitParam1TargetMEvade(void) {}
+
+// Address: _7C85
+static void hitCalcSteal(void) {}
+
+// Address: _7C97
+static void checkAegis(void) {}
+
+// Address: _7CC3
+static void multiTargetHitPercent(void) {}
+
+// Address: _7CFC
+static void checkSpecialEvade(void) {}
+
+// Address: _7D7F
+static void danceHitMod(void) {}
+
+// Address: _7D8B
+static void targetMHitMod(void) {}
+
+// Address: _7DAC
+static void targetPHitMod(void) {}
+
+// Address: _7DD1
+static void attackerStatusPHitMod(void) {}
+
+// Address: _7DE2
+static void checkTargetImage(void) {}
+
+// Address: _7DF1
+static void checkVoid(void) {}
+
+// Address: _7E03
+static void checkFloat(void) {}
+
+// Address: _7E12
+static void checkForHit(void) {}
+
+// Address: _7E23
+static void checkForPHit(void) {}
+
+// Address: _7E5B
+static void checkHitByCreatureType(void) {}
+
+// Address: _7E67
+static void checkLevel(void) {}
+
+// Address: _7E81
+static void hitMagicCondAutohit(void) {}
+
+// Address: _7EBE
+static void hitPhysical(void) {}
+
+// Address: _7EF6
+static void hitMagic(void) {}
+
+// Address: _7F1B
+static void hitPhysicalMagic(void) {}
+
+// Address: _7F30
+static void magicDamage(void) {}
+
+// Address: _7F6A
+static void flareDamage(void) {}
+
+// Address: _7FA7
+static void magicDamageRand(void) {}
+
+// Address: _7FC2
+static void magicDamagePhysical(void) {}
+
+// Address: _7FFC
+static void swordDamage(void) {}
+
+// Address: _803E
+static void fistDamage(void) {}
