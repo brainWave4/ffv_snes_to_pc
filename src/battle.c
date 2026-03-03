@@ -436,6 +436,130 @@ static void magicDamagePhysical(void);
 
 static void swordDamage(void);
 static void fistDamage(void);
+static void knifeDamage(void);
+static void axeDamage(void);
+static void bellDamage(void);
+static void rodDamage(void);
+static void levelDamage(void);
+static void monsterDamage(void);
+static void itemFormula(void);
+static void physicalParamDamage(void);
+static void throwDamage(void);
+static void gilTossDamage(void);
+
+static void multiTargetMod(void);
+static void backRowMod(void);
+static void commandMod(void);
+static void doubleGripMod(void);
+static void checkJump(void);
+static void runeMod(void);
+static void specialtyMod(void);
+static void medicineMod(void);
+static void creatureMod(void);
+static void targetStatusModMag(void);
+static void targetStatusModPhys(void);
+static void attackerStatusModPhys(void);
+static void equalLevelMod(void);
+
+static void braveDamage(void);
+static void goblinDamage(void);
+static void strongFightDamage(void);
+static void chickenDamage(void);
+
+static void elementUpMod(void);
+static void spellbladeMod(void);
+static void elementDamageModPhys(void);
+static void elementDamageModMag(void);
+static void elementDamageModMag2(void);
+static void checkCrit(void);
+static void checkCreatureCrit(void);
+
+static void calcFinalDmgSpellblade(void);
+static void gravityDamage(void);
+
+static void cureTarget(void);
+static void fullCureTarget(void);
+static void setHPCritical(void);
+static void drainDamage(void);
+static void spellbladePsyche(void);
+static void psycheDamage(void);
+static void mpHeal(void);
+static void fullMPHeal(void);
+
+static void calcFinalDamage(void);
+static void calcDamageMaxHP(void);
+static void calcDamageAttackerCurHP(void);
+static void calcDamageTargetCurHP(void);
+static void calcDamageAttackerDiffHP(void);
+static void restoreHalfMax(void);
+static void calcStatusDuration(void);
+static void applySpellbladeStatusEffect(void);
+static void applyConditionalStatus(void);
+static void applySpecialtyEffects(void);
+static void applyStatus1(void);
+static void applyStatus2(void);
+static void applyStatus3(void);
+static void applyStatus4(void);
+static void toggleStatus1(void);
+static void applyFlirt(void);
+static void applyStatus3Exclusive(void);
+static void removeStatus1(void);
+static void removeStatus2(void);
+static void removeStatus3(void);
+static void killNonHeavy(void);
+static void reviveTarget(void);
+static void applyStatus1Bypass(void);
+static void applyStatus2Bypass(void);
+static void applyStatus3Bypass(void);
+static void applyStatus1AttackerBypass(void);
+static void removeSpellblade(void);
+static void changeTargetRow(void);
+static void moveTargetToFront(void);
+static void moveAttackerToBack(void);
+static void halveDefence(void);
+static void halveLevel(void);
+static void addLevel(void);
+static void subtractLevel(void);
+static void doubleMaxHP(void);
+static void addAttack(void);
+static void addDefenses(void);
+static void toggleStatus4(void);
+static void addCreatureType(void);
+static void addStatus1Immunity(void);
+static void addElementUp(void);
+static void stealItem(void);
+static void startStatus1Timer(void);
+static void stopStatus1Timer(void);
+static void stopStatus2Timer(void);
+static void stopStatus3Timer(void);
+static void stopStatus4Timer(void);
+static void startStatus2Timer(void);
+static void startStatus3Timer(void);
+static void startStatus4Timer(void);
+static void loseOneImage(void);
+static void catchMonster(void);
+static void calcBaseDamage(void);
+static void processCommands(void);
+static void findFirstTargetPlus1(void);
+static void getCharStructActionData(void);
+static void checkTargetRedirect(void);
+static void checkValidTargetsExist2(void);
+static void steupReactionsAnims(void);
+static void copyReactionInfo(void);
+static void gfxCmdDamageNumbers(void);
+static void findOpenGfxQueueSlot(void);
+static void selectCurProcSequence(void);
+static void gfxCmdAttackNameFromTemp(void);
+static void gfxCmdMessage(void);
+static void setupMsgBoxIndexes(void);
+static void deleteCommand(void);
+static void collectMPCost(void);
+static void applyPartyGear(void);
+static void applyGear(void);
+static void applyEquipStatus(void);
+static void startTimerCurChar(void);
+static void replaceHands(void);
+static void swapHands(void);
 
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
@@ -7540,3 +7664,358 @@ static void swordDamage(void) {}
 
 // Address: _803E
 static void fistDamage(void) {}
+
+// Address: _80D4
+static void knifeDamage(void) {}
+
+// Address: _812B
+static void axeDamage(void) {}
+
+// Address: _816F
+static void bellDamage(void) {}
+
+// Address: _81CB
+static void rodDamage(void) {}
+
+// Address: _8205
+static void levelDamage(void) {}
+
+// Address: _8227
+static void monsterDamage(void) {}
+
+// Address: _8252
+static void itemFormula(void) {}
+
+// Address: _8261
+static void physicalParamDamage(void) {}
+
+// Address: _8299
+static void throwDamage(void) {}
+
+// Address: _830A
+static void gilTossDamage(void) {}
+
+// Address: _8366
+static void multiTargetMod(void) {}
+
+// Address: _839B
+static void backRowMod(void) {}
+
+// Address: _83BD
+static void commandMod(void) {}
+
+// Address: _8430
+static void doubleGripMod(void) {}
+
+// Address: _8452
+static void checkJump(void) {}
+
+// Address: _8467
+static void runeMod(void) {}
+
+// Address: _84AF
+static void specialtyMod(void) {}
+
+// Address: _84CF
+static void medicineMod(void) {}
+
+// Address: _84DD
+static void creatureMod(void) {}
+
+// Address: _84F3
+static void targetStatusModMag(void) {}
+
+// Address: _8512
+static void targetStatusModPhys(void) {}
+
+// Address: _8533
+static void attackerStatusModPhys(void) {}
+
+// Address: _855D
+static void equalLevelMod(void) {}
+
+static void braveDamage(void) {}
+
+// Address: _85AD
+static void goblinDamage(void) {}
+
+// Address: _85F1
+static void strongFightDamage(void) {}
+
+// Address: _8626
+static void chickenDamage(void) {}
+
+// Address: _866D
+static void elementUpMod(void) {}
+
+// Address: _8684
+static void spellbladeMod(void) {}
+
+// Address: _8734
+static void elementDamageModPhys(void) {}
+
+// Address: _876E
+static void elementDamageModMag(void) {}
+
+// Address: _87B5
+static void elementDamageModMag2(void) {}
+
+// Address: _87DF
+static void checkCrit(void) {}
+
+// Address: _87F9
+static void checkCreatureCrit(void) {}
+
+// Address: _8811
+static void calcFinalDmgSpellblade(void) {}
+
+// Address: _8874
+static void gravityDamage(void) {}
+
+// Address: _88C1
+static void cureTarget(void) {}
+
+// Address: _88D8
+static void fullCureTarget(void) {}
+
+// Address: _88FD
+static void setHPCritical(void) {}
+
+// Address: _88C1
+static void drainDamage(void) {}
+
+// Address: _894D
+static void spellbladePsyche(void) {}
+
+// Address: _8985
+static void psycheDamage(void) {}
+
+// Address: _89DE
+static void mpHeal(void) {}
+
+// Address: _89F7
+static void fullMPHeal(void) {}
+
+// Address: _8A05
+static void calcFinalDamage(void) {}
+
+// Address: _8A4E
+static void calcDamageMaxHP(void) {}
+
+// Address: _8A9D
+static void calcDamageAttackerCurHP(void) {}
+
+// Address: _8AEC
+static void calcDamageTargetCurHP(void) {}
+
+// Address: _8B33
+static void calcDamageAttackerDiffHP(void) {}
+
+// Address: _8B4D
+static void restoreHalfMax(void) {}
+
+// Address: _8B7D
+static void calcStatusDuration(void) {}
+
+// Address: _8BCF
+static void applySpellbladeStatusEffect(void) {}
+
+// Address: _8BF9
+static void applyConditionalStatus(void) {}
+
+// Address: _8C2F
+static void applySpecialtyEffects(void) {}
+
+// Address: _8CAC
+static void applyStatus1(void) {}
+
+// Address: _8D2E
+static void applyStatus2(void) {}
+
+// Address: _8DCB
+static void applyStatus3(void) {}
+
+// Address: _8E05
+static void applyStatus4(void) {}
+
+// Address: _8E25
+static void toggleStatus1(void) {}
+
+// Address: _8E3A
+static void applyFlirt(void) {}
+
+// Address: _8E51
+static void applyStatus3Exclusive(void) {}
+
+// Address: _8EB6
+static void removeStatus1(void) {}
+
+// Address: _8F11
+static void removeStatus2(void) {}
+
+// Address: _8F6E
+static void removeStatus3(void) {}
+
+// Address: _8F82
+static void killNonHeavy(void) {}
+
+// Address: _8FAA
+static void reviveTarget(void) {}
+
+// Address: _902B
+static void applyStatus1Bypass(void) {}
+
+// Address: _9039
+static void applyStatus2Bypass(void) {}
+
+// Address: _90CD
+static void applyStatus3Bypass(void) {}
+
+// Address: _90DB
+static void applyStatus1AttackerBypass(void) {}
+
+// Address: _90E9
+static void removeSpellblade(void) {}
+
+// Address: _9101
+static void changeTargetRow(void) {}
+
+// Address: _9117
+static void moveTargetToFront(void) {}
+
+// Address: _9122
+static void moveAttackerToBack(void) {}
+
+// Address: _912D
+static void halveDefence(void) {}
+
+// Address: _9136
+static void halveLevel(void) {}
+
+// Address: _9143
+static void addLevel(void) {}
+
+// Address: _9153
+static void subtractLevel(void) {}
+
+// Address: _9163
+static void doubleMaxHP(void) {}
+
+// Address: _9197
+static void addAttack(void) {}
+
+// Address: _91B4
+static void addDefenses(void) {}
+
+// Address: _91D1
+static void toggleStatus4(void) {}
+
+// Address: _91DC seems to be unused
+
+// Address: _91E7
+static void addCreatureType(void) {}
+
+// Address: _91F2
+static void addStatus1Immunity(void) {}
+
+// Address: _91FD
+static void addElementUp(void) {}
+
+// Address: _9208
+static void stealItem(void) {}
+
+// Address: _92A5
+static void startStatus1Timer(void) {}
+
+// Address: _92B4
+static void stopStatus1Timer(void) {}
+
+// Address: _92C3
+static void stopStatus2Timer(void) {}
+
+// Address: _92EE
+static void stopStatus3Timer(void) {}
+
+// Address: _9319
+static void stopStatus4Timer(void) {}
+
+// Address: _9328
+static void startStatus2Timer(void) {}
+
+// Address: _934D
+static void startStatus3Timer(void) {}
+
+// Address: _9319
+static void startStatus4Timer(void) {}
+
+// Address: _938F
+static void loseOneImage(void) {}
+
+// Address: _93A5
+static void catchMonster(void) {}
+
+// Address: _93F8
+static void calcBaseDamage(void) {}
+
+// Address: _9427
+static void processCommands(void) {}
+
+// Address: _94FF
+static void findFirstTargetPlus1(void) {}
+
+// Address: _951A
+static void getCharStructActionData(void) {}
+
+// Address: _9561
+static void checkTargetRedirect(void) {}
+
+// Address: _9728
+static void checkValidTargetsExist2(void) {}
+
+// Address: _9761
+static void steupReactionsAnims(void) {}
+
+// Address: _9885
+static void copyReactionInfo(void) {}
+
+// Address: _98E3
+static void gfxCmdDamageNumbers(void) {}
+
+// Address: _98FA
+static void findOpenGfxQueueSlot(void) {}
+
+// Address: _9923
+static void selectCurProcSequence(void) {}
+
+// Address: _992F
+static void gfxCmdAttackNameFromTemp(void) {}
+
+// Address: _994C
+static void gfxCmdMessage(void) {}
+
+// Address: _9965
+static void setupMsgBoxIndexes(void) {}
+
+// Address: _9980
+static void deleteCommand(void) {}
+
+// Address: _9A08
+static void collectMPCost(void) {}
+
+// Address: _9A5E
+static void applyPartyGear(void) {}
+
+// Address: _9A6F
+static void applyGear(void) {}
+
+// Address: _9D01
+static void applyEquipStatus(void) {}
+
+// Address: _9F2E
+static void startTimerCurChar(void) {}
+
+// Address: _9F3A
+static void replaceHands(void) {}
+
+// Address: _9FE7
+static void swapHands(void) {}
