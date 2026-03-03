@@ -5,6 +5,6 @@
 
 uint16_t battleCount;
 
-void execBattle(void);
+void execBattle(void); // Incomplete
 
 #endif

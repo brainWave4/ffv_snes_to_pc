@@ -9,480 +9,480 @@
 // for ExecSound_ext
 #include "sound.h"
 
-static void mainMenu(void);
-static void collectItemsAfterBattle(void);
-static void shop(void);
-static void initMenuSettings(void);
-static void tutorial(void);
-static void galufToKrile(void);
-static void nameChange(void);
-static void showMenu(void);
-static void dma(void);
-static void waitForVblank(void);
-static void initMenu(void);
-static void resetSpriteData(void);
-static void func_c2a18a(void);
-static void func_c2a1cf(void);
-static void func_c2a1f0(void);
-static void func_c2a23b(void);
-static void func_c2a247(void);
-static void getNextInput(void);
-static void getPressedBtnIdx(void);
-static void menuState14(void);
-static void menuState0e(void);
-static void menuState0f(void);
-static void initTutorialScript(void);
-static void menuState15(void);
-static void menuState10Up(void);
-static void menuState10Down(void);
-static void menuState10Left(void);
-static void menuState10Right(void);
-static void menuState0D(void);
-static void func_c2a4f3(void);
-static void func_c2a519(void);
-static void func_c2a54a(void);
-static void func_c2a55f(void);
-static void func_c2a5b5(void);
-static void func_c2a5e6(void);
-static void func_c2a607(void);
-static void func_c2a618(void);
-static void func_c2a67a(void);
-static void func_c2a693(void);
-static void func_c2a6b9(void);
-static void func_c2a6de(void);
-static void func_c2a6fc(void);
-static void func_c2a780(void);
-static void func_c2a79c(void);
-static void func_c2a7fc(void);
-static void func_c2a81d(void);
-static void func_c2a826(void);
-static void func_c2a848(void);
-static void func_c2a85a(void);
-static void func_c2a878(void);
-static void func_c2a892(void);
-static void func_c2a8cb(void);
-static void func_c2a8f0(void);
-static void func_c2a8fa(void);
-static void func_c2a91c(void);
-static void func_c2a925(void);
-static void func_c2a935(void);
-static void func_c2a948(void);
-static void func_c2a958(void);
-static void func_c2a965(void);
-static void func_c2a96c(void);
-static void func_c2a96f(void);
-static void func_c2a9d9(void);
-static void func_c2a9fd(void);
-static void func_c2aa12(void);
-static void func_c2aa35(void);
-static void func_c2aa4e(void);
-static void func_c2aa6e(void);
-static void func_c2aa89(void);
-static void func_c2aabb(void);
-static void func_c2aad1(void);
-static void func_c2aae9(void);
-static void func_c2ab19(void);
-static void func_c2ab20(void);
-static void func_c2ab36(void);
-static void func_c2ab4c(void);
-static void func_c2ab91(void);
-static void func_c2aba0(void);
-static void func_c2abb2(void);
-static void func_c2abc1(void);
-static void func_c2abd1(void);
-static void func_c2abdb(void);
-static void func_c2abdf(void);
-static void func_c2abf2(void);
-static void func_c2ac01(void);
-static void func_c2ac0e(void);
-static void func_c2ac1e(void);
-static void func_c2ac5e(void);
-static void func_c2ac90(void);
-static void func_c2acc3(void);
-static void func_c2acd6(void);
-static void func_c2acff(void);
-static void func_c2ad3e(void);
-static void func_c2ad5b(void);
-static void func_c2adb0(void);
-static void func_c2adcc(void);
-static void func_c2addf(void);
-static void func_c2ae11(void);
-static void func_c2ae31(void);
-static void func_c2ae47(void);
-static void func_c2ae4b(void);
-static void func_c2ae5c(void);
-static void func_c2ae6b(void);
-static void func_c2ae6f(void);
-static void func_c2af1b(void);
-static void func_c2af87(void);
-static void func_c2af91(void);
-static void func_c2b04f(void);
-static void func_c2b079(void);
-static void func_c2b0d6(void);
-static void func_c2b106(void);
-static void func_c2b154(void);
-static void func_c2b16e(void);
-static void func_c2b19a(void);
-static void func_c2b1ca(void);
-static void func_c2b1ec(void);
-static void func_c2b257(void);
-static void func_c2b25b(void);
-static void func_c2b25e(void);
-static void func_c2b2bd(void);;
-static void func_c2b2fb(void);
-static void rowAButtonPressed(void);
-static void func_c2b3db(void);
-static void func_c2b3e9(void);
-static void rowBButtonPressed(void);
-static void func_c2b429(void);
-static void func_c2b480(void);
-static void func_c2b48f(void);
-static void func_c2b4a8(void);
-static void func_c2b4d7(void);
-static void func_c2b511(void);
-static void func_c2b521(void);
-static void func_c2b5ea(void);
-static void func_c2b676(void);
-static void func_c2b6b9(void);
-static void func_c2b74b(void);
-static void func_c2b752(void);
-static void func_c2b796(void);
-static void func_c2b7a0(void);
-static void func_c2b7ad(void);
-static void func_c2b7fc(void);
-static void func_c2b811(void);
-static void func_c2b845(void);
-static void func_c2b84d(void);
-static void func_c2b879(void);
-static void func_c2b87c(void);
-static void func_c2b8ae(void);
-static void func_c2b91d(void);
-static void func_c2b922(void);
-static void func_c2b948(void);
-static void func_c2b955(void);
-static void func_c2b993(void);
-static void func_c2b998(void);
-static void func_c2ba05(void);
-static void func_c2ba0a(void);
-static void func_c2ba63(void);
-static void func_c2ba7d(void);
-static void func_c2bbfa(void);
-static void func_c2bc27(void);
-static void func_c2bc2a(void);
-static void func_c2bc2d(void);
-static void func_c2bc48(void);
-static void func_c2bc5e(void);
-static void func_c2bcd9(void);
-static void func_c2bce0(void);
-static void func_c2bd3d(void);
-static void func_c2bd47(void);
-static void func_c2bda5(void);
-static void func_c2bdb5(void);
-static void func_c2bdc6(void);
-static void func_c2bdf3(void);
-static void func_c2bdf6(void);
-static void func_c2be2e(void);
-static void func_c2be64(void);
-static void func_c2bec8(void);
-static void func_c2becd(void);
-static void func_c2bef4(void);
-static void saveToSlot(void);
-static void loadFromSlot(void);
-static void func_c2bf7d(void);
-static void func_c2bf89(void);
-static void func_c2bf9d(void);
-static void func_c2bfcd(void);
-static void func_c2bfd4(void);
-static void func_c2bff4(void);
-static void func_c2c003(void);
-static void func_c2c041(void);
-static void func_c2c046(void);
-static void func_c2c05e(void);
-static void func_c2c069(void);
-static void func_c2c06c(void);
-static void func_c2c071(void);
-static void func_c2c0bd(void);
-static void func_c2c0c0(void);
-static void func_c2c0e2(void);
-static void func_c2c0ed(void);
-static void func_c2c0f7(void);
-static void func_c2c146(void);
-static void func_c2c162(void);
-static void func_c2c16a(void);
-static void func_c2c1a6(void);
-static void loadMenuTilemap(void);
-static void func_c2c1f7(void);
-static void func_c2c1fd(void);
-static void func_c2c242(void);
-static void menuTilemapCmd00(void);
-static void menuTilemapCmd01(void);
-static void menuTilemapCmd05(void);
-static void func_c2c272(void);
-static void func_c2c27b(void);
-static void func_c2c28c(void);
-static void menuTilemapCmd02(void);
-static void func_c2c2cc(void);
-static void menuTilemapCmd03(void);
-static void menuTilemapCmd_drawMenuText(void);
-static void menuState08(void);
-static void menuState09(void);
-static void func_c2c3d2(void);
-static void func_c2c3fd(void);
-static void func_c2c419(void);
-static void menuState0c(void);
-static void func_c2c4da(void);
-static void func_c2c51d(void);
-static void func_c2c544(void);
-static void func_c2c551(void);
-static void menuState0b(void);
-static void func_c2c59c(void);
-static void menuState0a(void);
-static void menuState07(void);
-static void func_c2c6ba(void);
-static void func_c2c6e9(void);
-static void menuState06(void);
-static void func_c2c73d(void);
-static void func_c2c780(void);
-static void func_c2c7bd(void);
-static void menuState05(void);
-static void menuState04(void);
-static void func_c2c8de(void);
-static void func_c2c941(void);
-static void func_c2c954(void);
-static void menuState03(void);
-static void func_c2caa5(void);
-static void func_c2cac8(void);
-static void func_c2cb8c(void);
-static void func_c2cb95(void);
-static void func_c2cbe1(void);
-static void func_c2cbf1(void);
-static void func_c2cbf8(void);
-static void func_c2cc9e(void);
-static void menuState_job(void);
-static void func_c2cd08(void);
-static void updateSelectedJobPalette(void);
-static void updateCurrentCharData(void);
-static void updateJobSprite(void);
-static void updateCharSprite(void);
-static void updateJobStatsAbilities(void);
-static void getAvailableJobs(void);
-static void menuState_ability(void);
-static void func_c2cfa4(void);
-static void func_c2cfbd(void);
-static void menuState_main(void);
-static void func_c2d04c(void);
-static void func_c2d0b2(void);
-static void func_c2d210(void);
-static void func_c2d230(void);
-static void func_c2d25b(void);
-static void func_c2d298(void);
-static void func_c2d2db(void);
-static void func_c2d304(void);
-static void func_c2d34c(void);
-static void func_c2d37b(void);
-static void func_c2d388(void);
-static void func_c2d3db(void);
-static void func_c2d42e(void);
-static void updateWindowColor(void);
-static void func_c2d45f(void);
-static void func_c2d492(void);
-static void func_c2d4b4(void);
-static void func_c2d4c5(void);
-static void func_c2d4db(void);
-static void func_c2d503(void);
-static void func_c2d533(void);
-static void func_c2d54a(void);
-static void func_c2d554(void);
-static void func_c2d55d(void);
-static void func_c2d571(void);
-static void func_c2d588(void);
-static void func_c2d59d(void);
-static void func_c2d5d3(void);
-static void func_c2d5db(void);
-static void func_c2d5ef(void);
-static void func_c2d60b(void);
-static void func_c2d658(void);
-static void func_c2d662(void);
-static void func_c2d6a4(void);
-static void setFontColor(void);
-static void func_c2d717(void);
-static void func_c2d760(void);
-static void func_c2d7ca(void);
-static void func_c2d7d8(void);
-static void func_c2d7f6(void);
-static void func_c2d802(void);
-static void func_c2d80d(void);
-static void func_c2d837(void);
-static void getAvailableAbilities(void);
-static void buildListFromRAMBits(void);
-static void func_c2d8e4(void);
-static void func_c2d93f(void);
-static void menuCmd_GalufToKrile(void);
-static void func_c2d9ab(void);
-static void func_c2d9fb(void);
-static void func_c2da16(void);
-static void func_c2da9d(void);
-static void func_c2daa4(void);
-static void func_c2dada(void);
-static void func_c2daef(void);
-static void func_c2db66(void);
-static void func_c2db92(void);
-static void func_c2dbbd(void);
-static void func_c2dbce(void);
-static void func_c2dbe8(void);
-static void func_c2dbf9(void);
-static void func_c2dc0a(void);
-static void func_c2dc1b(void);
-static void func_c2dcd2(void);
-static void func_c2dcfe(void);
-static void func_c2dd0f(void);
-static void func_c2dd20(void);
-static void func_c2dd5a(void);
-static void func_c2dd6b(void);
-static void func_c2dd8e(void);
-static void func_c2dda8(void);
-static void func_c2ddb5(void);
-static void func_c2ddc6(void);
-static void func_c2ddd7(void);
-static void func_c2de3e(void);
-static void func_c2dec7(void);
-static void func_c2df4d(void);
-static void func_c2df7f(void);
-static void func_c2e002(void);
-static void func_c2e050(void);
-static void func_c2e0a8(void);
-static void func_c2e0b0(void);
-static void func_c2e0b8(void);
-static void func_c2e0c0(void);
-static void func_c2e0c8(void);
-static void playSoundEffect(void);
-static void func_c2e0f7(void);
-static void func_c2e178(void);
-static void func_c2e18f(void);
-static void func_c2e1a6(void);
-static void func_c2e211(void);
-static void func_c2e286(void);
-static void func_c2e2ce(void);
-static void func_c2e328(void);
-static void func_c2e367(void);
-static void func_c2e3a6(void);
-static void func_c2e3e3(void);
-static void func_c2e3f3(void);
-static void drawSpellName(void);
-static void drawItemName(void);
-static void func_c2e464(void);
-static void getCharJobData(void);
-static void getPtrCharJobData(void);
-static void func_c2e4c7(void);
-static void func_c2e4df(void);
-static void func_c2e4e1(void);
-static void func_c2e4ed(void);
-static void func_c2e552(void);
-static void func_c2e57f(void);
-static void drawText(void);
-static void getDakuten(void);
-static void func_c2e610(void);
-static void func_c2e653(void);
-static void func_c2e658(void);
-static void func_c2e65b(void);
-static void func_c2e66f(void);
-static void func_c2e67c(void);
-static void updateCursorSprite(void);
-static void func_c2e6d6(void);
-static void updateSpellLevels(void);
-static void setSpellLevels(void);
-static void updateCharProps(void);
-static void func_c2e7b3(void);
-static void func_c2e7cc(void);
-static void func_c2e879(void);
-static void getJobInnateAbilities(void);
-static void func_c2e933(void);
-static void func_c2e973(void);
-static void func_c2e9ce(void);
-static void func_c2eaac(void);
-static void func_c2eaee(void);
-static void func_c2eb82(void);
-static void func_c2ebbd(void);
-static void applyStatBonus(void);
-static void func_c2ec76(void);
-static void func_c2ecd9(void);
-static void func_c2ecf3(void);
-static void func_c2ed5e(void);
-static void func_c2ed87(void);
-static void func_c2edb5(void);
-static void func_c2edd3(void);
-static void func_c2ee03(void);
-static void func_c2ee1b(void);
-static void func_c2ee63(void);
-static void func_c2ee94(void);
-static void func_c2eec8(void);
-static void func_c2eee7(void);
-static void func_c2eefd(void);
-static void func_c2ef16(void);
-static void func_c2ef89(void);
-static void func_c2ef9f(void);
-static void func_c2efc5(void);
-static void func_c2efe3(void);
-static void giveSpell(void);
-static void func_c2f01d(void);
-static void func_c2f03e(void);
-static void func_c2f070(void);
-static void func_c2f0e6(void);
-static void func_c2f10e(void);
-static void drawShopTypeName(void);
-static void loadShopProps(void);
-static void getItemPrice(void);
-static void func_c2f2cd(void);
-static void func_c2f2fb(void);
-static void func_c2f32a(void);
-static void func_c2f39c(void);
-static void func_c2f3d1(void);
-static void func_c2f3dd(void);
-static void func_c2f3f6(void);
-static void func_c2f450(void);
-static void func_c2f463(void);
-static void func_c2f4d4(void);
-static void func_c2f4ef(void);
-static void func_c2f561(void);
-static void func_c2f588(void);
-static void updateMonoStereoSetting(void);
-static void func_c2f5c0(void);
-static void func_c2f63d(void);
-static void func_c2f6af(void);
-static void func_c2f6d6(void);
-static void func_c2f709(void);
-static void updateConfigSettings(void);
-static void func_c2f7a6(void);
-static void func_c2f7fc(void);
-static void func_c2f810(void);
-static void func_c2f869(void);
-static void func_c2f8b1(void);
-static void func_c2f90b(void);
-static void func_c2f932(void);
-static void func_c2f949(void);
-static void func_c2f984(void);
-static void func_c2f9d6(void);
-static void func_c2fa75(void);
-static void func_c2fa92(void);
-static void func_c2faad(void);
-static void copySpriteDataToVRAM(void);
-static void func_c2faf0(void);
-static void menuNMI(void);
-static void menuIRQ(void);
-static void func_c2fc2f(void);
-static void func_c2fcb1(void);
-static void func_c2fd09(void);
-static void func_c2fd2e(void);
-static void func_c2fd75(void);
-static void func_c2fdca(void);
-static void func_c2fe05(void);
-static void func_c2fe41(void);
-static void updateJoypadInput(void);
-static void func_c2fedo(void);
-static void setControllerSettingsBattle(void);
-static void setControllerSettingsField(void);
-void updateJoypadConfig(void);
-static void func_c2ffc2(void);
+static void mainMenu(void); // Incomplete
+static void collectItemsAfterBattle(void); // Incomplete
+static void shop(void); // Incomplete
+static void initMenuSettings(void); // Incomplete
+static void tutorial(void); // Incomplete
+static void galufToKrile(void); // Incomplete
+static void nameChange(void); // Incomplete
+static void showMenu(void); // Incomplete
+static void dma(void); // Incomplete
+static void waitForVblank(void); // Incomplete
+static void initMenu(void); // Incomplete
+static void resetSpriteData(void); // Incomplete
+static void func_c2a18a(void); // Incomplete
+static void func_c2a1cf(void); // Incomplete
+static void func_c2a1f0(void); // Incomplete
+static void func_c2a23b(void); // Incomplete
+static void func_c2a247(void); // Incomplete
+static void getNextInput(void); // Incomplete
+static void getPressedBtnIdx(void); // Incomplete
+static void menuState14(void); // Incomplete
+static void menuState0e(void); // Incomplete
+static void menuState0f(void); // Incomplete
+static void initTutorialScript(void); // Incomplete
+static void menuState15(void); // Incomplete
+static void menuState10Up(void); // Incomplete
+static void menuState10Down(void); // Incomplete
+static void menuState10Left(void); // Incomplete
+static void menuState10Right(void); // Incomplete
+static void menuState0D(void); // Incomplete
+static void func_c2a4f3(void); // Incomplete
+static void func_c2a519(void); // Incomplete
+static void func_c2a54a(void); // Incomplete
+static void func_c2a55f(void); // Incomplete
+static void func_c2a5b5(void); // Incomplete
+static void func_c2a5e6(void); // Incomplete
+static void func_c2a607(void); // Incomplete
+static void func_c2a618(void); // Incomplete
+static void func_c2a67a(void); // Incomplete
+static void func_c2a693(void); // Incomplete
+static void func_c2a6b9(void); // Incomplete
+static void func_c2a6de(void); // Incomplete
+static void func_c2a6fc(void); // Incomplete
+static void func_c2a780(void); // Incomplete
+static void func_c2a79c(void); // Incomplete
+static void func_c2a7fc(void); // Incomplete
+static void func_c2a81d(void); // Incomplete
+static void func_c2a826(void); // Incomplete
+static void func_c2a848(void); // Incomplete
+static void func_c2a85a(void); // Incomplete
+static void func_c2a878(void); // Incomplete
+static void func_c2a892(void); // Incomplete
+static void func_c2a8cb(void); // Incomplete
+static void func_c2a8f0(void); // Incomplete
+static void func_c2a8fa(void); // Incomplete
+static void func_c2a91c(void); // Incomplete
+static void func_c2a925(void); // Incomplete
+static void func_c2a935(void); // Incomplete
+static void func_c2a948(void); // Incomplete
+static void func_c2a958(void); // Incomplete
+static void func_c2a965(void); // Incomplete
+static void func_c2a96c(void); // Incomplete
+static void func_c2a96f(void); // Incomplete
+static void func_c2a9d9(void); // Incomplete
+static void func_c2a9fd(void); // Incomplete
+static void func_c2aa12(void); // Incomplete
+static void func_c2aa35(void); // Incomplete
+static void func_c2aa4e(void); // Incomplete
+static void func_c2aa6e(void); // Incomplete
+static void func_c2aa89(void); // Incomplete
+static void func_c2aabb(void); // Incomplete
+static void func_c2aad1(void); // Incomplete
+static void func_c2aae9(void); // Incomplete
+static void func_c2ab19(void); // Incomplete
+static void func_c2ab20(void); // Incomplete
+static void func_c2ab36(void); // Incomplete
+static void func_c2ab4c(void); // Incomplete
+static void func_c2ab91(void); // Incomplete
+static void func_c2aba0(void); // Incomplete
+static void func_c2abb2(void); // Incomplete
+static void func_c2abc1(void); // Incomplete
+static void func_c2abd1(void); // Incomplete
+static void func_c2abdb(void); // Incomplete
+static void func_c2abdf(void); // Incomplete
+static void func_c2abf2(void); // Incomplete
+static void func_c2ac01(void); // Incomplete
+static void func_c2ac0e(void); // Incomplete
+static void func_c2ac1e(void); // Incomplete
+static void func_c2ac5e(void); // Incomplete
+static void func_c2ac90(void); // Incomplete
+static void func_c2acc3(void); // Incomplete
+static void func_c2acd6(void); // Incomplete
+static void func_c2acff(void); // Incomplete
+static void func_c2ad3e(void); // Incomplete
+static void func_c2ad5b(void); // Incomplete
+static void func_c2adb0(void); // Incomplete
+static void func_c2adcc(void); // Incomplete
+static void func_c2addf(void); // Incomplete
+static void func_c2ae11(void); // Incomplete
+static void func_c2ae31(void); // Incomplete
+static void func_c2ae47(void); // Incomplete
+static void func_c2ae4b(void); // Incomplete
+static void func_c2ae5c(void); // Incomplete
+static void func_c2ae6b(void); // Incomplete
+static void func_c2ae6f(void); // Incomplete
+static void func_c2af1b(void); // Incomplete
+static void func_c2af87(void); // Incomplete
+static void func_c2af91(void); // Incomplete
+static void func_c2b04f(void); // Incomplete
+static void func_c2b079(void); // Incomplete
+static void func_c2b0d6(void); // Incomplete
+static void func_c2b106(void); // Incomplete
+static void func_c2b154(void); // Incomplete
+static void func_c2b16e(void); // Incomplete
+static void func_c2b19a(void); // Incomplete
+static void func_c2b1ca(void); // Incomplete
+static void func_c2b1ec(void); // Incomplete
+static void func_c2b257(void); // Incomplete
+static void func_c2b25b(void); // Incomplete
+static void func_c2b25e(void); // Incomplete
+static void func_c2b2bd(void); // Incomplete;
+static void func_c2b2fb(void); // Incomplete
+static void rowAButtonPressed(void); // Incomplete
+static void func_c2b3db(void); // Incomplete
+static void func_c2b3e9(void); // Incomplete
+static void rowBButtonPressed(void); // Incomplete
+static void func_c2b429(void); // Incomplete
+static void func_c2b480(void); // Incomplete
+static void func_c2b48f(void); // Incomplete
+static void func_c2b4a8(void); // Incomplete
+static void func_c2b4d7(void); // Incomplete
+static void func_c2b511(void); // Incomplete
+static void func_c2b521(void); // Incomplete
+static void func_c2b5ea(void); // Incomplete
+static void func_c2b676(void); // Incomplete
+static void func_c2b6b9(void); // Incomplete
+static void func_c2b74b(void); // Incomplete
+static void func_c2b752(void); // Incomplete
+static void func_c2b796(void); // Incomplete
+static void func_c2b7a0(void); // Incomplete
+static void func_c2b7ad(void); // Incomplete
+static void func_c2b7fc(void); // Incomplete
+static void func_c2b811(void); // Incomplete
+static void func_c2b845(void); // Incomplete
+static void func_c2b84d(void); // Incomplete
+static void func_c2b879(void); // Incomplete
+static void func_c2b87c(void); // Incomplete
+static void func_c2b8ae(void); // Incomplete
+static void func_c2b91d(void); // Incomplete
+static void func_c2b922(void); // Incomplete
+static void func_c2b948(void); // Incomplete
+static void func_c2b955(void); // Incomplete
+static void func_c2b993(void); // Incomplete
+static void func_c2b998(void); // Incomplete
+static void func_c2ba05(void); // Incomplete
+static void func_c2ba0a(void); // Incomplete
+static void func_c2ba63(void); // Incomplete
+static void func_c2ba7d(void); // Incomplete
+static void func_c2bbfa(void); // Incomplete
+static void func_c2bc27(void); // Incomplete
+static void func_c2bc2a(void); // Incomplete
+static void func_c2bc2d(void); // Incomplete
+static void func_c2bc48(void); // Incomplete
+static void func_c2bc5e(void); // Incomplete
+static void func_c2bcd9(void); // Incomplete
+static void func_c2bce0(void); // Incomplete
+static void func_c2bd3d(void); // Incomplete
+static void func_c2bd47(void); // Incomplete
+static void func_c2bda5(void); // Incomplete
+static void func_c2bdb5(void); // Incomplete
+static void func_c2bdc6(void); // Incomplete
+static void func_c2bdf3(void); // Incomplete
+static void func_c2bdf6(void); // Incomplete
+static void func_c2be2e(void); // Incomplete
+static void func_c2be64(void); // Incomplete
+static void func_c2bec8(void); // Incomplete
+static void func_c2becd(void); // Incomplete
+static void func_c2bef4(void); // Incomplete
+static void saveToSlot(void); // Incomplete
+static void loadFromSlot(void); // Incomplete
+static void func_c2bf7d(void); // Incomplete
+static void func_c2bf89(void); // Incomplete
+static void func_c2bf9d(void); // Incomplete
+static void func_c2bfcd(void); // Incomplete
+static void func_c2bfd4(void); // Incomplete
+static void func_c2bff4(void); // Incomplete
+static void func_c2c003(void); // Incomplete
+static void func_c2c041(void); // Incomplete
+static void func_c2c046(void); // Incomplete
+static void func_c2c05e(void); // Incomplete
+static void func_c2c069(void); // Incomplete
+static void func_c2c06c(void); // Incomplete
+static void func_c2c071(void); // Incomplete
+static void func_c2c0bd(void); // Incomplete
+static void func_c2c0c0(void); // Incomplete
+static void func_c2c0e2(void); // Incomplete
+static void func_c2c0ed(void); // Incomplete
+static void func_c2c0f7(void); // Incomplete
+static void func_c2c146(void); // Incomplete
+static void func_c2c162(void); // Incomplete
+static void func_c2c16a(void); // Incomplete
+static void func_c2c1a6(void); // Incomplete
+static void loadMenuTilemap(void); // Incomplete
+static void func_c2c1f7(void); // Incomplete
+static void func_c2c1fd(void); // Incomplete
+static void func_c2c242(void); // Incomplete
+static void menuTilemapCmd00(void); // Incomplete
+static void menuTilemapCmd01(void); // Incomplete
+static void menuTilemapCmd05(void); // Incomplete
+static void func_c2c272(void); // Incomplete
+static void func_c2c27b(void); // Incomplete
+static void func_c2c28c(void); // Incomplete
+static void menuTilemapCmd02(void); // Incomplete
+static void func_c2c2cc(void); // Incomplete
+static void menuTilemapCmd03(void); // Incomplete
+static void menuTilemapCmd_drawMenuText(void); // Incomplete
+static void menuState08(void); // Incomplete
+static void menuState09(void); // Incomplete
+static void func_c2c3d2(void); // Incomplete
+static void func_c2c3fd(void); // Incomplete
+static void func_c2c419(void); // Incomplete
+static void menuState0c(void); // Incomplete
+static void func_c2c4da(void); // Incomplete
+static void func_c2c51d(void); // Incomplete
+static void func_c2c544(void); // Incomplete
+static void func_c2c551(void); // Incomplete
+static void menuState0b(void); // Incomplete
+static void func_c2c59c(void); // Incomplete
+static void menuState0a(void); // Incomplete
+static void menuState07(void); // Incomplete
+static void func_c2c6ba(void); // Incomplete
+static void func_c2c6e9(void); // Incomplete
+static void menuState06(void); // Incomplete
+static void func_c2c73d(void); // Incomplete
+static void func_c2c780(void); // Incomplete
+static void func_c2c7bd(void); // Incomplete
+static void menuState05(void); // Incomplete
+static void menuState04(void); // Incomplete
+static void func_c2c8de(void); // Incomplete
+static void func_c2c941(void); // Incomplete
+static void func_c2c954(void); // Incomplete
+static void menuState03(void); // Incomplete
+static void func_c2caa5(void); // Incomplete
+static void func_c2cac8(void); // Incomplete
+static void func_c2cb8c(void); // Incomplete
+static void func_c2cb95(void); // Incomplete
+static void func_c2cbe1(void); // Incomplete
+static void func_c2cbf1(void); // Incomplete
+static void func_c2cbf8(void); // Incomplete
+static void func_c2cc9e(void); // Incomplete
+static void menuState_job(void); // Incomplete
+static void func_c2cd08(void); // Incomplete
+static void updateSelectedJobPalette(void); // Incomplete
+static void updateCurrentCharData(void); // Incomplete
+static void updateJobSprite(void); // Incomplete
+static void updateCharSprite(void); // Incomplete
+static void updateJobStatsAbilities(void); // Incomplete
+static void getAvailableJobs(void); // Incomplete
+static void menuState_ability(void); // Incomplete
+static void func_c2cfa4(void); // Incomplete
+static void func_c2cfbd(void); // Incomplete
+static void menuState_main(void); // Incomplete
+static void func_c2d04c(void); // Incomplete
+static void func_c2d0b2(void); // Incomplete
+static void func_c2d210(void); // Incomplete
+static void func_c2d230(void); // Incomplete
+static void func_c2d25b(void); // Incomplete
+static void func_c2d298(void); // Incomplete
+static void func_c2d2db(void); // Incomplete
+static void func_c2d304(void); // Incomplete
+static void func_c2d34c(void); // Incomplete
+static void func_c2d37b(void); // Incomplete
+static void func_c2d388(void); // Incomplete
+static void func_c2d3db(void); // Incomplete
+static void func_c2d42e(void); // Incomplete
+static void updateWindowColor(void); // Incomplete
+static void func_c2d45f(void); // Incomplete
+static void func_c2d492(void); // Incomplete
+static void func_c2d4b4(void); // Incomplete
+static void func_c2d4c5(void); // Incomplete
+static void func_c2d4db(void); // Incomplete
+static void func_c2d503(void); // Incomplete
+static void func_c2d533(void); // Incomplete
+static void func_c2d54a(void); // Incomplete
+static void func_c2d554(void); // Incomplete
+static void func_c2d55d(void); // Incomplete
+static void func_c2d571(void); // Incomplete
+static void func_c2d588(void); // Incomplete
+static void func_c2d59d(void); // Incomplete
+static void func_c2d5d3(void); // Incomplete
+static void func_c2d5db(void); // Incomplete
+static void func_c2d5ef(void); // Incomplete
+static void func_c2d60b(void); // Incomplete
+static void func_c2d658(void); // Incomplete
+static void func_c2d662(void); // Incomplete
+static void func_c2d6a4(void); // Incomplete
+static void setFontColor(void); // Incomplete
+static void func_c2d717(void); // Incomplete
+static void func_c2d760(void); // Incomplete
+static void func_c2d7ca(void); // Incomplete
+static void func_c2d7d8(void); // Incomplete
+static void func_c2d7f6(void); // Incomplete
+static void func_c2d802(void); // Incomplete
+static void func_c2d80d(void); // Incomplete
+static void func_c2d837(void); // Incomplete
+static void getAvailableAbilities(void); // Incomplete
+static void buildListFromRAMBits(void); // Incomplete
+static void func_c2d8e4(void); // Incomplete
+static void func_c2d93f(void); // Incomplete
+static void menuCmd_GalufToKrile(void); // Incomplete
+static void func_c2d9ab(void); // Incomplete
+static void func_c2d9fb(void); // Incomplete
+static void func_c2da16(void); // Incomplete
+static void func_c2da9d(void); // Incomplete
+static void func_c2daa4(void); // Incomplete
+static void func_c2dada(void); // Incomplete
+static void func_c2daef(void); // Incomplete
+static void func_c2db66(void); // Incomplete
+static void func_c2db92(void); // Incomplete
+static void func_c2dbbd(void); // Incomplete
+static void func_c2dbce(void); // Incomplete
+static void func_c2dbe8(void); // Incomplete
+static void func_c2dbf9(void); // Incomplete
+static void func_c2dc0a(void); // Incomplete
+static void func_c2dc1b(void); // Incomplete
+static void func_c2dcd2(void); // Incomplete
+static void func_c2dcfe(void); // Incomplete
+static void func_c2dd0f(void); // Incomplete
+static void func_c2dd20(void); // Incomplete
+static void func_c2dd5a(void); // Incomplete
+static void func_c2dd6b(void); // Incomplete
+static void func_c2dd8e(void); // Incomplete
+static void func_c2dda8(void); // Incomplete
+static void func_c2ddb5(void); // Incomplete
+static void func_c2ddc6(void); // Incomplete
+static void func_c2ddd7(void); // Incomplete
+static void func_c2de3e(void); // Incomplete
+static void func_c2dec7(void); // Incomplete
+static void func_c2df4d(void); // Incomplete
+static void func_c2df7f(void); // Incomplete
+static void func_c2e002(void); // Incomplete
+static void func_c2e050(void); // Incomplete
+static void func_c2e0a8(void); // Incomplete
+static void func_c2e0b0(void); // Incomplete
+static void func_c2e0b8(void); // Incomplete
+static void func_c2e0c0(void); // Incomplete
+static void func_c2e0c8(void); // Incomplete
+static void playSoundEffect(void); // Incomplete
+static void func_c2e0f7(void); // Incomplete
+static void func_c2e178(void); // Incomplete
+static void func_c2e18f(void); // Incomplete
+static void func_c2e1a6(void); // Incomplete
+static void func_c2e211(void); // Incomplete
+static void func_c2e286(void); // Incomplete
+static void func_c2e2ce(void); // Incomplete
+static void func_c2e328(void); // Incomplete
+static void func_c2e367(void); // Incomplete
+static void func_c2e3a6(void); // Incomplete
+static void func_c2e3e3(void); // Incomplete
+static void func_c2e3f3(void); // Incomplete
+static void drawSpellName(void); // Incomplete
+static void drawItemName(void); // Incomplete
+static void func_c2e464(void); // Incomplete
+static void getCharJobData(void); // Incomplete
+static void getPtrCharJobData(void); // Incomplete
+static void func_c2e4c7(void); // Incomplete
+static void func_c2e4df(void); // Incomplete
+static void func_c2e4e1(void); // Incomplete
+static void func_c2e4ed(void); // Incomplete
+static void func_c2e552(void); // Incomplete
+static void func_c2e57f(void); // Incomplete
+static void drawText(void); // Incomplete
+static void getDakuten(void); // Incomplete
+static void func_c2e610(void); // Incomplete
+static void func_c2e653(void); // Incomplete
+static void func_c2e658(void); // Incomplete
+static void func_c2e65b(void); // Incomplete
+static void func_c2e66f(void); // Incomplete
+static void func_c2e67c(void); // Incomplete
+static void updateCursorSprite(void); // Incomplete
+static void func_c2e6d6(void); // Incomplete
+static void updateSpellLevels(void); // Incomplete
+static void setSpellLevels(void); // Incomplete
+static void updateCharProps(void); // Incomplete
+static void func_c2e7b3(void); // Incomplete
+static void func_c2e7cc(void); // Incomplete
+static void func_c2e879(void); // Incomplete
+static void getJobInnateAbilities(void); // Incomplete
+static void func_c2e933(void); // Incomplete
+static void func_c2e973(void); // Incomplete
+static void func_c2e9ce(void); // Incomplete
+static void func_c2eaac(void); // Incomplete
+static void func_c2eaee(void); // Incomplete
+static void func_c2eb82(void); // Incomplete
+static void func_c2ebbd(void); // Incomplete
+static void applyStatBonus(void); // Incomplete
+static void func_c2ec76(void); // Incomplete
+static void func_c2ecd9(void); // Incomplete
+static void func_c2ecf3(void); // Incomplete
+static void func_c2ed5e(void); // Incomplete
+static void func_c2ed87(void); // Incomplete
+static void func_c2edb5(void); // Incomplete
+static void func_c2edd3(void); // Incomplete
+static void func_c2ee03(void); // Incomplete
+static void func_c2ee1b(void); // Incomplete
+static void func_c2ee63(void); // Incomplete
+static void func_c2ee94(void); // Incomplete
+static void func_c2eec8(void); // Incomplete
+static void func_c2eee7(void); // Incomplete
+static void func_c2eefd(void); // Incomplete
+static void func_c2ef16(void); // Incomplete
+static void func_c2ef89(void); // Incomplete
+static void func_c2ef9f(void); // Incomplete
+static void func_c2efc5(void); // Incomplete
+static void func_c2efe3(void); // Incomplete
+static void giveSpell(void); // Incomplete
+static void func_c2f01d(void); // Incomplete
+static void func_c2f03e(void); // Incomplete
+static void func_c2f070(void); // Incomplete
+static void func_c2f0e6(void); // Incomplete
+static void func_c2f10e(void); // Incomplete
+static void drawShopTypeName(void); // Incomplete
+static void loadShopProps(void); // Incomplete
+static void getItemPrice(void); // Incomplete
+static void func_c2f2cd(void); // Incomplete
+static void func_c2f2fb(void); // Incomplete
+static void func_c2f32a(void); // Incomplete
+static void func_c2f39c(void); // Incomplete
+static void func_c2f3d1(void); // Incomplete
+static void func_c2f3dd(void); // Incomplete
+static void func_c2f3f6(void); // Incomplete
+static void func_c2f450(void); // Incomplete
+static void func_c2f463(void); // Incomplete
+static void func_c2f4d4(void); // Incomplete
+static void func_c2f4ef(void); // Incomplete
+static void func_c2f561(void); // Incomplete
+static void func_c2f588(void); // Incomplete
+static void updateMonoStereoSetting(void); // Incomplete
+static void func_c2f5c0(void); // Incomplete
+static void func_c2f63d(void); // Incomplete
+static void func_c2f6af(void); // Incomplete
+static void func_c2f6d6(void); // Incomplete
+static void func_c2f709(void); // Incomplete
+static void updateConfigSettings(void); // Incomplete
+static void func_c2f7a6(void); // Incomplete
+static void func_c2f7fc(void); // Incomplete
+static void func_c2f810(void); // Incomplete
+static void func_c2f869(void); // Incomplete
+static void func_c2f8b1(void); // Incomplete
+static void func_c2f90b(void); // Incomplete
+static void func_c2f932(void); // Incomplete
+static void func_c2f949(void); // Incomplete
+static void func_c2f984(void); // Incomplete
+static void func_c2f9d6(void); // Incomplete
+static void func_c2fa75(void); // Incomplete
+static void func_c2fa92(void); // Incomplete
+static void func_c2faad(void); // Incomplete
+static void copySpriteDataToVRAM(void); // Incomplete
+static void func_c2faf0(void); // Incomplete
+static void menuNMI(void); // Incomplete
+static void menuIRQ(void); // Incomplete
+static void func_c2fc2f(void); // Incomplete
+static void func_c2fcb1(void); // Incomplete
+static void func_c2fd09(void); // Incomplete
+static void func_c2fd2e(void); // Incomplete
+static void func_c2fd75(void); // Incomplete
+static void func_c2fdca(void); // Incomplete
+static void func_c2fe05(void); // Incomplete
+static void func_c2fe41(void); // Incomplete
+static void updateJoypadInput(void); // Incomplete
+static void func_c2fedo(void); // Incomplete
+static void setControllerSettingsBattle(void); // Incomplete
+static void setControllerSettingsField(void); // Incomplete
+void updateJoypadConfig(void); // Incomplete
+static void func_c2ffc2(void); // Incomplete
 
 // Address: $7e0500 - $7e0aff
 Save current_save;
@@ -609,7 +609,6 @@ void execMenu(void) {
 
 // Address: _a033
 // Menu Command $00
-// Unstarted
 static void mainMenu(void) {
     // LoaD $35 to A
     // STore A to $44
@@ -622,7 +621,6 @@ static void mainMenu(void) {
 
 // Address: _a03b
 // Menu Command $01
-// Unstarted
 static void collectItemsAfterBattle(void) {
     // LoaD #$0a to A
     // BRAnch to _a06b
@@ -632,7 +630,6 @@ static void collectItemsAfterBattle(void) {
 
 // Address: _a03f
 // Menu Command $02
-// Unstarted
 static void shop(void) {
     // LoaD #$06 to A
     // BRAnch to _a06b
@@ -641,7 +638,6 @@ static void shop(void) {
 
 // Address: _a043
 // Menu Command $03
-// Unstarted
 static void initMenuSettings(void) {
     // Jump to SubRoutine _a1f0
     func_c2a1f0();
@@ -662,7 +658,6 @@ static void initMenuSettings(void) {
 
 // Address: _a053
 // Menu Command $04
-// Unstarted
 static void tutorial(void) {
     // LoaD #$80 to A
     // TeSt A Bits for zero flags
@@ -679,7 +674,6 @@ static void tutorial(void) {
 
 // Address: _a062
 // Menu Command $06
-// Unstarted
 // Tramsfer Galuf's stats to Krile
 static void galufToKrile(void) {
     // Store Zero to $35
@@ -691,14 +685,12 @@ static void galufToKrile(void) {
 
 // Address: _a069
 // Menu Command $05
-// Unstarted
 // Returns: Immediate value #$0d
 static void nameChange(void) {
     // Load #$0d to A
 }
 
 // Address: _a06b
-// Unstarted
 // Input: uint8_t (previously stored in A)
 static void showMenu(void) {
     // Shorten A
@@ -789,7 +781,6 @@ static void showMenu(void) {
 
 // Address: _a0f6
 // Direct Memory Access
-// Unstarted
 // +X: address of dma parameters (+$C00000)
 static void dma(void) {
     // LoaD #$4300 to Y
@@ -801,7 +792,6 @@ static void dma(void) {
 }
 
 // Address: _a106
-// Unstarted
 static void waitForVblank(void) {
     // PusH Processor status
     // Shorten A
@@ -1037,10 +1027,8 @@ static void func_c2a1cf(void) {
     // Return from Subroutine
 }
 
-// Unstarted
 static void func_c2a1f0(void) {}
 
-// Unstarted
 // This function seems to upload text.
 static void func_c2a23b(void) {
     // Store A to ($e0 + y)
@@ -1054,7 +1042,6 @@ static void func_c2a23b(void) {
     // ReTurn to Subroutine
 }
 
-// Unstarted
 static void func_c2a247(void) {
     // PusH Processor status register
     // Lengthen A
@@ -1125,7 +1112,6 @@ static void func_c2a247(void) {
 }
 
 // Address: _a2e9
-// Unstarted
 static void getNextInput(void) {
     // Shorten A
     // Lenghten Indexes
@@ -1182,7 +1168,6 @@ static void getNextInput(void) {
 }
 
 // Address: _a33a
-// Unstarted
 static void getPressedBtnIdx(void) {
     // PusH Proccessor
     // Lengthen A
@@ -1422,7 +1407,6 @@ static void func_c2b25b(void) {}
 
 static void func_c2b25e(void) {}
 
-// Unstarted
 static void func_c2b2bd(void) {}
 
 static void func_c2b2fb(void) {}
@@ -1542,7 +1526,6 @@ static void func_c2becd(void) {}
 static void func_c2bef4(void) {}
 
 // Address: _bef7
-// Unstarted
 static void saveToSlot(void) {
     // PusH Process status register
     // Lengthen A
@@ -1585,7 +1568,6 @@ static void saveToSlot(void) {
 }
 
 // Address: _bf2e
-// Unstarted
 static void loadFromSlot(void) {
     // Load $55 to A
     // CoMPare A with #$01
@@ -1649,7 +1631,6 @@ static void loadFromSlot(void) {
     //  - exit menu
 }
 
-// Unstarted
 // Get Pointer to Save Slot in SRAM
 static void func_c2bf7d(void) {
     // Load $6f to A
@@ -1661,7 +1642,6 @@ static void func_c2bf7d(void) {
     // Return To Subroutine
 }
 
-// Unstarted
 static void func_c2bf89(void) {}
 
 static void func_c2bf9d(void) {}
@@ -1698,7 +1678,6 @@ static void func_c2c0f7(void) {}
 
 static void func_c2c146(void) {}
 
-// Unstarted
 static void func_c2c162(void) {
     // Load $5b to A
     // CLear Carry flag
@@ -1706,7 +1685,6 @@ static void func_c2c162(void) {
     // JuMP to _c2a47c
 }
 
-// Unstarted
 // TODO: MVN
 static void func_c2c16a(void) {
     // PusH data Bank
@@ -1904,7 +1882,6 @@ static void func_c2d0b2(void) {}
 
 static void func_c2d210(void) {}
 
-// Unstarted
 static void func_c2d230(void) {
     // [LBL d230] PusH data Bank register
     // PusH Process status register
@@ -1935,7 +1912,6 @@ static void func_c2d230(void) {
     // ReTurn from Subroutine
 }
 
-// Unstarted
 static void func_c2d25b(void) {
     // Load $8e to X
     
@@ -2041,7 +2017,6 @@ static void func_c2d34c(void) {
     // Return To Subroutine
 }
 
-// Unstarted
 static void func_c2d37b(void) {
     // PusH data Bank
     // PusH Processor status
@@ -2105,7 +2080,6 @@ static void func_c2d3db(void) {
 static void func_c2d42e(void) {}
 
 // Address: _d447
-// Unstarted
 static void updateWindowColor(void) {
     // PusH Processor status
     // Lengthen A
@@ -2124,7 +2098,6 @@ static void updateWindowColor(void) {
     // ReTurn to Subroutine
 }
 
-// Unstarted
 static void func_c2d45f(void) {
     // PusH data Bank
     // PusH Processor status
@@ -2518,11 +2491,9 @@ static void func_c2f4ef(void) {}
 
 static void func_c2f561(void) {}
 
-// Unstarted
 static void func_c2f588(void) {}
 
 // Address: _f5a9
-// Unstarted
 static void updateMonoStereoSetting(void) {
     // PusH Processor status
     // Shorten A
@@ -2607,7 +2578,6 @@ static void func_c2fe05(void) {}
 static void func_c2fe41(void) {}
 
 // Address: _fe5b
-// Unstarted
 static void updateJoypadInput(void) {
     // PusH Processor status
     // Lengthen A
@@ -2686,7 +2656,6 @@ static void updateJoypadInput(void) {
 static void func_c2fedo(void) {}
 
 // Address: _ff56
-// Unstarted
 static void setControllerSettingsBattle(void) {
     // PusH Processor status
     // Lengthen A
@@ -2704,7 +2673,6 @@ static void setControllerSettingsBattle(void) {
 }
 
 // Address: _ff68
-// Unstarted
 static void setControllerSettingsField(void) {
     // PusH Processor status
     // Lengthen A
@@ -2723,7 +2691,6 @@ static void setControllerSettingsField(void) {
 }
 
 // Address: _ff7d
-// Unstarted
 void updateJoypadConfig(void) {
     // PusH data Bank
     // PusH Direct page
@@ -2773,7 +2740,6 @@ void updateJoypadConfig(void) {
     // ReTurn to Subroutine
 }
 
-// Unstarted
 static void func_c2ffc2(void) {
     // PusH X
     // And A with #$00fc

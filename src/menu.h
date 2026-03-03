@@ -151,9 +151,9 @@ typedef struct {
     uint8_t enableTimer;
 } Save;
 
-void func_a00a(void);
-void func_a00f(void);
-void execMenu(void);
-void updateJoypadConfig(void);
+void func_a00a(void); // Incomplete
+void func_a00f(void); // Incomplete
+void execMenu(void); // Incomplete
+void updateJoypadConfig(void); // Incomplete
 
 #endif

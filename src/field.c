@@ -16,472 +16,472 @@
 //.import InitSound_ext, ExecSound_ext
 #include "sound.h"
 
-static void fieldLoop(void);
-static void fieldNMI(void);
-static void fieldIRQ(void);
-static void execTriggerScript(void);
-static void checkTriggers(void);
-static void checkVehicle(void);
-static void func_c00853(void);
-static void boardChoco(void);
-static void landChoco(void);
-static void boardBlkChoco(void);
-static void boardHiryuu(void);
-static void landBlkChoco(void);
-static void landHiryuu(void);
-static void boardSub(void);
-static void landSub(void);
-static void func_c009c6(void);
-static void func_c009f7(void);
-static void func_c00a11(void);
-static void boardShip(void);
-static void landShip(void);
-static void boardAirship(void);
-static void landAirship(void);
-static void func_c00c9f(void);
-static void func_c00d3d(void);
-static void checkTresure(void);
-static void giveGil(void);
-static void calcGil(void);
-static void checkPlayerMovementWorld(void);
-static void func_c0103a(void);
-static void func_c0104a(void);
-static void func_c01055(void);
-static void func_c010c8(void);
-static void func_c0112d(void);
-static void getWorldTileTransparantUnderwater(void);
-static void checkPlayerMovementSub(void);
-static void updateDestZLevel(void);
-static void updateCurZLevel(void);
-static void doTileDamage(void);
-static void doPoisonDamage(void);
-static void poisonMosaic(void);
-static void updateCurPriority(void);
-static void updateDestPriority(void);
-static void checkDoor(void);
-static void checkFindPits(void);
-static void calcParallaxScroll(void);
-static void checkPartyCanMove(void);
-static void func_c016b7(void);
-static void func_c016da(void);
-static void updateLocalTilesWorld(void);
-static void updateLocalTilesNorm(void);
-static void getTilePropertiesCur(void);
-static void func_c01a1d(void);
-static void func_c01ae4(void);
-static void updateTopChar(void);
-static void updatePlayerGfx(void);
-static void copyPlayerGfx(void);
-static void copyAltGfx(void);
-static void func_c01e64(void);
-static void func_c01ec5(void);
-static void func_c01f57(void);
-static void func_c01fb4(void);
-static void func_c01fff(void);
-static void func_c0201f(void);
-static void func_c0203f(void);
-static void func_c02137(void);
-static void func_c022fb(void);
-static void drawPlayerSprite(void);
-static void loadOverlayGfx(void);
-static void loadOverlayProp(void);
-static void loadOverlaySprites(void);
-static void updateOverlay(void);
-static void execNPCScript(void);
-static void checkNPCEvents(void);
-static void func_c0324b(void);
-static void func_c03289(void);
-static void updateObjects(void);
-static void canNPCMoveToTile(void);
-static void moveTowardsParty(void);
-static void moveAwayFromParty(void);
-static void drawHiryuu(void);
-static void drawObjectSprites(void);
-static void updateObjectPositions(void);
-static void getPointerToObjLayout(void);
-static void clearObjLayout(void);
-static void addObjectToObjLayout(void);
-static void removeObjectToObjLayout(void);
-static void getObjectInObjLayout(void);
-static void getTileZ(void);
-static void loadNPCGfx(void);
-static void getPointerToNPCProperties(void);
-static void LoadNPCs(void);
-static void greyscalePalette(void);
-static void func_c0406b(void);
-static void copyDataToVram(void);
-static void func_c04107(void);
-static void func_c041f1(void);
-static void func_c0420a(void);
-static void showCutsceneFromField(uint8_t id);
-static void initMapBank(void);
-static void initVehicles(void);
-static void initCharNames(void);
-static void openMenu(void);
-static void func_c0456b(void);
-static void func_c04583(void);
-static void playSong(void);
-static void playSound(void);
-static void playSfx(void);
-static void updateScreenMosaic(void);
-static void func_c046c4(void);
-static void func_c04741(void);
-static void func_c04798(void);
-static void func_c047aa(void);
-static void func_c047f7(void);
-static void func_c04834(void);
-static void initNPCFlags(void);
-static void initEventFlags(void);
-static void initNewCharData(void);
-static void resetRam_0000_to_1D00(void);
-static void resetRam_0B00_to_1D00(void);
-static void func_c04931(void);
-static void initColorAddition(void);
-static void initColorSubtraction(void);
-static void updateFixedColor(void);
-static void setFixedColorParams(void);
-static void initFadeIn(void);
-static void initFadeOut(void);
-static void func_c04a7a(void);
-static void func_c04aad(void);
-static void waitForKeypress(void);
-static void tfrVehicleGfx(void);
-static void tfrWorldGfx(void);
-static void updateScrollingRegisters(void);
-static void updateCtrl(void);
-static void resetSprites(void);
-static void hideSpritesInCutscenes(void);
-static void tfrVram(void);
-static void disableInterrupts(void);
-static void enableInterrupts(void);
-static void clearVramForCutscenes(void);
-static void fillVram(void);
-static void tfrSprites(void);
-static void tfrPallets(void);
-static void func_c04d8e(void);
-static void waitVram(void);
-static void initInterrupts(void);
-static void initHardware(void);
-static void generateRandom(void);
-static void crystalShatterAnim(void);
-static void loadMap(void);
-static void loadMapNoFade(void);
-static void reloadMap(void);
-static void loadParentMap(void);
-static void func_c054a7(void);
-static void func_c054f6(void);
-static void loadWorldMap(void);
-static void loadWorldMapPalette(void);
-static void loadSubMap(void);
-static void func_c057f9(void);
-static void initAutoScroll(void);
-static void loadMapLayout(void);
-static void loadMapPalette(void);
-static void loadMapGfx(void);
-static void func_c05adb(void);
-static void loadMapProps(void);
-static void initMapColorMathSettings(void);
-static void func_c05bf4(void);
-static void func_c05bf8(void);
-static void func_c05c01(void);
-static void loadTreasureChests(void);
-static void updateWindowMaskCircle(void);
-static void func_c05d54(void);
-static void func_c05d87(void);
-static void copyTileLayoutToVram(void);
-static void func_c05e61(void);
-static void func_c05ee5(void);
-static void func_c05f3e(void);
-static void func_c05f8d(void);
-static void pitfallFadeOutAnim(void);
-static void fadeOutMap(void);
-static void pitfallFadeInAnim(void);
-static void fadeInMap(void);
-static void func_c0612b(void);
-static void func_c06134(void);
-static void func_c061d7(void);
-static void func_c062bc(void);
-static void func_c0630a(void);
-static void func_c0637e(void);
-static void func_c063d4(void);
-static void func_c06465(void);
-static void func_c064bb(void);
-static void func_c06513(void);
-static void func_c065a3(void);
-static void showMiniMap(void);
-static void func_c06731(void);
-static void func_c06755(void);
-static void func_c0679c(void);
-static void func_c067ec(void);
-static void func_c06831(void);
-static void loadWorldTilemap(void);
-static void loadSubTilemap(void);
-static void fillTilemap(void);
-static void loadWorldTileset(void);
-static void loadSubTileset(void);
-static void func_c06b99(void);
-static void func_c06bac(void);
-static void initBgScrollPos(void);
-static void func_c06c4a(void);
-static void func_c06c6a(void);
-static void func_c06c9d(void);
-static void func_c06cd4(void);
-static void func_c06d0c(void);
-static void func_c06de9(void);
-static void horizontalScrolling(void);
-static void verticalScrolling(void);
-static void modBgTilemap(void);
-static void func_c0703e(void);
-static void func_c0707d(void);
-static void func_c07221(void);
-static void func_c0722f(void);
-static void func_c07241(void);
-static void showDialog(void);
-static void getDialogPtr(void);
-static void loadDialogText(void);
-static void func_c08451(void);
-static void func_c08459(void);
-static void func_c08466(void);
-static void func_c08477(void);
-static void func_c08493(void);
-static void func_c084af(void);
-static void func_c084e9(void);
-static void func_c08508(void);
-static void func_c0850d(void);
-static void func_c08512(void);
-static void getSpellName(void);
-static void getItemName(void);
-static void getGilAmount(void);
-static void func_c08b53(void);
-static void func_c08ba4(void);
-static void func_c08bd3(void);
-static void func_c08be4(void);
-static void func_c08c2e(void);
-static void func_c08c7b(void);
-static void func_c08c92(void);
-static void func_c08d0e(void);
-static void func_c08d3b(void);
-static void func_c08e08(void);
-static void func_c08e23(void);
-static void func_c08ed3(void);
-static void loadFontGfx(void);
-static void func_c08f54(void);
-static void drawYesNoIndicator(void);
-static void showYesNoWindow(void);
-static void func_c090ad(void);
-static void showGPWindow(void);
-static void func_c091ed(void);
-static void showMapTitle(void);
-static void initMapTitle(void);
-static void drawMapTitleWindow(void);
-static void hideMapTitleWindow(void);
-static void func_c09440(void);
-static void func_c094a8(void);
-static void func_c09618(void);
-static void func_c0964c(void);
-static void func_c09695(void);
-static void func_c09704(void);
-static void func_c09772(void);
-static void func_c0975f(void);
-static void updatePaletteAnim(void);
-static void func_c097e2(void);
-static void func_c0980d(void);
-static void func_c09838(void);
-static void func_c09865(void);
-static void func_c098e2(void);
-static void initPaletteAnim(void);
-static void func_c0996d(void);
-static void updateMapAnim(void);
-static void initMapAnim(void);
-static void loadAnimTileGfx(void);
-static void func_c09c3d(void);
-static void func_c09cac(void);
-static void updateTimer(void);
-static void speedUpMusicWithTimer(void);
-static void execEvent(void);
-static void nextEventCmd(void);
-static void terminateEvent(void);
-static void func_c0a365(void);
-static void func_c0a380(void);
-static void func_c0a3c9(void);
-static void func_c0a40a(void);
-static void func_c0a449(void);
-static void func_c0a45f(void);
-static void eventCmd_bf(void);
-static void eventCmd_bf1a(void);
-static void eventCmd_bf18(void);
-static void func_c0a7be(void);
-static void eventCmd_bf19(void);
-static void eventCmd_bf15(void);
-static void func_c0a933(void);
-static void eventCmd_bf14(void);
-static void func_c0aa0e(void);
-static void eventCmd_bf13(void);
-static void eventCmd_bf12(void);
-static void func_c0ab8e(void);
-static void func_c0abb5(void);
-static void eventCmd_bf0f(void);
-static void eventCmd_bf10(void);
-static void eventCmd_bf07(void);
-static void eventCmd_bf08(void);
-static void eventCmd_bf09(void);
-static void eventCmd_bf0a(void);
-static void func_c0ac80(void);
-static void func_c0ac8b(void);
-static void func_c0acb1(void);
-static void func_c0acdd(void);
-static void func_c0ad01(void);
-static void func_c0ad28(void);
-static void func_c0ad54(void);
-static void func_c0ad86(void);
-static void func_c0ada0(void);
-static void func_c0adb7(void);
-static void func_c0add6(void);
-static void func_c0ae0b(void);
-static void func_c0ae32(void);
-static void eventCmd_bf00(void);
-static void eventCmd_bf01(void);
-static void eventCmd_bf16(void);
-static void eventCmd_bf02(void);
-static void eventCmd_bf11(void);
-static void eventCmd_bf05(void);
-static void func_c0b240(void);
-static void eventCmd_bf04(void);
-static void func_c0b2a5(void);
-static void func_c0b35c(void);
-static void func_c0b371(void);
-static void func_c0b3cd(void);
-static void eventCmd_bf06(void);
-static void func_c0b594(void);
-static void eventCmd_bf0b(void);
-static void func_c0b5fd(void);
-static void eventCmd_bf17(void);
-static void eventCmd_bf03(void);
-static void func_c0b750(void);
-static void func_c0b75e(void);
-static void func_c0b791(void);
-static void eventCmd_bf0c(void);
-static void eventCmd_bf0e(void);
-static void eventCmd_bf0d(void);
-static void func_c0b854(void);
-static void eventCmd_ea(void);
-static void eventCmd_eb(void);
-static void eventCmd_e9(void);
-static void eventCmd_e7(void);
-static void eventCmd_e6(void);
-static void eventCmd_e4(void);
-static void eventCmd_e5(void);
-static void eventCmd_dd(void);
-static void eventCmd_da(void);
-static void func_c0b9f5(void);
-static void eventCmd_79(void);
-static void eventCmd_db(void);
-static void eventCmd_d9(void);
-static void changeColorPalette(void);
-static void eventCmd_b6(void);
-static void eventCmd_ae(void);
-static void eventCmd_a6(void);
-static void eventCmd_a7(void);
-static void eventCmd_7b(void);
-static void eventCmd_7f(void);
-static void eventCmd_ad(void);
-static void calcInnPrice(void);
-static void eventCmd_ac(void);
-static void eventCmd_c0(void);
-static void func_c0bc9f(void);
-static void eventCmd_d0(void);
-static void eventCmd_70(void);
-static void eventCmd_dc(void);
-static void eventCmd_7a(void);
-static void eventCmd_a1(void);
-static void eventCmd_e8(void);
-static void eventCmd_bd(void);
-static void eventCmd_e2(void);
-static void eventBattle(void);
-static void eventCmd_b7(void);
-static void eventCmd_c6(void);
-static void eventCmd_af(void);
-static void eventCmd_b0(void);
-static void calcGilForEvent(void);
-static void eventCmd_aa(void);
-static void eventCmd_ab(void);
-static void findItemSlot(void);
-static void eventCmd_ba(void);
-static void eventCmd_bb(void);
-static void eventCmd_bc(void);
-static void eventCmd_a8(void);
-static void eventCmd_a9(void);
-static void getPtrToCharData(void);
-static void func_c0c19d(void);
-static void eventCmd_c2(void);
-static void eventCmd_d2(void);
-static void eventCmd_c9(void);
-static void eventCmd_b4(void);
-static void eventCmd_d4(void);
-static void eventCmd_b5(void);
-static void eventCmd_d5(void);
-static void eventCmd_76(void);
-static void eventCmd_78(void);
-static void eventCmd_77(void);
-static void eventCmd_f1(void);
-static void eventCmd_f0(void);
-static void eventCmd_d6(void);
-static void eventCmd_e0(void);
-static void eventCmd_e1(void);
-static void eventCmd_e3(void);
-static void func_c0c43f(void);
-static void eventCmd_f4(void);
-static void eventCmd_f3(void);
-static void eventCmd_7c(void);
-static void eventCmd_d8(void);
-static void eventCmd_d3(void);
-static void removeCurObjFromObjLayout(void);
-static void eventCmd_d1(void);
-static void eventCmd_d7(void);
-static void eventCmd_7d(void);
-static void eventCmd_c5(void);
-static void eventCmd_b8(void);
-static void eventCmd_b9(void);
-static void eventCmd_7e(void);
-static void eventCmd_c3(void);
-static void eventCmd_c4(void);
-static void eventCmd_be(void);
-static void eventCmd_c1(void);
-static void eventCmd_b1(void);
-static void func_c0c6de(void);
-static void eventCmd_b2(void);
-static void eventCmd_b3(void);
-static void eventCmd_a0(void);
-static void eventCmd_a2(void);
-static void eventCmd_a4(void);
-static void eventCmd_a3(void);
-static void eventCmd_a5(void);
-static void clearEventFlag_256_511(void);
-static void eventCmd_c8(void);
-static void initObjectMovement(void);
-static void func_c0c7f9(void);
-static void func_c0c932(void);
-static void initCameraMovement(void);
-static void giveSpell(void);
-static void getNPCFlag(void);
-static void eventCmd_ca(void);
-static void eventCmd_cb(void);
-static void setBattleFlag(void);
-static void clearBattleFlag(void);
-static void getTrasureFlag(void);
-static void setTreasureFlag(void);
-static void getEventFlag00xx(void);
-static void setEventFlag01xx(void);
-static void getFlagIndex(void);
-static void checkRandomBattlesSub(void);
-static void checkRandomBattlesWorld(void);
-static void updateRandomForBattles(void);
-static void func_c0cc6d(void);
-static void battleBlurSub(void);
-static void battleBlurWorld(void);
-static void battleBlur(void);
-static void randomBattle(void);
-static void reset(void);
+static void fieldLoop(void); // Incomplete
+static void fieldNMI(void); // Incomplete
+static void fieldIRQ(void); // Incomplete
+static void execTriggerScript(void); // Incomplete
+static void checkTriggers(void); // Incomplete
+static void checkVehicle(void); // Incomplete
+static void func_c00853(void); // Incomplete
+static void boardChoco(void); // Incomplete
+static void landChoco(void); // Incomplete
+static void boardBlkChoco(void); // Incomplete
+static void boardHiryuu(void); // Incomplete
+static void landBlkChoco(void); // Incomplete
+static void landHiryuu(void); // Incomplete
+static void boardSub(void); // Incomplete
+static void landSub(void); // Incomplete
+static void func_c009c6(void); // Incomplete
+static void func_c009f7(void); // Incomplete
+static void func_c00a11(void); // Incomplete
+static void boardShip(void); // Incomplete
+static void landShip(void); // Incomplete
+static void boardAirship(void); // Incomplete
+static void landAirship(void); // Incomplete
+static void func_c00c9f(void); // Incomplete
+static void func_c00d3d(void); // Incomplete
+static void checkTresure(void); // Incomplete
+static void giveGil(void); // Incomplete
+static void calcGil(void); // Incomplete
+static void checkPlayerMovementWorld(void); // Incomplete
+static void func_c0103a(void); // Incomplete
+static void func_c0104a(void); // Incomplete
+static void func_c01055(void); // Incomplete
+static void func_c010c8(void); // Incomplete
+static void func_c0112d(void); // Incomplete
+static void getWorldTileTransparantUnderwater(void); // Incomplete
+static void checkPlayerMovementSub(void); // Incomplete
+static void updateDestZLevel(void); // Incomplete
+static void updateCurZLevel(void); // Incomplete
+static void doTileDamage(void); // Incomplete
+static void doPoisonDamage(void); // Incomplete
+static void poisonMosaic(void); // Incomplete
+static void updateCurPriority(void); // Incomplete
+static void updateDestPriority(void); // Incomplete
+static void checkDoor(void); // Incomplete
+static void checkFindPits(void); // Incomplete
+static void calcParallaxScroll(void); // Incomplete
+static void checkPartyCanMove(void); // Incomplete
+static void func_c016b7(void); // Incomplete
+static void func_c016da(void); // Incomplete
+static void updateLocalTilesWorld(void); // Incomplete
+static void updateLocalTilesNorm(void); // Incomplete
+static void getTilePropertiesCur(void); // Incomplete
+static void func_c01a1d(void); // Incomplete
+static void func_c01ae4(void); // Incomplete
+static void updateTopChar(void); // Incomplete
+static void updatePlayerGfx(void); // Incomplete
+static void copyPlayerGfx(void); // Incomplete
+static void copyAltGfx(void); // Incomplete
+static void func_c01e64(void); // Incomplete
+static void func_c01ec5(void); // Incomplete
+static void func_c01f57(void); // Incomplete
+static void func_c01fb4(void); // Incomplete
+static void func_c01fff(void); // Incomplete
+static void func_c0201f(void); // Incomplete
+static void func_c0203f(void); // Incomplete
+static void func_c02137(void); // Incomplete
+static void func_c022fb(void); // Incomplete
+static void drawPlayerSprite(void); // Incomplete
+static void loadOverlayGfx(void); // Incomplete
+static void loadOverlayProp(void); // Incomplete
+static void loadOverlaySprites(void); // Incomplete
+static void updateOverlay(void); // Incomplete
+static void execNPCScript(void); // Incomplete
+static void checkNPCEvents(void); // Incomplete
+static void func_c0324b(void); // Incomplete
+static void func_c03289(void); // Incomplete
+static void updateObjects(void); // Incomplete
+static void canNPCMoveToTile(void); // Incomplete
+static void moveTowardsParty(void); // Incomplete
+static void moveAwayFromParty(void); // Incomplete
+static void drawHiryuu(void); // Incomplete
+static void drawObjectSprites(void); // Incomplete
+static void updateObjectPositions(void); // Incomplete
+static void getPointerToObjLayout(void); // Incomplete
+static void clearObjLayout(void); // Incomplete
+static void addObjectToObjLayout(void); // Incomplete
+static void removeObjectToObjLayout(void); // Incomplete
+static void getObjectInObjLayout(void); // Incomplete
+static void getTileZ(void); // Incomplete
+static void loadNPCGfx(void); // Incomplete
+static void getPointerToNPCProperties(void); // Incomplete
+static void LoadNPCs(void); // Incomplete
+static void greyscalePalette(void); // Incomplete
+static void func_c0406b(void); // Incomplete
+static void copyDataToVram(void); // Incomplete
+static void func_c04107(void); // Incomplete
+static void func_c041f1(void); // Incomplete
+static void func_c0420a(void); // Incomplete
+static void showCutsceneFromField(uint8_t id); // Incomplete
+static void initMapBank(void); // Incomplete
+static void initVehicles(void); // Incomplete
+static void initCharNames(void); // Incomplete
+static void openMenu(void); // Incomplete
+static void func_c0456b(void); // Incomplete
+static void func_c04583(void); // Incomplete
+static void playSong(void); // Incomplete
+static void playSound(void); // Incomplete
+static void playSfx(void); // Incomplete
+static void updateScreenMosaic(void); // Incomplete
+static void func_c046c4(void); // Incomplete
+static void func_c04741(void); // Incomplete
+static void func_c04798(void); // Incomplete
+static void func_c047aa(void); // Incomplete
+static void func_c047f7(void); // Incomplete
+static void func_c04834(void); // Incomplete
+static void initNPCFlags(void); // Incomplete
+static void initEventFlags(void); // Incomplete
+static void initNewCharData(void); // Incomplete
+static void resetRam_0000_to_1D00(void); // Incomplete
+static void resetRam_0B00_to_1D00(void); // Incomplete
+static void func_c04931(void); // Incomplete
+static void initColorAddition(void); // Incomplete
+static void initColorSubtraction(void); // Incomplete
+static void updateFixedColor(void); // Incomplete
+static void setFixedColorParams(void); // Incomplete
+static void initFadeIn(void); // Incomplete
+static void initFadeOut(void); // Incomplete
+static void func_c04a7a(void); // Incomplete
+static void func_c04aad(void); // Incomplete
+static void waitForKeypress(void); // Incomplete
+static void tfrVehicleGfx(void); // Incomplete
+static void tfrWorldGfx(void); // Incomplete
+static void updateScrollingRegisters(void); // Incomplete
+static void updateCtrl(void); // Incomplete
+static void resetSprites(void); // Incomplete
+static void hideSpritesInCutscenes(void); // Incomplete
+static void tfrVram(void); // Incomplete
+static void disableInterrupts(void); // Incomplete
+static void enableInterrupts(void); // Incomplete
+static void clearVramForCutscenes(void); // Incomplete
+static void fillVram(void); // Incomplete
+static void tfrSprites(void); // Incomplete
+static void tfrPallets(void); // Incomplete
+static void func_c04d8e(void); // Incomplete
+static void waitVram(void); // Incomplete
+static void initInterrupts(void); // Incomplete
+static void initHardware(void); // Incomplete
+static void generateRandom(void); // Incomplete
+static void crystalShatterAnim(void); // Incomplete
+static void loadMap(void); // Incomplete
+static void loadMapNoFade(void); // Incomplete
+static void reloadMap(void); // Incomplete
+static void loadParentMap(void); // Incomplete
+static void func_c054a7(void); // Incomplete
+static void func_c054f6(void); // Incomplete
+static void loadWorldMap(void); // Incomplete
+static void loadWorldMapPalette(void); // Incomplete
+static void loadSubMap(void); // Incomplete
+static void func_c057f9(void); // Incomplete
+static void initAutoScroll(void); // Incomplete
+static void loadMapLayout(void); // Incomplete
+static void loadMapPalette(void); // Incomplete
+static void loadMapGfx(void); // Incomplete
+static void func_c05adb(void); // Incomplete
+static void loadMapProps(void); // Incomplete
+static void initMapColorMathSettings(void); // Incomplete
+static void func_c05bf4(void); // Incomplete
+static void func_c05bf8(void); // Incomplete
+static void func_c05c01(void); // Incomplete
+static void loadTreasureChests(void); // Incomplete
+static void updateWindowMaskCircle(void); // Incomplete
+static void func_c05d54(void); // Incomplete
+static void func_c05d87(void); // Incomplete
+static void copyTileLayoutToVram(void); // Incomplete
+static void func_c05e61(void); // Incomplete
+static void func_c05ee5(void); // Incomplete
+static void func_c05f3e(void); // Incomplete
+static void func_c05f8d(void); // Incomplete
+static void pitfallFadeOutAnim(void); // Incomplete
+static void fadeOutMap(void); // Incomplete
+static void pitfallFadeInAnim(void); // Incomplete
+static void fadeInMap(void); // Incomplete
+static void func_c0612b(void); // Incomplete
+static void func_c06134(void); // Incomplete
+static void func_c061d7(void); // Incomplete
+static void func_c062bc(void); // Incomplete
+static void func_c0630a(void); // Incomplete
+static void func_c0637e(void); // Incomplete
+static void func_c063d4(void); // Incomplete
+static void func_c06465(void); // Incomplete
+static void func_c064bb(void); // Incomplete
+static void func_c06513(void); // Incomplete
+static void func_c065a3(void); // Incomplete
+static void showMiniMap(void); // Incomplete
+static void func_c06731(void); // Incomplete
+static void func_c06755(void); // Incomplete
+static void func_c0679c(void); // Incomplete
+static void func_c067ec(void); // Incomplete
+static void func_c06831(void); // Incomplete
+static void loadWorldTilemap(void); // Incomplete
+static void loadSubTilemap(void); // Incomplete
+static void fillTilemap(void); // Incomplete
+static void loadWorldTileset(void); // Incomplete
+static void loadSubTileset(void); // Incomplete
+static void func_c06b99(void); // Incomplete
+static void func_c06bac(void); // Incomplete
+static void initBgScrollPos(void); // Incomplete
+static void func_c06c4a(void); // Incomplete
+static void func_c06c6a(void); // Incomplete
+static void func_c06c9d(void); // Incomplete
+static void func_c06cd4(void); // Incomplete
+static void func_c06d0c(void); // Incomplete
+static void func_c06de9(void); // Incomplete
+static void horizontalScrolling(void); // Incomplete
+static void verticalScrolling(void); // Incomplete
+static void modBgTilemap(void); // Incomplete
+static void func_c0703e(void); // Incomplete
+static void func_c0707d(void); // Incomplete
+static void func_c07221(void); // Incomplete
+static void func_c0722f(void); // Incomplete
+static void func_c07241(void); // Incomplete
+static void showDialog(void); // Incomplete
+static void getDialogPtr(void); // Incomplete
+static void loadDialogText(void); // Incomplete
+static void func_c08451(void); // Incomplete
+static void func_c08459(void); // Incomplete
+static void func_c08466(void); // Incomplete
+static void func_c08477(void); // Incomplete
+static void func_c08493(void); // Incomplete
+static void func_c084af(void); // Incomplete
+static void func_c084e9(void); // Incomplete
+static void func_c08508(void); // Incomplete
+static void func_c0850d(void); // Incomplete
+static void func_c08512(void); // Incomplete
+static void getSpellName(void); // Incomplete
+static void getItemName(void); // Incomplete
+static void getGilAmount(void); // Incomplete
+static void func_c08b53(void); // Incomplete
+static void func_c08ba4(void); // Incomplete
+static void func_c08bd3(void); // Incomplete
+static void func_c08be4(void); // Incomplete
+static void func_c08c2e(void); // Incomplete
+static void func_c08c7b(void); // Incomplete
+static void func_c08c92(void); // Incomplete
+static void func_c08d0e(void); // Incomplete
+static void func_c08d3b(void); // Incomplete
+static void func_c08e08(void); // Incomplete
+static void func_c08e23(void); // Incomplete
+static void func_c08ed3(void); // Incomplete
+static void loadFontGfx(void); // Incomplete
+static void func_c08f54(void); // Incomplete
+static void drawYesNoIndicator(void); // Incomplete
+static void showYesNoWindow(void); // Incomplete
+static void func_c090ad(void); // Incomplete
+static void showGPWindow(void); // Incomplete
+static void func_c091ed(void); // Incomplete
+static void showMapTitle(void); // Incomplete
+static void initMapTitle(void); // Incomplete
+static void drawMapTitleWindow(void); // Incomplete
+static void hideMapTitleWindow(void); // Incomplete
+static void func_c09440(void); // Incomplete
+static void func_c094a8(void); // Incomplete
+static void func_c09618(void); // Incomplete
+static void func_c0964c(void); // Incomplete
+static void func_c09695(void); // Incomplete
+static void func_c09704(void); // Incomplete
+static void func_c09772(void); // Incomplete
+static void func_c0975f(void); // Incomplete
+static void updatePaletteAnim(void); // Incomplete
+static void func_c097e2(void); // Incomplete
+static void func_c0980d(void); // Incomplete
+static void func_c09838(void); // Incomplete
+static void func_c09865(void); // Incomplete
+static void func_c098e2(void); // Incomplete
+static void initPaletteAnim(void); // Incomplete
+static void func_c0996d(void); // Incomplete
+static void updateMapAnim(void); // Incomplete
+static void initMapAnim(void); // Incomplete
+static void loadAnimTileGfx(void); // Incomplete
+static void func_c09c3d(void); // Incomplete
+static void func_c09cac(void); // Incomplete
+static void updateTimer(void); // Incomplete
+static void speedUpMusicWithTimer(void); // Incomplete
+static void execEvent(void); // Incomplete
+static void nextEventCmd(void); // Incomplete
+static void terminateEvent(void); // Incomplete
+static void func_c0a365(void); // Incomplete
+static void func_c0a380(void); // Incomplete
+static void func_c0a3c9(void); // Incomplete
+static void func_c0a40a(void); // Incomplete
+static void func_c0a449(void); // Incomplete
+static void func_c0a45f(void); // Incomplete
+static void eventCmd_bf(void); // Incomplete
+static void eventCmd_bf1a(void); // Incomplete
+static void eventCmd_bf18(void); // Incomplete
+static void func_c0a7be(void); // Incomplete
+static void eventCmd_bf19(void); // Incomplete
+static void eventCmd_bf15(void); // Incomplete
+static void func_c0a933(void); // Incomplete
+static void eventCmd_bf14(void); // Incomplete
+static void func_c0aa0e(void); // Incomplete
+static void eventCmd_bf13(void); // Incomplete
+static void eventCmd_bf12(void); // Incomplete
+static void func_c0ab8e(void); // Incomplete
+static void func_c0abb5(void); // Incomplete
+static void eventCmd_bf0f(void); // Incomplete
+static void eventCmd_bf10(void); // Incomplete
+static void eventCmd_bf07(void); // Incomplete
+static void eventCmd_bf08(void); // Incomplete
+static void eventCmd_bf09(void); // Incomplete
+static void eventCmd_bf0a(void); // Incomplete
+static void func_c0ac80(void); // Incomplete
+static void func_c0ac8b(void); // Incomplete
+static void func_c0acb1(void); // Incomplete
+static void func_c0acdd(void); // Incomplete
+static void func_c0ad01(void); // Incomplete
+static void func_c0ad28(void); // Incomplete
+static void func_c0ad54(void); // Incomplete
+static void func_c0ad86(void); // Incomplete
+static void func_c0ada0(void); // Incomplete
+static void func_c0adb7(void); // Incomplete
+static void func_c0add6(void); // Incomplete
+static void func_c0ae0b(void); // Incomplete
+static void func_c0ae32(void); // Incomplete
+static void eventCmd_bf00(void); // Incomplete
+static void eventCmd_bf01(void); // Incomplete
+static void eventCmd_bf16(void); // Incomplete
+static void eventCmd_bf02(void); // Incomplete
+static void eventCmd_bf11(void); // Incomplete
+static void eventCmd_bf05(void); // Incomplete
+static void func_c0b240(void); // Incomplete
+static void eventCmd_bf04(void); // Incomplete
+static void func_c0b2a5(void); // Incomplete
+static void func_c0b35c(void); // Incomplete
+static void func_c0b371(void); // Incomplete
+static void func_c0b3cd(void); // Incomplete
+static void eventCmd_bf06(void); // Incomplete
+static void func_c0b594(void); // Incomplete
+static void eventCmd_bf0b(void); // Incomplete
+static void func_c0b5fd(void); // Incomplete
+static void eventCmd_bf17(void); // Incomplete
+static void eventCmd_bf03(void); // Incomplete
+static void func_c0b750(void); // Incomplete
+static void func_c0b75e(void); // Incomplete
+static void func_c0b791(void); // Incomplete
+static void eventCmd_bf0c(void); // Incomplete
+static void eventCmd_bf0e(void); // Incomplete
+static void eventCmd_bf0d(void); // Incomplete
+static void func_c0b854(void); // Incomplete
+static void eventCmd_ea(void); // Incomplete
+static void eventCmd_eb(void); // Incomplete
+static void eventCmd_e9(void); // Incomplete
+static void eventCmd_e7(void); // Incomplete
+static void eventCmd_e6(void); // Incomplete
+static void eventCmd_e4(void); // Incomplete
+static void eventCmd_e5(void); // Incomplete
+static void eventCmd_dd(void); // Incomplete
+static void eventCmd_da(void); // Incomplete
+static void func_c0b9f5(void); // Incomplete
+static void eventCmd_79(void); // Incomplete
+static void eventCmd_db(void); // Incomplete
+static void eventCmd_d9(void); // Incomplete
+static void changeColorPalette(void); // Incomplete
+static void eventCmd_b6(void); // Incomplete
+static void eventCmd_ae(void); // Incomplete
+static void eventCmd_a6(void); // Incomplete
+static void eventCmd_a7(void); // Incomplete
+static void eventCmd_7b(void); // Incomplete
+static void eventCmd_7f(void); // Incomplete
+static void eventCmd_ad(void); // Incomplete
+static void calcInnPrice(void); // Incomplete
+static void eventCmd_ac(void); // Incomplete
+static void eventCmd_c0(void); // Incomplete
+static void func_c0bc9f(void); // Incomplete
+static void eventCmd_d0(void); // Incomplete
+static void eventCmd_70(void); // Incomplete
+static void eventCmd_dc(void); // Incomplete
+static void eventCmd_7a(void); // Incomplete
+static void eventCmd_a1(void); // Incomplete
+static void eventCmd_e8(void); // Incomplete
+static void eventCmd_bd(void); // Incomplete
+static void eventCmd_e2(void); // Incomplete
+static void eventBattle(void); // Incomplete
+static void eventCmd_b7(void); // Incomplete
+static void eventCmd_c6(void); // Incomplete
+static void eventCmd_af(void); // Incomplete
+static void eventCmd_b0(void); // Incomplete
+static void calcGilForEvent(void); // Incomplete
+static void eventCmd_aa(void); // Incomplete
+static void eventCmd_ab(void); // Incomplete
+static void findItemSlot(void); // Incomplete
+static void eventCmd_ba(void); // Incomplete
+static void eventCmd_bb(void); // Incomplete
+static void eventCmd_bc(void); // Incomplete
+static void eventCmd_a8(void); // Incomplete
+static void eventCmd_a9(void); // Incomplete
+static void getPtrToCharData(void); // Incomplete
+static void func_c0c19d(void); // Incomplete
+static void eventCmd_c2(void); // Incomplete
+static void eventCmd_d2(void); // Incomplete
+static void eventCmd_c9(void); // Incomplete
+static void eventCmd_b4(void); // Incomplete
+static void eventCmd_d4(void); // Incomplete
+static void eventCmd_b5(void); // Incomplete
+static void eventCmd_d5(void); // Incomplete
+static void eventCmd_76(void); // Incomplete
+static void eventCmd_78(void); // Incomplete
+static void eventCmd_77(void); // Incomplete
+static void eventCmd_f1(void); // Incomplete
+static void eventCmd_f0(void); // Incomplete
+static void eventCmd_d6(void); // Incomplete
+static void eventCmd_e0(void); // Incomplete
+static void eventCmd_e1(void); // Incomplete
+static void eventCmd_e3(void); // Incomplete
+static void func_c0c43f(void); // Incomplete
+static void eventCmd_f4(void); // Incomplete
+static void eventCmd_f3(void); // Incomplete
+static void eventCmd_7c(void); // Incomplete
+static void eventCmd_d8(void); // Incomplete
+static void eventCmd_d3(void); // Incomplete
+static void removeCurObjFromObjLayout(void); // Incomplete
+static void eventCmd_d1(void); // Incomplete
+static void eventCmd_d7(void); // Incomplete
+static void eventCmd_7d(void); // Incomplete
+static void eventCmd_c5(void); // Incomplete
+static void eventCmd_b8(void); // Incomplete
+static void eventCmd_b9(void); // Incomplete
+static void eventCmd_7e(void); // Incomplete
+static void eventCmd_c3(void); // Incomplete
+static void eventCmd_c4(void); // Incomplete
+static void eventCmd_be(void); // Incomplete
+static void eventCmd_c1(void); // Incomplete
+static void eventCmd_b1(void); // Incomplete
+static void func_c0c6de(void); // Incomplete
+static void eventCmd_b2(void); // Incomplete
+static void eventCmd_b3(void); // Incomplete
+static void eventCmd_a0(void); // Incomplete
+static void eventCmd_a2(void); // Incomplete
+static void eventCmd_a4(void); // Incomplete
+static void eventCmd_a3(void); // Incomplete
+static void eventCmd_a5(void); // Incomplete
+static void clearEventFlag_256_511(void); // Incomplete
+static void eventCmd_c8(void); // Incomplete
+static void initObjectMovement(void); // Incomplete
+static void func_c0c7f9(void); // Incomplete
+static void func_c0c932(void); // Incomplete
+static void initCameraMovement(void); // Incomplete
+static void giveSpell(void); // Incomplete
+static void getNPCFlag(void); // Incomplete
+static void eventCmd_ca(void); // Incomplete
+static void eventCmd_cb(void); // Incomplete
+static void setBattleFlag(void); // Incomplete
+static void clearBattleFlag(void); // Incomplete
+static void getTrasureFlag(void); // Incomplete
+static void setTreasureFlag(void); // Incomplete
+static void getEventFlag00xx(void); // Incomplete
+static void setEventFlag01xx(void); // Incomplete
+static void getFlagIndex(void); // Incomplete
+static void checkRandomBattlesSub(void); // Incomplete
+static void checkRandomBattlesWorld(void); // Incomplete
+static void updateRandomForBattles(void); // Incomplete
+static void func_c0cc6d(void); // Incomplete
+static void battleBlurSub(void); // Incomplete
+static void battleBlurWorld(void); // Incomplete
+static void battleBlur(void); // Incomplete
+static void randomBattle(void); // Incomplete
+static void reset(void); // Incomplete
 
 // These adresses are loaded before
 // having valued stored there
@@ -660,7 +660,7 @@ void start(void) {
         //  - To be called outside branch
     }
 
-    fieldLoop(void);
+    fieldLoop();
 }
 
 // Field Main Loop

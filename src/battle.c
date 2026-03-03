@@ -12,554 +12,554 @@
 // TODO: import RNGTbl (from field), AttackMessageTbl
 
 // FUNCTION DECLARATIONS
-static void setupRegisters(void);
-static uint8_t getRandBetween(uint8_t min, uint8_t max);
-static void wipeDisplayStructures(void);
-static void copyStatsWithBonuses(void);
-static void copyDisplayDamage(void);
-static void wipeActionData(void);
-static uint8_t getRandom0_99(void);
-static uint16_t getTargetBitmask(void);
-static void checkMultiTarget(void);
-static void removeInactiveTargets(void);
-static void copyRomMagicInfo(void);
-static void nextMessageBoxSet(void);
-static void getItemsUsableY(void);
-static void setupInventoryInfo(void);
-static void applyPercentage(void);
+static void setupRegisters(void); // Incomplete
+static uint8_t getRandBetween(uint8_t min, uint8_t max); // Unfinished
+static void wipeDisplayStructures(void); // Incomplete
+static void copyStatsWithBonuses(void); // Incomplete
+static void copyDisplayDamage(void); // Incomplete
+static void wipeActionData(void); // Incomplete
+static uint8_t getRandom0_99(void); // Incomplete
+static uint16_t getTargetBitmask(void); // Incomplete
+static void checkMultiTarget(void); // Incomplete
+static void removeInactiveTargets(void); // Incomplete
+static void copyRomMagicInfo(void); // Incomplete
+static void nextMessageBoxSet(void); // Incomplete
+static void getItemsUsableY(void); // Incomplete
+static void setupInventoryInfo(void); // Incomplete
+static void applyPercentage(void); // Incomplete
 
-static void noActionAbility(void);
-static void commandTable00(void);
-static void itemCommand(void);
-static void weaponItem(void);
-static void prepMagicLamp(void);
-static void commandTable02(void);
-static void commandTable03(void);
-static void commandTable05(void);
-static void commandTable06(void);
-static void commandTable07(void);
-static void simpleFight(void);
-static void commandTable08(void);
-static void commandTable09(void);
-static void commandTable0A(void);
-static void commandTable0B(void);
-static void commandTable0C(void);
-static void commandTable2D(void);
-static void commandTable2E(void);
-static void commandTable0D(void);
-static void commandTable0E(void);
-static void commandTable0F(void);
-static void commandTable10(void);
-static void swordSlapCommand(void);
-static void commandTable12(void);
-static void commandTable13(void);
-static void commandTable14(void);
-static void commandTable15(void);
-static void commandTable16(void);
-static void commandTable18(void);
-static void commandTable19(void);
-static void commandTable17(void);
-static void commandTable1A(void);
-static void commandTable1B(void);
-static void commandTable1C(void);
-static void commandTable1D(void);
-static void commandTable1E(void);
-static void commandTable20(void);
-static void commandTable21(void);
-static void commandTable22(void);
-static void commandTable24(void);
-static void commandTable25(void);
-static void commandTable28(void);
-static void commandTable29(void);
-static void commandTable2A(void);
-static void commandTable2F(void);
-static void commandTable30(void);
-static void commandTable31(void);
-static void commandTable32(void);
-static void commandTable33(void);
-static void commandTable34(void);
+static void noActionAbility(void); // Incomplete
+static void commandTable00(void); // Incomplete
+static void itemCommand(void); // Incomplete
+static void weaponItem(void); // Incomplete
+static void prepMagicLamp(void); // Incomplete
+static void commandTable02(void); // Incomplete
+static void commandTable03(void); // Incomplete
+static void commandTable05(void); // Incomplete
+static void commandTable06(void); // Incomplete
+static void commandTable07(void); // Incomplete
+static void simpleFight(void); // Incomplete
+static void commandTable08(void); // Incomplete
+static void commandTable09(void); // Incomplete
+static void commandTable0A(void); // Incomplete
+static void commandTable0B(void); // Incomplete
+static void commandTable0C(void); // Incomplete
+static void commandTable2D(void); // Incomplete
+static void commandTable2E(void); // Incomplete
+static void commandTable0D(void); // Incomplete
+static void commandTable0E(void); // Incomplete
+static void commandTable0F(void); // Incomplete
+static void commandTable10(void); // Incomplete
+static void swordSlapCommand(void); // Incomplete
+static void commandTable12(void); // Incomplete
+static void commandTable13(void); // Incomplete
+static void commandTable14(void); // Incomplete
+static void commandTable15(void); // Incomplete
+static void commandTable16(void); // Incomplete
+static void commandTable18(void); // Incomplete
+static void commandTable19(void); // Incomplete
+static void commandTable17(void); // Incomplete
+static void commandTable1A(void); // Incomplete
+static void commandTable1B(void); // Incomplete
+static void commandTable1C(void); // Incomplete
+static void commandTable1D(void); // Incomplete
+static void commandTable1E(void); // Incomplete
+static void commandTable20(void); // Incomplete
+static void commandTable21(void); // Incomplete
+static void commandTable22(void); // Incomplete
+static void commandTable24(void); // Incomplete
+static void commandTable25(void); // Incomplete
+static void commandTable28(void); // Incomplete
+static void commandTable29(void); // Incomplete
+static void commandTable2A(void); // Incomplete
+static void commandTable2F(void); // Incomplete
+static void commandTable30(void); // Incomplete
+static void commandTable31(void); // Incomplete
+static void commandTable32(void); // Incomplete
+static void commandTable33(void); // Incomplete
+static void commandTable34(void); // Incomplete
 
-static void copyAbilityInfo(void);
-static void gfXCmdAbilityAnim(void);
-static void gfxCmdAttackNameA(void);
-static void magicAtkTypeSingleTarget(void);
-static void magicAtkTypeMultiTarget(void);
-static void finishCommand(void);
-static void finishCommandNullTargets(void);
-static void getTargets(void);
-static void handleAtbMenu(void);
-static void checkControlTargetActive(void);
-static void processMenuCommandData(void);
-static void consumeItem(void);
-static void setupCreditsDemo(void);
-static void checkDisablingStatus(void);
-static void applyBerserkStatus(void);
-static void disableCommandsMagic(void);
-static void handleUncontrolledParty(void);
-static void zombieAction(void);
-static void charmAction(void);
-static void berserkAction(void);
-static void queueUncontrolledAction(void);
-static void randomizeOrder(void);
+static void copyAbilityInfo(void); // Incomplete
+static void gfXCmdAbilityAnim(void); // Incomplete
+static void gfxCmdAttackNameA(void); // Incomplete
+static void magicAtkTypeSingleTarget(void); // Incomplete
+static void magicAtkTypeMultiTarget(void); // Incomplete
+static void finishCommand(void); // Incomplete
+static void finishCommandNullTargets(void); // Incomplete
+static void getTargets(void); // Incomplete
+static void handleAtbMenu(void); // Incomplete
+static void checkControlTargetActive(void); // Incomplete
+static void processMenuCommandData(void); // Incomplete
+static void consumeItem(void); // Incomplete
+static void setupCreditsDemo(void); // Incomplete
+static void checkDisablingStatus(void); // Incomplete
+static void applyBerserkStatus(void); // Incomplete
+static void disableCommandsMagic(void); // Incomplete
+static void handleUncontrolledParty(void); // Incomplete
+static void zombieAction(void); // Incomplete
+static void charmAction(void); // Incomplete
+static void berserkAction(void); // Incomplete
+static void queueUncontrolledAction(void); // Incomplete
+static void randomizeOrder(void); // Incomplete
 
-static void updateTimers(void);
-static void updateTimer(void);
-static void globalTimers(void);
-static void findEndedTimers(void);
-static void applyTimerEffects(void);
-static void dispatchTimerEffect(void);
-static void timerEffectStop(void);
-static void timerEffectPoison(void);
-static void timerEffectReflect(void);
-static void timerEffectCountdown(void);
-static void timerEffectMute(void);
-static void timerEffectHPLeak(void);
-static void timerEffectOld(void);
-static void timerEffectRegen(void);
-static void timerEffectSing(void);
-static void timerEffectParalyze(void);
-static void timerEffectATB(void);
-static void performAction(void);
-static void atbWait(void);
-static void resetAtbAll(void);
-static void resetAtb(void);
-static void clearQuick(void);
-static void stopTimer(void);
-static void startTimer(void);
-static void getTimerDuration(void);
-static void addTimerOffsetY(void);
+static void updateTimers(void); // Incomplete
+static void updateTimer(void); // Incomplete
+static void globalTimers(void); // Incomplete
+static void findEndedTimers(void); // Incomplete
+static void applyTimerEffects(void); // Incomplete
+static void dispatchTimerEffect(void); // Incomplete
+static void timerEffectStop(void); // Incomplete
+static void timerEffectPoison(void); // Incomplete
+static void timerEffectReflect(void); // Incomplete
+static void timerEffectCountdown(void); // Incomplete
+static void timerEffectMute(void); // Incomplete
+static void timerEffectHPLeak(void); // Incomplete
+static void timerEffectOld(void); // Incomplete
+static void timerEffectRegen(void); // Incomplete
+static void timerEffectSing(void); // Incomplete
+static void timerEffectParalyze(void); // Incomplete
+static void timerEffectATB(void); // Incomplete
+static void performAction(void); // Incomplete
+static void atbWait(void); // Incomplete
+static void resetAtbAll(void); // Incomplete
+static void resetAtb(void); // Incomplete
+static void clearQuick(void); // Incomplete
+static void stopTimer(void); // Incomplete
+static void startTimer(void); // Incomplete
+static void getTimerDuration(void); // Incomplete
+static void addTimerOffsetY(void); // Incomplete
 static uint8_t durSpell(void);
 static uint8_t durVit(void);
 static uint8_t dur180mod(void);
 static uint8_t dur110mod(void);
-static void monsterAtb(void);
+static void monsterAtb(void); // Incomplete
 
-static void checkAICondition(void);
-static void aiCondition00(void);
-static void aiCondition01(void);
-static void aiCondition02(void);
-static void aiCondition03(void);
-static void aiCondition04(void);
-static void aiCondition05(void);
-static void aiCondition06(void);
-static void aiCondition07(void);
-static void aiCondition08(void);
-static void aiCondition09(void);
-static void aiCondition0A(void);
-static void aiCondition0B(void);
-static void aiCondition0C(void);
-static void aiCondition0D(void);
-static void aiCondition0E(void);
-static void aiCondition0F(void);
-static void aiCondition10(void);
-static void aiCondition11(void);
-static void aiCondition12(void);
+static void checkAICondition(void); // Incomplete
+static void aiCondition00(void); // Incomplete
+static void aiCondition01(void); // Incomplete
+static void aiCondition02(void); // Incomplete
+static void aiCondition03(void); // Incomplete
+static void aiCondition04(void); // Incomplete
+static void aiCondition05(void); // Incomplete
+static void aiCondition06(void); // Incomplete
+static void aiCondition07(void); // Incomplete
+static void aiCondition08(void); // Incomplete
+static void aiCondition09(void); // Incomplete
+static void aiCondition0A(void); // Incomplete
+static void aiCondition0B(void); // Incomplete
+static void aiCondition0C(void); // Incomplete
+static void aiCondition0D(void); // Incomplete
+static void aiCondition0E(void); // Incomplete
+static void aiCondition0F(void); // Incomplete
+static void aiCondition10(void); // Incomplete
+static void aiCondition11(void); // Incomplete
+static void aiCondition12(void); // Incomplete
 
-static void getAiTarget(void);
-static void aiTarget00(void);
-static void aiTarget01(void);
-static void aiTarget02(void);
-static void aiTarget03(void);
-static void aiTarget04(void);
-static void aiTarget05(void);
-static void aiTarget06(void);
-static void aiTarget07(void);
-static void aiTarget08(void);
-static void aiTarget09(void);
-static void aiTarget0a(void);
-static void aiTarget0b(void);
-static void aiTarget0c(void);
-static void aiTarget0d(void);
-static void aiTarget0e(void);
-static void aiTarget0f(void);
-static void aiTarget10(void);
-static void aiTarget11(void);
-static void aiTarget12(void);
-static void aiTarget13(void);
-static void aiTarget14(void);
-static void aiTarget15(void);
-static void aiTarget16(void);
-static void aiTarget17(void);
-static void aiTarget18(void);
-static void aiTarget19(void);
-static void aiTarget1a(void);
-static void aiTarget1b(void);
-static void aiTarget1c(void);
-static void aiTarget1d(void);
-static void aiTarget1e(void);
-static void aiTarget1f(void);
-static void aiTarget20(void);
-static void aiTarget21(void);
-static void aiTarget22(void);
-static void aiTarget23(void);
-static void aiTarget24(void);
-static void aiTarget25(void);
-static void aiTarget26(void);
-static void aiTarget27(void);
-static void aiTarget28(void);
-static void aiTarget29(void);
-static void aiTarget2a(void);
-static void aiTarget2b(void);
-static void aiTarget2c(void);
-static void aiTarget2d(void);
-static void aiTarget2e(void);
-static void aiTarget2f(void);
-static void aiTarget30(void);
-static void aiTarget31(void);
-static void aiTarget32(void);
-static void checkTargetValid(void);
+static void getAiTarget(void); // Incomplete
+static void aiTarget00(void); // Incomplete
+static void aiTarget01(void); // Incomplete
+static void aiTarget02(void); // Incomplete
+static void aiTarget03(void); // Incomplete
+static void aiTarget04(void); // Incomplete
+static void aiTarget05(void); // Incomplete
+static void aiTarget06(void); // Incomplete
+static void aiTarget07(void); // Incomplete
+static void aiTarget08(void); // Incomplete
+static void aiTarget09(void); // Incomplete
+static void aiTarget0a(void); // Incomplete
+static void aiTarget0b(void); // Incomplete
+static void aiTarget0c(void); // Incomplete
+static void aiTarget0d(void); // Incomplete
+static void aiTarget0e(void); // Incomplete
+static void aiTarget0f(void); // Incomplete
+static void aiTarget10(void); // Incomplete
+static void aiTarget11(void); // Incomplete
+static void aiTarget12(void); // Incomplete
+static void aiTarget13(void); // Incomplete
+static void aiTarget14(void); // Incomplete
+static void aiTarget15(void); // Incomplete
+static void aiTarget16(void); // Incomplete
+static void aiTarget17(void); // Incomplete
+static void aiTarget18(void); // Incomplete
+static void aiTarget19(void); // Incomplete
+static void aiTarget1a(void); // Incomplete
+static void aiTarget1b(void); // Incomplete
+static void aiTarget1c(void); // Incomplete
+static void aiTarget1d(void); // Incomplete
+static void aiTarget1e(void); // Incomplete
+static void aiTarget1f(void); // Incomplete
+static void aiTarget20(void); // Incomplete
+static void aiTarget21(void); // Incomplete
+static void aiTarget22(void); // Incomplete
+static void aiTarget23(void); // Incomplete
+static void aiTarget24(void); // Incomplete
+static void aiTarget25(void); // Incomplete
+static void aiTarget26(void); // Incomplete
+static void aiTarget27(void); // Incomplete
+static void aiTarget28(void); // Incomplete
+static void aiTarget29(void); // Incomplete
+static void aiTarget2a(void); // Incomplete
+static void aiTarget2b(void); // Incomplete
+static void aiTarget2c(void); // Incomplete
+static void aiTarget2d(void); // Incomplete
+static void aiTarget2e(void); // Incomplete
+static void aiTarget2f(void); // Incomplete
+static void aiTarget30(void); // Incomplete
+static void aiTarget31(void); // Incomplete
+static void aiTarget32(void); // Incomplete
+static void checkTargetValid(void); // Incomplete
 
-static void processAiScript(void);
-static void dispatchAiCommands(void);
-static void aiCastNormalSpell(void);
-static void aiChoose1of3(void);
-static void aiShowMonster(void);
-static void aiSetTarget(void);
-static void aiSetVar(void);
-static void aiSetEventFlag(void);
-static void aiSetStatsToggleStatus(void);
-static void aiCopyCommand(void);
-static void aiSpellTarget(void);
-static void handleReactions(void);
-static void checkReactionConditions(void);
-static void saveActionData(void);
-static void restoreActionData(void);
-static void reactionPauseTimerChecks(void);
-static void unpauseTimerChecks(void);
-static void processReaction(void);
+static void processAiScript(void); // Incomplete
+static void dispatchAiCommands(void); // Incomplete
+static void aiCastNormalSpell(void); // Incomplete
+static void aiChoose1of3(void); // Incomplete
+static void aiShowMonster(void); // Incomplete
+static void aiSetTarget(void); // Incomplete
+static void aiSetVar(void); // Incomplete
+static void aiSetEventFlag(void); // Incomplete
+static void aiSetStatsToggleStatus(void); // Incomplete
+static void aiCopyCommand(void); // Incomplete
+static void aiSpellTarget(void); // Incomplete
+static void handleReactions(void); // Incomplete
+static void checkReactionConditions(void); // Incomplete
+static void saveActionData(void); // Incomplete
+static void restoreActionData(void); // Incomplete
+static void reactionPauseTimerChecks(void); // Incomplete
+static void unpauseTimerChecks(void); // Incomplete
+static void processReaction(void); // Incomplete
 
-static void loadStatsEquipAi(void);
-static void startTimerFromTemp(void);
-static void setupInventoryMagic(void);
-static void getItemUsableA(void);
-static void startPartyPoisonTimers(void);
-static void fightCommand(void);
-static void processTurn(void);
-static void shiftActionAnims(void);
-static void dispatchCommand(void);
-static void dispatchCommandReady(void);
-static void restoreStatsAfterRelease(void);
-static void checkRetarget(void);
-static void checkValidTargetsExist(void);
-static void checkLearnBlue(void);
-static void startBattle(void);
-static void checkOneTimeEncounters(void);
-static void advanceStartingAtb(void);
+static void loadStatsEquipAi(void); // Incomplete
+static void startTimerFromTemp(void); // Incomplete
+static void setupInventoryMagic(void); // Incomplete
+static void getItemUsableA(void); // Incomplete
+static void startPartyPoisonTimers(void); // Incomplete
+static void fightCommand(void); // Incomplete
+static void processTurn(void); // Incomplete
+static void shiftActionAnims(void); // Incomplete
+static void dispatchCommand(void); // Incomplete
+static void dispatchCommandReady(void); // Incomplete
+static void restoreStatsAfterRelease(void); // Incomplete
+static void checkRetarget(void); // Incomplete
+static void checkValidTargetsExist(void); // Incomplete
+static void checkLearnBlue(void); // Incomplete
+static void startBattle(void); // Incomplete
+static void checkOneTimeEncounters(void); // Incomplete
+static void advanceStartingAtb(void); // Incomplete
 
-static void initBattle(void);
-static void checkAmbushes(void);
-static void setupBackAttack(void);
-static void setupPreemptive(void);
-static void adjustAtb(void);
-static void setupBattleMusic(void);
+static void initBattle(void); // Incomplete
+static void checkAmbushes(void); // Incomplete
+static void setupBackAttack(void); // Incomplete
+static void setupPreemptive(void); // Incomplete
+static void adjustAtb(void); // Incomplete
+static void setupBattleMusic(void); // Incomplete
 
-static void endBattle(void);
-static void resetStats(void);
-static void mergeItemDupes(void);
-static void updateFieldData(void);
-static void getLootExp(void);
-static void checkHideAP(void);
-static void dropMonsterLoot(void);
-static void levelUp(void);
-static void applyHPMPPassives(void);
-static void divideExp(void);
-static void gfxCmdMessageClearAnim(void);
+static void endBattle(void); // Incomplete
+static void resetStats(void); // Incomplete
+static void mergeItemDupes(void); // Incomplete
+static void updateFieldData(void); // Incomplete
+static void getLootExp(void); // Incomplete
+static void checkHideAP(void); // Incomplete
+static void dropMonsterLoot(void); // Incomplete
+static void levelUp(void); // Incomplete
+static void applyHPMPPassives(void); // Incomplete
+static void divideExp(void); // Incomplete
+static void gfxCmdMessageClearAnim(void); // Incomplete
 
-static void mainBattleLoop(void);
-static void copyHPMPStatus(void);
-static void updateMonsterList(void);
-static void checkBattleEnd(void);
-static void updateMonsterRows(void);
-static void castSpell(void);
-static void castMultiHitSpell(void);
-static void prepSummon(void);
-static void getPartyTargetOffset(void);
-static void hasteSlowMod(void);
-static void killChar(void);
-static void checkPartyDeath(void);
-static void checkMonsterDeath(void);
-static void checkForDeath(void);
-static void setupAndLaunchAttack(void);
-static void dispatchAttack(void);
-static void clearAttackData(void);
-static void copyAttackParams(void);
-static void applyDamage(void);
-static void getDamageDisplayOffset(void);
+static void mainBattleLoop(void); // Incomplete
+static void copyHPMPStatus(void); // Incomplete
+static void updateMonsterList(void); // Incomplete
+static void checkBattleEnd(void); // Incomplete
+static void updateMonsterRows(void); // Incomplete
+static void castSpell(void); // Incomplete
+static void castMultiHitSpell(void); // Incomplete
+static void prepSummon(void); // Incomplete
+static void getPartyTargetOffset(void); // Incomplete
+static void hasteSlowMod(void); // Incomplete
+static void killChar(void); // Incomplete
+static void checkPartyDeath(void); // Incomplete
+static void checkMonsterDeath(void); // Incomplete
+static void checkForDeath(void); // Incomplete
+static void setupAndLaunchAttack(void); // Incomplete
+static void dispatchAttack(void); // Incomplete
+static void clearAttackData(void); // Incomplete
+static void copyAttackParams(void); // Incomplete
+static void applyDamage(void); // Incomplete
+static void getDamageDisplayOffset(void); // Incomplete
 
-static void attackType00(void);
-static void attackType01(void);
-static void attackType02(void);
-static void attackType03(void);
-static void attackType04(void);
-static void attackType05(void);
-static void attackType06(void);
-static void attackType07(void);
-static void attackType08(void);
-static void attackType09(void);
-static void attackType0A(void);
-static void attackType0B(void);
-static void attackType0C(void);
-static void attackType0D(void);
-static void attackType0E(void);
-static void attackType0F(void);
-static void attackType10(void);
-static void attackType11(void);
-static void attackType12(void);
-static void attackType13(void);
-static void attackType14(void);
-static void attackType15(void);
-static void attackType16(void);
-static void attackType17(void);
-static void attackType18(void);
-static void attackType19(void);
-static void attackType1A(void);
-static void attackType1B(void);
-static void attackType1C(void);
-static void attackType1D(void);
-static void attackType1E(void);
-static void attackType1F(void);
-static void attackType20(void);
-static void attackType21(void);
-static void attackType22(void);
-static void attackType23(void);
-static void attackType24(void);
-static void attackType25(void);
-static void attackType26(void);
-static void attackType27(void);
-static void attackType28(void);
-static void attackType29(void);
-static void attackType2A(void);
-static void attackType2B(void);
-static void attackType2C(void);
-static void attackType2D(void);
-static void attackType2E(void);
-static void attackType2F(void);
-static void attackType30(void);
-static void attackType31(void);
-static void attackType32(void);
-static void attackType33(void);
-static void attackType34(void);
-static void attackType35(void);
-static void attackType36(void);
-static void attackType37(void);
-static void attackType38(void);
-static void attackType39(void);
-static void attackType3A(void);
-static void attackType3B(void);
-static void attackType3C(void);
-static void attackType3D(void);
-static void attackType3E(void);
-static void attackType3F(void);
-static void attackType40(void);
-static void attackType41(void);
-static void attackType42(void);
-static void attackType43(void);
-static void attackType44(void);
-static void attackType45(void);
-static void attackType46(void);
-static void attackType47(void);
-static void attackType48(void);
-static void attackType49(void);
-static void attackType4B(void);
-static void attackType4C(void);
-static void attackType4D(void);
-static void attackType4E(void);
-static void attackType4F(void);
-static void attackType50(void);
-static void attackType51(void);
-static void attackType52(void);
-static void attackType53(void);
-static void attackType54(void);
-static void attackType55(void);
-static void attackType56(void);
-static void attackType57(void);
-static void attackType58(void);
-static void attackType59(void);
-static void attackType5A(void);
-static void attackType5B(void);
-static void attackType5C(void);
-static void attackType5D(void);
-static void attackType5E(void);
-static void attackType5F(void);
-static void attackType60(void);
-static void attackType61(void);
-static void attackType62(void);
-static void attackType63(void);
-static void attackType64(void);
-static void attackType65(void);
-static void attackType66(void);
-static void attackType68(void);
-static void attackType67(void);
-static void attackType69(void);
-static void attackType6A(void);
-static void attackType6B(void);
-static void attackType6C(void);
-static void attackType6D(void);
-static void attackType6E(void);
-static void attackType6F(void);
-static void attackType70(void);
-static void attackType71(void);
-static void attackType72(void);
-static void attackType73(void);
-static void attackType74(void);
-static void attackType75(void);
+static void attackType00(void); // Incomplete
+static void attackType01(void); // Incomplete
+static void attackType02(void); // Incomplete
+static void attackType03(void); // Incomplete
+static void attackType04(void); // Incomplete
+static void attackType05(void); // Incomplete
+static void attackType06(void); // Incomplete
+static void attackType07(void); // Incomplete
+static void attackType08(void); // Incomplete
+static void attackType09(void); // Incomplete
+static void attackType0A(void); // Incomplete
+static void attackType0B(void); // Incomplete
+static void attackType0C(void); // Incomplete
+static void attackType0D(void); // Incomplete
+static void attackType0E(void); // Incomplete
+static void attackType0F(void); // Incomplete
+static void attackType10(void); // Incomplete
+static void attackType11(void); // Incomplete
+static void attackType12(void); // Incomplete
+static void attackType13(void); // Incomplete
+static void attackType14(void); // Incomplete
+static void attackType15(void); // Incomplete
+static void attackType16(void); // Incomplete
+static void attackType17(void); // Incomplete
+static void attackType18(void); // Incomplete
+static void attackType19(void); // Incomplete
+static void attackType1A(void); // Incomplete
+static void attackType1B(void); // Incomplete
+static void attackType1C(void); // Incomplete
+static void attackType1D(void); // Incomplete
+static void attackType1E(void); // Incomplete
+static void attackType1F(void); // Incomplete
+static void attackType20(void); // Incomplete
+static void attackType21(void); // Incomplete
+static void attackType22(void); // Incomplete
+static void attackType23(void); // Incomplete
+static void attackType24(void); // Incomplete
+static void attackType25(void); // Incomplete
+static void attackType26(void); // Incomplete
+static void attackType27(void); // Incomplete
+static void attackType28(void); // Incomplete
+static void attackType29(void); // Incomplete
+static void attackType2A(void); // Incomplete
+static void attackType2B(void); // Incomplete
+static void attackType2C(void); // Incomplete
+static void attackType2D(void); // Incomplete
+static void attackType2E(void); // Incomplete
+static void attackType2F(void); // Incomplete
+static void attackType30(void); // Incomplete
+static void attackType31(void); // Incomplete
+static void attackType32(void); // Incomplete
+static void attackType33(void); // Incomplete
+static void attackType34(void); // Incomplete
+static void attackType35(void); // Incomplete
+static void attackType36(void); // Incomplete
+static void attackType37(void); // Incomplete
+static void attackType38(void); // Incomplete
+static void attackType39(void); // Incomplete
+static void attackType3A(void); // Incomplete
+static void attackType3B(void); // Incomplete
+static void attackType3C(void); // Incomplete
+static void attackType3D(void); // Incomplete
+static void attackType3E(void); // Incomplete
+static void attackType3F(void); // Incomplete
+static void attackType40(void); // Incomplete
+static void attackType41(void); // Incomplete
+static void attackType42(void); // Incomplete
+static void attackType43(void); // Incomplete
+static void attackType44(void); // Incomplete
+static void attackType45(void); // Incomplete
+static void attackType46(void); // Incomplete
+static void attackType47(void); // Incomplete
+static void attackType48(void); // Incomplete
+static void attackType49(void); // Incomplete
+static void attackType4B(void); // Incomplete
+static void attackType4C(void); // Incomplete
+static void attackType4D(void); // Incomplete
+static void attackType4E(void); // Incomplete
+static void attackType4F(void); // Incomplete
+static void attackType50(void); // Incomplete
+static void attackType51(void); // Incomplete
+static void attackType52(void); // Incomplete
+static void attackType53(void); // Incomplete
+static void attackType54(void); // Incomplete
+static void attackType55(void); // Incomplete
+static void attackType56(void); // Incomplete
+static void attackType57(void); // Incomplete
+static void attackType58(void); // Incomplete
+static void attackType59(void); // Incomplete
+static void attackType5A(void); // Incomplete
+static void attackType5B(void); // Incomplete
+static void attackType5C(void); // Incomplete
+static void attackType5D(void); // Incomplete
+static void attackType5E(void); // Incomplete
+static void attackType5F(void); // Incomplete
+static void attackType60(void); // Incomplete
+static void attackType61(void); // Incomplete
+static void attackType62(void); // Incomplete
+static void attackType63(void); // Incomplete
+static void attackType64(void); // Incomplete
+static void attackType65(void); // Incomplete
+static void attackType66(void); // Incomplete
+static void attackType68(void); // Incomplete
+static void attackType67(void); // Incomplete
+static void attackType69(void); // Incomplete
+static void attackType6A(void); // Incomplete
+static void attackType6B(void); // Incomplete
+static void attackType6C(void); // Incomplete
+static void attackType6D(void); // Incomplete
+static void attackType6E(void); // Incomplete
+static void attackType6F(void); // Incomplete
+static void attackType70(void); // Incomplete
+static void attackType71(void); // Incomplete
+static void attackType72(void); // Incomplete
+static void attackType73(void); // Incomplete
+static void attackType74(void); // Incomplete
+static void attackType75(void); // Incomplete
 
-static void hitCalcLevelMEvade(void);
-static void setHitParam1TargetEvade(void);
-static void setHit100TargetEvade(void);
-static void setHit100HalfTargetEvade(void);
-static void setHitParam1HalfTargetEvade(void);
-static void setHitParam1TargetMEvade(void);
-static void hitCalcSteal(void);
-static void checkAegis(void);
-static void multiTargetHitPercent(void);
-static void checkSpecialEvade(void);
-static void danceHitMod(void);
-static void targetMHitMod(void);
-static void targetPHitMod(void);
-static void attackerStatusPHitMod(void);
-static void checkTargetImage(void);
-static void checkVoid(void);
-static void checkFloat(void);
-static void checkForHit(void);
-static void checkForPHit(void);
-static void checkHitByCreatureType(void);
-static void checkLevel(void);
-static void hitMagicCondAutohit(void);
-static void hitPhysical(void);
-static void hitMagic(void);
-static void hitPhysicalMagic(void);
-static void magicDamage(void);
-static void flareDamage(void);
-static void magicDamageRand(void);
-static void magicDamagePhysical(void);
+static void hitCalcLevelMEvade(void); // Incomplete
+static void setHitParam1TargetEvade(void); // Incomplete
+static void setHit100TargetEvade(void); // Incomplete
+static void setHit100HalfTargetEvade(void); // Incomplete
+static void setHitParam1HalfTargetEvade(void); // Incomplete
+static void setHitParam1TargetMEvade(void); // Incomplete
+static void hitCalcSteal(void); // Incomplete
+static void checkAegis(void); // Incomplete
+static void multiTargetHitPercent(void); // Incomplete
+static void checkSpecialEvade(void); // Incomplete
+static void danceHitMod(void); // Incomplete
+static void targetMHitMod(void); // Incomplete
+static void targetPHitMod(void); // Incomplete
+static void attackerStatusPHitMod(void); // Incomplete
+static void checkTargetImage(void); // Incomplete
+static void checkVoid(void); // Incomplete
+static void checkFloat(void); // Incomplete
+static void checkForHit(void); // Incomplete
+static void checkForPHit(void); // Incomplete
+static void checkHitByCreatureType(void); // Incomplete
+static void checkLevel(void); // Incomplete
+static void hitMagicCondAutohit(void); // Incomplete
+static void hitPhysical(void); // Incomplete
+static void hitMagic(void); // Incomplete
+static void hitPhysicalMagic(void); // Incomplete
+static void magicDamage(void); // Incomplete
+static void flareDamage(void); // Incomplete
+static void magicDamageRand(void); // Incomplete
+static void magicDamagePhysical(void); // Incomplete
 
-static void swordDamage(void);
-static void fistDamage(void);
-static void knifeDamage(void);
-static void axeDamage(void);
-static void bellDamage(void);
-static void rodDamage(void);
-static void levelDamage(void);
-static void monsterDamage(void);
-static void itemFormula(void);
-static void physicalParamDamage(void);
-static void throwDamage(void);
-static void gilTossDamage(void);
+static void swordDamage(void); // Incomplete
+static void fistDamage(void); // Incomplete
+static void knifeDamage(void); // Incomplete
+static void axeDamage(void); // Incomplete
+static void bellDamage(void); // Incomplete
+static void rodDamage(void); // Incomplete
+static void levelDamage(void); // Incomplete
+static void monsterDamage(void); // Incomplete
+static void itemFormula(void); // Incomplete
+static void physicalParamDamage(void); // Incomplete
+static void throwDamage(void); // Incomplete
+static void gilTossDamage(void); // Incomplete
 
-static void multiTargetMod(void);
-static void backRowMod(void);
-static void commandMod(void);
-static void doubleGripMod(void);
-static void checkJump(void);
-static void runeMod(void);
-static void specialtyMod(void);
-static void medicineMod(void);
-static void creatureMod(void);
-static void targetStatusModMag(void);
-static void targetStatusModPhys(void);
-static void attackerStatusModPhys(void);
-static void equalLevelMod(void);
+static void multiTargetMod(void); // Incomplete
+static void backRowMod(void); // Incomplete
+static void commandMod(void); // Incomplete
+static void doubleGripMod(void); // Incomplete
+static void checkJump(void); // Incomplete
+static void runeMod(void); // Incomplete
+static void specialtyMod(void); // Incomplete
+static void medicineMod(void); // Incomplete
+static void creatureMod(void); // Incomplete
+static void targetStatusModMag(void); // Incomplete
+static void targetStatusModPhys(void); // Incomplete
+static void attackerStatusModPhys(void); // Incomplete
+static void equalLevelMod(void); // Incomplete
 
-static void braveDamage(void);
-static void goblinDamage(void);
-static void strongFightDamage(void);
-static void chickenDamage(void);
+static void braveDamage(void); // Incomplete
+static void goblinDamage(void); // Incomplete
+static void strongFightDamage(void); // Incomplete
+static void chickenDamage(void); // Incomplete
 
-static void elementUpMod(void);
-static void spellbladeMod(void);
-static void elementDamageModPhys(void);
-static void elementDamageModMag(void);
-static void elementDamageModMag2(void);
-static void checkCrit(void);
-static void checkCreatureCrit(void);
+static void elementUpMod(void); // Incomplete
+static void spellbladeMod(void); // Incomplete
+static void elementDamageModPhys(void); // Incomplete
+static void elementDamageModMag(void); // Incomplete
+static void elementDamageModMag2(void); // Incomplete
+static void checkCrit(void); // Incomplete
+static void checkCreatureCrit(void); // Incomplete
 
-static void calcFinalDmgSpellblade(void);
-static void gravityDamage(void);
+static void calcFinalDmgSpellblade(void); // Incomplete
+static void gravityDamage(void); // Incomplete
 
-static void cureTarget(void);
-static void fullCureTarget(void);
-static void setHPCritical(void);
-static void drainDamage(void);
-static void spellbladePsyche(void);
-static void psycheDamage(void);
-static void mpHeal(void);
-static void fullMPHeal(void);
+static void cureTarget(void); // Incomplete
+static void fullCureTarget(void); // Incomplete
+static void setHPCritical(void); // Incomplete
+static void drainDamage(void); // Incomplete
+static void spellbladePsyche(void); // Incomplete
+static void psycheDamage(void); // Incomplete
+static void mpHeal(void); // Incomplete
+static void fullMPHeal(void); // Incomplete
 
-static void calcFinalDamage(void);
-static void calcDamageMaxHP(void);
-static void calcDamageAttackerCurHP(void);
-static void calcDamageTargetCurHP(void);
-static void calcDamageAttackerDiffHP(void);
-static void restoreHalfMax(void);
-static void calcStatusDuration(void);
-static void applySpellbladeStatusEffect(void);
-static void applyConditionalStatus(void);
-static void applySpecialtyEffects(void);
-static void applyStatus1(void);
-static void applyStatus2(void);
-static void applyStatus3(void);
-static void applyStatus4(void);
-static void toggleStatus1(void);
-static void applyFlirt(void);
-static void applyStatus3Exclusive(void);
-static void removeStatus1(void);
-static void removeStatus2(void);
-static void removeStatus3(void);
-static void killNonHeavy(void);
-static void reviveTarget(void);
-static void applyStatus1Bypass(void);
-static void applyStatus2Bypass(void);
-static void applyStatus3Bypass(void);
-static void applyStatus1AttackerBypass(void);
-static void removeSpellblade(void);
-static void changeTargetRow(void);
-static void moveTargetToFront(void);
-static void moveAttackerToBack(void);
-static void halveDefence(void);
-static void halveLevel(void);
-static void addLevel(void);
-static void subtractLevel(void);
-static void doubleMaxHP(void);
-static void addAttack(void);
-static void addDefenses(void);
-static void toggleStatus4(void);
-static void addCreatureType(void);
-static void addStatus1Immunity(void);
-static void addElementUp(void);
-static void stealItem(void);
-static void startStatus1Timer(void);
-static void stopStatus1Timer(void);
-static void stopStatus2Timer(void);
-static void stopStatus3Timer(void);
-static void stopStatus4Timer(void);
-static void startStatus2Timer(void);
-static void startStatus3Timer(void);
-static void startStatus4Timer(void);
-static void loseOneImage(void);
-static void catchMonster(void);
-static void calcBaseDamage(void);
-static void processCommands(void);
-static void findFirstTargetPlus1(void);
-static void getCharStructActionData(void);
-static void checkTargetRedirect(void);
-static void checkValidTargetsExist2(void);
-static void steupReactionsAnims(void);
-static void copyReactionInfo(void);
-static void gfxCmdDamageNumbers(void);
-static void findOpenGfxQueueSlot(void);
-static void selectCurProcSequence(void);
-static void gfxCmdAttackNameFromTemp(void);
-static void gfxCmdMessage(void);
-static void setupMsgBoxIndexes(void);
-static void deleteCommand(void);
-static void collectMPCost(void);
-static void applyPartyGear(void);
-static void applyGear(void);
-static void applyEquipStatus(void);
-static void startTimerCurChar(void);
-static void replaceHands(void);
-static void swapHands(void);
+static void calcFinalDamage(void); // Incomplete
+static void calcDamageMaxHP(void); // Incomplete
+static void calcDamageAttackerCurHP(void); // Incomplete
+static void calcDamageTargetCurHP(void); // Incomplete
+static void calcDamageAttackerDiffHP(void); // Incomplete
+static void restoreHalfMax(void); // Incomplete
+static void calcStatusDuration(void); // Incomplete
+static void applySpellbladeStatusEffect(void); // Incomplete
+static void applyConditionalStatus(void); // Incomplete
+static void applySpecialtyEffects(void); // Incomplete
+static void applyStatus1(void); // Incomplete
+static void applyStatus2(void); // Incomplete
+static void applyStatus3(void); // Incomplete
+static void applyStatus4(void); // Incomplete
+static void toggleStatus1(void); // Incomplete
+static void applyFlirt(void); // Incomplete
+static void applyStatus3Exclusive(void); // Incomplete
+static void removeStatus1(void); // Incomplete
+static void removeStatus2(void); // Incomplete
+static void removeStatus3(void); // Incomplete
+static void killNonHeavy(void); // Incomplete
+static void reviveTarget(void); // Incomplete
+static void applyStatus1Bypass(void); // Incomplete
+static void applyStatus2Bypass(void); // Incomplete
+static void applyStatus3Bypass(void); // Incomplete
+static void applyStatus1AttackerBypass(void); // Incomplete
+static void removeSpellblade(void); // Incomplete
+static void changeTargetRow(void); // Incomplete
+static void moveTargetToFront(void); // Incomplete
+static void moveAttackerToBack(void); // Incomplete
+static void halveDefence(void); // Incomplete
+static void halveLevel(void); // Incomplete
+static void addLevel(void); // Incomplete
+static void subtractLevel(void); // Incomplete
+static void doubleMaxHP(void); // Incomplete
+static void addAttack(void); // Incomplete
+static void addDefenses(void); // Incomplete
+static void toggleStatus4(void); // Incomplete
+static void addCreatureType(void); // Incomplete
+static void addStatus1Immunity(void); // Incomplete
+static void addElementUp(void); // Incomplete
+static void stealItem(void); // Incomplete
+static void startStatus1Timer(void); // Incomplete
+static void stopStatus1Timer(void); // Incomplete
+static void stopStatus2Timer(void); // Incomplete
+static void stopStatus3Timer(void); // Incomplete
+static void stopStatus4Timer(void); // Incomplete
+static void startStatus2Timer(void); // Incomplete
+static void startStatus3Timer(void); // Incomplete
+static void startStatus4Timer(void); // Incomplete
+static void loseOneImage(void); // Incomplete
+static void catchMonster(void); // Incomplete
+static void calcBaseDamage(void); // Incomplete
+static void processCommands(void); // Incomplete
+static void findFirstTargetPlus1(void); // Incomplete
+static void getCharStructActionData(void); // Incomplete
+static void checkTargetRedirect(void); // Incomplete
+static void checkValidTargetsExist2(void); // Incomplete
+static void steupReactionsAnims(void); // Incomplete
+static void copyReactionInfo(void); // Incomplete
+static void gfxCmdDamageNumbers(void); // Incomplete
+static void findOpenGfxQueueSlot(void); // Incomplete
+static void selectCurProcSequence(void); // Incomplete
+static void gfxCmdAttackNameFromTemp(void); // Incomplete
+static void gfxCmdMessage(void); // Incomplete
+static void setupMsgBoxIndexes(void); // Incomplete
+static void deleteCommand(void); // Incomplete
+static void collectMPCost(void); // Incomplete
+static void applyPartyGear(void); // Incomplete
+static void applyGear(void); // Incomplete
+static void applyEquipStatus(void); // Incomplete
+static void startTimerCurChar(void); // Incomplete
+static void replaceHands(void); // Incomplete
+static void swapHands(void); // Incomplete
 
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
