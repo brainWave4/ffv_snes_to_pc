@@ -109,6 +109,173 @@ static void func_c11d65(void); // Incomplete
 static void func_c11df6(void); // Incomplete
 static void func_c11f22(void); // Incomplete
 static void func_c1202f(void); // Incomplete
+static void loadMonsterPalette(void); // Incomplete
+static void loadMonsterGraphics(void); // Incomplete
+static void getPtrMonsterPalette(void); // Incomplete
+static void copyMonsterGraphicsToVram(void); // Incomplete
+static void func_c12202(void); // Incomplete
+static void getPtrMonsterGraphics(void); // Incomplete
+static void func_c12289(void); // Incomplete
+static void func_c122f2(void); // Incomplete
+static void func_c12306(void); // Incomplete
+static void func_c1242a(void); // Incomplete
+static void func_c12454(void); // Incomplete
+static void func_c12481(void); // Incomplete
+static void func_c124d5(void); // Incomplete
+static void loadCharGraphics(void); // Incomplete
+static void func_c125a5(void); // Incomplete
+static void func_c125e8(void); // Incomplete
+static void loadCharPalettes(void); // Incomplete
+static void func_c12689(void); // Incomplete
+static void func_c126fb(void); // Incomplete
+static void func_c12736(void); // Incomplete
+static void copyCharGraphicsToVram(void); // Incomplete
+static void func_c128d7(void); // Incomplete
+static void drawBigTextString(void); // Incomplete
+static void getNextByteString(void); // Incomplete
+static void bigTextEscapeCode(void); // Incomplete
+static void bartzName(void); // Incomplete
+static void battleCommandName(void); // Incomplete
+static void jobName(void); // Incomplete
+static void attackName(void); // Incomplete
+static void func_c12af9(void); // Incomplete
+static void charName(void); // Incomplete
+static void func_c12b35(void); // Incomplete
+static void func_c12b85(void); // Incomplete
+static void func_c12b91(void); // Incomplete
+static void specialAbilityName(void); // Incomplete
+static void monsterSpecialAttackName(void); // Incomplete
+static void abilityName(void); // Incomplete
+static void attackName(void); // Incomplete
+static void func_c12c81(void); // Incomplete
+static void func_c12c9a(void); // Incomplete
+static void func_c12cab(void); // Incomplete
+static void kanji(void); // Incomplete
+static void drawKana(void); // Incomplete
+static void drawSmallText(void); // Incomplete
+static void drawSmallTextChar(void); // Incomplete
+static void averageExp(void); // Incomplete
+static void battleCount(void); // Incomplete
+static void monstersSlain(void); // Incomplete
+static void saveCount(void); // Incomplete
+static void treasuresPercent(void); // Incomplete
+static void smallTxtEscape01(void); // Incomplete
+static void smallTxtEscape0d(void); // Incomplete
+static void smallTxtEscape05(void); // Incomplete
+static void smallTxtEscape06(void); // Incomplete
+static void smallTxtEscape03(void); // Incomplete
+static void decodeSmallTxtEscapeCode(void); // Incomplete
+static void smallTxtEscape1b(void); // Incomplete
+static void smallTxtEscape0f(void); // Incomplete
+static void smallTxtEscape0e(void); // Incomplete
+static void smallTxtEscape0b(void); // Incomplete
+static void smallTxtEscape0c(void); // Incomplete
+static void smallTxtEscape07(void); // Incomplete
+static void smallTxtEscape08(void); // Incomplete
+static void smallTxtEscape09(void); // Incomplete
+static void smallTxtEscape0a(void); // Incomplete
+static void func_c130d6(void); // Incomplete
+static void func_c13112(void); // Incomplete
+static void func_c1313f(void); // Incomplete
+static void func_c13144(void); // Incomplete
+static void func_c13149(void); // Incomplete
+static void func_c1314e(void); // Incomplete
+static void func_c13153(void); // Incomplete
+static void func_c13158(void); // Incomplete
+static void func_c1315d(void); // Incomplete
+static void func_c13177(void); // Incomplete
+static void func_c13182(void); // Incomplete
+static void func_c1318d(void); // Incomplete
+static void func_c13198(void); // Incomplete
+static void func_c131a3(void); // Incomplete
+static void func_c131aa(void); // Incomplete
+static void func_c131b1(void); // Incomplete
+static void func_c131b8(void); // Incomplete
+static void func_c131bf(void); // Incomplete
+static void func_c131c6(void); // Incomplete
+static void func_c131cd(void); // Incomplete
+static void func_c13231(void); // Incomplete
+static void func_c1327b(void); // Incomplete
+static void func_c132a5(void); // Incomplete
+static void func_c132bc(void); // Incomplete
+static void func_c132cb(void); // Incomplete
+static void func_c13231(void); // Incomplete
+static void func_c132da(void); // Incomplete
+static void func_c132ed(void); // Incomplete
+static void func_c132f0(void); // Incomplete
+static void func_c13300(void); // Incomplete
+static void func_c13309(void); // Incomplete
+static void loadBattleBg(void); // Incomplete
+static void loadBattleBgTileLayout(void); // Incomplete
+static void func_c13577(void); // Incomplete
+static void flipBattleBgHorizontailly(void); // Incomplete
+static void setPriorityBitForBtlBgTiles(void); // Incomplete
+static void clearPriorityBitForBtlBgTiles(void); // Incomplete
+static void getNextByteForBtlBgTileFlipData(void); // Incomplete
+static void getBattleBgTileFlip(void); // Incomplete
+static void loadBattleBgPalette(void); // Incomplete
+static void getPointerToBattleBgPalette(void); // Incomplete
+static void loadBattleBgGfx(void); // Incomplete
+static void reverseBitOrder(void); // Incomplete
+static void func_c137b6(void); // Incomplete
+static void func_c137ef(void); // Incomplete
+static void func_c1382e(void); // Incomplete
+static void func_c13835(void); // Incomplete
+static void func_c138fe(void); // Incomplete
+static void func_c13940(void); // Incomplete
+static void func_c13954(void); // Incomplete
+static void func_c1397e(void); // Incomplete
+static void func_c139b2(void); // Incomplete
+static void func_c139e2(void); // Incomplete
+static void btlGfxFunc_openMenu(void); // Incomplete
+static void btlGfxFunc_closeMenu(void); // Incomplete
+static void func_c13a6e(void); // Incomplete
+static void func_c13ad2(void); // Incomplete
+static void func_c13ade(void); // Incomplete
+static void func_c13aea(void); // Incomplete
+static void func_c13b11(void); // Incomplete
+static void func_c13b1f(void); // Incomplete
+static void func_c13b5c(void); // Incomplete
+static void func_c13b87(void); // Incomplete
+static void func_c13c02(void); // Incomplete
+static void func_c13c22(void); // Incomplete
+static void func_c13c42(void); // Incomplete
+static void func_c13c62(void); // Incomplete
+static void func_c13c7f(void); // Incomplete
+static void drawBtlMessage(void); // Incomplete
+static void closeMessageWindow(void); // Incomplete
+static void battleMenu_spellblade(void); // Incomplete
+static void battleMenu_whiteMagic(void); // Incomplete
+static void battleMenu_blackMagic(void); // Incomplete
+static void battleMenu_timeMagic(void); // Incomplete
+static void battleMenu_summon(void); // Incomplete
+static void battleMenu_blueMagic(void); // Incomplete
+static void battleMenu_song(void); // Incomplete
+static void battleMenu_redMagic(void); // Incomplete
+static void battleMenu_dualCast(void); // Incomplete
+static void func_c13cff(void); // Incomplete
+static void func_c13d8c(void); // Incomplete
+static void initHdmaData(void); // Incomplete
+static void func_c13ed3(void); // Incomplete
+static void func_c13f53(void); // Incomplete
+static void func_c13f60(void); // Incomplete
+static void func_c13f71(void); // Incomplete
+static void func_c13f95(void); // Incomplete
+static void func_c13fa8(void); // Incomplete
+static void func_c13ff4(void); // Incomplete
+static void func_c1405b(void); // Incomplete
+static void func_c140a0(void); // Incomplete
+static void func_c140e4(void); // Incomplete
+static void func_c1412f(void); // Incomplete
+static void func_c1414b(void); // Incomplete
+static void func_c1416b(void); // Incomplete
+static void func_c14176(void); // Incomplete
+static void func_c141a7(void); // Incomplete
+static void func_c141be(void); // Incomplete
+static void func_c141d5(void); // Incomplete
+static void func_c141da(void); // Incomplete
+static void func_c1421d(void); // Incomplete
+static void func_c14224(void); // Incomplete
 
 // Execute Battle Graphics
 void execBtlGfx(void) {}
@@ -340,3 +507,414 @@ static void func_c11df6(void) {}
 static void func_c11f22(void) {}
 
 static void func_c1202f(void) {}
+
+// Address: _2068
+static void loadMonsterPalette(void) {}
+
+// Address: _20c4
+static void loadMonsterGraphics(void) {}
+
+// Address: _2133
+static void getPtrMonsterPalette(void) {}
+
+// Address: _2157
+static void copyMonsterGraphicsToVram(void) {}
+
+static void func_c12202(void) {}
+
+// Address: _2251
+static void getPtrMonsterGraphics(void) {}
+
+static void func_c12289(void) {}
+
+static void func_c122f2(void) {}
+
+static void func_c12306(void) {}
+
+static void func_c1242a(void) {}
+
+static void func_c12454(void) {}
+
+static void func_c12481(void) {}
+
+static void func_c124d5(void) {}
+
+// Address: _24d5
+static void loadCharGraphics(void) {}
+
+static void func_c125a5(void) {}
+
+static void func_c125e8(void) {}
+
+// Address: _2607
+static void loadCharPalettes(void) {}
+
+static void func_c12689(void) {}
+
+static void func_c126fb(void) {}
+
+static void func_c12736(void) {}
+
+// Address: _28c4
+static void copyCharGraphicsToVram(void) {}
+
+static void func_c128d7(void) {}
+
+// Address: _2971
+static void drawBigTextString(void) {}
+
+// Address: _299a
+static void getNextByteString(void) {}
+
+// Address: _29a0
+static void bigTextEscapeCode(void) {}
+
+// Address: _29f1
+static void bartzName(void) {}
+
+// Address: _2a2f
+static void battleCommandName(void) {}
+
+// Address: _2a6e
+static void jobName(void) {}
+
+// Address: _2a90
+static void attackName(void) {}
+
+static void func_c12af9(void) {}
+
+// Address: _2b13
+static void charName(void) {}
+
+static void func_c12b35(void) {}
+
+static void func_c12b85(void) {}
+
+static void func_c12b91(void) {}
+
+// Address: _2b9d
+static void specialAbilityName(void) {}
+
+// Address: _2bb6
+static void monsterSpecialAttackName(void) {}
+
+// Address: _2bdb
+static void abilityName(void) {}
+
+// Address: _2c15
+static void attackName(void) {}
+
+static void func_c12c81(void) {}
+
+static void func_c12c9a(void) {}
+
+static void func_c12cab(void) {}
+
+// Address: _2cb2
+static void kanji(void) {}
+
+// Address: _2cf1
+static void drawKana(void) {}
+
+// Address: _2dac
+static void drawSmallText(void) {}
+
+// Address: _2dea
+static void drawSmallTextChar(void) {}
+
+// Address: _2e55
+static void averageExp(void) {}
+
+// Address: _2e9a
+static void battleCount(void) {}
+
+// Address: _2e9f
+static void monstersSlain(void) {}
+
+// Address: _2ea4
+static void saveCount(void) {}
+
+// Address: _2ebf
+static void treasuresPercent(void) {}
+
+// Address: _2f0f only Return to SubRoutine
+
+// Address: _2f10
+static void smallTxtEscape01(void) {}
+
+// Address: _2f29
+static void smallTxtEscape0d(void) {}
+
+// Address: _2f31
+static void smallTxtEscape05(void) {}
+
+// Address: _2f42
+static void smallTxtEscape06(void) {}
+
+// Address: _2f55
+static void smallTxtEscape03(void) {}
+
+// Address: _2f5d
+static void decodeSmallTxtEscapeCode(void) {}
+
+// Address: _2f6e
+static void smallTxtEscape1b(void) {}
+
+// Address: _2fa3
+static void smallTxtEscape0f(void) {}
+
+// Address: _2fe3
+static void smallTxtEscape0e(void) {}
+
+// Address: _3004
+static void smallTxtEscape0b(void) {}
+
+// Address: _303e
+static void smallTxtEscape0c(void) {}
+
+// Address: _3061
+static void smallTxtEscape07(void) {}
+
+// Address: _306e
+static void smallTxtEscape08(void) {}
+
+// Address: _307b
+static void smallTxtEscape09(void) {}
+
+// Address: _3004
+static void smallTxtEscape0a(void) {}
+
+static void func_c130d6(void) {}
+
+static void func_c13112(void) {}
+
+static void func_c1313f(void) {}
+
+static void func_c13144(void) {}
+
+static void func_c13149(void) {}
+
+static void func_c1314e(void) {}
+
+static void func_c13153(void) {}
+
+static void func_c13158(void) {}
+
+static void func_c1315d(void) {}
+
+static void func_c13177(void) {}
+
+static void func_c13182(void) {}
+
+static void func_c1318d(void) {}
+
+static void func_c13198(void) {}
+
+static void func_c131a3(void) {}
+
+static void func_c131aa(void) {}
+
+static void func_c131b1(void) {}
+
+static void func_c131b8(void) {}
+
+static void func_c131bf(void) {}
+
+static void func_c131c6(void) {}
+
+static void func_c131cd(void) {}
+
+static void func_c13231(void) {}
+
+static void func_c1327b(void) {}
+
+static void func_c132a5(void) {}
+
+static void func_c132bc(void) {}
+
+static void func_c132cb(void) {}
+
+static void func_c13231(void) {}
+
+static void func_c132da(void) {}
+
+static void func_c132ed(void) {}
+
+static void func_c132f0(void) {}
+
+static void func_c13300(void) {}
+
+static void func_c13309(void) {}
+
+// Address: _335a
+static void loadBattleBg(void) {}
+
+// Address: _33cc
+static void loadBattleBgTileLayout(void) {}
+
+static void func_c13577(void) {}
+
+// Address: _3599
+static void flipBattleBgHorizontailly(void) {}
+
+// Address: _35e1
+static void setPriorityBitForBtlBgTiles(void) {}
+
+// Address: _35fe
+static void clearPriorityBitForBtlBgTiles(void) {}
+
+// Address: _361b
+static void getNextByteForBtlBgTileFlipData(void) {}
+
+// Address: _3670
+static void getBattleBgTileFlip(void) {}
+
+// Address: _36a5
+static void loadBattleBgPalette(void) {}
+
+// Address: _36dc
+static void getPointerToBattleBgPalette(void) {}
+
+// Address: _36eb decompresses battle bg graphics
+
+// Address: _3725
+static void loadBattleBgGfx(void) {}
+
+// Address: _37ac
+static void reverseBitOrder(void) {}
+
+static void func_c137b6(void) {}
+
+static void func_c137ef(void) {}
+
+// Address: _382d only Return to SubRoutine
+
+static void func_c1382e(void) {}
+
+static void func_c13835(void) {}
+
+static void func_c138fe(void) {}
+
+static void func_c13940(void) {}
+
+static void func_c13954(void) {}
+
+static void func_c1397e(void) {}
+
+static void func_c139b2(void) {}
+
+static void func_c139e2(void) {}
+
+// Address: _39f9
+static void btlGfxFunc_openMenu(void) {}
+
+// Address: _3a55
+static void btlGfxFunc_closeMenu(void) {}
+
+static void func_c13a6e(void) {}
+
+// Address: _3a95 only Return to SubRoutine
+
+static void func_c13ad2(void) {}
+
+static void func_c13ade(void) {}
+
+static void func_c13aea(void) {}
+
+static void func_c13b11(void) {}
+
+static void func_c13b1f(void) {}
+
+static void func_c13b5c(void) {}
+
+static void func_c13b87(void) {}
+
+static void func_c13c02(void) {}
+
+static void func_c13c22(void) {}
+
+static void func_c13c42(void) {}
+
+static void func_c13c62(void) {}
+
+static void func_c13c7f(void) {}
+
+// Address: _3c88
+static void drawBtlMessage(void) {}
+
+// Address: _3cbb
+static void closeMessageWindow(void) {}
+
+// Address: _3cd3
+static void battleMenu_spellblade(void) {}
+
+// Address: _3cd7
+static void battleMenu_whiteMagic(void) {}
+
+// Address: _3cdc
+static void battleMenu_blackMagic(void) {}
+
+// Address: _3ce1
+static void battleMenu_timeMagic(void) {}
+
+// Address: _3ce6
+static void battleMenu_summon(void) {}
+
+// Address: _3ceb
+static void battleMenu_blueMagic(void) {}
+
+// Address: _3cf0
+static void battleMenu_song(void) {}
+
+// Address: _3cf5
+static void battleMenu_redMagic(void) {}
+
+// Address: _3cfa
+static void battleMenu_dualCast(void) {}
+
+static void func_c13cff(void) {}
+
+static void func_c13d8c(void) {}
+
+// Address: _3dc5
+static void initHdmaData(void) {}
+
+static void func_c13ed3(void) {}
+
+static void func_c13f53(void) {}
+
+static void func_c13f60(void) {}
+
+static void func_c13f71(void) {}
+
+static void func_c13f95(void) {}
+
+static void func_c13fa8(void) {}
+
+static void func_c13ff4(void) {}
+
+static void func_c1405b(void) {}
+
+static void func_c140a0(void) {}
+
+static void func_c140e4(void) {}
+
+static void func_c1412f(void) {}
+
+static void func_c1414b(void) {}
+
+static void func_c1416b(void) {}
+
+static void func_c14176(void) {}
+
+static void func_c141a7(void) {}
+
+static void func_c141be(void) {}
+
+static void func_c141d5(void) {}
+
+static void func_c141da(void) {}
+
+static void func_c1421d(void) {}
+
+static void func_c14224(void) {}
