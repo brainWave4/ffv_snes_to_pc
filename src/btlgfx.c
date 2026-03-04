@@ -252,7 +252,7 @@ static void battleMenu_summon(void); // Incomplete
 static void battleMenu_blueMagic(void); // Incomplete
 static void battleMenu_song(void); // Incomplete
 static void battleMenu_redMagic(void); // Incomplete
-static void battleMenu_dualCast(void); // Incomplete
+static void battleMenu_dualcast(void); // Incomplete
 static void func_c13cff(void); // Incomplete
 static void func_c13d8c(void); // Incomplete
 static void initHdmaData(void); // Incomplete
@@ -276,6 +276,139 @@ static void func_c141d5(void); // Incomplete
 static void func_c141da(void); // Incomplete
 static void func_c1421d(void); // Incomplete
 static void func_c14224(void); // Incomplete
+static void btlGfxFunc05(void); // Incomplete
+static void func_c1427f(void); // Incomplete
+static void func_c142f3(void); // Incomplete
+static void func_c14316(void); // Incomplete
+static void func_c14336(void); // Incomplete
+static void func_c1434a(void); // Incomplete
+static void func_c1434f(void); // Incomplete
+static void func_c14365(void); // Incomplete
+static void func_c143ce(void); // Incomplete
+static void func_c1442e(void); // Incomplete
+static void func_c14451(void); // Incomplete
+static void func_c1445a(void); // Incomplete
+static void func_c144c8(void); // Incomplete
+static void func_c144d1(void); // Incomplete
+static void func_c14552(void); // Incomplete
+static void func_c1455b(void); // Incomplete
+static void func_c1455e(void); // Incomplete
+static void func_c145f1(void); // Incomplete
+static void func_c14622(void); // Incomplete
+static void func_c14641(void); // Incomplete
+static void func_c14656(void); // Incomplete
+static void battleCmdMenu_none(void); // Incomplete
+static void battleCmdMenu0b(void); // Incomplete
+static void battleCmdMenu_combine(void); // Incomplete
+static void battleCmdMenu_drink(void); // Incomplete
+static void battleCmdMenu_throw(void); // Incomplete
+static void battleCmdMenu_spellblade(void); // Incomplete
+static void battleCmdMenu_whiteMagic(void); // Incomplete
+static void battleCmdMenu_blackMagic(void); // Incomplete
+static void battleCmdMenu_timeMagic(void); // Incomplete
+static void battleCmdMenu_summon(void); // Incomplete
+static void battleCmdMenu_blueMagic(void); // Incomplete
+static void battleCmdMenu_redMagic(void); // Incomplete
+static void battleCmdMenu_song(void); // Incomplete
+static void battleCmdMenu_dualcast(void); // Incomplete
+static void func_c146e9(void); // Incomplete
+static void func_c146fd(void); // Incomplete
+static void func_c14735(void); // Incomplete
+static void func_c14759(void); // Incomplete
+static void func_c14773(void); // Incomplete
+static void func_c14789(void); // Incomplete
+static void func_c147a3(void); // Incomplete
+static void battleCmdMenu_item(void); // Incomplete
+static void func_c147ef(void); // Incomplete
+static void func_c147fe(void); // Incomplete
+static void func_c1483b(void); // Incomplete
+static void func_c1485c(void); // Incomplete
+static void func_c1486e(void); // Incomplete
+static void func_c148a2(void); // Incomplete
+static void func_c148f7(void); // Incomplete
+static void func_c1491d(void); // Incomplete
+static void func_c14930(void); // Incomplete
+static void func_c1494d(void); // Incomplete
+static void func_c1496a(void); // Incomplete
+static void func_c14986(void); // Incomplete
+static void func_c149c4(void); // Incomplete
+static void func_c14a05(void); // Incomplete
+static void func_c14a4f(void); // Incomplete
+static void func_c14a68(void); // Incomplete
+static void func_c14a86(void); // Incomplete
+static void func_c14b22(void); // Incomplete
+static void func_c14bbc(void); // Incomplete
+static void func_c14be9(void); // Incomplete
+static void func_c14bf6(void); // Incomplete
+static void func_c14c1d(void); // Incomplete
+static void func_c14c73(void); // Incomplete
+static void func_c14c97(void); // Incomplete
+static void func_c14cc4(void); // Incomplete
+static void func_c14cef(void); // Incomplete
+static void func_c14d28(void); // Incomplete
+static void func_c14d3c(void); // Incomplete
+static void func_c14d80(void); // Incomplete
+static void func_c14e35(void); // Incomplete
+static void func_c14e5e(void); // Incomplete
+static void func_c14ea3(void); // Incomplete
+static void func_c14ec6(void); // Incomplete
+static void func_c14ee9(void); // Incomplete
+static void func_c14f28(void); // Incomplete
+static void func_c14f71(void); // Incomplete
+static void func_c14f92(void); // Incomplete
+static void func_c14fba(void); // Incomplete
+static void func_c14ffe(void); // Incomplete
+static void func_c15041(void); // Incomplete
+static void func_c15086(void); // Incomplete
+static void func_c150c9(void); // Incomplete
+static void func_c1510e(void); // Incomplete
+static void func_c15195(void); // Incomplete
+static void func_c151a5(void); // Incomplete
+static void func_c151e9(void); // Incomplete
+static void func_c1522f(void); // Incomplete
+static void func_c15270(void); // Incomplete
+static void getMenuIdBatlCmd(void); // Incomplete
+static void func_c152ad(void); // Incomplete
+static void func_c152f6(void); // Incomplete
+static void func_c15318(void); // Incomplete
+static void func_c1531f(void); // Incomplete
+static void func_c153ce(void); // Incomplete
+static void func_c15494(void); // Incomplete
+static void func_c154a1(void); // Incomplete
+static void func_c15511(void); // Incomplete
+static void func_c15536(void); // Incomplete
+static void func_c1555b(void); // Incomplete
+static void func_c15574(void); // Incomplete
+static void func_c155d0(void); // Incomplete
+static void func_c156e0(void); // Incomplete
+static void func_c1571a(void); // Incomplete
+static void func_c15750(void); // Incomplete
+static void func_c1576c(void); // Incomplete
+static void func_c15784(void); // Incomplete
+static void func_c157b1(void); // Incomplete
+static void func_c15806(void); // Incomplete
+static void func_c1584b(void); // Incomplete
+static void func_c15880(void); // Incomplete
+static void func_c1588d(void); // Incomplete
+static void func_c1594e(void); // Incomplete
+static void func_c15ad0(void); // Incomplete
+static void func_c15af9(void); // Incomplete
+static void func_c15b65(void); // Incomplete
+static void func_c15bb8(void); // Incomplete
+static void func_c15b93(void); // Incomplete
+static void func_c15ba3(void); // Incomplete
+static void func_c15c88(void); // Incomplete
+static void func_c15dd4(void); // Incomplete
+static void func_c15dea(void); // Incomplete
+static void func_c15e04(void); // Incomplete
+static void func_c15e3b(void); // Incomplete
+static void func_c15ee0(void); // Incomplete
+static void func_c15f67(void); // Incomplete
+static void func_c15f6b(void); // Incomplete
+static void func_c15f92(void); // Incomplete
+static void func_c15fcc(void); // Incomplete
+static void func_c15ff0(void); // Incomplete
+static void func_c1605c(void); // Incomplete
 
 // Execute Battle Graphics
 void execBtlGfx(void) {}
@@ -870,7 +1003,7 @@ static void battleMenu_song(void) {}
 static void battleMenu_redMagic(void) {}
 
 // Address: _3cfa
-static void battleMenu_dualCast(void) {}
+static void battleMenu_dualcast(void) {}
 
 static void func_c13cff(void) {}
 
@@ -918,3 +1051,286 @@ static void func_c141da(void) {}
 static void func_c1421d(void) {}
 
 static void func_c14224(void) {}
+
+// Address: _422b
+static void btlGfxFunc05(void) {}
+
+static void func_c1427f(void) {}
+
+static void func_c142f3(void) {}
+
+static void func_c14316(void) {}
+
+static void func_c14336(void) {}
+
+static void func_c1434a(void) {}
+
+static void func_c1434f(void) {}
+
+static void func_c14365(void) {}
+
+static void func_c143ce(void) {}
+
+static void func_c1442e(void) {}
+
+static void func_c14451(void) {}
+
+static void func_c1445a(void) {}
+
+static void func_c144c8(void) {}
+
+static void func_c144d1(void) {}
+
+static void func_c14552(void) {}
+
+static void func_c1455b(void) {}
+
+static void func_c1455e(void) {}
+
+static void func_c145f1(void) {}
+
+static void func_c14622(void) {}
+
+static void func_c14641(void) {}
+
+static void func_c14656(void) {}
+
+// Address: _4676
+static void battleCmdMenu_none(void) {}
+
+// Address: _468c
+static void battleCmdMenu0b(void) {}
+
+// Address: _468d
+static void battleCmdMenu_combine(void) {}
+
+// Address: _469f
+static void battleCmdMenu_drink(void) {}
+
+// Address: _46ab
+static void battleCmdMenu_throw(void) {}
+
+// Address: _46b7
+static void battleCmdMenu_spellblade(void) {}
+
+// Address: _46bc
+static void battleCmdMenu_whiteMagic(void) {}
+
+// Address: _46c1
+static void battleCmdMenu_blackMagic(void) {}
+
+// Address: _46c6
+static void battleCmdMenu_timeMagic(void) {}
+
+// Address: _46cb
+static void battleCmdMenu_summon(void) {}
+
+// Address: _46d0
+static void battleCmdMenu_blueMagic(void) {}
+
+// Address: _46d5
+static void battleCmdMenu_redMagic(void) {}
+
+// Address: _46da
+static void battleCmdMenu_song(void) {}
+
+// Address: _46df
+static void battleCmdMenu_dualcast(void) {}
+
+static void func_c146e9(void) {}
+
+static void func_c146fd(void) {}
+
+static void func_c14735(void) {}
+
+static void func_c14759(void) {}
+
+static void func_c14773(void) {}
+
+static void func_c14789(void) {}
+
+static void func_c147a3(void) {}
+
+// Address: _47b6
+static void battleCmdMenu_item(void) {}
+
+static void func_c147ef(void) {}
+
+static void func_c147fe(void) {}
+
+static void func_c1483b(void) {}
+
+static void func_c1485c(void) {}
+
+static void func_c1486e(void) {}
+
+static void func_c148a2(void) {}
+
+static void func_c148f7(void) {}
+
+static void func_c1491d(void) {}
+
+static void func_c14930(void) {}
+
+static void func_c1494d(void) {}
+
+static void func_c1496a(void) {}
+
+static void func_c14986(void) {}
+
+static void func_c149c4(void) {}
+
+static void func_c14a05(void) {}
+
+static void func_c14a4f(void) {}
+
+static void func_c14a68(void) {}
+
+static void func_c14a86(void) {}
+
+static void func_c14b22(void) {}
+
+static void func_c14bbc(void) {}
+
+static void func_c14be9(void) {}
+
+static void func_c14bf6(void) {}
+
+static void func_c14c1d(void) {}
+
+static void func_c14c73(void) {}
+
+static void func_c14c97(void) {}
+
+static void func_c14cc4(void) {}
+
+static void func_c14cef(void) {}
+
+static void func_c14d28(void) {}
+
+static void func_c14d3c(void) {}
+
+static void func_c14d80(void) {}
+
+static void func_c14e35(void) {}
+
+static void func_c14e5e(void) {}
+
+static void func_c14ea3(void) {}
+
+static void func_c14ec6(void) {}
+
+static void func_c14ee9(void) {}
+
+static void func_c14f28(void) {}
+
+static void func_c14f71(void) {}
+
+static void func_c14f92(void) {}
+
+static void func_c14fba(void) {}
+
+static void func_c14ffe(void) {}
+
+static void func_c15041(void) {}
+
+static void func_c15086(void) {}
+
+static void func_c150c9(void) {}
+
+static void func_c1510e(void) {}
+
+static void func_c15195(void) {}
+
+static void func_c151a5(void) {}
+
+static void func_c151e9(void) {}
+
+static void func_c1522f(void) {}
+
+static void func_c15270(void) {}
+
+// Address: _52a7
+static void getMenuIdBatlCmd(void) {}
+
+static void func_c152ad(void) {}
+
+static void func_c152f6(void) {}
+
+static void func_c15318(void) {}
+
+static void func_c1531f(void) {}
+
+static void func_c153ce(void) {}
+
+static void func_c15494(void) {}
+
+static void func_c154a1(void) {}
+
+static void func_c15511(void) {}
+
+static void func_c15536(void) {}
+
+static void func_c1555b(void) {}
+
+static void func_c15574(void) {}
+
+static void func_c155d0(void) {}
+
+static void func_c156e0(void) {}
+
+static void func_c1571a(void) {}
+
+static void func_c15750(void) {}
+
+static void func_c1576c(void) {}
+
+static void func_c15784(void) {}
+
+static void func_c157b1(void) {}
+
+static void func_c15806(void) {}
+
+static void func_c1584b(void) {}
+
+static void func_c15880(void) {}
+
+static void func_c1588d(void) {}
+
+static void func_c1594e(void) {}
+
+static void func_c15ad0(void) {}
+
+static void func_c15af9(void) {}
+
+static void func_c15b65(void) {}
+
+static void func_c15bb8(void) {}
+
+static void func_c15b93(void) {}
+
+static void func_c15ba3(void) {}
+
+static void func_c15c88(void) {}
+
+static void func_c15dd4(void) {}
+
+static void func_c15dea(void) {}
+
+static void func_c15e04(void) {}
+
+static void func_c15e3b(void) {}
+
+static void func_c15ee0(void) {}
+
+static void func_c15f67(void) {}
+
+static void func_c15f6b(void) {}
+
+static void func_c15f92(void) {}
+
+static void func_c15fcc(void) {}
+
+static void func_c15ff0(void) {}
+
+static void func_c1605c(void) {}
