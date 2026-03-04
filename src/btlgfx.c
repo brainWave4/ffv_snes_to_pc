@@ -516,6 +516,190 @@ static void func_c17f9a(void); // Incomplete
 static void func_c17fc7(void); // Incomplete
 static void func_c17ffe(void); // Incomplete
 static void moveBackAfterAttack(void); // Incomplete
+static void moveForwardToAttack(void); // Incomplete
+static void waitForCharToMoveForward(void); // Incomplete
+static void flashActiveMonster(void); // Incomplete
+static void flashMonster(void); // Incomplete
+static void wait(void); // Incomplete
+static void func_c1814a(void); // Incomplete
+static void func_c18179(void); // Incomplete
+static void btlGfxFunc_execGfxScript(void); // Incomplete
+static void gfxScriptCmd_execMisc(void); // Incomplete
+static void miscEffect09(void); // Incomplete
+static void miscEffect0A(void); // Incomplete
+static void miscEffect_wait(void); // Incomplete
+static void miscEffect04(void); // Incomplete
+static void func_c182c6(void); // Incomplete
+static void miscEffect_shakeScreen(void); // Incomplete
+static void miscEffect05(void); // Incomplete
+static void miscEffect08(void); // Incomplete
+static void miscEffect06(void); // Incomplete
+static void miscEffect_playSoundEffect(void); // Incomplete
+static void miscEffect_playSong(void); // Incomplete
+static void func_c18344(void); // Incomplete
+static void func_c18352(void); // Incomplete
+static void func_c18360(void); // Incomplete
+static void func_c18367(void); // Incomplete
+static void func_c1836e(void); // Incomplete
+static void func_c18382(void); // Incomplete
+static void func_c1839b(void); // Incomplete
+static void func_c183b4(void); // Incomplete
+static void func_c183ca(void); // Incomplete
+static void func_c18400(void); // Incomplete
+static void func_c18436(void); // Incomplete
+static void func_c18467(void); // Incomplete
+static void func_c18498(void); // Incomplete
+static void showMonster_fadeIn(void); // Incomplete
+static void func_c184b5(void); // Incomplete
+static void showMonster_ironClaw(void); // Incomplete
+static void showMonster_merugene3(void); // Incomplete
+static void showMonster_merugene4(void); // Incomplete
+static void showMonster_discreet(void); // Incomplete
+static void showMonster_motorTrap(void); // Incomplete
+static void showMonster_fadeAndDrop(void); // Incomplete
+static void showMonster_merugene1(void); // Incomplete
+static void showMonster_merugene2(void); // Incomplete
+static void showMonster_switch(void); // Incomplete
+static void func_c185a6(void); // Incomplete
+static void func_c185af(void); // Incomplete
+static void showMonster_transform(void); // Incomplete
+static void showMonster_pages(void); // Incomplete
+static void func_c18695(void); // Incomplete
+static void showMonster_sandworm(void); // Incomplete
+static void doMonsterEntry(void); // Incomplete
+static void func_c1875c(void); // Incomplete
+static void func_c1879d(void); // Incomplete
+static void func_c187cf(void); // Incomplete
+static void monsterEntry02(void); // Incomplete
+static void monsterEntry04(void); // Incomplete
+static void func_c18836(void); // Incomplete
+static void func_c1886b(void); // Incomplete
+static void func_c188a8(void); // Incomplete
+static void monsterEntry03(void); // Incomplete
+static void monsterEntry05(void); // Incomplete
+static void monsterEntry_enterFromSide(void); // Incomplete
+static void monsterEntry_enterFromTop(void); // Incomplete
+static void func_c189af(void); // Incomplete
+static void func_c189c2(void); // Incomplete
+static void showMonster_neoExdeath(void); // Incomplete
+static void func_c18b2a(void); // Incomplete
+static void gfxScriptCmd_showMonster(void); // Incomplete
+static void gfxScriptCmd_execGfxCmd(void); // Incomplete
+static void func_c18b93(void); // Incomplete
+static void func_c18baa(void); // Incomplete
+static void showAttackName(void); // Incomplete
+static void animCommand_displayQueuedBtlMsg(void); // Incomplete
+static void displayBattleMessage(void); // Incomplete
+static void waitForMessage(void); // Incomplete
+static void showNeoExdeathIntroDialog(void); // Incomplete
+static void gfxScriptCmd_showBattleDialog(void); // Incomplete
+static void displayBattleDialog(void); // Incomplete
+static void func_c18cf1(void); // Incomplete
+static void showCharInReadyStance(void); // Incomplete
+static void showCharInNormalStance(void); // Incomplete
+static void getAttackerId(void); // Incomplete
+static void getTargetId(void); // Incomplete
+static void func_c18d3b(void); // Incomplete
+static void func_c18d41(void); // Incomplete
+static void getGfxScriptParam3(void); // Incomplete
+static void getGfxScriptParam2(void); // Incomplete
+static void getGfxScriptParam4(void); // Incomplete
+static void getGfxScriptParam1(void); // Incomplete
+static void getGfxScriptParam3(void); // Incomplete
+static void abilityAnim(void); // Incomplete
+static void func_c18d74(void); // Incomplete
+static void abilityAnimCredits_Knight(void); // Incomplete
+static void abilityAnimCredits_JobMoveBack(void); // Incomplete
+static void abilityAnimCredits_Monk(void); // Incomplete
+static void abilityAnimCredits_Thief(void); // Incomplete
+static void abilityAnimCredits_Dragoon(void); // Incomplete
+static void abilityAnimCredits_Ninja(void); // Incomplete
+static void abilityAnimCredits_Samurai(void); // Incomplete
+static void abilityAnimCredits_Berserker(void); // Incomplete
+static void abilityAnimCredits_Ranger(void); // Incomplete
+static void abilityAnimCredits_MysticKnight(void); // Incomplete
+static void abilityAnimCredits_WhiteMage(void); // Incomplete
+static void abilityAnimCredits_BlackMage(void); // Incomplete
+static void abilityAnimCredits_TimeMage(void); // Incomplete
+static void abilityAnimCredits_Summoner(void); // Incomplete
+static void abilityAnimCredits_BlueMage(void); // Incomplete
+static void abilityAnimCredits_RedMage(void); // Incomplete
+static void abilityAnimCredits_Beastmaster(void); // Incomplete
+static void abilityAnimCredits_Chemist(void); // Incomplete
+static void abilityAnimCredits_Geomancer(void); // Incomplete
+static void abilityAnimCredits_Bard(void); // Incomplete
+static void abilityAnimCredits_Dancer(void); // Incomplete
+static void abilityAnimCredits_Mime(void); // Incomplete
+static void abilityAnimCredits_Freelancer(void); // Incomplete
+static void func_c18f3c(void); // Incomplete
+static void showCharStatsInCredicts(void); // Incomplete
+static void func_c1931a(void); // Incomplete
+static void func_c1933e(void); // Incomplete
+static void func_c19360(void); // Incomplete
+static void func_c193af(void); // Incomplete
+static void func_c1942f(void); // Incomplete
+static void func_c1943d(void); // Incomplete
+static void func_c19443(void); // Incomplete
+static void func_c1946b(void); // Incomplete
+static void func_c19481(void); // Incomplete
+static void func_c194ea(void); // Incomplete
+static void func_c19559(void); // Incomplete
+static void func_c19581(void); // Incomplete
+static void func_c195a6(void); // Incomplete
+static void func_c195bf(void); // Incomplete
+static void func_c1962c(void); // Incomplete
+static void setAttackerAnimFrame(void); // Incomplete
+static void func_c19709(void); // Incomplete
+static void func_c1971b(void); // Incomplete
+static void func_c19725(void); // Incomplete
+static void abilityAnim_hide(void); // Incomplete
+static void abilityAnim_show(void); // Incomplete
+static void runOnOffScreen(void); // Incomplete
+static void func_c1979e(void); // Incomplete
+static void abilityAnim_guard(void); // Incomplete
+static void abilityAnim_dance(void); // Incomplete
+static void abilityAnim_flirt(void); // Incomplete
+static void func_c19897(void); // Incomplete
+static void abilityAnim_catch(void); // Incomplete
+static void abilityAnim_gilToss(void); // Incomplete
+static void func_c198d3(void); // Incomplete
+static void abilityAnim_lance(void); // Incomplete
+static void abilityAnim_tame(void); // Incomplete
+static void abilityAnim_pray(void); // Incomplete
+static void abilityAnim_revive(void); // Incomplete
+static void abilityAnim_smoke(void); // Incomplete
+static void abilityAnim_steal(void); // Incomplete
+static void abilityAnim_chakra(void); // Incomplete
+static void abilityAnim_image(void); // Incomplete
+static void abilityAnim_def(void); // Incomplete
+static void abilityAnim_focus(void); // Incomplete
+static void func_c1999c(void); // Incomplete
+static void abilityAnim_intRocket(void); // Incomplete
+static void abilityAnim_jumpAttack(void); // Incomplete
+static void func_c19b5b(void); // Incomplete
+static void abilityAnim_jumpUp(void); // Incomplete
+static void abilityAnim_slash(void); // Incomplete
+static void abilityAnim_kick(void); // Incomplete
+static void func_c19d37(void); // Incomplete
+static void func_c19d3c(void); // Incomplete
+static void func_c19d41(void); // Incomplete
+static void func_c19d46(void); // Incomplete
+static void func_c19d4b(void); // Incomplete
+static void getPtrCharGfxProp(void); // Incomplete
+static void func_c19d8c(void); // Incomplete
+static void waitForDamageNumerals(void); // Incomplete
+static void func_c19da1(void); // Incomplete
+static void func_c19db3(void); // Incomplete
+static void func_c19dcb(void); // Incomplete
+static void func_c19e0a(void); // Incomplete
+static void abilityAnim_row(void); // Incomplete
+static void func_c19e89(void); // Incomplete
+static void func_c19ed8(void); // Incomplete
+static void func_c19ee7(void); // Incomplete
+static void abilityAnim_throw(void); // Incomplete
+static void abilityAnim_fight(void); // Incomplete
+static void func_c19fed(void); // Incomplete
+static void func_c1a01d(void); // Incomplete
 
 // Execute Battle Graphics
 void execBtlGfx(void) {}
@@ -1671,3 +1855,487 @@ static void func_c17ffe(void) {}
 
 // Address: _8062
 static void moveBackAfterAttack(void) {}
+
+// Address: _80b8
+static void moveForwardToAttack(void) {}
+
+// Address: _8103
+static void waitForCharToMoveForward(void) {}
+
+// Address: _810e
+static void flashActiveMonster(void) {}
+
+// Address: _8125
+static void flashMonster(void) {}
+
+// Address: _8141
+static void wait(void) {}
+
+static void func_c1814a(void) {}
+
+static void func_c18179(void) {}
+
+// Address: _8189
+static void btlGfxFunc_execGfxScript(void) {}
+
+// Address: _8234
+static void gfxScriptCmd_execMisc(void) {}
+
+// Address: _825e
+static void miscEffect09(void) {}
+
+// Address: _8281
+static void miscEffect0A(void) {}
+
+// Address: _82a4 only Return To Subroutine
+
+// Address: _82a5
+static void miscEffect_wait(void) {}
+
+// Address: _821b
+static void miscEffect04(void) {}
+
+static void func_c182c6(void) {}
+
+// Address: _830e
+static void miscEffect_shakeScreen(void) {}
+
+// Address: _8317
+static void miscEffect05(void) {}
+
+// Address: _8320
+static void miscEffect08(void) {}
+
+// Address: _8329
+static void miscEffect06(void) {}
+
+// Address: _8332
+static void miscEffect_playSoundEffect(void) {}
+
+// Address: _833d
+static void miscEffect_playSong(void) {}
+
+static void func_c18344(void) {}
+
+static void func_c18352(void) {}
+
+static void func_c18360(void) {}
+
+static void func_c18367(void) {}
+
+static void func_c1836e(void) {}
+
+static void func_c18382(void) {}
+
+static void func_c1839b(void) {}
+
+static void func_c183b4(void) {}
+
+static void func_c183ca(void) {}
+
+static void func_c18400(void) {}
+
+static void func_c18436(void) {}
+
+static void func_c18467(void) {}
+
+static void func_c18498(void) {}
+
+// Address: _84a7
+static void showMonster_fadeIn(void) {}
+
+static void func_c184b5(void) {}
+
+// Address: _84c1
+static void showMonster_ironClaw(void) {}
+
+// Address: _84d8
+static void showMonster_merugene3(void) {}
+
+// Address: _8500
+static void showMonster_merugene4(void) {}
+
+// Address: _8528
+static void showMonster_discreet(void) {}
+
+// Address: _8533
+static void showMonster_motorTrap(void) {}
+
+// Address: _854e
+static void showMonster_fadeAndDrop(void) {}
+
+// Address: _856a
+static void showMonster_merugene1(void) {}
+
+// Address: _857e
+static void showMonster_merugene2(void) {}
+
+// Address: _8592
+static void showMonster_switch(void) {}
+
+static void func_c185a6(void) {}
+
+static void func_c185af(void) {}
+
+// Address: _85b8
+static void showMonster_transform(void) {}
+
+// Address: _8626
+static void showMonster_pages(void) {}
+
+static void func_c18695(void) {}
+
+// Address: _869f
+static void showMonster_sandworm(void) {}
+
+// Address: _8736
+static void doMonsterEntry(void) {}
+
+static void func_c1875c(void) {}
+
+static void func_c1879d(void) {}
+
+static void func_c187cf(void) {}
+
+// Address: _87e3
+static void monsterEntry02(void) {}
+
+// Address: _8826
+static void monsterEntry04(void) {}
+
+static void func_c18836(void) {}
+
+static void func_c1886b(void) {}
+
+static void func_c188a8(void) {}
+
+// Address: _890c
+static void monsterEntry03(void) {}
+
+// Address: _8926
+static void monsterEntry05(void) {}
+
+// Address: _8962
+static void monsterEntry_enterFromSide(void) {}
+
+// Address: _897c
+static void monsterEntry_enterFromTop(void) {}
+
+static void func_c189af(void) {}
+
+static void func_c189c2(void) {}
+
+// Address: _89d0
+static void showMonster_neoExdeath(void) {}
+
+static void func_c18b2a(void) {}
+
+// Address: _8b46
+static void gfxScriptCmd_showMonster(void) {}
+
+// Address: _8b69
+static void gfxScriptCmd_execGfxCmd(void) {}
+
+static void func_c18b93(void) {}
+
+// Address: _8ba9 only Return To Subroutine
+
+static void func_c18baa(void) {}
+
+// Address: _8be4
+static void showAttackName(void) {}
+
+// Address: _8c37
+static void animCommand_displayQueuedBtlMsg(void) {}
+
+// Address: _8c6d
+static void displayBattleMessage(void) {}
+
+// Address: _8c93
+static void waitForMessage(void) {}
+
+// Address: _8ca8
+static void showNeoExdeathIntroDialog(void) {}
+
+// Address: _8cbd
+static void gfxScriptCmd_showBattleDialog(void) {}
+
+// Address: _8cd4
+static void displayBattleDialog(void) {}
+
+static void func_c18cf1(void) {}
+
+// Address: _8d14
+static void showCharInReadyStance(void) {}
+
+// Address: _8d22
+static void showCharInNormalStance(void) {}
+
+// Address: _8d2f
+static void getAttackerId(void) {}
+
+// Address: _8d35
+static void getTargetId(void) {}
+
+static void func_c18d3b(void) {}
+
+static void func_c18d41(void) {}
+
+// Address: _8d47
+static void getGfxScriptParam3(void) {}
+
+// Address: _8d4d
+static void getGfxScriptParam2(void) {}
+
+// Address: _8d53
+static void getGfxScriptParam4(void) {}
+
+// Address: _8d59
+static void getGfxScriptParam1(void) {}
+
+// Address: _8d47
+static void getGfxScriptParam3(void) {}
+
+// Address: _8d5f
+static void abilityAnim(void) {}
+
+// Address: _8d73 is only Return To Subroutine
+
+static void func_c18d74(void) {}
+
+// Address: _8e14
+static void abilityAnimCredits_Knight(void) {}
+
+// Address: _8e1a
+static void abilityAnimCredits_JobMoveBack(void) {}
+
+// Address: _8e20
+static void abilityAnimCredits_Monk(void) {}
+
+// Address: _8e29
+static void abilityAnimCredits_Thief(void) {}
+
+// Address: _8e32
+static void abilityAnimCredits_Dragoon(void) {}
+
+// Address: _8e3b
+static void abilityAnimCredits_Ninja(void) {}
+
+// Address: _8e44
+static void abilityAnimCredits_Samurai(void) {}
+
+// Address: _8e4a
+static void abilityAnimCredits_Berserker(void) {}
+
+// Address: _8e53
+static void abilityAnimCredits_Ranger(void) {}
+
+// Address: _8e62
+static void abilityAnimCredits_MysticKnight(void) {}
+
+// Address: _8e72
+static void abilityAnimCredits_WhiteMage(void) {}
+
+// Address: _8e82
+static void abilityAnimCredits_BlackMage(void) {}
+
+// Address: _8e92
+static void abilityAnimCredits_TimeMage(void) {}
+
+// Address: _8ea2
+static void abilityAnimCredits_Summoner(void) {}
+
+// Address: _8eb2
+static void abilityAnimCredits_BlueMage(void) {}
+
+// Address: _8ec2
+static void abilityAnimCredits_RedMage(void) {}
+
+// Address: _8ed2
+static void abilityAnimCredits_Beastmaster(void) {}
+
+// Address: _8eea
+static void abilityAnimCredits_Chemist(void) {}
+
+// Address: _8f01
+static void abilityAnimCredits_Geomancer(void) {}
+
+// Address: _8f11
+static void abilityAnimCredits_Bard(void) {}
+
+// Address: _8f21
+static void abilityAnimCredits_Dancer(void) {}
+
+// Address: _8f2a
+static void abilityAnimCredits_Mime(void) {}
+
+// Address: _8f33
+static void abilityAnimCredits_Freelancer(void) {}
+
+static void func_c18f3c(void) {}
+
+// Address: _906f
+static void showCharStatsInCredicts(void) {}
+
+static void func_c1931a(void) {}
+
+static void func_c1933e(void) {}
+
+static void func_c19360(void) {}
+
+static void func_c193af(void) {}
+
+static void func_c1942f(void) {}
+
+static void func_c1943d(void) {}
+
+static void func_c19443(void) {}
+
+static void func_c1946b(void) {}
+
+static void func_c19481(void) {}
+
+static void func_c194ea(void) {}
+
+static void func_c19559(void) {}
+
+static void func_c19581(void) {}
+
+static void func_c195a6(void) {}
+
+static void func_c195bf(void) {}
+
+static void func_c1962c(void) {}
+
+// Address: _96ec
+static void setAttackerAnimFrame(void) {}
+
+static void func_c19709(void) {}
+
+static void func_c1971b(void) {}
+
+static void func_c19725(void) {}
+
+// Address: _972e
+static void abilityAnim_hide(void) {}
+
+// Address: _974a
+static void abilityAnim_show(void) {}
+
+// Address: _9763
+static void runOnOffScreen(void) {}
+
+static void func_c1979e(void) {}
+
+// Address: _9815
+static void abilityAnim_guard(void) {}
+
+// Address: _981d
+static void abilityAnim_dance(void) {}
+
+// Address: _987d
+static void abilityAnim_flirt(void) {}
+
+static void func_c19897(void) {}
+
+// Address: _98a9
+static void abilityAnim_catch(void) {}
+
+// Address: _98c1
+static void abilityAnim_gilToss(void) {}
+
+static void func_c198d3(void) {}
+
+// Address: _98df
+static void abilityAnim_lance(void) {}
+
+// Address: _98f7
+static void abilityAnim_tame(void) {}
+
+// Address: _9909
+static void abilityAnim_pray(void) {}
+
+// Address: _991b
+static void abilityAnim_revive(void) {}
+
+// Address: _992d
+static void abilityAnim_smoke(void) {}
+
+// Address: _9951
+static void abilityAnim_steal(void) {}
+
+// Address: _9966
+static void abilityAnim_chakra(void) {}
+
+// Address: _9977
+static void abilityAnim_image(void) {}
+
+// Address: _9986
+static void abilityAnim_def(void) {}
+
+// Address: _998b
+static void abilityAnim_focus(void) {}
+
+static void func_c1999c(void) {}
+
+// Address: _99ad
+static void abilityAnim_intRocket(void) {}
+
+// Address: _99e0
+static void abilityAnim_jumpAttack(void) {}
+
+static void func_c19b5b(void) {}
+
+// Address: _9b74
+static void abilityAnim_jumpUp(void) {}
+
+// Address: _9be3
+static void abilityAnim_slash(void) {}
+
+// Address: _9c7c
+static void abilityAnim_kick(void) {}
+
+static void func_c19d37(void) {}
+
+static void func_c19d3c(void) {}
+
+static void func_c19d41(void) {}
+
+static void func_c19d46(void) {}
+
+static void func_c19d4b(void) {}
+
+// Address: _9d80
+static void getPtrCharGfxProp(void) {}
+
+static void func_c19d8c(void) {}
+
+// Address: _9d93
+static void waitForDamageNumerals(void) {}
+
+static void func_c19da1(void) {}
+
+static void func_c19db3(void) {}
+
+static void func_c19dcb(void) {}
+
+static void func_c19e0a(void) {}
+
+// Address: _9e4d
+static void abilityAnim_row(void) {}
+
+static void func_c19e89(void) {}
+
+static void func_c19ed8(void) {}
+
+static void func_c19ee7(void) {}
+
+// Address: _9ef6
+static void abilityAnim_throw(void) {}
+
+// Address: _9f44
+static void abilityAnim_fight(void) {}
+
+static void func_c19fed(void) {}
+
+static void func_c1a01d(void) {}
