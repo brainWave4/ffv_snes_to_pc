@@ -409,6 +409,113 @@ static void func_c15f92(void); // Incomplete
 static void func_c15fcc(void); // Incomplete
 static void func_c15ff0(void); // Incomplete
 static void func_c1605c(void); // Incomplete
+static void func_c1608e(void); // Incomplete
+static void func_c1609d(void); // Incomplete
+static void func_c160bb(void); // Incomplete
+static void func_c160cc(void); // Incomplete
+static void func_c160da(void); // Incomplete
+static void func_c161b6(void); // Incomplete
+static void func_c161c3(void); // Incomplete
+static void func_c16268(void); // Incomplete
+static void func_c16295(void); // Incomplete
+static void func_c162d7(void); // Incomplete
+static void func_c163aa(void); // Incomplete
+static void func_c16423(void); // Incomplete
+static void func_c16486(void); // Incomplete
+static void func_c1649a(void); // Incomplete
+static void func_c164b0(void); // Incomplete
+static void func_c16533(void); // Incomplete
+static void func_c165d7(void); // Incomplete
+static void func_c1667c(void); // Incomplete
+static void func_c166d5(void); // Incomplete
+static void func_c1673a(void); // Incomplete
+static void func_c167d3(void); // Incomplete
+static void func_c167e4(void); // Incomplete
+static void func_c168f1(void); // Incomplete
+static void func_c1697d(void); // Incomplete
+static void func_c1698c(void); // Incomplete
+static void decodeStringOfAnimFrameTiles(void); // Incomplete
+static void decodeSingleAnimFrameTiles(void); // Incomplete
+static void hideDamageNumeralSprites(void); // Incomplete
+static void func_c16c08(void); // Incomplete
+static void func_c16c1a(void); // Incomplete
+static void updateDamageNumeralSpritesGolem(void); // Incomplete
+static void updateDamageNumeralSprites(void); // Incomplete
+static void func_c16d5c(void); // Incomplete
+static void func_c16e1c(void); // Incomplete
+static void func_c16e52(void); // Incomplete
+static void func_c16ed4(void); // Incomplete
+static void func_c16ef6(void); // Incomplete
+static void func_c16fa4(void); // Incomplete
+static void func_c16fd5(void); // Incomplete
+static void func_c1703a(void); // Incomplete
+static void func_c1705c(void); // Incomplete
+static void func_c1706b(void); // Incomplete
+static void func_c170d3(void); // Incomplete
+static void func_c172c1(void); // Incomplete
+static void func_c172db(void); // Incomplete
+static void func_c172fb(void); // Incomplete
+static void func_c17374(void); // Incomplete
+static void func_c173ec(void); // Incomplete
+static void func_c17471(void); // Incomplete
+static void func_c174d8(void); // Incomplete
+static void func_c17529(void); // Incomplete
+static void func_c17539(void); // Incomplete
+static void func_c1754d(void); // Incomplete
+static void func_c17576(void); // Incomplete
+static void func_c175ac(void); // Incomplete
+static void func_c175bb(void); // Incomplete
+static void btlGfxFunc08(void); // Incomplete
+static void func_c17602(void); // Incomplete
+static void func_c17613(void); // Incomplete
+static void func_c17624(void); // Incomplete
+static void func_c1763d(void); // Incomplete
+static void func_c1765e(void); // Incomplete
+static void func_c1766b(void); // Incomplete
+static void btlGfxFunc_doomAnim(void); // Incomplete
+static void func_c17695(void); // Incomplete
+static void func_c176bc(void); // Incomplete
+static void func_c176fe(void); // Incomplete
+static void func_c1772c(void); // Incomplete
+static void func_c1778a(void); // Incomplete
+static void func_c1781d(void); // Incomplete
+static void func_c17864(void); // Incomplete
+static void func_c178ab(void); // Incomplete
+static void miscEffect_flashScreen(void); // Incomplete
+static void updateScreenFlash(void); // Incomplete
+static void func_c17930(void); // Incomplete
+static void func_c17979(void); // Incomplete
+static void func_c179a5(void); // Incomplete
+static void func_c17a2a(void); // Incomplete
+static void func_c17a93(void); // Incomplete
+static void func_c17b02(void); // Incomplete
+static void func_c17b43(void); // Incomplete
+static void func_c17ba0(void); // Incomplete
+static void func_c17c49(void); // Incomplete
+static void func_c17cb1(void); // Incomplete
+static void func_c17d52(void); // Incomplete
+static void func_c17c5f(void); // Incomplete
+static void func_c17d8c(void); // Incomplete
+static void func_c17da7(void); // Incomplete
+static void func_c17db0(void); // Incomplete
+static void func_c17de7(void); // Incomplete
+static void func_c17e1b(void); // Incomplete
+static void func_c17e1f(void); // Incomplete
+static void func_c17e44(void); // Incomplete
+static void func_c17e6b(void); // Incomplete
+static void func_c17e8b(void); // Incomplete
+static void func_c17eab(void); // Incomplete
+static void func_c17eb4(void); // Incomplete
+static void func_c17ee4(void); // Incomplete
+static void func_c17ef5(void); // Incomplete
+static void func_c17f2b(void); // Incomplete
+static void func_c17f34(void); // Incomplete
+static void func_c17f43(void); // Incomplete
+static void func_c17f70(void); // Incomplete
+static void func_c17f9a(void); // Incomplete
+static void func_c17fc7(void); // Incomplete
+static void func_c17ffe(void); // Incomplete
+static void moveBackAfterAttack(void); // Incomplete
 
 // Execute Battle Graphics
 void execBtlGfx(void) {}
@@ -1334,3 +1441,233 @@ static void func_c15fcc(void) {}
 static void func_c15ff0(void) {}
 
 static void func_c1605c(void) {}
+
+static void func_c1608e(void) {}
+
+static void func_c1609d(void) {}
+
+static void func_c160bb(void) {}
+
+static void func_c160cc(void) {}
+
+static void func_c160da(void) {}
+
+static void func_c161b6(void) {}
+
+static void func_c161c3(void) {}
+
+static void func_c16268(void) {}
+
+static void func_c16295(void) {}
+
+static void func_c162d7(void) {}
+
+static void func_c163aa(void) {}
+
+static void func_c16423(void) {}
+
+static void func_c16486(void) {}
+
+static void func_c1649a(void) {}
+
+static void func_c164b0(void) {}
+
+static void func_c16533(void) {}
+
+static void func_c165d7(void) {}
+
+static void func_c1667c(void) {}
+
+static void func_c166d5(void) {}
+
+static void func_c1673a(void) {}
+
+static void func_c167d3(void) {}
+
+static void func_c167e4(void) {}
+
+static void func_c168f1(void) {}
+
+static void func_c1697d(void) {}
+
+static void func_c1698c(void) {}
+
+// Address: _6ab1
+static void decodeStringOfAnimFrameTiles(void) {}
+
+// Address: _6b6c
+static void decodeSingleAnimFrameTiles(void) {}
+
+// Address: _6bef
+static void hideDamageNumeralSprites(void) {}
+
+static void func_c16c08(void) {}
+
+static void func_c16c1a(void) {}
+
+// Address: _6c58
+static void updateDamageNumeralSpritesGolem(void) {}
+
+// Address: _6cd4
+static void updateDamageNumeralSprites(void) {}
+
+static void func_c16d5c(void) {}
+
+static void func_c16e1c(void) {}
+
+static void func_c16e52(void) {}
+
+static void func_c16ed4(void) {}
+
+static void func_c16ef6(void) {}
+
+static void func_c16fa4(void) {}
+
+static void func_c16fd5(void) {}
+
+static void func_c1703a(void) {}
+
+static void func_c1705c(void) {}
+
+static void func_c1706b(void) {}
+
+static void func_c170d3(void) {}
+
+static void func_c172c1(void) {}
+
+static void func_c172db(void) {}
+
+static void func_c172fb(void) {}
+
+static void func_c17374(void) {}
+
+static void func_c173ec(void) {}
+
+static void func_c17471(void) {}
+
+static void func_c174d8(void) {}
+
+static void func_c17529(void) {}
+
+static void func_c17539(void) {}
+
+static void func_c1754d(void) {}
+
+static void func_c17576(void) {}
+
+static void func_c175ac(void) {}
+
+static void func_c175bb(void) {}
+
+// Address: _75d7
+static void btlGfxFunc08(void) {}
+
+static void func_c17602(void) {}
+
+static void func_c17613(void) {}
+
+static void func_c17624(void) {}
+
+static void func_c1763d(void) {}
+
+static void func_c1765e(void) {}
+
+static void func_c1766b(void) {}
+
+// Address: _768d
+static void btlGfxFunc_doomAnim(void) {}
+
+static void func_c17695(void) {}
+
+static void func_c176bc(void) {}
+
+static void func_c176fe(void) {}
+
+static void func_c1772c(void) {}
+
+static void func_c1778a(void) {}
+
+static void func_c1781d(void) {}
+
+static void func_c17864(void) {}
+
+static void func_c178ab(void) {}
+
+// Address: _78f5
+static void miscEffect_flashScreen(void) {}
+
+// Address: _78fe
+static void updateScreenFlash(void) {}
+
+static void func_c17930(void) {}
+
+static void func_c17979(void) {}
+
+static void func_c179a5(void) {}
+
+static void func_c17a2a(void) {}
+
+static void func_c17a93(void) {}
+
+static void func_c17b02(void) {}
+
+static void func_c17b43(void) {}
+
+static void func_c17ba0(void) {}
+
+static void func_c17c49(void) {}
+
+static void func_c17cb1(void) {}
+
+static void func_c17d52(void) {}
+
+static void func_c17c5f(void) {}
+
+// Address: _7d79 only JuMPs to ($0088)
+
+static void func_c17d8c(void) {}
+
+static void func_c17da7(void) {}
+
+static void func_c17db0(void) {}
+
+static void func_c17de7(void) {}
+
+static void func_c17e1b(void) {}
+
+static void func_c17e1f(void) {}
+
+static void func_c17e44(void) {}
+
+static void func_c17e6b(void) {}
+
+static void func_c17e8b(void) {}
+
+static void func_c17eab(void) {}
+
+static void func_c17eb4(void) {}
+
+// Address: _7ed1 only Return To Subroutine
+
+// Address: _7ee1 only JuMPs to _7f34
+
+static void func_c17ee4(void) {}
+
+static void func_c17ef5(void) {}
+
+static void func_c17f2b(void) {}
+
+static void func_c17f34(void) {}
+
+static void func_c17f43(void) {}
+
+static void func_c17f70(void) {}
+
+static void func_c17f9a(void) {}
+
+static void func_c17fc7(void) {}
+
+static void func_c17ffe(void) {}
+
+// Address: _8062
+static void moveBackAfterAttack(void) {}
