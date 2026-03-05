@@ -700,6 +700,171 @@ static void abilityAnim_throw(void); // Incomplete
 static void abilityAnim_fight(void); // Incomplete
 static void func_c19fed(void); // Incomplete
 static void func_c1a01d(void); // Incomplete
+static void func_c1a065(void); // Incomplete
+static void func_c1a073(void); // Incomplete
+static void func_c1a0a4(void); // Incomplete
+static void func_c1a0b1(void); // Incomplete
+static void func_c1a0d6(void); // Incomplete
+static void func_c1a112(void); // Incomplete
+static void func_c1a3d3(void); // Incomplete
+static void func_c1a416(void); // Incomplete
+static void func_c1a431(void); // Incomplete
+static void func_c1a442(void); // Incomplete
+static void func_c1a461(void); // Incomplete
+static void func_c1a480(void); // Incomplete
+static void func_c1a497(void); // Incomplete
+static void func_c1a4ae(void); // Incomplete
+static void func_c1a4b5(void); // Incomplete
+static void func_c1a4be(void); // Incomplete
+static void func_c1a4cb(void); // Incomplete
+static void func_c1a4d1(void); // Incomplete
+static void func_c1a4de(void); // Incomplete
+static void func_c1a4e7(void); // Incomplete
+static void func_c1a503(void); // Incomplete
+static void func_c1a513(void); // Incomplete
+static void func_c1a570(void); // Incomplete
+static void func_c1a57e(void); // Incomplete
+static void func_c1a5b6(void); // Incomplete
+static void func_c1a5eb(void); // Incomplete
+static void func_c1a633(void); // Incomplete
+static void func_c1a67b(void); // Incomplete
+static void func_c1a6ad(void); // Incomplete
+static void func_c1a6df(void); // Incomplete
+static void func_c1a70f(void); // Incomplete
+static void func_c1a737(void); // Incomplete
+static void func_c1a796(void); // Incomplete
+static void func_c1a7a5(void); // Incomplete
+static void func_c1a7ac(void); // Incomplete
+static void func_c1a7b3(void); // Incomplete
+static void func_c1a7bd(void); // Incomplete
+static void func_c1a7c4(void); // Incomplete
+static void func_c1a7f7(void); // Incomplete
+static void func_c1a7fd(void); // Incomplete
+static void func_c1a800(void); // Incomplete
+static void func_c1a806(void); // Incomplete
+static void func_c1a809(void); // Incomplete
+static void func_c1a80c(void); // Incomplete
+static void func_c1a812(void); // Incomplete
+static void func_c1a815(void); // Incomplete
+static void func_c1a81b(void); // Incomplete
+static void func_c1a825(void); // Incomplete
+static void func_c1a82f(void); // Incomplete
+static void func_c1a839(void); // Incomplete
+static void loadAttackAnimProps(void); // Incomplete
+static void func_c1a8fc(void); // Incomplete
+static void loadWeaponProps(void); // Incomplete
+static void loadAltWeaponProps(void); // Incomplete
+static void loadWeaponHitGfx(void); // Incomplete
+static void loadAttackPal08Bit(void); // Incomplete
+static void loadAttackPal16Bit(void); // Incomplete
+static void loadWeaponGfx(void); // Incomplete
+static void func_c1aa9e(void); // Incomplete
+static void func_c1aaae(void); // Incomplete
+static void loadSpell1Gfx(void); // Incomplete
+static void loadSpell2Gfx(void); // Incomplete
+static void loadSpell3Gfx(void); // Incomplete
+static void loadAnimalsGfx(void); // Incomplete
+static void loadAttackGfx3bpp(void); // Incomplete
+static void loadAttackGfx4bpp(void); // Incomplete
+static void flipHorizontally(void); // Incomplete
+static void func_c1aca8(void); // Incomplete
+static void func_c1ace8(void); // Incomplete
+static void func_c1ad2d(void); // Incomplete
+static void func_c1ad64(void); // Incomplete
+static void func_c1ae58(void); // Incomplete
+static void func_c1ae65(void); // Incomplete
+static void func_c1ae9c(void); // Incomplete
+static void func_c1aed7(void); // Incomplete
+static void func_c1aef9(void); // Incomplete
+static void func_c1af05(void); // Incomplete
+static void updateCharStatusAnim(void); // Incomplete
+static void func_c1afe0(void); // Incomplete
+static void func_c1afeb(void); // Incomplete
+static void updateCharStatusSprite(void); // Incomplete
+static void isCharSelected(void); // Incomplete
+static void func_c1b09f(void); // Incomplete
+static void func_c1b106(void); // Incomplete
+static void func_c1b117(void); // Incomplete
+static void func_c1b12a(void); // Incomplete
+static void func_c1b181(void); // Incomplete
+static void func_c1b1ac(void); // Incomplete
+static void func_c1b266(void); // Incomplete
+static void func_c1b282(void); // Incomplete
+static void func_c1b294(void); // Incomplete
+static void func_c1b2af(void); // Incomplete
+static void func_c1b2c1(void); // Incomplete
+static void func_c1b2d9(void); // Incomplete
+static void func_c1b300(void); // Incomplete
+static void func_c1b388(void); // Incomplete
+static void func_c1b3fe(void); // Incomplete
+static void func_c1b40a(void); // Incomplete
+static void func_c1b426(void); // Incomplete
+static void func_c1b442(void); // Incomplete
+static void func_c1b4a2(void); // Incomplete
+static void func_c1b536(void); // Incomplete
+static void func_c1b58b(void); // Incomplete
+static void func_c1b633(void); // Incomplete
+static void func_c1b660(void); // Incomplete
+static void func_c1b677(void); // Incomplete
+static void func_c1b69c(void); // Incomplete
+static void func_c1b7bc(void); // Incomplete
+static void func_c1b830(void); // Incomplete
+static void func_c1b8bc(void); // Incomplete
+static void loadSpriteParacleteAnim(void); // Incomplete
+static void func_c1b989(void); // Incomplete
+static void func_c1b9af(void); // Incomplete
+static void func_c1b9cb(void); // Incomplete
+static void func_c1b9f0(void); // Incomplete
+static void func_c1b9f6(void); // Incomplete
+static void func_c1ba12(void); // Incomplete
+static void func_c1ba22(void); // Incomplete
+static void func_c1ba3d(void); // Incomplete
+static void func_c1ba65(void); // Incomplete
+static void func_c1ba9a(void); // Incomplete
+static void func_c1baf6(void); // Incomplete
+static void func_c1bb2b(void); // Incomplete
+static void func_c1bb59(void); // Incomplete
+static void func_c1bb8e(void); // Incomplete
+static void func_c1bbb8(void); // Incomplete
+static void func_c1bbda(void); // Incomplete
+static void func_c1bbe6(void); // Incomplete
+static void func_c1bbef(void); // Incomplete
+static void func_c1bc0f(void); // Incomplete
+static void func_c1bc2d(void); // Incomplete
+static void func_c1bc75(void); // Incomplete
+static void func_c1bc97(void); // Incomplete
+static void func_c1bcbd(void); // Incomplete
+static void func_c1bcde(void); // Incomplete
+static void func_c1bd23(void); // Incomplete
+static void func_c1bd5f(void); // Incomplete
+static void func_c1bda1(void); // Incomplete
+static void func_c1bdbf(void); // Incomplete
+static void func_c1bdec(void); // Incomplete
+static void func_c1be42(void); // Incomplete
+static void func_c1be5a(void); // Incomplete
+static void func_c1bea7(void); // Incomplete
+static void func_c1bebd(void); // Incomplete
+static void func_c1bec9(void); // Incomplete
+static void func_c1bee8(void); // Incomplete
+static void func_c1bf04(void); // Incomplete
+static void func_c1bf07(void); // Incomplete
+static void func_c1bf0a(void); // Incomplete
+static void func_c1bf0d(void); // Incomplete
+static void func_c1bf10(void); // Incomplete
+static void func_c1bf16(void); // Incomplete
+static void func_c1bf19(void); // Incomplete
+static void func_c1bf1d(void); // Incomplete
+static void func_c1bf29(void); // Incomplete
+static void func_c1bf39(void); // Incomplete
+static void func_c1bf3f(void); // Incomplete
+static void func_c1bf5b(void); // Incomplete
+static void func_c1bf85(void); // Incomplete
+static void func_c1bfa2(void); // Incomplete
+static void func_c1bfab(void); // Incomplete
+static void func_c1bfcb(void); // Incomplete
+static void func_c1bfe1(void); // Incomplete
+static void func_c1bff7(void); // Incomplete
+static void func_c1c008(void); // Incomplete
 
 // Execute Battle Graphics
 void execBtlGfx(void) {}
@@ -2339,3 +2504,367 @@ static void abilityAnim_fight(void) {}
 static void func_c19fed(void) {}
 
 static void func_c1a01d(void) {}
+
+static void func_c1a065(void) {}
+
+static void func_c1a073(void) {}
+
+static void func_c1a0a4(void) {}
+
+static void func_c1a0b1(void) {}
+
+static void func_c1a0d6(void) {}
+
+static void func_c1a112(void) {}
+
+static void func_c1a3d3(void) {}
+
+static void func_c1a416(void) {}
+
+static void func_c1a431(void) {}
+
+static void func_c1a442(void) {}
+
+static void func_c1a461(void) {}
+
+static void func_c1a480(void) {}
+
+static void func_c1a497(void) {}
+
+static void func_c1a4ae(void) {}
+
+static void func_c1a4b5(void) {}
+
+static void func_c1a4be(void) {}
+
+static void func_c1a4cb(void) {}
+
+static void func_c1a4d1(void) {}
+
+static void func_c1a4de(void) {}
+
+static void func_c1a4e7(void) {}
+
+static void func_c1a503(void) {}
+
+static void func_c1a513(void) {}
+
+static void func_c1a570(void) {}
+
+static void func_c1a57e(void) {}
+
+static void func_c1a5b6(void) {}
+
+static void func_c1a5eb(void) {}
+
+static void func_c1a633(void) {}
+
+static void func_c1a67b(void) {}
+
+static void func_c1a6ad(void) {}
+
+static void func_c1a6df(void) {}
+
+static void func_c1a70f(void) {}
+
+static void func_c1a737(void) {}
+
+static void func_c1a796(void) {}
+
+static void func_c1a7a5(void) {}
+
+static void func_c1a7ac(void) {}
+
+static void func_c1a7b3(void) {}
+
+static void func_c1a7bd(void) {}
+
+static void func_c1a7c4(void) {}
+
+static void func_c1a7f7(void) {}
+
+static void func_c1a7fd(void) {}
+
+static void func_c1a800(void) {}
+
+static void func_c1a806(void) {}
+
+static void func_c1a809(void) {}
+
+static void func_c1a80c(void) {}
+
+static void func_c1a812(void) {}
+
+static void func_c1a815(void) {}
+
+static void func_c1a81b(void) {}
+
+static void func_c1a825(void) {}
+
+static void func_c1a82f(void) {}
+
+static void func_c1a839(void) {}
+
+// Address: _a847
+static void loadAttackAnimProps(void) {}
+
+static void func_c1a8fc(void) {}
+
+// Address: _a992
+static void loadWeaponProps(void) {}
+
+// Address: _a9b5
+static void loadAltWeaponProps(void) {}
+
+// Address: _a9d5
+static void loadWeaponHitGfx(void) {}
+
+// Address: _aa1d
+static void loadAttackPal08Bit(void) {}
+
+// Address: _aa3e
+static void loadAttackPal16Bit(void) {}
+
+// Address: _aa5c initiates tile pointers (.3bpp)
+
+// Address: _aa75 initiates tile pointers (.4bpp)
+
+// Address: _aa8e
+static void loadWeaponGfx(void) {}
+
+static void func_c1aa9e(void) {}
+
+static void func_c1aaae(void) {}
+
+// Address: _aabe
+static void loadSpell1Gfx(void) {}
+
+// Address: _aace
+static void loadSpell2Gfx(void) {}
+
+// Address: _aade
+static void loadSpell3Gfx(void) {}
+
+// Address: _aaee
+static void loadAnimalsGfx(void) {}
+
+// Address: _aafe loads attack graphics pointers
+
+// Address: _ab1a
+static void loadAttackGfx3bpp(void) {}
+
+// Address: _abd7
+static void loadAttackGfx4bpp(void) {}
+
+// Address: _ac91
+static void flipHorizontally(void) {}
+
+static void func_c1aca8(void) {}
+
+static void func_c1ace8(void) {}
+
+static void func_c1ad2d(void) {}
+
+static void func_c1ad64(void) {}
+
+static void func_c1ae58(void) {}
+
+static void func_c1ae65(void) {}
+
+static void func_c1ae9c(void) {}
+
+static void func_c1aed7(void) {}
+
+// Address: _aef6 only JuMPs to c1_ae9c
+
+static void func_c1aef9(void) {}
+
+static void func_c1af05(void) {}
+
+// Address: _af21
+static void updateCharStatusAnim(void) {}
+
+static void func_c1afe0(void) {}
+
+static void func_c1afeb(void) {}
+
+// Address: _b01a
+static void updateCharStatusSprite(void) {}
+
+// Address: _b087
+static void isCharSelected(void) {}
+
+static void func_c1b09f(void) {}
+
+static void func_c1b106(void) {}
+
+static void func_c1b117(void) {}
+
+static void func_c1b12a(void) {}
+
+static void func_c1b181(void) {}
+
+static void func_c1b1ac(void) {}
+
+static void func_c1b266(void) {}
+
+static void func_c1b282(void) {}
+
+static void func_c1b294(void) {}
+
+static void func_c1b2af(void) {}
+
+static void func_c1b2c1(void) {}
+
+static void func_c1b2d9(void) {}
+
+static void func_c1b300(void) {}
+
+static void func_c1b388(void) {}
+
+static void func_c1b3fe(void) {}
+
+static void func_c1b40a(void) {}
+
+static void func_c1b426(void) {}
+
+static void func_c1b442(void) {}
+
+static void func_c1b4a2(void) {}
+
+static void func_c1b536(void) {}
+
+static void func_c1b58b(void) {}
+
+static void func_c1b633(void) {}
+
+static void func_c1b660(void) {}
+
+static void func_c1b677(void) {}
+
+static void func_c1b69c(void) {}
+
+static void func_c1b7bc(void) {}
+
+static void func_c1b830(void) {}
+
+// Address: _b846 only Return To Subroutine
+
+// Address: _b8b9 only JuMPs to _c1bbe6
+
+static void func_c1b8bc(void) {}
+
+// Address: _b961
+static void loadSpriteParacleteAnim(void) {}
+
+static void func_c1b989(void) {}
+
+static void func_c1b9af(void) {}
+
+static void func_c1b9cb(void) {}
+
+static void func_c1b9f0(void) {}
+
+static void func_c1b9f6(void) {}
+
+static void func_c1ba12(void) {}
+
+static void func_c1ba22(void) {}
+
+static void func_c1ba3d(void) {}
+
+static void func_c1ba65(void) {}
+
+static void func_c1ba9a(void) {}
+
+static void func_c1baf6(void) {}
+
+static void func_c1bb2b(void) {}
+
+static void func_c1bb59(void) {}
+
+static void func_c1bb8e(void) {}
+
+static void func_c1bbb8(void) {}
+
+static void func_c1bbda(void) {}
+
+static void func_c1bbe6(void) {}
+
+static void func_c1bbef(void) {}
+
+static void func_c1bc0f(void) {}
+
+static void func_c1bc2d(void) {}
+
+static void func_c1bc75(void) {}
+
+static void func_c1bc97(void) {}
+
+static void func_c1bcbd(void) {}
+
+// Address: _bcdb only JuMPs to _c1bd5f
+
+static void func_c1bcde(void) {}
+
+static void func_c1bd23(void) {}
+
+static void func_c1bd5f(void) {}
+
+static void func_c1bda1(void) {}
+
+// Address _bdbc only JuMPs to _c1bdbf (next function)
+
+static void func_c1bdbf(void) {}
+
+static void func_c1bdec(void) {}
+
+static void func_c1be42(void) {}
+
+static void func_c1be5a(void) {}
+
+static void func_c1bea7(void) {}
+
+static void func_c1bebd(void) {}
+
+static void func_c1bec9(void) {}
+
+static void func_c1bee8(void) {}
+
+static void func_c1bf04(void) {}
+
+static void func_c1bf07(void) {}
+
+static void func_c1bf0a(void) {}
+
+static void func_c1bf0d(void) {}
+
+static void func_c1bf10(void) {}
+
+static void func_c1bf16(void) {}
+
+static void func_c1bf19(void) {}
+
+static void func_c1bf1d(void) {}
+
+static void func_c1bf29(void) {}
+
+static void func_c1bf39(void) {}
+
+static void func_c1bf3f(void) {}
+
+static void func_c1bf5b(void) {}
+
+static void func_c1bf85(void) {}
+
+static void func_c1bfa2(void) {}
+
+static void func_c1bfab(void) {}
+
+static void func_c1bfcb(void) {}
+
+static void func_c1bfe1(void) {}
+
+static void func_c1bff7(void) {}
+
+static void func_c1c008(void) {}
