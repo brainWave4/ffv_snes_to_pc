@@ -865,6 +865,184 @@ static void func_c1bfcb(void); // Incomplete
 static void func_c1bfe1(void); // Incomplete
 static void func_c1bff7(void); // Incomplete
 static void func_c1c008(void); // Incomplete
+static void func_c1c019(void); // Incomplete
+static void func_c1c02c(void); // Incomplete
+static void func_c1c031(void); // Incomplete
+static void func_c1c035(void); // Incomplete
+static void func_c1c050(void); // Incomplete
+static void func_c1c05f(void); // Incomplete
+static void func_c1c077(void); // Incomplete
+static void func_c1c099(void); // Incomplete
+static void func_c1c0d5(void); // Incomplete
+static void func_c1c1d9(void); // Incomplete
+static void func_c1c20d(void); // Incomplete
+static void func_c1c266(void); // Incomplete
+static void func_c1c296(void); // Incomplete
+static void func_c1c35d(void); // Incomplete
+static void execAnimScript(void); // Incomplete
+static void execAnimCommand(void); // Incomplete
+static void func_c1c610(void); // Incomplete
+static void func_c1c625(void); // Incomplete
+static void func_c1c6a1(void); // Incomplete
+static void func_c1c6ce(void); // Incomplete
+static void func_c1c6e3(void); // Incomplete
+static void func_c1c740(void); // Incomplete
+static void func_c1c74a(void); // Incomplete
+static void func_c1c75b(void); // Incomplete
+static void func_c1c7af(void); // Incomplete
+static void func_c1c7b5(void); // Incomplete
+static void func_c1c7c1(void); // Incomplete
+static void func_c1c7e8(void); // Incomplete
+static void func_c1c7f8(void); // Incomplete
+static void func_c1c830(void); // Incomplete
+static void func_c1c83d(void); // Incomplete
+static void func_c1c867(void); // Incomplete
+static void func_c1c891(void); // Incomplete
+static void func_c1c8d3(void); // Incomplete
+static void func_c1c907(void); // Incomplete
+static void func_c1c959(void); // Incomplete
+static void func_c1c984(void); // Incomplete
+static void func_c1c98b(void); // Incomplete
+static void func_c1c997(void); // Incomplete
+static void func_c1c9a0(void); // Incomplete
+static void func_c1c9a3(void); // Incomplete
+static void func_c1c9b9(void); // Incomplete
+static void func_c1c9bf(void); // Incomplete
+static void func_c1c9dc(void); // Incomplete
+static void func_c1c9f4(void); // Incomplete
+static void func_c1c9fd(void); // Incomplete
+static void func_c1ca0a(void); // Incomplete
+static void func_c1ca55(void); // Incomplete
+static void func_c1ca9b(void); // Incomplete
+static void func_c1caa4(void); // Incomplete
+static void func_c1cadb(void); // Incomplete
+static void func_c1caeb(void); // Incomplete
+static void flashScreenIfNotAlreadyFlashing(void); // Incomplete
+static void func_c1cb4f(void); // Incomplete
+static void func_c1cb56(void); // Incomplete
+static void func_c1cb5a(void); // Incomplete
+static void func_c1cb62(void); // Incomplete
+static void func_c1cb6a(void); // Incomplete
+static void func_c1cb78(void); // Incomplete
+static void func_c1cb88(void); // Incomplete
+static void func_c1cb98(void); // Incomplete
+static void func_c1cbc9(void); // Incomplete
+static void func_c1cbe9(void); // Incomplete
+static void func_c1cc81(void); // Incomplete
+static void func_c1cce2(void); // Incomplete
+static void func_c1ccf6(void); // Incomplete
+static void func_c1ccfd(void); // Incomplete
+static void func_c1cd34(void); // Incomplete
+static void func_c1cd53(void); // Incomplete
+static void func_c1cd92(void); // Incomplete
+static void func_c1cdda(void); // Incomplete
+static void func_c1cde9(void); // Incomplete
+static void func_c1ceb9(void); // Incomplete
+static void func_c1ceda(void); // Incomplete
+static void func_c1cef6(void); // Incomplete
+static void func_c1cf07(void); // Incomplete
+static void func_c1cf2f(void); // Incomplete
+static void func_c1cf56(void); // Incomplete
+static void func_c1cfc9(void); // Incomplete
+static void func_c1cfd9(void); // Incomplete
+static void func_c1cfec(void); // Incomplete
+static void func_c1d01d(void); // Incomplete
+static void func_c1d02a(void); // Incomplete
+static void func_c1d0a6(void); // Incomplete
+static void func_c1d0bf(void); // Incomplete
+static void func_c1d0c3(void); // Incomplete
+static void func_c1d0d5(void); // Incomplete
+static void func_c1d104(void); // Incomplete
+static void func_c1d147(void); // Incomplete
+static void func_c1d15a(void); // Incomplete
+static void func_c1d195(void); // Incomplete
+static void func_c1d1a7(void); // Incomplete
+static void func_c1d1b9(void); // Incomplete
+static void func_c1d1cf(void); // Incomplete
+static void func_c1d1ed(void); // Incomplete
+static void func_c1d217(void); // Incomplete
+static void func_c1d272(void); // Incomplete
+static void func_c1d281(void); // Incomplete
+static void func_c1d2cf(void); // Incomplete
+static void func_c1d34a(void); // Incomplete
+static void func_c1d3e2(void); // Incomplete
+static void func_c1d41d(void); // Incomplete
+static void func_c1d476(void); // Incomplete
+static void func_c1d4d0(void); // Incomplete
+static void func_c1d4e2(void); // Incomplete
+static void func_c1d4f1(void); // Incomplete
+static void func_c1d536(void); // Incomplete
+static void func_c1d589(void); // Incomplete
+static void func_c1d5b1(void); // Incomplete
+static void func_c1d5e9(void); // Incomplete
+static void func_c1d610(void); // Incomplete
+static void func_c1d665(void); // Incomplete
+static void func_c1d6c1(void); // Incomplete
+static void func_c1d6f3(void); // Incomplete
+static void func_c1d723(void); // Incomplete
+static void func_c1d742(void); // Incomplete
+static void func_c1d777(void); // Incomplete
+static void func_c1d780(void); // Incomplete
+static void func_c1d789(void); // Incomplete
+static void animCommandDD(void); // Incomplete
+static void func_c1d7d0(void); // Incomplete
+static void func_c1d7e6(void); // Incomplete
+static void func_c1d83b(void); // Incomplete
+static void func_c1d895(void); // Incomplete
+static void func_c1d8bf(void); // Incomplete
+static void func_c1d8d1(void); // Incomplete
+static void func_c1d903(void); // Incomplete
+static void func_c1d99a(void); // Incomplete
+static void func_c1d9ed(void); // Incomplete
+static void func_c1da04(void); // Incomplete
+static void func_c1da13(void); // Incomplete
+static void func_c1da2c(void); // Incomplete
+static void func_c1da59(void); // Incomplete
+static void func_c1da89(void); // Incomplete
+static void func_c1dac2(void); // Incomplete
+static void func_c1dae4(void); // Incomplete
+static void func_c1db18(void); // Incomplete
+static void func_c1db2b(void); // Incomplete
+static void func_c1db54(void); // Incomplete
+static void func_c1db67(void); // Incomplete
+static void func_c1db8d(void); // Incomplete
+static void func_c1db9c(void); // Incomplete
+static void animCommand_setAnimSize(void); // Incomplete
+static void func_c1dbd6(void); // Incomplete
+static void func_c1dbe3(void); // Incomplete
+static void func_c1dbf0(void); // Incomplete
+static void func_c1dbf7(void); // Incomplete
+static void animCommand_setAnimPal(void); // Incomplete
+static void animCommandBE(void); // Incomplete
+static void func_c1dc4d(void); // Incomplete
+static void func_c1dc74(void); // Incomplete
+static void func_c1dcbc(void); // Incomplete
+static void func_c1dcdf(void); // Incomplete
+static void func_c1dd15(void); // Incomplete
+static void func_c1dd48(void); // Incomplete
+static void func_c1dd72(void); // Incomplete
+static void func_c1dd98(void); // Incomplete
+static void func_c1ddb4(void); // Incomplete
+static void func_c1ddd0(void); // Incomplete
+static void func_c1ddec(void); // Incomplete
+static void func_c1de08(void); // Incomplete
+static void func_c1de3b(void); // Incomplete
+static void func_c1de62(void); // Incomplete
+static void func_c1de78(void); // Incomplete
+static void animCommand_setPosition(void); // Incomplete
+static void func_c1dea6(void); // Incomplete
+static void func_c1deb3(void); // Incomplete
+static void func_c1deb9(void); // Incomplete
+static void func_c1debf(void); // Incomplete
+static void func_c1dec5(void); // Incomplete
+static void func_c1decb(void); // Incomplete
+static void loadTargetPalette(void); // Incomplete
+static void func_c1df09(void); // Incomplete
+static void func_c1df1b(void); // Incomplete
+static void animCommand80(void); // Incomplete
+static void animCommandf7(void); // Incomplete
+static void func_c1dfe0(void); // Incomplete
+static void func_c1e022(void); // Incomplete
 
 // Execute Battle Graphics
 void execBtlGfx(void) {}
@@ -2868,3 +3046,370 @@ static void func_c1bfe1(void) {}
 static void func_c1bff7(void) {}
 
 static void func_c1c008(void) {}
+
+static void func_c1c019(void) {}
+
+static void func_c1c02c(void) {}
+
+static void func_c1c031(void) {}
+
+static void func_c1c035(void) {}
+
+static void func_c1c050(void) {}
+
+static void func_c1c05f(void) {}
+
+static void func_c1c077(void) {}
+
+static void func_c1c099(void) {}
+
+static void func_c1c0d5(void) {}
+
+static void func_c1c1d9(void) {}
+
+static void func_c1c20d(void) {}
+
+static void func_c1c266(void) {}
+
+static void func_c1c296(void) {}
+
+static void func_c1c35d(void) {}
+
+// Address: _c409
+static void execAnimScript(void) {}
+
+// Address: _c4fd
+static void execAnimCommand(void) {}
+
+static void func_c1c610(void) {}
+
+static void func_c1c625(void) {}
+
+static void func_c1c6a1(void) {}
+
+static void func_c1c6ce(void) {}
+
+static void func_c1c6e3(void) {}
+
+static void func_c1c740(void) {}
+
+static void func_c1c74a(void) {}
+
+static void func_c1c75b(void) {}
+
+static void func_c1c7af(void) {}
+
+static void func_c1c7b5(void) {}
+
+static void func_c1c7c1(void) {}
+
+static void func_c1c7e8(void) {}
+
+static void func_c1c7f8(void) {}
+
+static void func_c1c830(void) {}
+
+static void func_c1c83d(void) {}
+
+static void func_c1c867(void) {}
+
+static void func_c1c891(void) {}
+
+static void func_c1c8d3(void) {}
+
+static void func_c1c907(void) {}
+
+static void func_c1c959(void) {}
+
+static void func_c1c984(void) {}
+
+static void func_c1c98b(void) {}
+
+static void func_c1c997(void) {}
+
+static void func_c1c9a0(void) {}
+
+static void func_c1c9a3(void) {}
+
+static void func_c1c9b9(void) {}
+
+static void func_c1c9bf(void) {}
+
+static void func_c1c9dc(void) {}
+
+static void func_c1c9f4(void) {}
+
+static void func_c1c9fd(void) {}
+
+static void func_c1ca0a(void) {}
+
+static void func_c1ca55(void) {}
+
+static void func_c1ca9b(void) {}
+
+static void func_c1caa4(void) {}
+
+static void func_c1cadb(void) {}
+
+static void func_c1caeb(void) {}
+
+// Address: _cb46
+static void flashScreenIfNotAlreadyFlashing(void) {}
+
+static void func_c1cb4f(void) {}
+
+static void func_c1cb56(void) {}
+
+static void func_c1cb5a(void) {}
+
+static void func_c1cb62(void) {}
+
+static void func_c1cb6a(void) {}
+
+static void func_c1cb78(void) {}
+
+static void func_c1cb88(void) {}
+
+static void func_c1cb98(void) {}
+
+static void func_c1cbc9(void) {}
+
+static void func_c1cbe9(void) {}
+
+static void func_c1cc81(void) {}
+
+static void func_c1cce2(void) {}
+
+static void func_c1ccf6(void) {}
+
+static void func_c1ccfd(void) {}
+
+static void func_c1cd34(void) {}
+
+static void func_c1cd53(void) {}
+
+static void func_c1cd92(void) {}
+
+static void func_c1cdda(void) {}
+
+static void func_c1cde9(void) {}
+
+static void func_c1ceb9(void) {}
+
+static void func_c1ceda(void) {}
+
+static void func_c1cef6(void) {}
+
+static void func_c1cf07(void) {}
+
+static void func_c1cf2f(void) {}
+
+static void func_c1cf56(void) {}
+
+static void func_c1cfc9(void) {}
+
+static void func_c1cfd9(void) {}
+
+static void func_c1cfec(void) {}
+
+static void func_c1d01d(void) {}
+
+static void func_c1d02a(void) {}
+
+static void func_c1d0a6(void) {}
+
+static void func_c1d0bf(void) {}
+
+static void func_c1d0c3(void) {}
+
+static void func_c1d0d5(void) {}
+
+static void func_c1d104(void) {}
+
+static void func_c1d147(void) {}
+
+static void func_c1d15a(void) {}
+
+static void func_c1d195(void) {}
+
+static void func_c1d1a7(void) {}
+
+static void func_c1d1b9(void) {}
+
+static void func_c1d1cf(void) {}
+
+static void func_c1d1ed(void) {}
+
+static void func_c1d217(void) {}
+
+static void func_c1d272(void) {}
+
+static void func_c1d281(void) {}
+
+static void func_c1d2cf(void) {}
+
+static void func_c1d34a(void) {}
+
+static void func_c1d3e2(void) {}
+
+static void func_c1d41d(void) {}
+
+static void func_c1d476(void) {}
+
+static void func_c1d4d0(void) {}
+
+static void func_c1d4e2(void) {}
+
+static void func_c1d4f1(void) {}
+
+static void func_c1d536(void) {}
+
+static void func_c1d589(void) {}
+
+static void func_c1d5b1(void) {}
+
+static void func_c1d5e9(void) {}
+
+static void func_c1d610(void) {}
+
+static void func_c1d665(void) {}
+
+static void func_c1d6c1(void) {}
+
+static void func_c1d6f3(void) {}
+
+static void func_c1d723(void) {}
+
+static void func_c1d742(void) {}
+
+static void func_c1d777(void) {}
+
+static void func_c1d780(void) {}
+
+static void func_c1d789(void) {}
+
+// Address: _d7ad
+static void animCommandDD(void) {}
+
+static void func_c1d7d0(void) {}
+
+static void func_c1d7e6(void) {}
+
+static void func_c1d83b(void) {}
+
+static void func_c1d895(void) {}
+
+static void func_c1d8bf(void) {}
+
+static void func_c1d8d1(void) {}
+
+static void func_c1d903(void) {}
+
+static void func_c1d99a(void) {}
+
+static void func_c1d9ed(void) {}
+
+static void func_c1da04(void) {}
+
+static void func_c1da13(void) {}
+
+static void func_c1da2c(void) {}
+
+static void func_c1da59(void) {}
+
+static void func_c1da89(void) {}
+
+static void func_c1dac2(void) {}
+
+static void func_c1dae4(void) {}
+
+static void func_c1db18(void) {}
+
+static void func_c1db2b(void) {}
+
+static void func_c1db54(void) {}
+
+static void func_c1db67(void) {}
+
+static void func_c1db8d(void) {}
+
+static void func_c1db9c(void) {}
+
+// Address: _dba9
+static void animCommand_setAnimSize(void) {}
+
+static void func_c1dbd6(void) {}
+
+static void func_c1dbe3(void) {}
+
+static void func_c1dbf0(void) {}
+
+static void func_c1dbf7(void) {}
+
+// Address: _dc04
+static void animCommand_setAnimPal(void) {}
+
+// Address: _dc3b
+static void animCommandBE(void) {}
+
+static void func_c1dc4d(void) {}
+
+static void func_c1dc74(void) {}
+
+static void func_c1dcbc(void) {}
+
+static void func_c1dcdf(void) {}
+
+static void func_c1dd15(void) {}
+
+static void func_c1dd48(void) {}
+
+static void func_c1dd72(void) {}
+
+static void func_c1dd98(void) {}
+
+static void func_c1ddb4(void) {}
+
+static void func_c1ddd0(void) {}
+
+static void func_c1ddec(void) {}
+
+static void func_c1de08(void) {}
+
+static void func_c1de3b(void) {}
+
+static void func_c1de62(void) {}
+
+static void func_c1de78(void) {}
+
+// Address: _de8d
+static void animCommand_setPosition(void) {}
+
+static void func_c1dea6(void) {}
+
+static void func_c1deb3(void) {}
+
+static void func_c1deb9(void) {}
+
+static void func_c1debf(void) {}
+
+static void func_c1dec5(void) {}
+
+static void func_c1decb(void) {}
+
+// Address: _ded1
+static void loadTargetPalette(void) {}
+
+static void func_c1df09(void) {}
+
+static void func_c1df1b(void) {}
+
+// Address: _df24
+static void animCommand80(void) {}
+
+// Address: _df9e
+static void animCommandf7(void) {}
+
+static void func_c1dfe0(void) {}
+
+static void func_c1e022(void) {}
