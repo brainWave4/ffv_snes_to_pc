@@ -68,6 +68,145 @@ static void func_7f9af2(void); // Incomplete
 static void func_7f9deb(void); // Incomplete
 static void func_7f9f2c(void); // Incomplete
 static void func_7fa244(void); // Incomplete
+static void func_7fa3a0(void); // Incomplete
+static void func_7fa3b6(void); // Incomplete
+static void func_7fa50e(void); // Incomplete
+static void func_7fa527(void); // Incomplete
+static void func_7fa538(void); // Incomplete
+static void func_7fa549(void); // Incomplete
+static void func_7fa554(void); // Incomplete
+static void func_7fa562(void); // Incomplete
+static void func_7fa570(void); // Incomplete
+static void func_7fa797(void); // Incomplete
+static void func_7fa811(void); // Incomplete
+static void func_7fa8c6(void); // Incomplete
+static void func_7fa963(void); // Incomplete
+static void func_7faafc(void); // Incomplete
+static void func_7fab3b(void); // Incomplete
+static void func_7fab7a(void); // Incomplete
+static void func_7fac2a(void); // Incomplete
+static void func_7fac54(void); // Incomplete
+static void func_7fac78(void); // Incomplete
+static void func_7facab(void); // Incomplete
+static void func_7faccc(void); // Incomplete
+static void func_7fad0d(void); // Incomplete
+static void func_7fad23(void); // Incomplete
+static void func_7fae01(void); // Incomplete
+static void func_7fae2d(void); // Incomplete
+static void func_7fae37(void); // Incomplete
+static void func_7fae70(void); // Incomplete
+static void func_7faebc(void); // Incomplete
+static void func_7faf08(void); // Incomplete
+static void func_7faf81(void); // Incomplete
+static void func_7fafa1(void); // Incomplete
+static void func_7fafae(void); // Incomplete
+static void func_7fafc1(void); // Incomplete
+static void func_7fafed(void); // Incomplete
+static void func_7faff3(void); // Incomplete
+static void func_7faff9(void); // Incomplete
+static void func_7fafff(void); // Incomplete
+static void func_7fb035(void); // Incomplete
+static void func_7fb046(void); // Incomplete
+static void func_7fb067(void); // Incomplete
+static void func_7fb08a(void); // Incomplete
+static void func_7fb0ad(void); // Incomplete
+static void func_7fb124(void); // Incomplete
+static void func_7fb19f(void); // Incomplete
+static void func_7fb1fd(void); // Incomplete
+static void func_7fb21d(void); // Incomplete
+static void func_7fb273(void); // Incomplete
+static void func_7fb29e(void); // Incomplete
+static void func_7fb30a(void); // Incomplete
+static void func_7fb335(void); // Incomplete
+static void func_7fb360(void); // Incomplete
+static void func_7fb375(void); // Incomplete
+static void func_7fb38a(void); // Incomplete
+static void func_7fb3a6(void); // Incomplete
+static void func_7fb3c2(void); // Incomplete
+static void func_7fb3de(void); // Incomplete
+static void func_7fb3fa(void); // Incomplete
+static void func_7fb41b(void); // Incomplete
+static void func_7fb43c(void); // Incomplete
+static void func_7fb45d(void); // Incomplete
+static void func_7fb47e(void); // Incomplete
+static void func_7fb49f(void); // Incomplete
+static void func_7fb4e1(void); // Incomplete
+static void func_7fb523(void); // Incomplete
+static void func_7fb550(void); // Incomplete
+static void func_7fb566(void); // Incomplete
+static void func_7fb593(void); // Incomplete
+static void func_7fb5a9(void); // Incomplete
+static void func_7fb5eb(void); // Incomplete
+static void func_7fb629(void); // Incomplete
+static void func_7fb667(void); // Incomplete
+static void func_7fb693(void); // Incomplete
+static void func_7fb6ac(void); // Incomplete
+static void func_7fb6c5(void); // Incomplete
+static void func_7fb6de(void); // Incomplete
+static void func_7fb6f7(void); // Incomplete
+static void func_7fb710(void); // Incomplete
+static void func_7fb729(void); // Incomplete
+static void func_7fb742(void); // Incomplete
+static void func_7fb75b(void); // Incomplete
+static void func_7fb774(void); // Incomplete
+static void func_7fb78d(void); // Incomplete
+static void func_7fb7a6(void); // Incomplete
+static void func_7fb7bf(void); // Incomplete
+static void func_7fb7e2(void); // Incomplete
+static void func_7fb805(void); // Incomplete
+static void func_7fb828(void); // Incomplete
+static void func_7fb846(void); // Incomplete
+static void func_7fb88e(void); // Incomplete
+static void func_7fb8a7(void); // Incomplete
+static void func_7fb8c0(void); // Incomplete
+static void func_7fb8d9(void); // Incomplete
+static void func_7fb8f2(void); // Incomplete
+static void func_7fb9cc(void); // Incomplete
+static void func_7fb9e5(void); // Incomplete
+static void func_7fb9fe(void); // Incomplete
+static void func_7fba17(void); // Incomplete
+static void func_7fba44(void); // Incomplete
+static void func_7fba5d(void); // Incomplete
+static void func_7fba86(void); // Incomplete
+static void func_7fbaa9(void); // Incomplete
+static void func_7fbb00(void); // Incomplete
+static void func_7fbb79(void); // Incomplete
+static void func_7fbbb0(void); // Incomplete
+static void func_7fbbca(void); // Incomplete
+static void func_7fbbe4(void); // Incomplete
+static void func_7fbbfe(void); // Incomplete
+static void func_7fbc3e(void); // Incomplete
+static void func_7fbc71(void); // Incomplete
+static void func_7fbc9a(void); // Incomplete
+static void func_7fbcd7(void); // Incomplete
+static void func_7fbd2a(void); // Incomplete
+static void func_7fbd6c(void); // Incomplete
+static void func_7fbd88(void); // Incomplete
+static void func_7fbdb3(void); // Incomplete
+static void func_7fbe34(void); // Incomplete
+static void func_7fbe55(void); // Incomplete
+static void func_7fbe7e(void); // Incomplete
+static void func_7fbe85(void); // Incomplete
+static void func_7fbed2(void); // Incomplete
+static void func_7fbf1b(void); // Incomplete
+static void func_7fbf28(void); // Incomplete
+static void func_7fbf3b(void); // Incomplete
+static void func_7fbf70(void); // Incomplete
+static void func_7fbfaf(void); // Incomplete
+static void func_7fbfc8(void); // Incomplete
+static void func_7fbff4(void); // Incomplete
+static void decompress(void); // Incomplete
+static void highNybbleClear(void); // Incomplete
+static void highNybbleSet(void); // Incomplete
+static void compressionMode_lzss(void); // Incomplete
+static void func_7fc1a3(void); // Incomplete
+static void compressionMode_none(void); // Incomplete
+static void func_7fc1e0(void); // Incomplete
+static void func_7fc1f4(void); // Incomplete
+static void func_7fc209(void); // Incomplete
+static void func_7fc500(void); // Incomplete
+static void func_7fc64f(void); // Incomplete
+static void func_7fc678(void); // Incomplete
 
 void decompExt(void) {}
 
@@ -214,3 +353,286 @@ static void func_7f9deb(void) {}
 static void func_7f9f2c(void) {}
 
 static void func_7fa244(void) {}
+
+static void func_7fa3a0(void) {}
+
+static void func_7fa3b6(void) {}
+
+static void func_7fa50e(void) {}
+
+static void func_7fa527(void) {}
+
+static void func_7fa538(void) {}
+
+static void func_7fa549(void) {}
+
+static void func_7fa554(void) {}
+
+static void func_7fa562(void) {}
+
+static void func_7fa570(void) {}
+
+static void func_7fa797(void) {}
+
+static void func_7fa811(void) {}
+
+static void func_7fa8c6(void) {}
+
+static void func_7fa963(void) {}
+
+static void func_7faafc(void) {}
+
+static void func_7fab3b(void) {}
+
+static void func_7fab7a(void) {}
+
+static void func_7fac2a(void) {}
+
+static void func_7fac54(void) {}
+
+static void func_7fac78(void) {}
+
+static void func_7facab(void) {}
+
+static void func_7faccc(void) {}
+
+static void func_7fad0d(void) {}
+
+static void func_7fad23(void) {}
+
+static void func_7fae01(void) {}
+
+static void func_7fae2d(void) {}
+
+static void func_7fae37(void) {}
+
+static void func_7fae70(void) {}
+
+static void func_7faebc(void) {}
+
+static void func_7faf08(void) {}
+
+static void func_7faf81(void) {}
+
+static void func_7fafa1(void) {}
+
+static void func_7fafae(void) {}
+
+static void func_7fafc1(void) {}
+
+static void func_7fafed(void) {}
+
+static void func_7faff3(void) {}
+
+static void func_7faff9(void) {}
+
+static void func_7fafff(void) {}
+
+static void func_7fb035(void) {}
+
+static void func_7fb046(void) {}
+
+static void func_7fb067(void) {}
+
+static void func_7fb08a(void) {}
+
+static void func_7fb0ad(void) {}
+
+static void func_7fb124(void) {}
+
+static void func_7fb19f(void) {}
+
+static void func_7fb1fd(void) {}
+
+static void func_7fb21d(void) {}
+
+static void func_7fb273(void) {}
+
+static void func_7fb29e(void) {}
+
+static void func_7fb30a(void) {}
+
+static void func_7fb335(void) {}
+
+static void func_7fb360(void) {}
+
+static void func_7fb375(void) {}
+
+static void func_7fb38a(void) {}
+
+static void func_7fb3a6(void) {}
+
+static void func_7fb3c2(void) {}
+
+static void func_7fb3de(void) {}
+
+static void func_7fb3fa(void) {}
+
+static void func_7fb41b(void) {}
+
+static void func_7fb43c(void) {}
+
+static void func_7fb45d(void) {}
+
+static void func_7fb47e(void) {}
+
+static void func_7fb49f(void) {}
+
+static void func_7fb4e1(void) {}
+
+static void func_7fb523(void) {}
+
+static void func_7fb550(void) {}
+
+static void func_7fb566(void) {}
+
+static void func_7fb593(void) {}
+
+static void func_7fb5a9(void) {}
+
+static void func_7fb5eb(void) {}
+
+static void func_7fb629(void) {}
+
+static void func_7fb667(void) {}
+
+static void func_7fb693(void) {}
+
+static void func_7fb6ac(void) {}
+
+static void func_7fb6c5(void) {}
+
+static void func_7fb6de(void) {}
+
+static void func_7fb6f7(void) {}
+
+static void func_7fb710(void) {}
+
+static void func_7fb729(void) {}
+
+static void func_7fb742(void) {}
+
+static void func_7fb75b(void) {}
+
+static void func_7fb774(void) {}
+
+static void func_7fb78d(void) {}
+
+static void func_7fb7a6(void) {}
+
+static void func_7fb7bf(void) {}
+
+static void func_7fb7e2(void) {}
+
+static void func_7fb805(void) {}
+
+static void func_7fb828(void) {}
+
+static void func_7fb846(void) {}
+
+static void func_7fb88e(void) {}
+
+static void func_7fb8a7(void) {}
+
+static void func_7fb8c0(void) {}
+
+static void func_7fb8d9(void) {}
+
+static void func_7fb8f2(void) {}
+
+static void func_7fb9cc(void) {}
+
+static void func_7fb9e5(void) {}
+
+static void func_7fb9fe(void) {}
+
+static void func_7fba17(void) {}
+
+static void func_7fba44(void) {}
+
+static void func_7fba5d(void) {}
+
+static void func_7fba86(void) {}
+
+static void func_7fbaa9(void) {}
+
+static void func_7fbb00(void) {}
+
+static void func_7fbb79(void) {}
+
+static void func_7fbbb0(void) {}
+
+static void func_7fbbca(void) {}
+
+static void func_7fbbe4(void) {}
+
+static void func_7fbbfe(void) {}
+
+static void func_7fbc3e(void) {}
+
+static void func_7fbc71(void) {}
+
+static void func_7fbc9a(void) {}
+
+static void func_7fbcd7(void) {}
+
+static void func_7fbd2a(void) {}
+
+static void func_7fbd6c(void) {}
+
+static void func_7fbd88(void) {}
+
+static void func_7fbdb3(void) {}
+
+static void func_7fbe34(void) {}
+
+static void func_7fbe55(void) {}
+
+static void func_7fbe7e(void) {}
+
+static void func_7fbe85(void) {}
+
+static void func_7fbed2(void) {}
+
+static void func_7fbf1b(void) {}
+
+static void func_7fbf28(void) {}
+
+static void func_7fbf3b(void) {}
+
+static void func_7fbf70(void) {}
+
+static void func_7fbfaf(void) {}
+
+static void func_7fbfc8(void) {}
+
+static void func_7fbff4(void) {}
+
+// Address: 7f/c00d
+static void decompress(void) {}
+
+// Address: 7f/c05d
+static void highNybbleClear(void) {}
+
+// Address: 7f/c0a1
+static void highNybbleSet(void) {}
+
+// Address: 7f/c0f0
+static void compressionMode_lzss(void) {}
+
+static void func_7fc1a3(void) {}
+
+// Address: 7f/c1cc
+static void compressionMode_none(void) {}
+
+static void func_7fc1e0(void) {}
+
+static void func_7fc1f4(void) {}
+
+static void func_7fc209(void) {}
+
+static void func_7fc500(void) {}
+
+static void func_7fc64f(void) {}
+
+static void func_7fc678(void) {}
