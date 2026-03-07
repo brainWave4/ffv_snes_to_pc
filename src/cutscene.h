@@ -1,7 +1,7 @@
 #ifndef CUTSCENE_H
 #define CUTSCENE_H
 
+void decompExt(void); // Incomplete
 void showCutscene(void); // Incomplete
-void decomp(void); // Incomplete
 
 #endif
