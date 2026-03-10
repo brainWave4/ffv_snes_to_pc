@@ -10,13 +10,19 @@ DICT_HEADER = "bin_header"
 DICT_PTR = "ptr_addr"
 DICT_PTR_BANK = "ptr_bank"
 DICT_DEPTH = "texture_depth"
-DICT_WIDTH = "texture_width"
-DICT_HEIGHT = "texture_height"
+DICT_HEIGHT_TILES = "texture_height_in_tiles"
 DICT_FUNC = "def"
 DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
 DICT_TEXT = "text"
 DICT_RULE = "special_rule"
+
+TILE_SIZE = 8
+TILESET_WIDTH_TILES = 16
+TILESET_WIDTH = TILE_SIZE * TILESET_WIDTH_TILES
+
+def get_texture_ext(depth):
+    return "." + str(depth) + "bpp"
 
 def writeByte(inner_f, rommap, addr_i, file):
     file.write(rommap[addr_i])
@@ -122,6 +128,47 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
 
+def writeTextureToFile(d, rommap):
+    fullpath = pathlib.Path(FILE_CAR) / "textures" / (d[DICT_FILE] + get_texture_ext(d[DICT_DEPTH]))
+
+    base_data = rommap[d[DICT_ADDR]: d[DICT_ADDR] + d[DICT_BYTES] + 1]
+    
+    new_data = []
+    for i in range(len(base_data)):
+        a = i % TILESET_WIDTH
+        if a < TILE_SIZE:
+            new_data.insert(0, [base_data[i]])
+        else:
+            b = TILE_SIZE - a % TILE_SIZE - 1
+            new_data[b].append(base_data[i])
+
+    new_data.reverse()
+    with open (fullpath, 'wb') as file:
+        file_size = d[DICT_BYTES] + 14 + 12 + 8
+        
+        # BMP File Header
+        file.write(b'BM')
+        file.write(file_size.to_bytes(4, 'little'))
+        file.write(b'\x00\x00\x00\x00')
+        file.write((14 + 12 + 8).to_bytes(4, 'little'))
+
+        # DIB Header
+        file.write(b'\x0C\x00\x00\x00')
+        file.write(TILESET_WIDTH.to_bytes(2, 'little'))
+        file.write((d[DICT_HEIGHT_TILES] * TILE_SIZE).to_bytes(2, 'little'))
+        file.write(b'\x01\x00')
+        file.write(d[DICT_DEPTH].to_bytes(2, 'little'))
+
+        # Base Palette
+        file.write(b'\x00\x00\x00\x00')
+        file.write(b'\xff\xff\xff\x00')
+
+        # Data
+        for i in range(len(new_data)):
+            for j in range(len(new_data[i])):
+                file.write(new_data[i][j])
+
+
 def binaryData(rommap):
     file_info = {
         "folder": "data",
@@ -172,47 +219,14 @@ def binaryData(rommap):
         writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
 
 def texture(rommap):
-    file_info = {
-        "folder": "textures",
-        "ext": ".1bpp"
-    }
-
     for d in [
-        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_WIDTH: 128, DICT_HEIGHT: 10},
-        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_WIDTH: 8, DICT_HEIGHT: 608}
+        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 12},
+        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 42},
+        {DICT_FILE: "kanji", DICT_ADDR: 0x1bd000, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 80}
     ]:
-        d[DICT_BYTES] = d[DICT_WIDTH] * d[DICT_DEPTH] * d[DICT_HEIGHT]
+        d[DICT_BYTES] = d[DICT_DEPTH] * TILESET_WIDTH_TILES * TILE_SIZE * d[DICT_HEIGHT_TILES]
         
-        file_size = d[DICT_BYTES] + 14 + 8
-        
-        # BMP File Header
-        header = b'BM'
-        header += file_size.to_bytes(4, 'little')
-        header += (54 + 8).to_bytes(8, 'big')
-
-        # DIB Header
-        header += (40).to_bytes(4, 'little')
-        header += d[DICT_WIDTH].to_bytes(4, 'little')
-        header += d[DICT_HEIGHT].to_bytes(4, 'little')
-        header += b'\x01\x00'
-        header += d[DICT_DEPTH].to_bytes(2, 'little')
-        header += b'\x00\x00\x00\x00'
-        header += b'\x00\x00\x00\x00'
-        header += b'\x00\x00\x00\x00'
-        header += b'\x00\x00\x00\x00'
-        header += b'\x02\x00\x00\x00'
-        header += b'\x00\x00\x00\x00'
-
-        # Base Palette
-        header += b'\x00\x00\x00\x00'
-        header += b'\xff\xff\xff\x00'
-
-        inner_f = {
-            DICT_FUNC: writeByte,
-            DICT_HEADER: header,
-            DICT_BYTES: d[DICT_BYTES]
-        }
-        writeToFile(d[DICT_FILE], file_info, byBytes, inner_f, rommap, d[DICT_ADDR])
+        writeTextureToFile(d, rommap)
 
 def palette(rommap):
     file_info = {
