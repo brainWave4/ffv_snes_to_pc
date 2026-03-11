@@ -128,10 +128,17 @@ static void stopTimer(void); // Incomplete
 static void startTimer(void); // Incomplete
 static void getTimerDuration(void); // Incomplete
 static void addTimerOffsetY(void); // Incomplete
-static uint8_t durSpell(void);
-static uint8_t durVit(void);
-static uint8_t dur180mod(void);
-static uint8_t dur110mod(void);
+static uint8_t timerDuration_spell(void); // Incomplete
+static uint8_t timerDuration_120(void);
+static uint8_t timerDuration_stamina20(void); // Incomplete
+static uint8_t timerDuration_049(void);
+static uint8_t timerDuration_180MagicHalf(void); // Incomplete
+static uint8_t timerDuration_180(void);
+static uint8_t timerDuration_010(void);
+static uint8_t timerDuration_110Magic(void); // Incomplete
+static uint8_t timerDuration_030(void);
+static uint8_t timerDuration_spellMagicHalf(void); // Incomplete
+static uint8_t timerDuration_120MagicHalf(void); // Incomplete
 static void monsterAtb(void); // Incomplete
 
 static void checkAICondition(void); // Incomplete
@@ -5813,6 +5820,26 @@ static void startTimer(void) {
 // sets the correct duration
 // also sets up Y as the correct timer offset
 static void getTimerDuration(void) {
+    // TimerDurationJumpTable (Address: _254A)
+        // Is only called in this function
+
+    // .word DurSpell, Dur120a, DurVit, DurVit, DurSpell
+    // .word Dur120b, DurSpell, Dur49, DurSpell, Dur180mod
+    // .word DurSpell, Dur180, Dur10, Dur10, Dur110mod
+    // .word Dur110mod, Dur30, Dur30, DurSpellmod, Dur120mod
+
+    // .word $2572, $2576, $2579, $2579, $2572
+    //       $2584, $2572, $2587, $2572, $258A
+    //       $2572, $259A, $259D, $259D, $25A0
+    //       $25A0, $25AF, $25AF, $25B2, $25C3
+
+    const uint8_t (*spellDurations[20])() = {
+        timerDuration_spell, timerDuration_120, timerDuration_stamina20, timerDuration_stamina20, timerDuration_spell,
+        timerDuration_120, timerDuration_spell, timerDuration_049, timerDuration_spell, timerDuration_180MagicHalf,
+        timerDuration_spell, timerDuration_180, timerDuration_010, timerDuration_010, timerDuration_110Magic,
+        timerDuration_110Magic, timerDuration_030, timerDuration_030, timerDuration_spellMagicHalf, timerDuration_120MagicHalf
+    };
+
     // Jump to SubRoutine AddTimerOffsetY      (Y = X + TimerOffset)
     // Transfer X to A
     // A Shift Left
@@ -5827,21 +5854,9 @@ static void getTimerDuration(void) {
     // LoaD #$c2 to A (.b #bank(TimerDurationJumpTable))
     // STore A to $0A
     // JuMP to [$0008]		(jump to table address)
-
-    // TimerDurationJumpTable
-
-    // .word DurSpell, Dur120a, DurVit, DurVit, DurSpell
-    // .word Dur120b, DurSpell, Dur49, DurSpell, Dur180mod
-    // .word DurSpell, Dur180, Dur10, Dur10, Dur110mod
-    // .word Dur110mod, Dur30, Dur30, DurSpellmod, Dur120mod
-
-    // .word $2572, $2576, $2579, $2579, $2572
-    //       $2584, $2572, $2587, $2572, $258A
-    //       $2572, $259A, $259D, $259D, $25A0
-    //       $25A0, $25AF, $25AF, $25B2, $25C3
-
 }
 
+// Address: _253F
 // (X): Y = X + $36 (Timer Offset)
 static void addTimerOffsetY(void) {
     // Transfer X to A
@@ -5855,19 +5870,25 @@ static void addTimerOffsetY(void) {
 
 // Address: _2572
 // Duration = Spell Duration
-static uint8_t durSpell(uint8_t value) {
+// TODO: Get duration
+static uint8_t timerDuration_spell(void) {
     // LoaD StatusDuration to A
     // Return To Subroutine
-    return value;
+    return 0;
 }
 
 // Address: _2576
 // Duration = 120
-// Similar to durSpell(..), but with a direct value as the input.
+static uint8_t timerDuration_120(void) {
+    // LoaD #$78 (#120) to A
+    // Return To Subroutine
+    return 120;
+}
 
+// Address: _2579
 // Duration = Attacker's Vitality + 20
 // TODO: Update formula to include Vitality
-static uint8_t durVit(void) {
+static uint8_t timerDuration_stamina20(void) {
     // CLear Carry Flag
     // LoaD Vitality to A
     // ADd A with #$14 (#20) AND A with Carry
@@ -5883,22 +5904,27 @@ static uint8_t durVit(void) {
 
 // Address: _2584
 // Duration = 120
-// Similar of durSpell(..)
+// Essentially the same as _2576
 
 // Address: _2587
 // Duration = 49
-// Similar to durSpell(..)
+static uint8_t timerDuration_049(void) {
+    // LoaD #$31 (#49) to A
+    // Return To Subroutine
+    return 49;
+}
 
+// Address: 258A
 // Duration = 180 - Attacker's Magic Power / 2
 // TODO: Update formula with Magic Power
-static uint8_t dur180mod(uint8_t base) {
+static uint8_t timerDuration_180MagicHalf(void) {
     // Load MagicPower to A
     // (L)Shift A Right
     // Store A to $0E
     // SEt Carry
     // Load #$B4 (#180) to A
     // SuBtract $0E from A with Carry
-    uint8_t total = base;
+    uint8_t total = 0;
 
     // Branch to next label if Carry Set
     // LoaD #$01 to A
@@ -5910,15 +5936,24 @@ static uint8_t dur180mod(uint8_t base) {
 
 // Address: _259A
 // Duration = 180
-// Similar to durSpell(..)
+static uint8_t timerDuration_180(void) {
+    // LoaD #$B4 (#180) to A
+    // Return To Subroutine
+    return 180;
+}
 
 // Address: _259D
 // Duration = 10
-// Similar to durSpell(..)
+static uint8_t timerDuration_010(void) {
+    // LoaD #$0A (#10) to A
+    // Return To Subroutine
+    return 10;
+}
 
+// Address: _25A0
 // Duration = 110 - Attacker's Magic Power, min 30
 // TODO: Update formula with Magic Power
-static uint8_t dur110mod(void) {
+static uint8_t timerDuration_110Magic(void) {
     //  SEt Carry flag
     //  LoaD #$6E to A
     //  SuBtract MagicPower from A with Carry
@@ -5936,13 +5971,23 @@ static uint8_t dur110mod(void) {
 
 // Address: _25AF
 // Duration = 30
-// Similar to durSpell(..)
+static uint8_t timerDuration_030(void) {
+    // LoaD #$1E (#30) to A
+    // Return To Subroutine
+    return 30;
+}
 
+// Address: _25B2
 // Duration = Spell Duration - Attacker's Magic Power / 2
-// Similar to dur180mod(..), but with starting value pointing to spell duration
+static uint8_t timerDuration_spellMagicHalf(void) {
+    return 1;
+}
 
+// Address: _25C3
 // Duration = 120 - Attacker's Magic Power / 2
-// Similar to dur180mod(..), with with different starting value
+static uint8_t timerDuration_120MagicHalf(void) {
+    return 120;
+}
 
 // Queues up a monster's action when
 // their ATB is ready
