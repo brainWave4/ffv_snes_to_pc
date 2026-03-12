@@ -126,8 +126,8 @@ static void resetAtb(void); // Incomplete
 static void clearQuick(void); // Incomplete
 static void stopTimer(void); // Incomplete
 static void startTimer(void); // Incomplete
-static void getTimerDuration(void); // Incomplete
-static void addTimerOffsetY(void); // Incomplete
+static void getTimerDuration(uint8_t timer); // Incomplete
+static void addTimerOffsetY(uint8_t timer); // Incomplete
 static uint8_t timerDuration_spell(void); // Incomplete
 static uint8_t timerDuration_120(void);
 static uint8_t timerDuration_stamina20(void); // Incomplete
@@ -5814,12 +5814,14 @@ static void startTimer(void) {
     // Return to SubRoutine
 }
 
-// Get Timer Duration (X - #timer; $3ED7 - IsItem):
-// A = return duration
+// Get Timer Duration
+    //  Input X - #timer
+    //  $3ED7 - IsItem
+// Output A = return duration
 // sets up and jumps to a jump table entry that
 // sets the correct duration
 // also sets up Y as the correct timer offset
-static void getTimerDuration(void) {
+static void getTimerDuration(uint8_t timer) {
     // TimerDurationJumpTable (Address: _254A)
         // Is only called in this function
 
@@ -5841,6 +5843,8 @@ static void getTimerDuration(void) {
     };
 
     // Jump to SubRoutine AddTimerOffsetY      (Y = X + TimerOffset)
+    addTimerOffsetY(timer);
+
     // Transfer X to A
     // A Shift Left
     // CLear Carry flag
@@ -5858,7 +5862,7 @@ static void getTimerDuration(void) {
 
 // Address: _253F
 // (X): Y = X + $36 (Timer Offset)
-static void addTimerOffsetY(void) {
+static void addTimerOffsetY(uint8_t timer) {
     // Transfer X to A
     // Lengthen A
     // CLear Carry flag
