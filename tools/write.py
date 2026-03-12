@@ -124,7 +124,7 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
     for i in range(item_count):
         final_name = filename
 
-        final_name += f"{item_count:03d}"
+        final_name += f"{i:03d}"
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
 
