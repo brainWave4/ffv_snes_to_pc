@@ -134,13 +134,18 @@ def writeTextureToFile(d, rommap):
     base_data = rommap[d[DICT_ADDR]: d[DICT_ADDR] + d[DICT_BYTES]]
     
     new_data = []
-    for i in range(len(base_data)):
+    for i in range(0, len(base_data), d[DICT_DEPTH]):
+        sub_arr = []
+        if d[DICT_DEPTH] == 1: sub_arr.append(base_data[i])
+        else:
+            sub_arr = base_data[i : i + d[DICT_DEPTH]]
+        
         a = i % TILESET_WIDTH
         if a < TILE_SIZE:
-            new_data.insert(0, [base_data[i]])
+            new_data.insert(0, sub_arr)
         else:
             b = TILE_SIZE - a % TILE_SIZE - 1
-            new_data[b].append(base_data[i])
+            new_data[b].extend(sub_arr)
 
     with open (fullpath, 'wb') as file:
         TOTAL_PALETTE_SIZE = 4 * 2 ** d[DICT_DEPTH]
@@ -239,6 +244,7 @@ def texture(rommap):
     for d in [
         {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 12},
         {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 42},
+        {DICT_FILE: "small_fonts", DICT_ADDR: 0x11f00, DICT_DEPTH: 2, DICT_HEIGHT_TILES: 128},
         {DICT_FILE: "kanji", DICT_ADDR: 0x1bd000, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 80}
     ]:
         d[DICT_BYTES] = d[DICT_DEPTH] * TILESET_WIDTH_TILES * TILE_SIZE * d[DICT_HEIGHT_TILES]
