@@ -131,7 +131,7 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
 def writeTextureToFile(d, rommap):
     fullpath = pathlib.Path(FILE_CAR) / "textures" / (d[DICT_FILE] + get_texture_ext(d[DICT_DEPTH]))
 
-    base_data = rommap[d[DICT_ADDR]: d[DICT_ADDR] + d[DICT_BYTES] + 1]
+    base_data = rommap[d[DICT_ADDR]: d[DICT_ADDR] + d[DICT_BYTES]]
     
     new_data = []
     for i in range(len(base_data)):
@@ -185,6 +185,7 @@ def writeTextureToFile(d, rommap):
             for j in range(len(new_data[i])):
                 file.write(new_data[i][j])
 
+    print(f"Written down {fullpath}")
 
 def binaryData(rommap):
     file_info = {
