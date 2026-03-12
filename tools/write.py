@@ -144,13 +144,16 @@ def writeTextureToFile(d, rommap):
 
     new_data.reverse()
     with open (fullpath, 'wb') as file:
-        file_size = d[DICT_BYTES] + 14 + 12 + 8
+        TOTAL_PALETTE_SIZE = 8 * 2 ** d[DICT_DEPTH]
+        DATA_OFFSET = 14 + 12 + TOTAL_PALETTE_SIZE
+
+        TOTAL_FILE_SIZE = DATA_OFFSET + d[DICT_BYTES]
         
         # BMP File Header
         file.write(b'BM')
-        file.write(file_size.to_bytes(4, 'little'))
+        file.write(TOTAL_FILE_SIZE.to_bytes(4, 'little'))
         file.write(b'\x00\x00\x00\x00')
-        file.write((14 + 12 + 8).to_bytes(4, 'little'))
+        file.write(DATA_OFFSET.to_bytes(4, 'little'))
 
         # DIB Header
         file.write(b'\x0C\x00\x00\x00')
@@ -161,6 +164,20 @@ def writeTextureToFile(d, rommap):
 
         # Base Palette
         file.write(b'\x00\x00\x00\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\x11\x11\x11\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\x22\x22\x22\x00')
+        if d[DICT_DEPTH] > 2: file.write(b'\x33\x33\x33\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\x44\x44\x44\x00')
+        if d[DICT_DEPTH] > 1: file.write(b'\x55\x55\x55\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\x66\x66\x66\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\x77\x77\x77\x00')
+        if d[DICT_DEPTH] > 2: file.write(b'\x88\x88\x88\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\x99\x99\x99\x00')
+        if d[DICT_DEPTH] > 1: file.write(b'\xaa\xaa\xaa\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\xbb\xbb\xbb\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\xcc\xcc\xcc\x00')
+        if d[DICT_DEPTH] > 2: file.write(b'\xdd\xdd\xdd\x00')
+        if d[DICT_DEPTH] > 3: file.write(b'\xee\xee\xee\x00')
         file.write(b'\xff\xff\xff\x00')
 
         # Data
