@@ -142,7 +142,6 @@ def writeTextureToFile(d, rommap):
             b = TILE_SIZE - a % TILE_SIZE - 1
             new_data[b].append(base_data[i])
 
-    new_data.reverse()
     with open (fullpath, 'wb') as file:
         TOTAL_PALETTE_SIZE = 4 * 2 ** d[DICT_DEPTH]
         DATA_OFFSET = 14 + 12 + TOTAL_PALETTE_SIZE
