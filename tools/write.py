@@ -138,9 +138,29 @@ def writeTextureToFile(d, rommap):
         sub_arr = []
         if d[DICT_DEPTH] == 1: sub_arr.append(base_data[i])
         else:
-            sub_arr = base_data[i : i + d[DICT_DEPTH]]
+            base_arr = []
+            for j in range(i, i + d[DICT_DEPTH]):
+                base_arr.append(int.from_bytes(base_data[j], 'big'))
+
+            sub_arr_int = []
+            c = TILE_SIZE
+
+            for a in range(TILE_SIZE):
+                for b in range(d[DICT_DEPTH]):
+                    if c == TILE_SIZE:
+                        sub_arr_int.insert(0, 0)
+                        c = 0
+                    
+                    e = base_arr[b] % 2
+                    sub_arr_int[0] += e * 2 ** c
+
+                    base_arr[b] //= 2
+                    c += 1
+            
+            for k in range(len(sub_arr_int)):
+                sub_arr.append(sub_arr_int[k].to_bytes(1, 'big'))
         
-        a = i % TILESET_WIDTH
+        a = i % TILESET_WIDTH // d[DICT_DEPTH]
         if a < TILE_SIZE:
             new_data.insert(0, sub_arr)
         else:
@@ -168,18 +188,21 @@ def writeTextureToFile(d, rommap):
 
         # Base Palette
         file.write(b'\x00\x00\x00\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\x11\x11\x11\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\x22\x22\x22\x00')
+        if d[DICT_DEPTH] > 3:
+            file.write(b'\x11\x11\x11\x00')
+            file.write(b'\x22\x22\x22\x00')
         if d[DICT_DEPTH] > 2: file.write(b'\x33\x33\x33\x00')
         if d[DICT_DEPTH] > 3: file.write(b'\x44\x44\x44\x00')
         if d[DICT_DEPTH] > 1: file.write(b'\x55\x55\x55\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\x66\x66\x66\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\x77\x77\x77\x00')
+        if d[DICT_DEPTH] > 3:
+            file.write(b'\x66\x66\x66\x00')
+            file.write(b'\x77\x77\x77\x00')
         if d[DICT_DEPTH] > 2: file.write(b'\x88\x88\x88\x00')
         if d[DICT_DEPTH] > 3: file.write(b'\x99\x99\x99\x00')
         if d[DICT_DEPTH] > 1: file.write(b'\xaa\xaa\xaa\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\xbb\xbb\xbb\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\xcc\xcc\xcc\x00')
+        if d[DICT_DEPTH] > 3:
+            file.write(b'\xbb\xbb\xbb\x00')
+            file.write(b'\xcc\xcc\xcc\x00')
         if d[DICT_DEPTH] > 2: file.write(b'\xdd\xdd\xdd\x00')
         if d[DICT_DEPTH] > 3: file.write(b'\xee\xee\xee\x00')
         file.write(b'\xff\xff\xff\x00')
