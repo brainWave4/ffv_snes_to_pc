@@ -10,16 +10,11 @@ DICT_HEADER = "bin_header"
 DICT_PTR = "ptr_addr"
 DICT_PTR_BANK = "ptr_bank"
 DICT_DEPTH = "texture_depth"
-DICT_HEIGHT_TILES = "texture_height_in_tiles"
 DICT_FUNC = "def"
 DICT_ITEMS = "items"
 DICT_BYTES = "bytes"
 DICT_TEXT = "text"
 DICT_RULE = "special_rule"
-
-TILE_SIZE = 8
-TILESET_WIDTH_TILES = 16
-TILESET_WIDTH = TILE_SIZE * TILESET_WIDTH_TILES
 
 def get_texture_ext(depth):
     return "." + str(depth) + "bpp"
@@ -128,92 +123,6 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
 
-def writeTextureToFile(d, rommap):
-    fullpath = pathlib.Path(FILE_CAR) / "textures" / (d[DICT_FILE] + get_texture_ext(d[DICT_DEPTH]))
-
-    base_data = rommap[d[DICT_ADDR]: d[DICT_ADDR] + d[DICT_BYTES]]
-    
-    new_data = []
-    for i in range(0, len(base_data), d[DICT_DEPTH]):
-        sub_arr = []
-        if d[DICT_DEPTH] == 1: sub_arr.append(base_data[i])
-        else:
-            base_arr = []
-            for j in range(i, i + d[DICT_DEPTH]):
-                base_arr.append(int.from_bytes(base_data[j], 'big'))
-
-            sub_arr_int = []
-            c = TILE_SIZE
-
-            for a in range(TILE_SIZE):
-                for b in range(d[DICT_DEPTH]):
-                    if c == TILE_SIZE:
-                        sub_arr_int.insert(0, 0)
-                        c = 0
-                    
-                    e = base_arr[b] % 2
-                    sub_arr_int[0] += e * 2 ** c
-
-                    base_arr[b] //= 2
-                    c += 1
-            
-            for k in range(len(sub_arr_int)):
-                sub_arr.append(sub_arr_int[k].to_bytes(1, 'big'))
-        
-        a = i % TILESET_WIDTH // d[DICT_DEPTH]
-        if a < TILE_SIZE:
-            new_data.insert(0, sub_arr)
-        else:
-            b = TILE_SIZE - a % TILE_SIZE - 1
-            new_data[b].extend(sub_arr)
-
-    with open (fullpath, 'wb') as file:
-        TOTAL_PALETTE_SIZE = 4 * 2 ** d[DICT_DEPTH]
-        DATA_OFFSET = 14 + 12 + TOTAL_PALETTE_SIZE
-
-        TOTAL_FILE_SIZE = DATA_OFFSET + d[DICT_BYTES]
-        
-        # BMP File Header
-        file.write(b'BM')
-        file.write(TOTAL_FILE_SIZE.to_bytes(4, 'little'))
-        file.write(b'\x00\x00\x00\x00')
-        file.write(DATA_OFFSET.to_bytes(4, 'little'))
-
-        # DIB Header
-        file.write(b'\x0C\x00\x00\x00')
-        file.write(TILESET_WIDTH.to_bytes(2, 'little'))
-        file.write((d[DICT_HEIGHT_TILES] * TILE_SIZE).to_bytes(2, 'little'))
-        file.write(b'\x01\x00')
-        file.write(d[DICT_DEPTH].to_bytes(2, 'little'))
-
-        # Base Palette
-        file.write(b'\x00\x00\x00\x00')
-        if d[DICT_DEPTH] > 3:
-            file.write(b'\x11\x11\x11\x00')
-            file.write(b'\x22\x22\x22\x00')
-        if d[DICT_DEPTH] > 2: file.write(b'\x33\x33\x33\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\x44\x44\x44\x00')
-        if d[DICT_DEPTH] > 1: file.write(b'\x55\x55\x55\x00')
-        if d[DICT_DEPTH] > 3:
-            file.write(b'\x66\x66\x66\x00')
-            file.write(b'\x77\x77\x77\x00')
-        if d[DICT_DEPTH] > 2: file.write(b'\x88\x88\x88\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\x99\x99\x99\x00')
-        if d[DICT_DEPTH] > 1: file.write(b'\xaa\xaa\xaa\x00')
-        if d[DICT_DEPTH] > 3:
-            file.write(b'\xbb\xbb\xbb\x00')
-            file.write(b'\xcc\xcc\xcc\x00')
-        if d[DICT_DEPTH] > 2: file.write(b'\xdd\xdd\xdd\x00')
-        if d[DICT_DEPTH] > 3: file.write(b'\xee\xee\xee\x00')
-        file.write(b'\xff\xff\xff\x00')
-
-        # Data
-        for i in range(len(new_data)):
-            for j in range(len(new_data[i])):
-                file.write(new_data[i][j])
-
-    print(f"Written down {fullpath}")
-
 def binaryData(rommap):
     file_info = {
         "folder": "data",
@@ -264,15 +173,24 @@ def binaryData(rommap):
         writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
 
 def texture(rommap):
+    file_info = {
+        "folder": "textures"
+    }
+
     for d in [
-        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 7692},
-        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 38},
-        {DICT_FILE: "small_fonts", DICT_ADDR: 0x11f00, DICT_DEPTH: 2, DICT_HEIGHT_TILES: 16},
-        {DICT_FILE: "kanji", DICT_ADDR: 0x1bd000, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 80}
+        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_END: 0xfe500, DICT_DEPTH: 1},
+        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_END: 0x3fe00, DICT_DEPTH: 1},
+        {DICT_FILE: "small_fonts", DICT_ADDR: 0x11f000, DICT_END: 0x120000, DICT_DEPTH: 2},
+        {DICT_FILE: "kanji", DICT_ADDR: 0x1bd000, DICT_END: 0x1bf800, DICT_DEPTH: 1}
     ]:
-        d[DICT_BYTES] = d[DICT_DEPTH] * TILESET_WIDTH_TILES * TILE_SIZE * d[DICT_HEIGHT_TILES]
+        inner_f = {
+            DICT_FUNC: writeByte,
+            DICT_END: d[DICT_END]
+        }
+
+        file_info["ext"] = get_texture_ext(d[DICT_DEPTH])
         
-        writeTextureToFile(d, rommap)
+        writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
 
 def palette(rommap):
     file_info = {

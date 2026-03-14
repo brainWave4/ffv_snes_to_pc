@@ -1,7 +1,5 @@
 A ROM contains the data as well as the instruxtions of a game. Since FFV is a Hi-ROM, it is mapped at Bank C0-FF. However, if opened by a hex editor, the bank is offset at $00 instead.
 
-For more details on textures for extractions, see [here](snes_rom_textures.md).
-
 # Bank C0
 This bank covers Field.
 |From|To|Type|Content|
