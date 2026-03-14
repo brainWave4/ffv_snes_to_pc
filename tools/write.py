@@ -265,9 +265,9 @@ def binaryData(rommap):
 
 def texture(rommap):
     for d in [
-        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 12},
-        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 42},
-        {DICT_FILE: "small_fonts", DICT_ADDR: 0x11f00, DICT_DEPTH: 2, DICT_HEIGHT_TILES: 128},
+        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 7692},
+        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 38},
+        {DICT_FILE: "small_fonts", DICT_ADDR: 0x11f00, DICT_DEPTH: 2, DICT_HEIGHT_TILES: 16},
         {DICT_FILE: "kanji", DICT_ADDR: 0x1bd000, DICT_DEPTH: 1, DICT_HEIGHT_TILES: 80}
     ]:
         d[DICT_BYTES] = d[DICT_DEPTH] * TILESET_WIDTH_TILES * TILE_SIZE * d[DICT_HEIGHT_TILES]
