@@ -201,7 +201,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0ADF||Integer|Chocobo's X Position|
 |7E/0AE0||Integer|Chocobo's Y Position|
 |7E/0AE1|7E/0AE4|Integers|Black Chocobo|
-|7E/0AE5|7E/0AE8|Integers|Dragon|
+|7E/0AE5|7E/0AE8|Integers|Hiryuu|
 |7E/0AE9|7E/0AEC|Integers|Submarine|
 |7E/0AED|7E/0AF0|Integers|Steamship|
 |7E/0AF1|7E/0AF4|Integers|Airship|
@@ -214,4 +214,4 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0AFC|7E/0AFD|Integer|Timed Events Timer|
 |7E/0AFE|7E/0AFF|Integer|Timed Events End|
 
-All Vehicles (Black Chocobo, Dragon, Submarine, Steamship and Airship) are structured the same as Chocobo.
+All Vehicles (Black Chocobo, Hiryuu, Submarine, Steamship and Airship) are structured the same as Chocobo.
