@@ -178,37 +178,45 @@ def texture(rommap):
     }
 
     for d in [
-        {DICT_FILE: "window", DICT_ADDR: 0xd380, DICT_END: 0xd980, DICT_DEPTH: 4},
-        {DICT_FILE: "map_overlay", DICT_ADDR: 0xdf00, DICT_END: 0xfe500, DICT_DEPTH: 1},
-        {DICT_FILE: "big_fonts", DICT_ADDR: 0x3eb00, DICT_END: 0x3fe00, DICT_DEPTH: 1},
-        {DICT_FILE: "timer_font", DICT_ADDR: 0xdfe00, DICT_END: 0xe0000, DICT_DEPTH: 4},
-        {DICT_FILE: "minimap", DICT_ADDR: 0xfd800, DICT_END: 0xfe000, DICT_DEPTH: 4},
-        {DICT_FILE: "misc_battle", DICT_ADDR: 0x10e003, DICT_END: 0x10e163, DICT_DEPTH: 4},
-        {DICT_FILE: "unknown_d0e220", DICT_ADDR: 0x10e220, DICT_END: 0x10e320, DICT_DEPTH: 4},
-        {DICT_FILE: "the_end_lz", DICT_ADDR: 0x10e4cb, DICT_END: 0x10ebe5, DICT_DEPTH: 4},
-        {DICT_FILE: "animals", DICT_ADDR: 0x11aba0, DICT_END: 0x11be00, DICT_DEPTH: 4},
-        {DICT_FILE: "weapons", DICT_ADDR: 0x11c000, DICT_END: 0x11d800, DICT_DEPTH: 3},
-        {DICT_FILE: "weapon_hit", DICT_ADDR: 0x11d800, DICT_END: 0x11f000, DICT_DEPTH: 3},
-        {DICT_FILE: "small_fonts", DICT_ADDR: 0x11f000, DICT_END: 0x120000, DICT_DEPTH: 2},
-        {DICT_FILE: "battle_sprites", DICT_ADDR: 0x1497c0, DICT_END: 0x149e50, DICT_DEPTH: 3},
-        {DICT_FILE: "battle_sprites2", DICT_ADDR: 0x149e50, DICT_END: 0x14a3c0, DICT_DEPTH: 3},
-        {DICT_FILE: "attack", DICT_ADDR: 0x190000, DICT_END: 0x192ec8, DICT_DEPTH: 3},
-        {DICT_FILE: "attack2", DICT_ADDR: 0x192ec8, DICT_END: 0x195760, DICT_DEPTH: 3},
-        {DICT_FILE: "attack3", DICT_ADDR: 0x195760, DICT_END: 0x197c50, DICT_DEPTH: 3},
-        {DICT_FILE: "map_sprite", DICT_ADDR: 0x1a0000, DICT_END: 0x1b3a00, DICT_DEPTH: 4},
-        {DICT_FILE: "vehicle", DICT_ADDR: 0x1b3a00, DICT_END: 0x1b4d80, DICT_DEPTH: 4},
-        {DICT_FILE: "world_sprite", DICT_ADDR: 0x1b4d80, DICT_END: 0x1b8000, DICT_DEPTH: 4},
-        {DICT_FILE: "kanji", DICT_ADDR: 0x1bd000, DICT_END: 0x1bf800, DICT_DEPTH: 1},
-        {DICT_FILE: "map_anim", DICT_ADDR: 0x1f9b00, DICT_END: 0x1ffc00, DICT_DEPTH: 4}
+        {DICT_FILE: "window", DICT_FUNC: byAddrRange, DICT_ADDR: 0xd380, DICT_END: 0xd980, DICT_DEPTH: 4},
+        {DICT_FILE: "map_overlay", DICT_FUNC: byAddrRange, DICT_ADDR: 0xdf00, DICT_END: 0xfe500, DICT_DEPTH: 1},
+        {DICT_FILE: "big_fonts", DICT_FUNC: byAddrRange, DICT_ADDR: 0x3eb00, DICT_END: 0x3fe00, DICT_DEPTH: 1},
+        {DICT_FILE: "timer_font", DICT_FUNC: byAddrRange, DICT_ADDR: 0xdfe00, DICT_END: 0xe0000, DICT_DEPTH: 4},
+        {DICT_FILE: "minimap", DICT_FUNC: byAddrRange, DICT_ADDR: 0xfd800, DICT_END: 0xfe000, DICT_DEPTH: 4},
+        {DICT_FILE: "misc_battle", DICT_FUNC: byAddrRange, DICT_ADDR: 0x10e003, DICT_END: 0x10e163, DICT_DEPTH: 4},
+        {DICT_FILE: "unknown_d0e220", DICT_FUNC: byAddrRange, DICT_ADDR: 0x10e220, DICT_END: 0x10e320, DICT_DEPTH: 4},
+        {DICT_FILE: "the_end_lz", DICT_FUNC: byAddrRange, DICT_ADDR: 0x10e4cb, DICT_END: 0x10ebe5, DICT_DEPTH: 4},
+        {DICT_FILE: "animals", DICT_FUNC: byAddrRange, DICT_ADDR: 0x11aba0, DICT_END: 0x11be00, DICT_DEPTH: 4},
+        {DICT_FILE: "weapons", DICT_FUNC: byAddrRange, DICT_ADDR: 0x11c000, DICT_END: 0x11d800, DICT_DEPTH: 3},
+        {DICT_FILE: "weapon_hit", DICT_FUNC: byAddrRange, DICT_ADDR: 0x11d800, DICT_END: 0x11f000, DICT_DEPTH: 3},
+        {DICT_FILE: "small_fonts", DICT_FUNC: byAddrRange, DICT_ADDR: 0x11f000, DICT_END: 0x120000, DICT_DEPTH: 2},
+        {DICT_FILE: "battle_char", DICT_FUNC: byBytes, DICT_ADDR: 0x11aba0, DICT_BYTES: 110, DICT_ITEMS: 1536, DICT_DEPTH: 4},
+        {DICT_FILE: "battle_sprites", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1497c0, DICT_END: 0x149e50, DICT_DEPTH: 3},
+        {DICT_FILE: "battle_sprites2", DICT_FUNC: byAddrRange, DICT_ADDR: 0x149e50, DICT_END: 0x14a3c0, DICT_DEPTH: 3},
+        {DICT_FILE: "attack", DICT_FUNC: byAddrRange, DICT_ADDR: 0x190000, DICT_END: 0x192ec8, DICT_DEPTH: 3},
+        {DICT_FILE: "attack2", DICT_FUNC: byAddrRange, DICT_ADDR: 0x192ec8, DICT_END: 0x195760, DICT_DEPTH: 3},
+        {DICT_FILE: "attack3", DICT_FUNC: byAddrRange, DICT_ADDR: 0x195760, DICT_END: 0x197c50, DICT_DEPTH: 3},
+        {DICT_FILE: "map_sprite", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1a0000, DICT_END: 0x1b3a00, DICT_DEPTH: 4},
+        {DICT_FILE: "vehicle", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1b3a00, DICT_END: 0x1b4d80, DICT_DEPTH: 4},
+        {DICT_FILE: "world_sprite", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1b4d80, DICT_END: 0x1b8000, DICT_DEPTH: 4},
+        {DICT_FILE: "kanji", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1bd000, DICT_END: 0x1bf800, DICT_DEPTH: 1},
+        {DICT_FILE: "map_anim", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1f9b00, DICT_END: 0x1ffc00, DICT_DEPTH: 4}
     ]:
         inner_f = {
-            DICT_FUNC: writeByte,
-            DICT_END: d[DICT_END]
+            DICT_FUNC: writeByte
         }
+        match d[DICT_FUNC].__name__:
+            case "byAddrRange":
+                inner_f[DICT_END] = d[DICT_END]
+            case "byBytes":
+                inner_f[DICT_BYTES] = d[DICT_BYTES]
 
         file_info["ext"] = get_texture_ext(d[DICT_DEPTH])
         
-        writeToFile(d[DICT_FILE], file_info, byAddrRange, inner_f, rommap, d[DICT_ADDR])
+        if DICT_ITEMS in d and d[DICT_ITEMS] > 1:
+            writeFilesTimesItems(d[DICT_ITEMS], d[DICT_FILE], file_info, d[DICT_FUNC], inner_f, rommap, d[DICT_ADDR])
+        else:
+            writeToFile(d[DICT_FILE], file_info, d[DICT_FUNC], inner_f, rommap, d[DICT_ADDR])
 
 def palette(rommap):
     file_info = {
