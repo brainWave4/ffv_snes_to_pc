@@ -1,6 +1,45 @@
 A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F. It is also mirrored at Bank 00-3F and 80-BF, both by $0000 - $1FFFF, making the addresses interchangable for ease of access.
 
 # Battle
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/0020||Integer|Temproary Attached Spell|
+|7E/0021||Integer|Temproary Indicator to Skip Name|
+|7E/0022||Integer|Temproary Party Targets, Monster AI when Charmed|
+|7E/0023||Integer|Temproary Monster Targets|
+|7E/0032|7E/0033|Integer|Attacker Offset|
+|7E/0034|7E/0035|Integer|Spell Offset|
+|7E/0036|7E/0037|Integer|Timer Offset|
+|7E/0039||Integer|Attacker Offset 2|
+|7E/003A|7E/003B|Integers|RNG|
+|7E/0047||Integer|Attacker Index|
+|7E/0048||Integer|Target Index|
+|7E/0049||Integer|Target Offset|
+|7E/004b||Integer|AI Offset|
+|7E/004d||Integer|Attack Element|
+|7E/004e||Integer|Hit Percent|
+|7E/004f||Integer|Evade Percent|
+|7E/0050|7E/0051|Integer|Attack|
+|7E/0052|7E/0053|Integer|Attack Multiplier|
+|7E/0054|7E/0055|Integer|Defence|
+|7E/0056|7E/0057|Integer|Attack Missed|
+|7E/0057|7E/0059|Integers|Parameters for Various Purposes|
+|7E/005A||Integer|Sword Block|
+|7E/005B||Integer|Knife Block|
+|7E/005C||Integer|Elf Cape|
+|7E/005D||Integer|Shield Block|
+|7E/005E||Integer|Blade Grasp|
+|7E/005F||Integer|Critical Hit|
+|7E/0060||Integer|Spellblade|
+|7E/0061||Integer|Is Target Dead|
+|7E/0062||Integer|Attack Healed|
+|7E/0063||Integer|Attacker Damaged|
+|7E/0065||Integer|Monster Targets|
+|7E/0066||Integer|Party Targets|
+|7E/013B||Integer|Field Items Won|
+|7E/04F0|7E/04F1|Integer|Encounter Index|
+|7E/04F2||Integer|Terrain Type|
+
 # Menu
 # For Saving
 These range of addresses are to be stored in a save slot address when saving the game.

@@ -575,8 +575,137 @@ static uint8_t addr_7e0008 = 0;
 static uint8_t addr_7e0009 = 0;
 static uint8_t addr_7e000a = 0;
 
+// For Magic Routines
+    // Address: $20
+static uint8_t tempAttachedSpell = 0;
+    // Address: $21
+static uint8_t tempSkipNaming = 0;
+    // Address: $22
+static uint8_t tempPartyTargets = 0;
+        // This address is also used for monster ai, indicates a charmed action
+    // Address: $23
+static uint8_t tempMonsterTargets = 0;
+
+// Address: $32
+static uint16_t attackerOffset = 0;
+    // Offset includes size of data.
+
+// Address: $34
+static uint16_t spellOffset = 0;
+
 // Address: $36
 static uint16_t timerOffset = 0;
+
+// Address: $39
+static uint8_t attackerOffset2 = 0;
+
+// Address: $3a
+static uint8_t rngA = 0;
+
+// Address: $3a
+static uint8_t rngB = 0;
+
+// These are used for various things
+static uint8_t addr_7e003d = 0;
+static uint8_t addr_7e003e = 0;
+static uint8_t addr_7e003f = 0;
+static uint8_t addr_7e0040 = 0;
+static uint8_t addr_7e0041 = 0;
+static uint8_t addr_7e0042 = 0;
+static uint8_t addr_7e0043 = 0;
+static uint8_t addr_7e0044 = 0;
+static uint8_t addr_7e0045 = 0;
+static uint8_t addr_7e0046 = 0;
+
+// Address: $47
+static uint8_t attackerIndex = 0;
+
+// Address: $48
+static uint8_t wTargetIndex = 0;
+
+// Address: $49
+static uint16_t targetOffset = 0;
+
+// Address: $4b
+static uint8_t aiOffset = 0;
+
+// Address: $4d
+static uint8_t atkElement = 0;
+
+// Address: $4e
+static uint8_t hitPercent = 0;
+
+// Address: $4f
+static uint8_t evadePercent = 0;
+
+// Address: $50
+static uint16_t attack = 0;
+
+// Address: $52
+static uint16_t attackMultiplier = 0;
+
+// Address: $54
+static uint16_t defence = 0;
+
+// Address: $56
+static uint16_t attackMissed = 0;
+
+// Parameters to be stored for various purposes
+    // Address: $57
+static uint8_t param1 = 0;
+
+    // Address: $58
+static uint8_t param2 = 0;
+
+    // Address: $59
+static uint8_t param3 = 0;
+
+// Address: $5a
+static uint8_t swordBlock = 0;
+
+// Address: $5b
+static uint8_t knifeBlock = 0;
+
+// Address: $5c
+static uint8_t elfCape = 0;
+
+// Address: $5d
+static uint8_t shieldBlock = 0;
+
+// Address: $5e
+static uint8_t bladeGrasp = 0;
+
+// Address: $5f
+static uint8_t crit = 0;
+
+// Address: $60
+static uint8_t spellblade = 0;
+
+// Address: $61
+static uint8_t targetDead = 0;
+
+// Address: $62
+static uint8_t atkHealed = 0;
+
+// Address: $63
+static uint8_t attackerDamaged = 0;
+
+// Address: $65
+static uint8_t monsterTargets = 0;
+
+// Address: $66
+static uint8_t partyTargets = 0;
+
+static uint8_t addr_7e0070 = 0;
+
+// Address: $013b
+static uint8_t fieldItemsWon = 0;
+
+// Address: $04f0
+static uint16_t encounterIndex = 0;
+
+// Address: $04f2
+static uint8_t terrainType = 0;
 
 // Address: $09c0
 static uint16_t battleCount = 0;
