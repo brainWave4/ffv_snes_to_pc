@@ -1,6 +1,6 @@
 import pathlib
 
-FILE_CAR = "src/assets"
+FILE_CAR = "assets"
 FILE_JP = "jp"
 
 DICT_FILE = "file"

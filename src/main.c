@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "field.h"
+#include "include/field.h"
 
 #define BASE_GAME_WIDTH 256
 #define BASE_GAME_HEIGHT 224

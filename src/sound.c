@@ -1,5 +1,5 @@
 // Bank Range: C4
-#include "sound.h"
+#include "include/sound.h"
 
 static void playSong(void); // Incomplete
 static void otherInterrupts(void); // Incomplete
