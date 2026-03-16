@@ -127,7 +127,7 @@ static void clearQuick(void); // Incomplete
 static void stopTimer(void); // Incomplete
 static void startTimer(void); // Incomplete
 static void getTimerDuration(uint8_t timer); // Incomplete
-static void addTimerOffsetY(uint8_t timer); // Incomplete
+static uint16_t addTimerOffsetY(uint8_t timer);
 static uint8_t timerDuration_spell(void); // Incomplete
 static uint8_t timerDuration_120(void);
 static uint8_t timerDuration_stamina20(void); // Incomplete
@@ -571,8 +571,19 @@ static void swapHands(void); // Incomplete
 const uint8_t MIN_BYTE = 1;
 const uint8_t MAX_BYTE = 255;
 
+static uint8_t addr_7e0008 = 0;
+static uint8_t addr_7e0009 = 0;
+static uint8_t addr_7e000a = 0;
+
+// Address: $36
+static uint16_t timerOffset = 0;
+
 // Address: $09c0
-uint16_t battleCount = 0;
+static uint16_t battleCount = 0;
+
+// Address: $3ed7
+static uint8_t statusFixedDuration = 0; // When set, status effects with durations use an alternate formula.
+    // This is usually a fixed duration instead of a spell-based duration.
 
 // FUNCTION DEFINITIONS
 
@@ -5843,33 +5854,49 @@ static void getTimerDuration(uint8_t timer) {
     };
 
     // Jump to SubRoutine AddTimerOffsetY      (Y = X + TimerOffset)
-    addTimerOffsetY(timer);
+    uint16_t y = addTimerOffsetY(timer);
 
     // Transfer X to A
     // A Shift Left
+    uint16_t dur_i = timer;
+    dur_i <<= 1;
+
     // CLear Carry flag
     // ADd StatusFixedDur to A with Carry    (uses alternate fixed status duration)
+    dur_i += statusFixedDuration;
+
     // A Shift Left
+    dur_i <<= 1;
+
     // Transfer A to X
     // LoaD f:TimerDurationJumpTable,X to A
     // STore A to $08
+    addr_7e0008 = spellDurations[dur_i]();
+
     // LoaD f:TimerDurationJumpTable+1,X to A
     // STore A to $09
+    addr_7e0009 = spellDurations[dur_i + 1]();
+
     // LoaD #$c2 to A (.b #bank(TimerDurationJumpTable))
     // STore A to $0A
+    addr_7e000a = 0xC2;
+
     // JuMP to [$0008]		(jump to table address)
 }
 
 // Address: _253F
 // (X): Y = X + $36 (Timer Offset)
-static void addTimerOffsetY(uint8_t timer) {
+static uint16_t addTimerOffsetY(uint8_t timer) {
     // Transfer X to A
     // Lengthen A
     // CLear Carry flag
     // ADd TimerOffset to A with Carry
+    uint16_t result = timer + timerOffset;
+
     // Transfer A to Y
     // Clear A, then Shorten
     // Return to SubRoutine
+    return result;
 }
 
 // Address: _2572
