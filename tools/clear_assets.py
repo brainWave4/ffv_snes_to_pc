@@ -1,6 +1,6 @@
 import os
 
-EXTS = ['.1bpp', '.2bpp', '.4bpp', '.8bpp', '.bin', '.pal', '.txt']
+EXTS = ['.1bpp', '.2bpp', '.3bpp', '.4bpp', '.8bpp', '.bin', '.pal', '.txt']
 
 def clear_in_file(path):
     for entry in os.listdir(path):
@@ -14,4 +14,4 @@ def clear_in_file(path):
                 os.remove(fullpath)
                 print("Cleared " + fullpath)
 
-clear_in_file("src")
+clear_in_file("assets")
