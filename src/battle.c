@@ -3,6 +3,8 @@
 
 #include "include/battle.h"
 
+#include "include/menu.h"
+
 // for ExecBtlGfx_ext
 #include "include/btlgfx.h"
 
@@ -707,9 +709,6 @@ static uint16_t encounterIndex = 0;
 // Address: $04f2
 static uint8_t terrainType = 0;
 
-// Address: $09c0
-static uint16_t battleCount = 0;
-
 // Address: $3ed7
 static uint8_t statusFixedDuration = 0; // When set, status effects with durations use an alternate formula.
     // This is usually a fixed duration instead of a spell-based duration.
@@ -735,11 +734,12 @@ void execBattle(void) {
     //  Lengthen A to 16-bits
     //  CLear Carry flag
     //  LoaD $09c0 to A
+            // $09c0 records the amount of times battled
     //  ADd #1 to accumulator with Carry
     //  Branch to [0023] if Carry Clear
     //  LoaD #$ffff to A
     //  [0023] Store A to $09c0
-    if (battleCount < 0xffff) ++battleCount;
+    if (currentSave.timesBattle < 0xffff) ++currentSave.timesBattle;
 
     //  Clear A, then Shorten
     //  Store Zero to $7cd8

@@ -484,9 +484,6 @@ static void setControllerSettingsField(void); // Incomplete
 void updateJoypadConfig(void); // Incomplete
 static void func_c2ffc2(void); // Incomplete
 
-// Address: $7e0500 - $7e0aff
-Save current_save;
-
 // These adresses are loaded before
 // having valued stored there
 static uint16_t addr_7e0034 = 0;
