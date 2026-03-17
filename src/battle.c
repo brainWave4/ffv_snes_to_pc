@@ -654,14 +654,9 @@ static uint16_t defence = 0;
 static uint16_t attackMissed = 0;
 
 // Parameters to be stored for various purposes
-    // Address: $57
-static uint8_t param1 = 0;
-
-    // Address: $58
-static uint8_t param2 = 0;
-
-    // Address: $59
-static uint8_t param3 = 0;
+static uint8_t *param1 = &addr_7e0057;
+static uint8_t *param2 = &addr_7e0058;
+static uint8_t *param3 = &addr_7e0059;
 
 // Address: $5a
 static uint8_t swordBlock = 0;
