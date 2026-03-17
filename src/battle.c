@@ -130,17 +130,17 @@ static void stopTimer(void); // Incomplete
 static void startTimer(void); // Incomplete
 static void getTimerDuration(uint8_t timer); // Incomplete
 static uint16_t addTimerOffsetY(uint8_t timer);
-static uint8_t timerDuration_spell(void); // Incomplete
+static uint8_t timerDuration_spell(void);
 static uint8_t timerDuration_120(void);
-static uint8_t timerDuration_stamina20(void); // Incomplete
+static uint8_t timerDuration_stamina20(void);
 static uint8_t timerDuration_049(void);
-static uint8_t timerDuration_180MagicHalf(void); // Incomplete
+static uint8_t timerDuration_180MagicHalf(void);
 static uint8_t timerDuration_180(void);
 static uint8_t timerDuration_010(void);
-static uint8_t timerDuration_110Magic(void); // Incomplete
+static uint8_t timerDuration_110Magic(void);
 static uint8_t timerDuration_030(void);
-static uint8_t timerDuration_spellMagicHalf(void); // Incomplete
-static uint8_t timerDuration_120MagicHalf(void); // Incomplete
+static uint8_t timerDuration_spellMagicHalf(void);
+static uint8_t timerDuration_120MagicHalf(void);
 static void monsterAtb(void); // Incomplete
 
 static void checkAICondition(void); // Incomplete
@@ -576,6 +576,7 @@ const uint8_t MAX_BYTE = 255;
 static uint8_t addr_7e0008 = 0;
 static uint8_t addr_7e0009 = 0;
 static uint8_t addr_7e000a = 0;
+static uint8_t addr_7e000e = 0;
 
 // For Magic Routines
     // Address: $20
@@ -712,6 +713,21 @@ static uint8_t terrainType = 0;
 // Address: $3ed7
 static uint8_t statusFixedDuration = 0; // When set, status effects with durations use an alternate formula.
     // This is usually a fixed duration instead of a spell-based duration.
+
+// Address: $3ed8
+static uint8_t statusDuration = 0;
+
+// Stats after all bonuses
+    // Address: $7be1
+static uint8_t finalStrength = 0;
+    // Address: $7be2
+static uint8_t finalAgility = 0;
+    // Address: $7be3
+static uint8_t finalStamina = 0;
+    // Address: $7be4
+static uint8_t finalMagic = 0;
+    // Address: $7be5
+static uint8_t finalLevel = 0;
 
 // FUNCTION DEFINITIONS
 
@@ -6030,11 +6046,10 @@ static uint16_t addTimerOffsetY(uint8_t timer) {
 
 // Address: _2572
 // Duration = Spell Duration
-// TODO: Get duration
 static uint8_t timerDuration_spell(void) {
     // LoaD StatusDuration to A
     // Return To Subroutine
-    return 0;
+    return statusDuration;
 }
 
 // Address: _2576
@@ -6046,20 +6061,18 @@ static uint8_t timerDuration_120(void) {
 }
 
 // Address: _2579
-// Duration = Attacker's Vitality + 20
-// TODO: Update formula to include Vitality
+// Duration = Attacker's Stamina + 20
 static uint8_t timerDuration_stamina20(void) {
     // CLear Carry Flag
-    // LoaD Vitality to A
-    // ADd A with #$14 (#20) AND A with Carry
-    uint8_t sum = 20;
+    // LoaD Vitality (Stamina) to A
 
+    // ADd A with #$14 (#20) AND A with Carry
     // Branch to next label if Carry Clear
     // LoaD #$FF (max #255) to A
-    // [LBL] Return To Subroutine
-    if (sum > MAX_BYTE) return MAX_BYTE;
+    if (finalStamina > MAX_BYTE - 20) return MAX_BYTE;
 
-    return sum;
+    // [LBL] Return To Subroutine
+    return finalStamina + 20;
 }
 
 // Address: _2584
@@ -6075,23 +6088,23 @@ static uint8_t timerDuration_049(void) {
 }
 
 // Address: 258A
-// Duration = 180 - Attacker's Magic Power / 2
-// TODO: Update formula with Magic Power
+// Duration = 180 - Attacker's Magic / 2
 static uint8_t timerDuration_180MagicHalf(void) {
-    // Load MagicPower to A
+    // Load MagicPower (final Magic stat) to A
     // (L)Shift A Right
     // Store A to $0E
+    addr_7e000e = finalMagic >> 1;
+
     // SEt Carry
     // Load #$B4 (#180) to A
     // SuBtract $0E from A with Carry
-    uint8_t total = 0;
 
     // Branch to next label if Carry Set
     // LoaD #$01 to A
     // [LBL] Return To Subroutine
-    if (total < MIN_BYTE) return MIN_BYTE;
+    if (180 < addr_7e000e) return MIN_BYTE;
 
-    return total;
+    return 180 - addr_7e000e;
 }
 
 // Address: _259A
@@ -6111,20 +6124,24 @@ static uint8_t timerDuration_010(void) {
 }
 
 // Address: _25A0
-// Duration = 110 - Attacker's Magic Power, min 30
-// TODO: Update formula with Magic Power
+// Duration = 110 - Attacker's Magic, min 30
 static uint8_t timerDuration_110Magic(void) {
     //  SEt Carry flag
     //  LoaD #$6E to A
-    //  SuBtract MagicPower from A with Carry
+    //  SuBtract MagicPower (attacker's final Magic) from A with Carry
     //  Brach to next label if Carry Clear
+
     //  CoMPare A with #$1E	(min 30)
     //  Branch to second next label if Carry Set
+
     //  [LBL] Load #$1E to A	(min 30)
     //  [LBL] Return To Subroutine
-    uint8_t total = 110;
+    const uint8_t STARTING_VAL = 110;
+    const uint8_t MIN_RESULT = 30;
+    if (STARTING_VAL < finalMagic) return MIN_RESULT;
 
-    if (total < 30) return 30;
+    uint8_t total = STARTING_VAL - finalMagic;
+    if (total < MIN_RESULT) return MIN_RESULT;
 
     return total;
 }
@@ -6138,15 +6155,39 @@ static uint8_t timerDuration_030(void) {
 }
 
 // Address: _25B2
-// Duration = Spell Duration - Attacker's Magic Power / 2
+// Duration = Spell Duration - Attacker's Magic / 2
 static uint8_t timerDuration_spellMagicHalf(void) {
+    // LoaD MagicPower to A
+    // Logical Shift A Right
+    // STore A to $0e
+    addr_7e003e = finalMagic >> 1;
+
+    // SEt Carry flag
+    // LoaD StatusDuration to A
+    // SuBtract $0e from A with Carry
+    // Branch to next label if Carry Set
+    // LoaD #1 to A
+    // [LBL] Return to Subroutine
+    if (statusDuration > addr_7e003e) return statusDuration - addr_7e003e;
     return 1;
 }
 
 // Address: _25C3
-// Duration = 120 - Attacker's Magic Power / 2
+// Duration = 120 - Attacker's Magic / 2
 static uint8_t timerDuration_120MagicHalf(void) {
-    return 120;
+    // LoaD MagicPower to A
+    // Logical Shift A Right
+    // STore A to $0e
+    addr_7e000e = finalMagic >> 1;
+
+    // SEt Carry flag
+    // LoaD #$78 (#120) to A
+    // SuBtract $0e from A with Carry
+    // Branch to next label if Carry Set
+    // LoaD #1 to A
+    // [LBL] Return to Subroutine
+    if (120 > addr_7e000e) return 120 - addr_7e000e;
+    return 1;
 }
 
 // Queues up a monster's action when
