@@ -955,9 +955,19 @@ static void initEventFlags(void) {}
 
 static void initNewCharData(void) {}
 
-static void resetRam_0000_to_1D00(void) {}
+static void resetRam_0000_to_1D00(void) {
+    // Essentially loops 2 bytes over a given range
+    // to be set as Zero.
 
-static void resetRam_0B00_to_1D00(void) {}
+    // Can't be done here as not all variables
+    // share the same type. Some are even objects.
+
+    resetRam_0B00_to_1D00();
+}
+
+static void resetRam_0B00_to_1D00(void) {
+    // See above function.
+}
 
 static void func_c04931(void) {}
 
