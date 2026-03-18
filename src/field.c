@@ -484,11 +484,20 @@ static void battleBlur(void); // Incomplete
 static void randomBattle(void); // Incomplete
 static void reset(void); // Incomplete
 
-// These adresses are loaded before
-// having valued stored there
+// These adresses are called before
+// having any value stored first
 static uint8_t addr_7e0139 = 0;
 static uint8_t addr_7e0af9 = 0;
 
+static uint8_t addr_7e0088;
+static uint8_t addr_7e0089;
+static uint8_t addr_7e00b9;
+static uint8_t addr_7e00bc;
+static uint8_t addr_7e00bd;
+static uint8_t addr_7e00ce;
+static uint8_t addr_7e0134;
+static uint8_t addr_7e0b60;
+static uint8_t addr_7e0b5f;
 // Address: _420d
 static uint8_t h_memsel;
 // Address: _420b
@@ -497,15 +506,6 @@ static uint8_t h_mdmaen;
 static uint8_t h_hdmaen;
 // Address: _4200
 static uint8_t h_nmitimen;
-static uint8_t addr_7e0134;
-static uint8_t addr_7e00bd;
-static uint8_t addr_7e00bc;
-static uint8_t addr_7e00ce;
-static uint8_t addr_7e0b60;
-static uint8_t addr_7e0b5f;
-static uint8_t addr_7e00b9;
-static uint8_t addr_7e0088;
-static uint8_t addr_7e0089;
 
 void start(void) {
     // SEt Interrpt flag
