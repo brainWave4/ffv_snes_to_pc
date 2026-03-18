@@ -1,5 +1,6 @@
 // Bank Range: C0
 #include "include/field.h"
+#include "include/display.h"
 
 //.import _c10003, _c10006
 #include "include/btlgfx.h"
@@ -494,8 +495,6 @@ static uint8_t h_memsel;
 static uint8_t h_mdmaen;
 // Address: _420c
 static uint8_t h_hdmaen;
-// Address: _2100
-static uint8_t h_inidisp;
 // Address: _4200
 static uint8_t h_nmitimen;
 static uint8_t addr_7e0134;
@@ -523,7 +522,7 @@ void start(void) {
     h_hdmaen = 0;
     // LoaD #$8f (143) to A
     // Store A to hINIDISP
-    h_inidisp = 143;
+    inidisp = 143;
     // LoaD #0 to A
     // Store A to hNMITIMEN
     h_nmitimen = 0;
