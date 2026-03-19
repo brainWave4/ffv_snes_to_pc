@@ -713,14 +713,8 @@ static uint8_t statusFixedDuration = 0; // When set, status effects with duratio
 static uint8_t statusDuration = 0;
 
 // Stats after all bonuses
-    // Address: $7be1
-static uint8_t finalStrength = 0;
-    // Address: $7be2
-static uint8_t finalAgility = 0;
-    // Address: $7be3
-static uint8_t finalStamina = 0;
-    // Address: $7be4
-static uint8_t finalMagic = 0;
+    // Addresses: $7be1 - $7be4
+static Parameters finalCalc;
     // Address: $7be5
 static uint8_t finalLevel = 0;
 
@@ -6064,10 +6058,10 @@ static uint8_t timerDuration_stamina20(void) {
     // ADd A with #$14 (#20) AND A with Carry
     // Branch to next label if Carry Clear
     // LoaD #$FF (max #255) to A
-    if (finalStamina > MAX_BYTE - 20) return MAX_BYTE;
+    if (finalCalc.stamina > MAX_BYTE - 20) return MAX_BYTE;
 
     // [LBL] Return To Subroutine
-    return finalStamina + 20;
+    return finalCalc.stamina + 20;
 }
 
 // Address: _2584
@@ -6088,7 +6082,7 @@ static uint8_t timerDuration_180MagicHalf(void) {
     // Load MagicPower (final Magic stat) to A
     // (L)Shift A Right
     // Store A to $0E
-    addr_7e000e = finalMagic >> 1;
+    addr_7e000e = finalCalc.magic >> 1;
 
     // SEt Carry
     // Load #$B4 (#180) to A
@@ -6133,9 +6127,9 @@ static uint8_t timerDuration_110Magic(void) {
     //  [LBL] Return To Subroutine
     const uint8_t STARTING_VAL = 110;
     const uint8_t MIN_RESULT = 30;
-    if (STARTING_VAL < finalMagic) return MIN_RESULT;
+    if (STARTING_VAL < finalCalc.magic) return MIN_RESULT;
 
-    uint8_t total = STARTING_VAL - finalMagic;
+    uint8_t total = STARTING_VAL - finalCalc.magic;
     if (total < MIN_RESULT) return MIN_RESULT;
 
     return total;
@@ -6155,7 +6149,7 @@ static uint8_t timerDuration_spellMagicHalf(void) {
     // LoaD MagicPower to A
     // Logical Shift A Right
     // STore A to $0e
-    addr_7e003e = finalMagic >> 1;
+    addr_7e003e = finalCalc.magic >> 1;
 
     // SEt Carry flag
     // LoaD StatusDuration to A
@@ -6173,7 +6167,7 @@ static uint8_t timerDuration_120MagicHalf(void) {
     // LoaD MagicPower to A
     // Logical Shift A Right
     // STore A to $0e
-    addr_7e000e = finalMagic >> 1;
+    addr_7e000e = finalCalc.magic >> 1;
 
     // SEt Carry flag
     // LoaD #$78 (#120) to A
