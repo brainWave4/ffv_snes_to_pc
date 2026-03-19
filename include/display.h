@@ -28,6 +28,27 @@ uint8_t mosaic;
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
 
+// Address: _211A
+uint8_t mode7_settings;
+
+// Address: _211B
+uint8_t mode7_a;
+
+// Address: _211C
+uint8_t mode7_b;
+
+// Address: _211D
+uint8_t mode7_c;
+
+// Address: _211E
+uint8_t mode7_d;
+
+// Address: _211F
+uint8_t mode7_x;
+
+// Address: _2120
+uint8_t mode7_y;
+
 // Addresses _2121-2122 are for CGRAM,
 // which stores the palette.
 SDL_Color[256] palette;
