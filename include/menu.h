@@ -1,14 +1,14 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <stdint.h>
+#include <SDL3/SDL_stdinc.h>
 #include <wchar.h>
 
 typedef struct {
-    uint8_t strength;
-    uint8_t agility;
-    uint8_t stamina;
-    uint8_t magic;
+    Uint8 strength;
+    Uint8 agility;
+    Uint8 stamina;
+    Uint8 magic;
 } Parameters;
 
 typedef struct {
@@ -16,14 +16,14 @@ typedef struct {
     Parameters current;
     Parameters best;
     
-    uint16_t exp;
-    uint16_t currentHp;
-    uint16_t maxHp;
-    uint16_t currentMp;
-    uint16_t maxMp;
-    uint16_t currentInnateAbilities;
-    uint16_t abilityPoints;
-    uint16_t freelancerInnateAbilities;
+    Uint16 exp;
+    Uint16 currentHp;
+    Uint16 maxHp;
+    Uint16 currentMp;
+    Uint16 maxMp;
+    Uint16 currentInnateAbilities;
+    Uint16 abilityPoints;
+    Uint16 freelancerInnateAbilities;
 
     // Order: rpbb giii
     //  r: is in back Row
@@ -31,53 +31,53 @@ typedef struct {
     //  b: Battle order
     //  g: Gender
     //  i: character Id
-    uint8_t about;
-    uint8_t jobId;
-    uint8_t level;
-    uint8_t headEquipId;
-    uint8_t bodyEquipId;
-    uint8_t accEquipId;
-    uint8_t shieldIdRight;
-    uint8_t shieldIdLeft;
-    uint8_t weaponIdRight;
-    uint8_t weaponIdLeft;
-    uint8_t caughtMonsterID;
-    uint8_t[4] commandID;
-    uint8_t[4] status;
-    uint8_t actions;
-    uint8_t damageModifiers;
-    uint8_t equipmentElements;
-    uint8_t equipmentWeight;
-    uint8_t evadeChance;
-    uint8_t defense;
-    uint8_t MagicEvadeChance;
-    uint8_t MagicDefense;
-    uint8_t elementalAbsorb;
-    uint8_t elementalEvasion;
-    uint8_t elementalImmunity;
-    uint8_t elementalResistance;
-    uint8_t elementalWeakness;
-    uint8_t[3] statusResistance;
-    uint8_t weaponProperties;
-    uint8_t equipProperties;
-    uint8_t jobLevel;
-    uint8_t[3] magicLevel;
-    uint8_t headEquipType;
-    uint8_t bodyEquipType;
-    uint8_t accEquipType;
-    uint8_t weaponPowerRight;
-    uint8_t weaponPowerLeft;
-    uint8_t prevCommand;
-    uint8_t prevAttack;
-    uint8_t prevItem;
-    uint8_t prevElement;
+    Uint8 about;
+    Uint8 jobId;
+    Uint8 level;
+    Uint8 headEquipId;
+    Uint8 bodyEquipId;
+    Uint8 accEquipId;
+    Uint8 shieldIdRight;
+    Uint8 shieldIdLeft;
+    Uint8 weaponIdRight;
+    Uint8 weaponIdLeft;
+    Uint8 caughtMonsterID;
+    Uint8[4] commandID;
+    Uint8[4] status;
+    Uint8 actions;
+    Uint8 damageModifiers;
+    Uint8 equipmentElements;
+    Uint8 equipmentWeight;
+    Uint8 evadeChance;
+    Uint8 defense;
+    Uint8 MagicEvadeChance;
+    Uint8 MagicDefense;
+    Uint8 elementalAbsorb;
+    Uint8 elementalEvasion;
+    Uint8 elementalImmunity;
+    Uint8 elementalResistance;
+    Uint8 elementalWeakness;
+    Uint8[3] statusResistance;
+    Uint8 weaponProperties;
+    Uint8 equipProperties;
+    Uint8 jobLevel;
+    Uint8[3] magicLevel;
+    Uint8 headEquipType;
+    Uint8 bodyEquipType;
+    Uint8 accEquipType;
+    Uint8 weaponPowerRight;
+    Uint8 weaponPowerLeft;
+    Uint8 prevCommand;
+    Uint8 prevAttack;
+    Uint8 prevItem;
+    Uint8 prevElement;
 } Character;
 
 typedef struct {
-    uint8_t setting;
-    uint8_t height;
-    uint8_t x;
-    uint8_t y;
+    Uint8 setting;
+    Uint8 height;
+    Uint8 x;
+    Uint8 y;
 } Vehicle;
 
 typedef struct {
@@ -85,70 +85,70 @@ typedef struct {
 
     Vehicle[6] vehicle;
 
-    uint32_t gil;
-    uint32_t playTime;
+    Uint32 gil;
+    Uint32 playTime;
 
     wchar_t[5][6] names;
 
-    uint16_t enemiesDefeated;
-    uint16_t windowColor;
+    Uint16 enemiesDefeated;
+    Uint16 windowColor;
 
-    uint16_t timesBattle;
-    uint16_t timesSaved;
-    uint16_t battleEvents;
+    Uint16 timesBattle;
+    Uint16 timesSaved;
+    Uint16 battleEvents;
 
-    uint16_t mapId;
-    uint16_t worldId;
-    uint16_t teleportMapId;
+    Uint16 mapId;
+    Uint16 worldId;
+    Uint16 teleportMapId;
 
-    uint16_t timerEventProgress;
-    uint16_t timerEventEnd;
+    Uint16 timerEventProgress;
+    Uint16 timerEventEnd;
 
-    uint8_t[256] itemId;
-    uint8_t[256] itemAmount;
+    Uint8[256] itemId;
+    Uint8[256] itemAmount;
 
-    uint8_t[4][12] jobProgression;
-    uint8_t[4] abilityCount;
-    uint8_t[4][20] unlockedAbilities;
+    Uint8[4][12] jobProgression;
+    Uint8[4] abilityCount;
+    Uint8[4][20] unlockedAbilities;
 
-    uint8_t[32] unlockedMagic;
+    Uint8[32] unlockedMagic;
 
-    uint8_t config;
-    uint8_t config2;
-    uint8_t configController;
+    Uint8 config;
+    Uint8 config2;
+    Uint8 configController;
 
-    uint8_t buttonConfigureA;
-    uint8_t buttonConfigureB;
-    uint8_t buttonConfigureX;
-    uint8_t buttonConfigureY;
-    uint8_t buttonConfigureL;
-    uint8_t buttonConfigureR;
-    uint8_t buttonConfigureSelect;
+    Uint8 buttonConfigureA;
+    Uint8 buttonConfigureB;
+    Uint8 buttonConfigureX;
+    Uint8 buttonConfigureY;
+    Uint8 buttonConfigureL;
+    Uint8 buttonConfigureR;
+    Uint8 buttonConfigureSelect;
 
-    uint8_t[4] playerNumber;
-    uint8_t[4] shortcutPlacement;
+    Uint8[4] playerNumber;
+    Uint8[4] shortcutPlacement;
 
-    uint8_t magicLamp;
-    uint8_t timesEscaped;
-    uint8_t wonderRod;
-    uint8_t battleResult;
+    Uint8 magicLamp;
+    Uint8 timesEscaped;
+    Uint8 wonderRod;
+    Uint8 battleResult;
 
-    uint8_t[32] treasuresOpened;
-    uint8_t[32] eventsCleared;
-    uint8_t[32] npcStatus;
+    Uint8[32] treasuresOpened;
+    Uint8[32] eventsCleared;
+    Uint8[32] npcStatus;
 
-    uint8_t playerX;
-    uint8_t playerY;
-    uint8_t FieldCharId;
-    uint8_t playerDir;
-    uint8_t vehicleId;
+    Uint8 playerX;
+    Uint8 playerY;
+    Uint8 FieldCharId;
+    Uint8 playerDir;
+    Uint8 vehicleId;
 
-    uint8_t teleportX;
-    uint8_t teleportY;
+    Uint8 teleportX;
+    Uint8 teleportY;
 
-    uint8_t randSeed;
-    uint8_t walkingSpeed;
-    uint8_t enableTimer;
+    Uint8 randSeed;
+    Uint8 walkingSpeed;
+    Uint8 enableTimer;
 } Save;
 
 void func_a00a(void); // Incomplete

@@ -1,7 +1,7 @@
 // Bank Range: C2/0000 - C2/9FFF
-#include <stdint.h>
-
 #include "include/battle.h"
+
+#include <SDL3/SDL_stdinc.h>
 
 #include "include/menu.h"
 
@@ -15,13 +15,13 @@
 
 // FUNCTION DECLARATIONS
 static void setupRegisters(void); // Incomplete
-static uint8_t getRandBetween(uint8_t min, uint8_t max); // Unfinished
+static Uint8 getRandBetween(Uint8 min, Uint8 max); // Unfinished
 static void wipeDisplayStructures(void); // Incomplete
 static void copyStatsWithBonuses(void); // Incomplete
 static void copyDisplayDamage(void); // Incomplete
 static void wipeActionData(void); // Incomplete
-static uint8_t getRandom0_99(void); // Incomplete
-static uint16_t getTargetBitmask(void); // Incomplete
+static Uint8 getRandom0_99(void); // Incomplete
+static Uint16 getTargetBitmask(void); // Incomplete
 static void checkMultiTarget(void); // Incomplete
 static void removeInactiveTargets(void); // Incomplete
 static void copyRomMagicInfo(void); // Incomplete
@@ -128,19 +128,19 @@ static void resetAtb(void); // Incomplete
 static void clearQuick(void); // Incomplete
 static void stopTimer(void); // Incomplete
 static void startTimer(void); // Incomplete
-static void getTimerDuration(uint8_t timer); // Incomplete
-static uint16_t addTimerOffsetY(uint8_t timer);
-static uint8_t timerDuration_spell(void);
-static uint8_t timerDuration_120(void);
-static uint8_t timerDuration_stamina20(void);
-static uint8_t timerDuration_049(void);
-static uint8_t timerDuration_180MagicHalf(void);
-static uint8_t timerDuration_180(void);
-static uint8_t timerDuration_010(void);
-static uint8_t timerDuration_110Magic(void);
-static uint8_t timerDuration_030(void);
-static uint8_t timerDuration_spellMagicHalf(void);
-static uint8_t timerDuration_120MagicHalf(void);
+static void getTimerDuration(Uint8 timer); // Incomplete
+static Uint16 addTimerOffsetY(Uint8 timer);
+static Uint8 timerDuration_spell(void);
+static Uint8 timerDuration_120(void);
+static Uint8 timerDuration_stamina20(void);
+static Uint8 timerDuration_049(void);
+static Uint8 timerDuration_180MagicHalf(void);
+static Uint8 timerDuration_180(void);
+static Uint8 timerDuration_010(void);
+static Uint8 timerDuration_110Magic(void);
+static Uint8 timerDuration_030(void);
+static Uint8 timerDuration_spellMagicHalf(void);
+static Uint8 timerDuration_120MagicHalf(void);
 static void monsterAtb(void); // Incomplete
 
 static void checkAICondition(void); // Incomplete
@@ -570,153 +570,153 @@ static void startTimerCurChar(void); // Incomplete
 static void replaceHands(void); // Incomplete
 static void swapHands(void); // Incomplete
 
-const uint8_t MIN_BYTE = 1;
-const uint8_t MAX_BYTE = 255;
+const Uint8 MIN_BYTE = 1;
+const Uint8 MAX_BYTE = 255;
 
-static uint8_t addr_7e0008 = 0;
-static uint8_t addr_7e0009 = 0;
-static uint8_t addr_7e000a = 0;
-static uint8_t addr_7e000e = 0;
+static Uint8 addr_7e0008 = 0;
+static Uint8 addr_7e0009 = 0;
+static Uint8 addr_7e000a = 0;
+static Uint8 addr_7e000e = 0;
 
 // For Magic Routines
     // Address: $20
-static uint8_t tempAttachedSpell = 0;
+static Uint8 tempAttachedSpell = 0;
     // Address: $21
-static uint8_t tempSkipNaming = 0;
+static Uint8 tempSkipNaming = 0;
     // Address: $22
-static uint8_t tempPartyTargets = 0;
+static Uint8 tempPartyTargets = 0;
         // This address is also used for monster ai, indicates a charmed action
     // Address: $23
-static uint8_t tempMonsterTargets = 0;
+static Uint8 tempMonsterTargets = 0;
 
 // Address: $32
-static uint16_t attackerOffset = 0;
+static Uint16 attackerOffset = 0;
     // Offset includes size of data.
 
 // Address: $34
-static uint16_t spellOffset = 0;
+static Uint16 spellOffset = 0;
 
 // Address: $36
-static uint16_t timerOffset = 0;
+static Uint16 timerOffset = 0;
 
 // Address: $39
-static uint8_t attackerOffset2 = 0;
+static Uint8 attackerOffset2 = 0;
 
 // Address: $3a
-static uint8_t rngA = 0;
+static Uint8 rngA = 0;
 
 // Address: $3a
-static uint8_t rngB = 0;
+static Uint8 rngB = 0;
 
 // These are used for various things
-static uint8_t addr_7e003d = 0;
-static uint8_t addr_7e003e = 0;
-static uint8_t addr_7e003f = 0;
-static uint8_t addr_7e0040 = 0;
-static uint8_t addr_7e0041 = 0;
-static uint8_t addr_7e0042 = 0;
-static uint8_t addr_7e0043 = 0;
-static uint8_t addr_7e0044 = 0;
-static uint8_t addr_7e0045 = 0;
-static uint8_t addr_7e0046 = 0;
+static Uint8 addr_7e003d = 0;
+static Uint8 addr_7e003e = 0;
+static Uint8 addr_7e003f = 0;
+static Uint8 addr_7e0040 = 0;
+static Uint8 addr_7e0041 = 0;
+static Uint8 addr_7e0042 = 0;
+static Uint8 addr_7e0043 = 0;
+static Uint8 addr_7e0044 = 0;
+static Uint8 addr_7e0045 = 0;
+static Uint8 addr_7e0046 = 0;
 
 // Address: $47
-static uint8_t attackerIndex = 0;
+static Uint8 attackerIndex = 0;
 
 // Address: $48
-static uint8_t wTargetIndex = 0;
+static Uint8 wTargetIndex = 0;
 
 // Address: $49
-static uint16_t targetOffset = 0;
+static Uint16 targetOffset = 0;
 
 // Address: $4b
-static uint8_t aiOffset = 0;
+static Uint8 aiOffset = 0;
 
 // Address: $4d
-static uint8_t atkElement = 0;
+static Uint8 atkElement = 0;
 
 // Address: $4e
-static uint8_t hitPercent = 0;
+static Uint8 hitPercent = 0;
 
 // Address: $4f
-static uint8_t evadePercent = 0;
+static Uint8 evadePercent = 0;
 
 // Address: $50
-static uint16_t attack = 0;
+static Uint16 attack = 0;
 
 // Address: $52
-static uint16_t attackMultiplier = 0;
+static Uint16 attackMultiplier = 0;
 
 // Address: $54
-static uint16_t defence = 0;
+static Uint16 defence = 0;
 
 // Address: $56
-static uint16_t attackMissed = 0;
+static Uint16 attackMissed = 0;
 
 // Parameters to be stored for various purposes
-static uint8_t *param1 = &addr_7e0057;
-static uint8_t *param2 = &addr_7e0058;
-static uint8_t *param3 = &addr_7e0059;
+static Uint8 *param1 = &addr_7e0057;
+static Uint8 *param2 = &addr_7e0058;
+static Uint8 *param3 = &addr_7e0059;
 
 // Address: $5a
-static uint8_t swordBlock = 0;
+static Uint8 swordBlock = 0;
 
 // Address: $5b
-static uint8_t knifeBlock = 0;
+static Uint8 knifeBlock = 0;
 
 // Address: $5c
-static uint8_t elfCape = 0;
+static Uint8 elfCape = 0;
 
 // Address: $5d
-static uint8_t shieldBlock = 0;
+static Uint8 shieldBlock = 0;
 
 // Address: $5e
-static uint8_t bladeGrasp = 0;
+static Uint8 bladeGrasp = 0;
 
 // Address: $5f
-static uint8_t crit = 0;
+static Uint8 crit = 0;
 
 // Address: $60
-static uint8_t spellblade = 0;
+static Uint8 spellblade = 0;
 
 // Address: $61
-static uint8_t targetDead = 0;
+static Uint8 targetDead = 0;
 
 // Address: $62
-static uint8_t atkHealed = 0;
+static Uint8 atkHealed = 0;
 
 // Address: $63
-static uint8_t attackerDamaged = 0;
+static Uint8 attackerDamaged = 0;
 
 // Address: $65
-static uint8_t monsterTargets = 0;
+static Uint8 monsterTargets = 0;
 
 // Address: $66
-static uint8_t partyTargets = 0;
+static Uint8 partyTargets = 0;
 
-static uint8_t addr_7e0070 = 0;
+static Uint8 addr_7e0070 = 0;
 
 // Address: $013b
-static uint8_t fieldItemsWon = 0;
+static Uint8 fieldItemsWon = 0;
 
 // Address: $04f0
-static uint16_t encounterIndex = 0;
+static Uint16 encounterIndex = 0;
 
 // Address: $04f2
-static uint8_t terrainType = 0;
+static Uint8 terrainType = 0;
 
 // Address: $3ed7
-static uint8_t statusFixedDuration = 0; // When set, status effects with durations use an alternate formula.
+static Uint8 statusFixedDuration = 0; // When set, status effects with durations use an alternate formula.
     // This is usually a fixed duration instead of a spell-based duration.
 
 // Address: $3ed8
-static uint8_t statusDuration = 0;
+static Uint8 statusDuration = 0;
 
 // Stats after all bonuses
     // Addresses: $7be1 - $7be4
 static Parameters finalCalc;
     // Address: $7be5
-static uint8_t finalLevel = 0;
+static Uint8 finalLevel = 0;
 
 // FUNCTION DEFINITIONS
 
@@ -803,7 +803,7 @@ static void setupRegisters(void) {
 //  - TODO: Implement random table
 // Input: Minimum Value, Maximum Value
 // Output: Result
-static uint8_t getRandBetween(uint8_t min, uint8_t max) {
+static Uint8 getRandBetween(Uint8 min, Uint8 max) {
     //  Shorten Indexes
     //  STore X to $3c
     //  ComPare X with #$ff
@@ -848,8 +848,8 @@ static uint8_t getRandBetween(uint8_t min, uint8_t max) {
     //  Lengthen Indexes
     //  PulL A
     //  Return To Subroutine
-    uint8_t diff = max - min;
-    uint8_t randDiff = diff;
+    Uint8 diff = max - min;
+    Uint8 randDiff = diff;
     
     //randDiff = rand() % diff;
 
@@ -1020,7 +1020,7 @@ static void wipeActionData(void) {
 // Address: _02A2
 // Returns an integor between
 // 0 and 99, inclusive
-static uint8_t getRandom0_99(void) {
+static Uint8 getRandom0_99(void) {
     // Transfer Direct page to aCcumulator
     // Transfer A to X
     // LoaD #$63 to A
@@ -1032,7 +1032,7 @@ static uint8_t getRandom0_99(void) {
 // Combines MonsterTargets and PartyTargets into
 // Bitmask PPPPMMMM MMMM0000 to match
 // normal index order
-static uint16_t getTargetBitmask(void) {
+static Uint16 getTargetBitmask(void) {
     // LoaD MonsterTargets to A
     // PusH A
     // AND A with #$F0
@@ -5966,7 +5966,7 @@ static void startTimer(void) {
 // sets up and jumps to a jump table entry that
 // sets the correct duration
 // also sets up Y as the correct timer offset
-static void getTimerDuration(uint8_t timer) {
+static void getTimerDuration(Uint8 timer) {
     // TimerDurationJumpTable (Address: _254A)
         // Is only called in this function
 
@@ -5980,7 +5980,7 @@ static void getTimerDuration(uint8_t timer) {
     //       $2572, $259A, $259D, $259D, $25A0
     //       $25A0, $25AF, $25AF, $25B2, $25C3
 
-    const uint8_t (*spellDurations[20])() = {
+    const Uint8 (*spellDurations[20])() = {
         timerDuration_spell, timerDuration_120, timerDuration_stamina20, timerDuration_stamina20, timerDuration_spell,
         timerDuration_120, timerDuration_spell, timerDuration_049, timerDuration_spell, timerDuration_180MagicHalf,
         timerDuration_spell, timerDuration_180, timerDuration_010, timerDuration_010, timerDuration_110Magic,
@@ -5988,11 +5988,11 @@ static void getTimerDuration(uint8_t timer) {
     };
 
     // Jump to SubRoutine AddTimerOffsetY      (Y = X + TimerOffset)
-    uint16_t y = addTimerOffsetY(timer);
+    Uint16 y = addTimerOffsetY(timer);
 
     // Transfer X to A
     // A Shift Left
-    uint16_t dur_i = timer;
+    Uint16 dur_i = timer;
     dur_i <<= 1;
 
     // CLear Carry flag
@@ -6020,12 +6020,12 @@ static void getTimerDuration(uint8_t timer) {
 
 // Address: _253F
 // (X): Y = X + $36 (Timer Offset)
-static uint16_t addTimerOffsetY(uint8_t timer) {
+static Uint16 addTimerOffsetY(Uint8 timer) {
     // Transfer X to A
     // Lengthen A
     // CLear Carry flag
     // ADd TimerOffset to A with Carry
-    uint16_t result = timer + timerOffset;
+    Uint16 result = timer + timerOffset;
 
     // Transfer A to Y
     // Clear A, then Shorten
@@ -6035,7 +6035,7 @@ static uint16_t addTimerOffsetY(uint8_t timer) {
 
 // Address: _2572
 // Duration = Spell Duration
-static uint8_t timerDuration_spell(void) {
+static Uint8 timerDuration_spell(void) {
     // LoaD StatusDuration to A
     // Return To Subroutine
     return statusDuration;
@@ -6043,7 +6043,7 @@ static uint8_t timerDuration_spell(void) {
 
 // Address: _2576
 // Duration = 120
-static uint8_t timerDuration_120(void) {
+static Uint8 timerDuration_120(void) {
     // LoaD #$78 (#120) to A
     // Return To Subroutine
     return 120;
@@ -6051,7 +6051,7 @@ static uint8_t timerDuration_120(void) {
 
 // Address: _2579
 // Duration = Attacker's Stamina + 20
-static uint8_t timerDuration_stamina20(void) {
+static Uint8 timerDuration_stamina20(void) {
     // CLear Carry Flag
     // LoaD Vitality (Stamina) to A
 
@@ -6070,7 +6070,7 @@ static uint8_t timerDuration_stamina20(void) {
 
 // Address: _2587
 // Duration = 49
-static uint8_t timerDuration_049(void) {
+static Uint8 timerDuration_049(void) {
     // LoaD #$31 (#49) to A
     // Return To Subroutine
     return 49;
@@ -6078,7 +6078,7 @@ static uint8_t timerDuration_049(void) {
 
 // Address: 258A
 // Duration = 180 - Attacker's Magic / 2
-static uint8_t timerDuration_180MagicHalf(void) {
+static Uint8 timerDuration_180MagicHalf(void) {
     // Load MagicPower (final Magic stat) to A
     // (L)Shift A Right
     // Store A to $0E
@@ -6098,7 +6098,7 @@ static uint8_t timerDuration_180MagicHalf(void) {
 
 // Address: _259A
 // Duration = 180
-static uint8_t timerDuration_180(void) {
+static Uint8 timerDuration_180(void) {
     // LoaD #$B4 (#180) to A
     // Return To Subroutine
     return 180;
@@ -6106,7 +6106,7 @@ static uint8_t timerDuration_180(void) {
 
 // Address: _259D
 // Duration = 10
-static uint8_t timerDuration_010(void) {
+static Uint8 timerDuration_010(void) {
     // LoaD #$0A (#10) to A
     // Return To Subroutine
     return 10;
@@ -6114,7 +6114,7 @@ static uint8_t timerDuration_010(void) {
 
 // Address: _25A0
 // Duration = 110 - Attacker's Magic, min 30
-static uint8_t timerDuration_110Magic(void) {
+static Uint8 timerDuration_110Magic(void) {
     //  SEt Carry flag
     //  LoaD #$6E to A
     //  SuBtract MagicPower (attacker's final Magic) from A with Carry
@@ -6125,11 +6125,11 @@ static uint8_t timerDuration_110Magic(void) {
 
     //  [LBL] Load #$1E to A	(min 30)
     //  [LBL] Return To Subroutine
-    const uint8_t STARTING_VAL = 110;
-    const uint8_t MIN_RESULT = 30;
+    const Uint8 STARTING_VAL = 110;
+    const Uint8 MIN_RESULT = 30;
     if (STARTING_VAL < finalCalc.magic) return MIN_RESULT;
 
-    uint8_t total = STARTING_VAL - finalCalc.magic;
+    Uint8 total = STARTING_VAL - finalCalc.magic;
     if (total < MIN_RESULT) return MIN_RESULT;
 
     return total;
@@ -6137,7 +6137,7 @@ static uint8_t timerDuration_110Magic(void) {
 
 // Address: _25AF
 // Duration = 30
-static uint8_t timerDuration_030(void) {
+static Uint8 timerDuration_030(void) {
     // LoaD #$1E (#30) to A
     // Return To Subroutine
     return 30;
@@ -6145,7 +6145,7 @@ static uint8_t timerDuration_030(void) {
 
 // Address: _25B2
 // Duration = Spell Duration - Attacker's Magic / 2
-static uint8_t timerDuration_spellMagicHalf(void) {
+static Uint8 timerDuration_spellMagicHalf(void) {
     // LoaD MagicPower to A
     // Logical Shift A Right
     // STore A to $0e
@@ -6163,7 +6163,7 @@ static uint8_t timerDuration_spellMagicHalf(void) {
 
 // Address: _25C3
 // Duration = 120 - Attacker's Magic / 2
-static uint8_t timerDuration_120MagicHalf(void) {
+static Uint8 timerDuration_120MagicHalf(void) {
     // LoaD MagicPower to A
     // Logical Shift A Right
     // STore A to $0e

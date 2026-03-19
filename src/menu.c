@@ -1,7 +1,7 @@
 // Bank Range: C2/A000 - C2/FFFF, D0
-#include <stdint.h>
-
 #include "include/menu.h"
+
+#include <SDL3/SDL_stdinc.h>
 
 // for subroute _c10009
 #include "include/btlgfx.h"
@@ -486,28 +486,28 @@ static void func_c2ffc2(void); // Incomplete
 
 // These adresses are loaded before
 // having valued stored there
-static uint16_t addr_7e0034 = 0;
+static Uint16 addr_7e0034 = 0;
 
 // Address: $306000 - $307bff
 static Save[4] saves;
 
-static uint16_t addr_7e008e;
-static uint16_t addr_7e2100;
-static uint8_t addr_7e0044;
-static uint8_t addr_7e0045;
-static uint8_t addr_7e0046;
-static uint8_t addr_7e0047;
-static uint8_t addr_7e0048;
-static uint16_t addr_7e0039;
-static uint16_t addr_7e00c7;
+static Uint16 addr_7e008e;
+static Uint16 addr_7e2100;
+static Uint8 addr_7e0044;
+static Uint8 addr_7e0045;
+static Uint8 addr_7e0046;
+static Uint8 addr_7e0047;
+static Uint8 addr_7e0048;
+static Uint16 addr_7e0039;
+static Uint16 addr_7e00c7;
 
-static uint8_t addr_7e4200;
-static uint8_t addr_7e2101;
-static uint8_t addr_7e2105;
-static uint8_t addr_7e2106;
-static uint8_t addr_7e2115;
-static uint8_t addr_7e420b;
-static uint16_t addr_7e420c;
+static Uint8 addr_7e4200;
+static Uint8 addr_7e2101;
+static Uint8 addr_7e2105;
+static Uint8 addr_7e2106;
+static Uint8 addr_7e2115;
+static Uint8 addr_7e420b;
+static Uint16 addr_7e420c;
 
 // _a000 is ExecMenu_ext
 // Branches to _a016 execMenu(..)
@@ -688,7 +688,7 @@ static void nameChange(void) {
 }
 
 // Address: _a06b
-// Input: uint8_t (previously stored in A)
+// Input: Uint8 (previously stored in A)
 static void showMenu(void) {
     // Shorten A
     // Store A to $43 (Menu State)

@@ -1,5 +1,8 @@
 // Bank Range: C0
 #include "include/field.h"
+
+#include <SDL3/SDL_stdinc.h>
+
 #include "include/display.h"
 
 //.import _c10003, _c10006
@@ -114,7 +117,7 @@ static void copyDataToVram(void); // Incomplete
 static void func_c04107(void); // Incomplete
 static void func_c041f1(void); // Incomplete
 static void func_c0420a(void); // Incomplete
-static void showCutsceneFromField(uint8_t id); // Incomplete
+static void showCutsceneFromField(Uint8 id); // Incomplete
 static void initMapBank(void); // Incomplete
 static void initVehicles(void); // Incomplete
 static void initCharNames(void); // Incomplete
@@ -486,26 +489,26 @@ static void reset(void); // Incomplete
 
 // These adresses are called before
 // having any value stored first
-static uint8_t addr_7e0139 = 0;
-static uint8_t addr_7e0af9 = 0;
+static Uint8 addr_7e0139 = 0;
+static Uint8 addr_7e0af9 = 0;
 
-static uint8_t addr_7e0088;
-static uint8_t addr_7e0089;
-static uint8_t addr_7e00b9;
-static uint8_t addr_7e00bc;
-static uint8_t addr_7e00bd;
-static uint8_t addr_7e00ce;
-static uint8_t addr_7e0134;
-static uint8_t addr_7e0b60;
-static uint8_t addr_7e0b5f;
+static Uint8 addr_7e0088;
+static Uint8 addr_7e0089;
+static Uint8 addr_7e00b9;
+static Uint8 addr_7e00bc;
+static Uint8 addr_7e00bd;
+static Uint8 addr_7e00ce;
+static Uint8 addr_7e0134;
+static Uint8 addr_7e0b60;
+static Uint8 addr_7e0b5f;
 // Address: _420d
-static uint8_t h_memsel;
+static Uint8 h_memsel;
 // Address: _420b
-static uint8_t h_mdmaen;
+static Uint8 h_mdmaen;
 // Address: _420c
-static uint8_t h_hdmaen;
+static Uint8 h_hdmaen;
 // Address: _4200
-static uint8_t h_nmitimen;
+static Uint8 h_nmitimen;
 
 void start(void) {
     // SEt Interrpt flag
@@ -543,7 +546,7 @@ void start(void) {
     initSound();
 
     // LoaD #$f1 to Accumulator
-    const uint8_t CUTSCENE_TITLE = 241;
+    const Uint8 CUTSCENE_TITLE = 241;
     // Jump to SubRoutine ShowCutscene
     showCutsceneFromField(CUTSCENE_TITLE);
 
@@ -907,7 +910,7 @@ static void func_c041f1(void) {}
 
 static void func_c0420a(void) {}
 
-static void showCutsceneFromField(uint8_t id) {}
+static void showCutsceneFromField(Uint8 id) {}
 
 // Address: _44e3
 static void initMapBank(void) {}
