@@ -1,6 +1,7 @@
 #ifndef SNES_DISPLAY
 #define SNES_DISPLAY
 
+#include <SDL3/SDL_pixels.h>
 #include <stdint.h>
 
 typedef struct {
@@ -24,5 +25,11 @@ uint8_t bgMode;
 // Address: _2106
 uint8_t mosaic;
 
-// Addresses _2115-2119 are VRAM
+// Addresses _2115-2119 are for VRAM,
+// which stores tilesets and tilemaps.
+
+// Addresses _2121-2122 are for CGRAM,
+// which stores the palette.
+SDL_Color[256] palette;
+
 #endif
