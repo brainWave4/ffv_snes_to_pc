@@ -570,9 +570,6 @@ static void startTimerCurChar(void); // Incomplete
 static void replaceHands(void); // Incomplete
 static void swapHands(void); // Incomplete
 
-const Uint8 MIN_BYTE = 1;
-const Uint8 MAX_BYTE = 255;
-
 static Uint8 addr_7e0008 = 0;
 static Uint8 addr_7e0009 = 0;
 static Uint8 addr_7e000a = 0;
@@ -6058,7 +6055,7 @@ static Uint8 timerDuration_stamina20(void) {
     // ADd A with #$14 (#20) AND A with Carry
     // Branch to next label if Carry Clear
     // LoaD #$FF (max #255) to A
-    if (finalCalc.stamina > MAX_BYTE - 20) return MAX_BYTE;
+    if (finalCalc.stamina > SDL_MAX_UINT8 - 20) return SDL_MAX_UINT8;
 
     // [LBL] Return To Subroutine
     return finalCalc.stamina + 20;
@@ -6091,9 +6088,9 @@ static Uint8 timerDuration_180MagicHalf(void) {
     // Branch to next label if Carry Set
     // LoaD #$01 to A
     // [LBL] Return To Subroutine
-    if (180 < addr_7e000e) return MIN_BYTE;
+    if (180 > addr_7e000e) return 180 - addr_7e000e;
 
-    return 180 - addr_7e000e;
+    return 1;
 }
 
 // Address: _259A
