@@ -1,7 +1,7 @@
 #ifndef SNES_DISPLAY
 #define SNES_DISPLAY
 
-#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL.h>
 #include <SDL3/SDL_stdinc.h>
 
 typedef struct {
@@ -15,6 +15,8 @@ typedef struct {
 
     Uint8 vScroll;
 } BgLayer;
+
+BgLayer[4] bgLayers;
 
 // Address: _2100
 Uint8 inidisp;
@@ -51,6 +53,6 @@ Uint8 mode7_y;
 
 // Addresses _2121-2122 are for CGRAM,
 // which stores the palette.
-SDL_Color[256] palette;
+SDL_Palette palette;
 
 #endif
