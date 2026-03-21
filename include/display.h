@@ -5,9 +5,10 @@
 #include <SDL3/SDL_stdinc.h>
 
 typedef struct {
-    SDL_Texture *high, *low;
+    SDL_Texture *high_texture, *low_texture;
+    SDL_Rect *high_rect[], *low_rect[];
 
-    Uint16[1024] tilemap;
+    SDL_Rect tilemap[1024];
 
     Uint8 tilemapCount;
 
