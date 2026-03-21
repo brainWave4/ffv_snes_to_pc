@@ -5,7 +5,7 @@
 #include <SDL3/SDL_stdinc.h>
 
 typedef struct {
-    // TODO: Get Tileset
+    SDL_Texture *high, *low;
 
     Uint16[1024] tilemap;
 
