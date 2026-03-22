@@ -2,6 +2,7 @@
 
 #include "<SDL3/SDL.h>"
 
+static const Uint8 BGLAYER_COUNTS[8] = {4, 3, 2, 2, 2, 2, 1, 1};
 static const Uint8 LAYER_COUNTS[8] = {12, 10, 8, 8, 8, 8, 6, 7};
 static SDL_Texture *layers_texture[8][];
 static SDL_Rect *layers_rect[8][][];
@@ -14,9 +15,9 @@ void setupDisplay(void) {
 
 void draw(SDL_Renderer *renderer) {
 
-    switch (bgMode) {
-        default: // Mode 0
-            break
+    for (Uint8 i = 0; i < BGLAYER_COUNTS[8]; i++) {
+        BgLayer *bgLayer = bgLayers[i];
+        
     }
 
     for (Uint8 i = 0; i < LAYER_COUNTS[bgMode]; i++) {
@@ -35,7 +36,7 @@ void draw(SDL_Renderer *renderer) {
         }
 
         SDL_SetRenderTarget(renderer, NULL);
-        SDL_RenderTexture(renderer, layer_texture, 0, 0);
+        SDL_RenderTexture(renderer, layer_texture, NULL, NULL);
     }
 
     SDL_RenderPresent(renderer);
