@@ -1,7 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL.h>
 #include <wchar.h>
 
 typedef struct {

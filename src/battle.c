@@ -1,7 +1,7 @@
 // Bank Range: C2/0000 - C2/9FFF
 #include "include/battle.h"
 
-#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL.h>
 
 #include "include/menu.h"
 

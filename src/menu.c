@@ -1,7 +1,7 @@
 // Bank Range: C2/A000 - C2/FFFF, D0
 #include "include/menu.h"
 
-#include <SDL3/SDL_stdinc.h>
+#include <SDL3/SDL.h>
 
 // for subroute _c10009
 #include "include/btlgfx.h"

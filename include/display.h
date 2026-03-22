@@ -2,7 +2,6 @@
 #define SNES_DISPLAY
 
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_stdinc.h>
 
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
