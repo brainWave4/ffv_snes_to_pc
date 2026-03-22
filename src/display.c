@@ -1,3 +1,5 @@
+// Simulates the PPU chip of the SNES.
+
 #include "include/display.h"
 
 #include "<SDL3/SDL.h>"
@@ -17,7 +19,7 @@ void draw(SDL_Renderer *renderer) {
 
     for (Uint8 i = 0; i < BGLAYER_COUNTS[8]; i++) {
         BgLayer *bgLayer = bgLayers[i];
-        
+
     }
 
     for (Uint8 i = 0; i < LAYER_COUNTS[bgMode]; i++) {

@@ -21,6 +21,10 @@ Where `'.../ffv.sfc'` is the full filepath to the FFV ROM. This arguement is opt
 
 ### Compilation
 
+## Other Usage
+For those who are porting SNES games to the PC, you may want to check out the following:
+* Module `display`, which is the equivilent to the PPU compoment.
+
 ## Acknowledgements
 
 * [everything8215's Dissembly](https://github.com/everything8215/ff5) as a reference.
