@@ -110,7 +110,7 @@ static void getObjectInObjLayout(void); // Incomplete
 static void getTileZ(void); // Incomplete
 static void loadNPCGfx(void); // Incomplete
 static void getPointerToNPCProperties(void); // Incomplete
-static void LoadNPCs(void); // Incomplete
+static void loadNPCs(void); // Incomplete
 static void greyscalePalette(void); // Incomplete
 static void func_c0406b(void); // Incomplete
 static void copyDataToVram(void); // Incomplete
@@ -894,7 +894,7 @@ static void loadNPCGfx(void) {}
 static void getPointerToNPCProperties(void) {}
 
 // Address: _3eaa
-static void LoadNPCs(void) {}
+static void loadNPCs(void) {}
 
 // Address: 4008
 static void greyscalePalette(void) {}
@@ -1243,7 +1243,15 @@ static void func_c08b53(void) {}
 
 static void func_c08ba4(void) {}
 
-static void func_c08bd3(void) {}
+static void func_c08bd3(void) {
+    // LoaD $06 to X
+    // [@8bd5] LoaD ($7f6a8a + x) to A
+    // STore A to ($7f6a59 + x)
+    // INcrement X
+    // ComPare X to #$0031
+    // Branch to [@8bd5] if Not Equals
+    // Return To Subroutine
+}
 
 static void func_c08be4(void) {}
 
@@ -1285,7 +1293,58 @@ static void showMapTitle(void) {}
 
 static void initMapTitle(void) {}
 
-static void drawMapTitleWindow(void) {}
+// Address: _933d
+static void drawMapTitleWindow(void) {
+    // Jump to SubRoutine _8bd3
+    // LoaD $b4 to A
+    // SEt Carry flag
+    // ADd $0ad9 to A with Carry
+    // STore A to $76
+
+    // LoaD $0ad8 to A
+    // STore A to $75
+
+    // LoaD #$00 to A
+    // STore A to $b5
+
+    // [@9351] Jump to SubRoutine WaitVBlank
+    // LoaD #$01 to A
+    // LoaD $06 to X
+    // STore X to $71
+    // Jump to SubRoutine _707d
+    // LoaD $b5 to A
+    // Lengthen A
+    // eXchange high Bytes in A with lower
+    // Logical Shift A Right x2
+    // Transfer A to X
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD #$0004 to Y
+
+    // [@936c] LoaD f:_c09399,x to A
+    // STore A to ($16f3 + y)
+
+    // LoaD #$03 to A
+    // STore A to ($16f4 + y)
+
+    // LoaD (f:_c093b9 + x) to A
+    // STore A to ($1733 + y)
+    
+    // LoaD #$03 to A
+    // STore A to ($1734 + y)
+
+    // INcrement X
+    // INcrement Y by 2
+    // ComPare Y with #$003c
+    // Branch to [@936c] if Not Equals
+    // INCrement $a6
+    // INCrement $76
+    // INCrement $b5
+    // LoaD $b5 to A
+    // CoMPare A with #$02
+    // Branch to [@9351] if Not Equals
+    // Return To Subroutine
+}
 
 static void hideMapTitleWindow(void) {}
 
