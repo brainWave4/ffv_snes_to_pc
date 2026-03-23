@@ -163,7 +163,7 @@ static void fillVram(void); // Incomplete
 static void tfrSprites(void); // Incomplete
 static void tfrPallets(void); // Incomplete
 static void func_c04d8e(void); // Incomplete
-static void waitVram(void); // Incomplete
+static void waitVblank(void); // Incomplete
 static void initInterrupts(void); // Incomplete
 static void initHardware(void); // Incomplete
 static void generateRandom(void); // Incomplete
@@ -302,6 +302,7 @@ static void func_c09c3d(void); // Incomplete
 static void func_c09cac(void); // Incomplete
 static void updateTimer(void); // Incomplete
 static void speedUpMusicWithTimer(void); // Incomplete
+
 static void execEvent(void); // Incomplete
 static void nextEventCmd(void); // Incomplete
 static void terminateEvent(void); // Incomplete
@@ -470,6 +471,7 @@ static void giveSpell(void); // Incomplete
 static void getNPCFlag(void); // Incomplete
 static void eventCmd_ca(void); // Incomplete
 static void eventCmd_cb(void); // Incomplete
+
 static void setBattleFlag(void); // Incomplete
 static void clearBattleFlag(void); // Incomplete
 static void getTrasureFlag(void); // Incomplete
@@ -492,23 +494,32 @@ static void reset(void); // Incomplete
 static Uint8 addr_7e0139 = 0;
 static Uint8 addr_7e0af9 = 0;
 
+static Uint8 addr_7e0006;
+static Uint8 addr_7e0071;
+static Uint8 addr_7e0075;
+static Uint8 addr_7e0076;
 static Uint8 addr_7e0088;
 static Uint8 addr_7e0089;
+static Uint8 addr_7e00a6;
+static Uint8 addr_7e00b4;
+static Uint8 addr_7e00b5;
 static Uint8 addr_7e00b9;
 static Uint8 addr_7e00bc;
 static Uint8 addr_7e00bd;
 static Uint8 addr_7e00ce;
 static Uint8 addr_7e0134;
+static Uint8 addr_7e0ad8;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b5f;
-// Address: _420d
-static Uint8 h_memsel;
+
+// Address: _4200
+static Uint8 h_nmitimen;
 // Address: _420b
 static Uint8 h_mdmaen;
 // Address: _420c
 static Uint8 h_hdmaen;
-// Address: _4200
-static Uint8 h_nmitimen;
+// Address: _420d
+static Uint8 h_memsel;
 
 void start(void) {
     // SEt Interrpt flag
@@ -628,7 +639,7 @@ void start(void) {
 
         // LoaD $0af9 to A
         // Store A to $0b60
-        addr_7e0b60 = addr_0af9;
+        addr_7e0b60 = addr_7e0af9;
 
         // Shift Right A
         // Store A to $0b5f
@@ -1033,7 +1044,7 @@ static void func_c04d8e(void) {}
 
 // Hex to Dec
 
-static void waitVram(void) {}
+static void waitVblank(void) {}
 
 static void initInterrupts(void) {}
 
@@ -1245,11 +1256,14 @@ static void func_c08ba4(void) {}
 
 static void func_c08bd3(void) {
     // LoaD $06 to X
-    // [@8bd5] LoaD ($7f6a8a + x) to A
-    // STore A to ($7f6a59 + x)
+    // ...
     // INcrement X
-    // ComPare X to #$0031
+    // ComPare X to #$0031 (#49)
     // Branch to [@8bd5] if Not Equals
+    for (Uint8 i = addr_7e0006; i < 49; i++) {
+        // [@8bd5] LoaD ($7f6a8a + x) to A
+        // STore A to ($7f6a59 + x)
+    }
     // Return To Subroutine
 }
 
@@ -1294,55 +1308,84 @@ static void showMapTitle(void) {}
 static void initMapTitle(void) {}
 
 // Address: _933d
+// Output: X?
 static void drawMapTitleWindow(void) {
     // Jump to SubRoutine _8bd3
     // LoaD $b4 to A
     // SEt Carry flag
     // ADd $0ad9 to A with Carry
     // STore A to $76
+    addr_7e0076 = addr_7e0ad9 + addr_7e00b4;
 
     // LoaD $0ad8 to A
     // STore A to $75
+    addr_7e0075 = addr_7e0ad8;
 
     // LoaD #$00 to A
     // STore A to $b5
-
-    // [@9351] Jump to SubRoutine WaitVBlank
-    // LoaD #$01 to A
-    // LoaD $06 to X
-    // STore X to $71
-    // Jump to SubRoutine _707d
-    // LoaD $b5 to A
-    // Lengthen A
-    // eXchange high Bytes in A with lower
-    // Logical Shift A Right x2
-    // Transfer A to X
-    // LoaD $06 to A
-    // Shorten A
-    // LoaD #$0004 to Y
-
-    // [@936c] LoaD f:_c09399,x to A
-    // STore A to ($16f3 + y)
-
-    // LoaD #$03 to A
-    // STore A to ($16f4 + y)
-
-    // LoaD (f:_c093b9 + x) to A
-    // STore A to ($1733 + y)
-    
-    // LoaD #$03 to A
-    // STore A to ($1734 + y)
-
-    // INcrement X
-    // INcrement Y by 2
-    // ComPare Y with #$003c
-    // Branch to [@936c] if Not Equals
-    // INCrement $a6
-    // INCrement $76
-    // INCrement $b5
+    // ...
     // LoaD $b5 to A
     // CoMPare A with #$02
     // Branch to [@9351] if Not Equals
+    for (addr_7e00b5 = 0; addr_7e00b5 < 2; addr_7e00b5++) {
+        // [@9351] Jump to SubRoutine WaitVBlank
+        waitVblank();
+
+        // LoaD #$01 to A
+        // LoaD $06 to X
+        // STore X to $71
+        addr_7e0071 = addr_7e0006;
+
+        // Jump to SubRoutine _707d
+        func_c0707d();
+
+        // LoaD $b5 to A
+        // Lengthen A
+        // eXchange high Bytes in A with lower
+        // Logical Shift A Right x2
+        // Transfer A to X
+        Uint8 x = addr_7e00b5;
+        x %= 0x10;
+        x *= 0x100000;
+
+        // LoaD $06 to A
+        // Shorten A
+
+        // LoaD #$0004 to Y
+        // ...
+        // INcrement Y by 2
+        // ComPare Y with #$003c (#60)
+        // Branch to [@936c] if Not Equals
+        for (Uint8 y = 4; y < 60; y+=2) {
+            // [@936c] LoaD f:_c09399,x to A
+                // _c09399:
+                    // .byte   $d1,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7
+                    // .byte   $d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d2,$00,$00,$00,$00
+            // STore A to ($16f3 + y)
+
+            // LoaD #$03 to A
+            // STore A to ($16f4 + y)
+
+            // LoaD (f:_c093b9 + x) to A
+            // STore A to ($1733 + y)
+            
+            // LoaD #$03 to A
+            // STore A to ($1734 + y)
+
+            // INcrement X
+            x ++;
+        }
+
+        // INCrement $a6
+        addr_7e00a6 ++;
+
+        // INCrement $76
+        addr_7e0076 ++;
+
+        // INCrement $b5
+            // Already done within loop
+    }
+
     // Return To Subroutine
 }
 
