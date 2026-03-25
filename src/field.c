@@ -1034,7 +1034,32 @@ static void enableInterrupts(void) {}
 // Address: _4d06
 static void clearVramForCutscenes(void) {}
 
-static void fillVram(void) {}
+static void fillVram(void) {
+    // LoaD #$80 to A
+    // STore A to hVMAINC
+    // STore Zero to hMDMAEN
+    
+    // LoaD #$09 to A
+    // STore A to hDMA0::CTRL
+
+    // LoaD #<hVMDATAL to A
+    // STore A to hDMA0::HREG
+
+    // LoaD $2e to X
+    // STore X to hVMADDL
+
+    // LoaD #$0b6d to X
+    // STore X to hDMA0::ADDR
+    // STore Z to hDMA0::ADDR_B
+
+    // LoaD $2c to X
+    // STore X to hDMA0::SIZE
+
+    // LoaD A to #$01
+    // STore A to hMDMAEN
+
+    // Return To Subroutine
+}
 
 static void tfrSprites(void) {}
 
@@ -1044,7 +1069,13 @@ static void func_c04d8e(void) {}
 
 // Hex to Dec
 
-static void waitVblank(void) {}
+static void waitVblank(void) {
+    // STore Zero to $51
+    // [LBL] LoaD $51 to A
+    // Branch to previous label if EQuals
+    // STore Zero to $51
+    // Return to SubRoutine
+}
 
 static void initInterrupts(void) {}
 
