@@ -1303,7 +1303,28 @@ static void showGPWindow(void) {}
 
 static void func_c091ed(void) {}
 
-static void showMapTitle(void) {}
+static void showMapTitle(void) {
+    // LoaD $0b53 to A
+    // Branch to [DONE] if EQuals
+    
+    // LoaD $16a0 to A
+    // Branch to next label if EQuals (if map title is disabled)
+    
+    // LoaD #$01 to A
+    // STore A to $b4
+
+    // Jump to SubRoutine DrawMapTitleWindow
+    // Jump to SubRoutine _c04ac1 (wait for keypress)
+    // Jump to SubRoutine HideMapTitleWindow
+    // [LBL] STore Zero to $16a0
+    // INCrement $a5
+    // Jump to SubRoutine WaitVBlank
+    
+    // LoaD #$01 A
+    // STore A to $10b8
+
+    // [DONE] Return To Subroutine
+}
 
 static void initMapTitle(void) {}
 
@@ -1389,7 +1410,32 @@ static void drawMapTitleWindow(void) {
     // Return To Subroutine
 }
 
-static void hideMapTitleWindow(void) {}
+static void hideMapTitleWindow(void) {
+    // LoaD $b4 to A
+    // SEt Carry flag
+    // ADd $0ad9 to A with Carry
+    // CLear Carry flag
+    // ADd #$01 to A with Carry
+    // STore A to $76
+
+    // LoaD $0ad8 to A
+    // STore A to $75
+
+    // [LBL] Jump to SubRoutine WaitVBlank
+    // LoaD #$01 to A
+
+    // LoaD $06 to X
+    // STore X to $71
+
+    // Jump to SubRoutine _c0707d
+    // INCrement $a6
+    // DECrement $76
+    // DECrement $b5
+
+    // LoaD $b5 to A
+    // Branch to previous label if Not Equals
+    // Return to SubRoutine
+}
 
 static void func_c09440(void) {}
 
