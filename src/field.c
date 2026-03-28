@@ -674,7 +674,283 @@ void start(void) {
 }
 
 // Field Main Loop
-static void fieldLoop(void) {}
+static void fieldLoop(void) {
+    // Jump to SubRoutine WaitVBlank
+
+    // Check if the menu button is pressed
+        // LoaD $02 to A
+        // AND A with #JOY_X
+        // Branch to next label if EQuals
+        // LoaD $53 to A
+        // Branch to [CheckMenu] if EQuals
+        // LoaD $5d to A
+        // Branch to [CheckMenu] if EQuals
+        // [LBL] JuMP to [NoMenu]
+    
+    // [CheckMenu]
+        // LoaD $0b61 to A
+        // AND A with #$1f
+        // Branch to [NoMenu] if Not Equals
+            // if partially scrolled
+        // LoaD $0b63 to A
+            // bg1 y position
+        // AND A with #$1f
+        // Branch to [NoMenu] if Not Equals
+            // if partially scrolled
+        // LoaD #$00 to A
+        // STore A to $0135
+        // LoaD $0adc to A
+        // Branch to [CheckWarp] if Not Equals
+            // if in a vehicle
+        // LoaD $0ad6 (map index) to X
+        // ComPare X with #$0005
+        // Branch to [EnableSave] if Carry Clear
+            // if not on a world map
+        // LoaD #$fd to A
+        // Jump to SubRoutine _c0ca3c
+            // get event flag $01xx
+        // CoMPare A with #$00
+        // Branch to [CheckWarp] if EQuals
+
+    // [EnableSave]
+        // LoaD #$80 to A
+            // Enable tent/cabin/save
+        // STore A to $0135
+    
+    // [CheckWarp]
+        // STore Zero to $08
+        // LoaD $53 to A
+        // Branch to next label if EQuals
+        // LoaD $110f to A
+            // Enable warp/teleporter?
+        // AND A with #$03
+        // STore A to $08
+
+    // Open the menu
+        // [LBL] LoaD $0135 to A
+        // OR A with $08
+        // STore A to $0135
+        // LoaD #$00 to A (menu command index)
+        // STore A to $0134
+        // Jump to SubRoutine OpenMenu
+        // LoaD #$02 to A
+        // STore A to $55
+        // LoaD $0ad8 to A
+        // STore A to $1088
+        // LoaD $0ad9 to A
+        // STore A to $1089
+        // Jump to SubRoutine ReloadMap
+    
+    // Check if an item was used in the menu
+        // LoaD $0139 to A (the item used)
+        // CoMPare A with #$f0
+        // Branch to next label if Not Equals
+            // if not tent
+        // LoaD #$0022 to X
+        // BRAnch to [DoMenuEvent]
+        // [LBL] CoMPare A with #$f1
+        // Branch to next label if Not Equals
+            // if not cabin
+        // LoaD #$0024 to X
+        // BRAnch to [DoMenuEvent]
+        // CoMPare A with #$3e (judgement staff???)
+        // Branch to next label if Not Equals
+        // LoaD #$0032 to X
+
+    // [DoMenuEvent]
+        // Jump to SubRoutine ExecTriggerScript
+        // [LBL] STore Zero to $16aa
+        // Jump to SubRoutine PoisonMosaic
+        // JuMP to FieldLoop
+
+    // [NoMenu] check triggers and timer
+        // Jump to SubRoutine CheckTriggers
+        // Jump to SubRoutine _c0a18b (update timer)
+        // LoaD $58 to A
+        // Branch to next label if EQuals
+        // STore Zero to $58
+        // JuMP to FieldLoop
+
+        // [LBL] LoaD $6e to A
+        // Branch to next label if EQuals
+        // Jump to SubRoutine LoadMap
+        // JuMP to FieldLoop
+
+        // [LBL] LoaD $0ad6 (map index) to X
+        // ComPare X to #$0005
+        // Jump to SubMapLoop if Carry Set
+    
+    // World Map
+        // check if boarding or landing a vehicle
+            // Jump to SubRoutine CheckVehicle
+            // LoaD $58 to A
+            // Branch to next label if EQuals
+            // STore Zero to $58
+            // JuMP to FieldLoop
+
+        // check events
+            // [LBL] LoaD $61 to A
+            // AND A with #$1f (31)
+            // Branch to [NoWorldEvent] if Not Equals
+            // LoaD $63 to A
+            // AND A with #$1f (31)
+            // Branch to [NoWorldEvent] if Not Equals
+            // LoaD $0ad6 (map index) to A
+            // CoMPare A with #$01
+            // Branch to next label if Not Equals
+            // LoaD $0ad9 to A
+            // CoMPare A with #$a1
+            // Branch to next label if Not Equals
+            // LoaD $0ad8 to A
+            // CoMPare A with #$9f (#159)
+            // Branch to next label if Carry Clear
+            // CoMPare A with #$a2 (#162)
+            // Branch to next label if Carry Set
+            // LoaD #$0012 (#18) to X
+            // BRAnch to [DoWorldEvent]
+
+            // [LBL] LoaD $0ad6 (map index) to A
+            // Branch to next label if Not Equals
+            // LoaD $0adc to A
+            // CoMPare A with #$06
+            // Branch to next label if Not Equals
+            // LoaD $0ad8 to A
+            // CoMPare A with #$3d (#61)
+            // Branch to next label if Carry Clear
+            // CoMPare A with #$43
+            // Branch to next label if Carry Set
+            // LoaD $0ad9 to A
+            // CoMPare A with #$9e
+            // Branch to next if Carry Clear
+            // CoMPare A with #$a5
+            // Branch to next if Carry Set
+            // LoaD #$0020 to X
+            // BRAnch to [DoWorldEvent]
+
+            // [LBL] LoaD $0ad6 (map index) to A
+            // CoMPare A with #$02
+            // Branch to next if Not Equals
+            // LoaD $0adc to A
+            // CoMPare A with #$05
+            // Branch to next if Carry Clear
+            // LoaD $0ad8 to A
+            // CoMPare A with #$b6
+            // Branch to next if Carry Clear
+            // CoMPare A with #$ba
+            // Branch to next if Carry Set
+            // LoaD $0ad9 to A
+            // CoMPare A with #$87
+            // Branch to next if Carry Clear
+            // CoMPare A with #$8b
+            // Branch to next if Carry Set
+            // LoaD #$0018 to X
+
+            // [DoWorldEvent]
+            // Jump to SubRoutine ExecTriggerScript
+            // LoaD $58 to A
+            // Branch to next if EQuals
+            // STore Zero to $58
+            // JuMP to FieldLoop
+
+        // check random battle
+            // [NoWorldEvent] Jump to SubRoutine _c0cb11
+            // LoaD $55 to A
+            // Branch to next if EQuals
+            // LoaD #$ff to A
+            // Jump to SubRoutine _c0ca3c (get event flag $01xx)
+            // CoMPare A with #$00
+            // Branch to next if Not Equals
+            // Jump to SubRoutine RandomBattle
+            // LoaD $0ad8 to A
+            // STore A to $1088
+            // LoaD $0ad9 to A
+            // STore A to $1089
+            // Jump to SubRoutine ReloadMap
+            // JuMP to FieldLoop
+        
+        // check minimap
+            // [LBL] STore Zero to $55
+            // LoaD $03 to A
+            // AND A with #>JOY_Y
+            // Branch to next if EQuals
+            // LoaD #$fb to A
+            // Jump to SubRoutine _c0ca3c
+            // CoMPare A with #$00
+            // Branch to next if EQuals
+            // Jump to SubRoutine ShowMinimap
+            // LoaD $0ad8 to A
+            // STore A to $1088
+            // LoaD $0ad9 to A
+            // STore A to $1089
+            // Jump to SubRoutine ReloadMap
+            // JuMP to FieldLoop
+            
+            // [LBL] Jump to SubRoutine CheckPlayerMoveWorld
+            // Jump to SubRoutine _c01a1d
+            // Jump to SubRoutine ResetSprites
+            // Jump to SubRoutine _c02137
+            // Jump to SubRoutine _c0612b
+            // Jump to SubRoutine _c01ec5
+            // Jump to SubRoutine _c01e64
+            // Jump to SubRoutine _c0420a
+            // JuMP to FieldLoop
+            // Reutrn to Subroutine (unused step)
+
+    // [SubMapLoop]
+        // check activated NPCs and treasures
+            // Jump to SubRoutine _c00d3d
+            // LoaD $58 to A
+            // Branch to next if EQuals
+            // STore Zero to $58
+            // JuMP to FieldLoop
+
+        // [LBL] check map exit
+            // LoaD $10fb (tile properties byte 2) to A
+            // CoMPare A with #$00
+            // Branch to next if Not Equals (if not exit)
+            // Jump to SubRoutine LoadParentMap
+            // LoaD #$001c to X
+            // Jump to SubRoutine ExecTriggerScript
+            // JuMP to FieldLoop
+
+        // [LBL] check random battles
+            // Jump to SubRoutine _c0ca69
+            // LoaD $55 to A
+            // Branch to next if EQuals
+            // LoaD #$ff to A
+            // Jump to SubRoutine _c0ca3c
+            // CoMPare A with #$00
+            // Branch to next if Not Equals
+            // Jump to SubRoutine RandomBattle
+            // Jump to SubRoutine ReloadMap
+            // JuMP to FieldLoop
+
+            // [LBL] STore Zero to $55
+            // Jump to SubRoutine _c032ab (update objects)
+            // Jump to SubRoutine CheckPlayerMoveSub
+            // LoaD $6e to A
+            // Branch to next if EQuals
+            // Jump to SubRoutine LoadMap
+            // JuMP to FieldLoop
+
+        // [LBL] loop if an event is running
+            // LoaD $58 to A
+            // Branch to next if EQuals
+            // STore Zero to $58
+            // JuMP to FieldLoop
+
+        // [LBL] do updates if no events are running
+            // Jump to SubRoutine _c01ae4
+            // Jump to SubRoutine _c03bac
+            // Jump to SubRoutine ResetSprites
+            // Jump to SubRoutine _c04834
+            // Jump to SubRoutine DrawPlayerSprite
+            // Jump to SubRoutine DrawObjSprites
+            // Jump to SubRoutine DrawOverlaySprites
+            // Jump to SubRoutine _c0420a
+            // JuMP to FieldLoop
+            // Return to SubRoutine (unused step)
+}
 
 static void fieldNMI(void) {}
 
