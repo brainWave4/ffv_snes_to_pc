@@ -1076,7 +1076,273 @@ static void getTilePropertiesCur(void) {}
 
 static void func_c01a1d(void) {}
 
-static void func_c01ae4(void) {}
+static void func_c01ae4(void) {
+    // [_1ae4] LoaD $be to A
+    // Branch to [_1af5] if EQuals
+    // LoaD $be to A
+    // SEt Carry flag
+    // SuBtract $c0 from A with Carry
+    // STore A to $be
+    // AND A with #$7f
+    // Branch to [_1af5] if Not Equals
+    // STore Zero to $be
+
+    // [_1af5] LoaD $ba to A
+    // Branch to [_1afc] if Not Equals
+    // INCrement $41
+    // Return To Subroutine
+
+    // [_1afc] LoaD $41 to A
+    // Logical Shift Right
+    // Branch to [_1b46] if Carry Set
+    // LoaD $0ad9 to A
+    // STore A to $76
+    // LoaD $0ad8 to A
+    // STore A to $75
+    // LoaD $ba to A
+    // LoaD $06 to X
+    // STore X to $71
+    // Jump to SubRoutine _c0707d
+    // LoaD $1121 to A
+    // AND A with #$40
+    // Branch to [_1b2d] if Not Equals
+    // LoaD $78 to A
+    // STore A to $76
+    // LoaD $77 to A
+    // STore A to $75
+    // LoaD $ba to A
+    // LoaD #$1000 to X
+    // STore X to $71
+    // Jump to SubRoutine _c0707d
+
+    // [_1b2d] LoaD $1121
+    // Branch to [_1b44] if MInus
+    // LoaD $7a to A
+    // STore A to $76
+    // LoaD $79 to A
+    // STore A to $75
+    // LoaD $ba to A
+    // LoaD #$2000 to X
+    // STore X to $71
+    // Jump to SubRoutine _c0707d
+
+    // [_1b44] INCrement $9f
+
+    // [_1b46] LoaD $ba to A
+    // DECrement A
+    // Branch to [_1ba6] if Not Equals
+    // LoaD $63 to A
+    // AND A with #$1f
+    // SEt Carry flag
+    // SuBtract $c0 from A with Carry
+    // Branch to [_1b5d] if Carry Set
+    // LoaD $0ad9 to A
+    // DECrement A
+    // AND A with #$3f
+    // STore A to $0ad9
+
+    // [_1b5d] LoaD $67 to A
+    // AND A with #$1f
+    // SEt Carry flag
+    // SuBtract $1082 from A with Carry
+    // Branch to [_1b70] if Carry Set
+    // LoaD $0b78 to A
+    // DECrement A
+    // AND A with #$3f
+    // STore A to $0b78
+
+    // [_1b70] LoaD $6b to A
+    // AND A with #$1f
+    // SEt Carry flag
+    // SuBtract $1086 from A
+    // Branch to [_1b83] if Carry Set
+    // LoaD $0b7a to A
+    // DECrement A
+    // AND A with #$3f
+    // STore A to $0b7a
+
+    // [_1b83] Lengthen A
+    // LoaD $63 to A
+    // SEt Carry flag
+    // SuBtract $c0 from A with Carry
+    // AND A with #$0fff
+    // STore A to $63
+    // LoaD $67 to A
+    // SEt Carry flag
+    // SuBtract $1082 from A with Carry
+    // STore A to $67
+    // LoaD $6b to A
+    // SEt Carry flag
+    // SuBtract $1086 from A with Carry
+    // STore A to $6b
+    // LoaD $06 to A
+    // Shorten A
+    // JuMP to _1cc6
+
+    // [_1ba6] DECrement A
+    // Branch to [_1c0a] if Not Equals
+    // LoaD $61 to A
+    // AND A with #$1f
+    // CLear Carry flag
+    // ADd $co to A with Carry
+    // AND A with #$e0
+    // Branch to [_1bbd] if EQuals
+    // LoaD $0ad8 to A
+    // INCrement A
+    // AND A with #$3f
+    // STore A to $0ad8
+
+    // [_1bbd] LoaD $65 to A
+    // AND A with #$1f
+    // CLear Carry flag
+    // ADd $1080 to A with Carry
+    // AND A with #$e0
+    // Branch to [_1bd2] if EQuals
+    // LoaD $0b77 to A
+    // INCrement A
+    // AND A with #$3f
+    // STore A to $0b77
+
+    // [_1bd2] LoaD $69 to A
+    // AND A to #$1f
+    // CLear Carry
+    // Add $1084 to A with Carry
+    // AND A with #$e0
+    // Branch to [_1be7] if EQuals
+    // LoaD $0b79 to A
+    // INCrement A
+    // AND A with #$3f
+    // STore A to $0b79
+
+    // [_1be7] Lengthen A
+    // LoaD $61 to A
+    // CLear Carry
+    // AND A with #$0fff
+    // ADd $c0 to A with Carry
+    // STore A to $61
+    // LoaD $65 to A
+    // CLear Carry
+    // ADd $1080 with Carry
+    // STore A to $65
+    // LoaD $69 to A
+    // CLear Carry
+    // ADd $1084 to A with Carry
+    // STore A to $69
+    // LoaD $06 to A
+    // Shorten A
+    // JuMP to [_1cc6]
+
+    // [_1c0a] DECrement A
+    // Branch to [_1c6e] if Not Equals
+    // LoaD $63 to A
+    // AND A with #$1f
+    // CLear Carry
+    // ADd $c0 to A with Carry
+    // AND A with #$e0
+    // Branch to [_1c21] if EQuals
+    // LoaD $0ad9 to A
+    // INCrement A
+    // AND A with #$3f
+    // STore A to $0ad9
+
+    // [_1c21] LoaD $67 to A
+    // AND A with #$1f
+    // CLear Carry
+    // ADd $1082 to A with Carry
+    // AND A with #$e0
+    // Branch to [_1c36] if EQuals
+    // LoaD $0b78 to A
+    // INCrement A
+    // AND A with #$3f
+    // STore A to $0b78
+
+    // [_1c36] LoaD $6b to A
+    // AND A with #$1f
+    // CLear Carry
+    // ADd $1086 to A with Carry
+    // AND A with #$e0
+    // Branch to [_1c4b] if EQuals
+    // LoaD $0b7a to A
+    // INCrement A
+    // AND A with #$3f
+    // STore A to $0b7a
+
+    // [_1c4b] Lengthen A
+    // LoaD $63 to A
+    // CLear Carry
+    // AND A with #$0fff
+    // ADd $c0 to A with Carry
+    // STore A to $63
+    // LoaD $67 to A
+    // CLear Carry
+    // Add $1082 to A with Carry
+    // STore A to $67
+    // LoaD $6b to A
+    // CLear Carry
+    // ADd $1086 to A with Carry
+    // STore A to $6b
+    // LoaD $06 to A
+    // Shorten A
+    // JuMP to [_1cc6]
+
+    // [_1c6e] LoaD $61 to A
+    // AND A with #$1f
+    // SEt Carry
+    // SuBtract $c0 from A with Carry
+    // Branch to [_1c80] if Carry Set
+    // LoaD $0ad8 to A
+    // DECrement A
+    // AND A with #$3f
+    // STore A to $0ad8
+
+    // [_1c80] LoaD $65 to A
+    // AND A with #$1f
+    // SEt Carry
+    // SuBtract $1080 from A with Carry
+    // Branch to [_1c93] if Carry Set
+    // LoaD $0b77 to A
+    // DECrement A
+    // AND A with #$3f
+    // STore A to $0b77
+
+    // [_1c93] LoaD $69 to A
+    // AND A with #$1f
+    // SEt Carry
+    // SuBtract $1084 from A with Carry
+    // Branch to [_1ca6] if Carry Set
+    // LoaD $0b79 to A
+    // DECrement A
+    // AND A with #$3f
+    // STore A to $0b79
+
+    // [_1ca6] Lengthen A
+    // LoaD $61 to A
+    // SEt Carry
+    // AND A with #$0fff
+    // SuBtract $c0 from A with Carry
+    // STore A to $61
+    // LoaD $65 to A
+    // SEt Carry
+    // SuBtract $1080 from A with Carry
+    // STore A to $65
+    // LoaD $69 to A
+    // SEt Carry
+    // SuBtract $1084 from A with Carry
+    // STore A to $69
+    // LoaD $06 to A
+    // Shorten A
+
+    // [_1cc6] LoaD $61 to A
+    // AND A with #$1f
+    // Branch to [_1cd4] if Not Equals
+    // LoaD $63 to A
+    // AND A with #$1f
+    // Branch to [_1cd4] if Not Equals
+    // INCrement $56 (enable random battle)
+
+    // [_1dc4] INCrement $41
+    // Return To Subroutine
+}
 
 // Address: _1cd7
 static void updateTopChar(void) {}
