@@ -20,10 +20,10 @@
 //.import InitSound_ext, ExecSound_ext
 #include "include/sound.h"
 
-static void fieldLoop(void); // Incomplete
+static void fieldLoop(void);
 static void fieldNMI(void); // Incomplete
 static void fieldIRQ(void); // Incomplete
-static void execTriggerScript(void); // Incomplete
+static void execTriggerScript(Uint8 index); // Incomplete
 static void checkTriggers(void); // Incomplete
 static void checkVehicle(void); // Incomplete
 static void func_c00853(void); // Incomplete
@@ -89,7 +89,7 @@ static void func_c022fb(void); // Incomplete
 static void drawPlayerSprite(void); // Incomplete
 static void loadOverlayGfx(void); // Incomplete
 static void loadOverlayProp(void); // Incomplete
-static void loadOverlaySprites(void); // Incomplete
+static void drawOverlaySprites(void); // Incomplete
 static void updateOverlay(void); // Incomplete
 static void execNPCScript(void); // Incomplete
 static void checkNPCEvents(void); // Incomplete
@@ -477,7 +477,7 @@ static void clearBattleFlag(void); // Incomplete
 static void getTrasureFlag(void); // Incomplete
 static void setTreasureFlag(void); // Incomplete
 static void getEventFlag00xx(void); // Incomplete
-static void setEventFlag01xx(void); // Incomplete
+static Uint8 getEventFlag01xx(Uint8 val); // Incomplete
 static void getFlagIndex(void); // Incomplete
 static void checkRandomBattlesSub(void); // Incomplete
 static void checkRandomBattlesWorld(void); // Incomplete
@@ -494,7 +494,17 @@ static void reset(void); // Incomplete
 static Uint8 addr_7e0139 = 0;
 static Uint8 addr_7e0af9 = 0;
 
+static Uint8 addr_7e0002;
+static Uint8 addr_7e0003;
 static Uint8 addr_7e0006;
+static Uint8 addr_7e0008;
+static Uint8 addr_7e0053;
+static Uint8 addr_7e0055;
+static Uint8 addr_7e0058;
+static Uint8 addr_7e005d;
+static Uint8 addr_7e0061;
+static Uint8 addr_7e0063;
+static Uint8 addr_7e006e;
 static Uint8 addr_7e0071;
 static Uint8 addr_7e0075;
 static Uint8 addr_7e0076;
@@ -508,9 +518,21 @@ static Uint8 addr_7e00bc;
 static Uint8 addr_7e00bd;
 static Uint8 addr_7e00ce;
 static Uint8 addr_7e0134;
+static Uint8 addr_7e0135;
+static Uint8 addr_7e0139;
+static Uint8 addr_7e0ad6;
 static Uint8 addr_7e0ad8;
+static Uint8 addr_7e0ad9;
+static Uint8 addr_7e0adc;
 static Uint8 addr_7e0b60;
+static Uint8 addr_7e0b61;
+static Uint8 addr_7e0b63;
 static Uint8 addr_7e0b5f;
+static Uint8 addr_7e1088;
+static Uint8 addr_7e1089;
+static Uint8 addr_7e10fb;
+static Uint8 addr_7e110f;
+static Uint8 addr_7e16aa;
 
 // Address: _4200
 static Uint8 h_nmitimen;
@@ -551,8 +573,11 @@ void start(void) {
     // LoaD #$0b00 to X
     // PusH X
     // PulL Direct page register
+
     // LoaD #0 to X
     // STore X to $06
+    addr_7e0006 = 0;
+
     // Jump to Subroutine Long InitSound_ext
     initSound();
 
@@ -676,6 +701,7 @@ void start(void) {
 // Field Main Loop
 static void fieldLoop(void) {
     // Jump to SubRoutine WaitVBlank
+    waitVblank();
 
     // Check if the menu button is pressed
         // LoaD $02 to A
@@ -685,9 +711,9 @@ static void fieldLoop(void) {
         // Branch to [CheckMenu] if EQuals
         // LoaD $5d to A
         // Branch to [CheckMenu] if EQuals
-        // [LBL] JuMP to [NoMenu]
-    
-    // [CheckMenu]
+    const Uint8 JOY_X = 64;
+    if (addr_7e0002 & JOY_X == 0 || addr_7e0053 | addr_7e005d) {
+        // [CheckMenu]
         // LoaD $0b61 to A
         // AND A with #$1f
         // Branch to [NoMenu] if Not Equals
@@ -697,179 +723,430 @@ static void fieldLoop(void) {
         // AND A with #$1f
         // Branch to [NoMenu] if Not Equals
             // if partially scrolled
-        // LoaD #$00 to A
-        // STore A to $0135
-        // LoaD $0adc to A
-        // Branch to [CheckWarp] if Not Equals
-            // if in a vehicle
-        // LoaD $0ad6 (map index) to X
-        // ComPare X with #$0005
-        // Branch to [EnableSave] if Carry Clear
-            // if not on a world map
-        // LoaD #$fd to A
-        // Jump to SubRoutine _c0ca3c
-            // get event flag $01xx
-        // CoMPare A with #$00
-        // Branch to [CheckWarp] if EQuals
+        const Uint8 PARTIALLY_SCROLLED = 0x1F;
+        if (addr_7e0b61 & PARTIALLY_SCROLLED && addr_7e0b63 & PARTIALLY_SCROLLED) {
+            // LoaD #$00 to A
+            // STore A to $0135
+            addr_7e0135 = 0;
 
-    // [EnableSave]
-        // LoaD #$80 to A
-            // Enable tent/cabin/save
-        // STore A to $0135
-    
-    // [CheckWarp]
-        // STore Zero to $08
-        // LoaD $53 to A
-        // Branch to next label if EQuals
-        // LoaD $110f to A
-            // Enable warp/teleporter?
-        // AND A with #$03
-        // STore A to $08
+            // LoaD $0adc (if in a vehicle) to A
+            // Branch to [CheckWarp] if Not Equals
+            if (addr_7e0adc) {
+                // LoaD $0ad6 (map index) to X
+                // ComPare X with #$0005
+                // Branch to [EnableSave] if Carry Clear
+                    // if not on a world map
+                if (addr_7e0ad6 >= 5) {
+                    // LoaD #$fd to A
+                    // Jump to SubRoutine _c0ca3c
+                        // get event flag $01xx
+                    Uint8 flagIndex = getEventFlag01xx(0xFD);
+                    // CoMPare A with #$00
+                    // Branch to [CheckWarp] if EQuals
+                    if (flagIndex == 0) goto checkWarp;
+                }
+                
+                // [EnableSave]
+                // LoaD #$80 to A
+                // STore A to $0135
+                    // Enable tent/cabin/save
+                addr_7e0135 = 0x80;
 
-    // Open the menu
-        // [LBL] LoaD $0135 to A
-        // OR A with $08
-        // STore A to $0135
-        // LoaD #$00 to A (menu command index)
-        // STore A to $0134
-        // Jump to SubRoutine OpenMenu
-        // LoaD #$02 to A
-        // STore A to $55
-        // LoaD $0ad8 to A
-        // STore A to $1088
-        // LoaD $0ad9 to A
-        // STore A to $1089
-        // Jump to SubRoutine ReloadMap
-    
-    // Check if an item was used in the menu
-        // LoaD $0139 to A (the item used)
-        // CoMPare A with #$f0
-        // Branch to next label if Not Equals
-            // if not tent
-        // LoaD #$0022 to X
-        // BRAnch to [DoMenuEvent]
-        // [LBL] CoMPare A with #$f1
-        // Branch to next label if Not Equals
-            // if not cabin
-        // LoaD #$0024 to X
-        // BRAnch to [DoMenuEvent]
-        // CoMPare A with #$3e (judgement staff???)
-        // Branch to next label if Not Equals
-        // LoaD #$0032 to X
+            }
+            
+            // [CheckWarp]
+            checkWarp:
+                // STore Zero to $08
+                addr_7e0008 = 0;
 
-    // [DoMenuEvent]
-        // Jump to SubRoutine ExecTriggerScript
-        // [LBL] STore Zero to $16aa
-        // Jump to SubRoutine PoisonMosaic
-        // JuMP to FieldLoop
+                // LoaD $53 to A
+                // Branch to next label if EQuals
+                if (addr_7e0053) {
+                    // LoaD $110f to A
+                        // Enable warp/teleporter?
+                    // AND A with #$03
+                    // STore A to $08
+                    addr_7e0008 = addr_7e110f & 3;
+                }
+            
+            // Open the menu
+                // [LBL] LoaD $0135 to A
+                // OR A with $08
+                // STore A to $0135
+            addr_7e0135 |= 8;
 
-    // [NoMenu] check triggers and timer
+                // LoaD #$00 to A (menu command index)
+                // STore A to $0134
+            addr_7e0134 = 0;
+
+                // Jump to SubRoutine OpenMenu
+            openMenu();
+
+                // LoaD #$02 to A
+                // STore A to $55
+            addr_7e0055 = 2;
+
+                // LoaD $0ad8 to A
+                // STore A to $1088
+            addr_7e1088 = addr_7e0ad8;
+
+                // LoaD $0ad9 to A
+                // STore A to $1089
+            addr_7e1089 = addr_7e0ad9;
+
+                // Jump to SubRoutine ReloadMap
+            reloadMap();
+            
+            // Check if an item was used in the menu
+                // LoaD $0139 to A (the item used)
+                // CoMPare A with #$f0
+                // Branch to next label if Not Equals
+                    // if not tent
+            Uint8 x;
+            if (addr_7e0139 == 0xF0) {
+                    // LoaD #$0022 to X
+                x = 0x22;
+                    // BRAnch to [DoMenuEvent]
+            }
+                // [LBL] CoMPare A with #$f1
+                // Branch to next label if Not Equals
+                    // if not cabin
+            if (addr_7e0139 == 0xF1) {
+                    // LoaD #$0024 to X
+                x = 0x24;
+                    // BRAnch to [DoMenuEvent]
+            }
+                // CoMPare A with #$3e (judgement staff???)
+                // Branch to next label if Not Equals
+            if (addr_7e0139 == 0x3E) {
+                    // LoaD #$0032 to X
+                x = 0x32;
+            }
+            
+            // [DoMenuEvent]
+                // Jump to SubRoutine ExecTriggerScript
+            execTriggerScript();
+
+                // [LBL] STore Zero to $16aa
+            addr_7e16aa = 0;
+
+                // Jump to SubRoutine PoisonMosaic
+            poisonMosaic();
+
+                // JuMP to FieldLoop
+            return;
+        }
+        // [LBL] JuMP to [NoMenu]
+    } else {
+        // [NoMenu] (check triggers and timer)
         // Jump to SubRoutine CheckTriggers
+        checkTriggers();
+
         // Jump to SubRoutine _c0a18b (update timer)
+        updateTimer();
+
         // LoaD $58 to A
         // Branch to next label if EQuals
-        // STore Zero to $58
-        // JuMP to FieldLoop
+        if (addr_7e0058) {
+            // STore Zero to $58
+            addr_7e0058 = 0;
+
+            // JuMP to FieldLoop
+            return;
+        }
 
         // [LBL] LoaD $6e to A
         // Branch to next label if EQuals
-        // Jump to SubRoutine LoadMap
-        // JuMP to FieldLoop
+        if (addr_7e006e) {
+            // Jump to SubRoutine LoadMap
+            loadMap();
+
+            // JuMP to FieldLoop
+            return;
+        }
 
         // [LBL] LoaD $0ad6 (map index) to X
         // ComPare X to #$0005
-        // Jump to SubMapLoop if Carry Set
-    
-    // World Map
+        // Jump to [SubMapLoop] if Carry Set
+        if (addr_7e0ad6 >= 5) {
+            // [SubMapLoop] check activated NPCs and treasures
+            // Jump to SubRoutine _c00d3d
+            func_c00d3d();
+
+            // LoaD $58 to A
+            // Branch to next if EQuals
+            if (addr_7e0058) {
+                // STore Zero to $58
+                addr_7e0058 = 0;
+
+                // JuMP to FieldLoop
+                return;
+            }
+
+            // [LBL] check map exit
+            // LoaD $10fb (tile properties byte 2) to A
+            // CoMPare A with #$00
+            // Branch to next if Not Equals (if not exit)
+            if (addr_7e10fb == 0) {
+                // Jump to SubRoutine LoadParentMap
+                loadParentMap();
+
+                // LoaD #$001c to X
+                // Jump to SubRoutine ExecTriggerScript
+                execTriggerScript(0x1C);
+
+                // JuMP to FieldLoop
+                return;
+            }
+
+            // [LBL] check random battles
+            // Jump to SubRoutine _c0ca69
+            checkRandomBattlesSub();
+
+            // LoaD $55 to A
+            // Branch to next if EQuals
+            if (addr_7e0055) {
+                // LoaD #$ff to A
+                // Jump to SubRoutine _c0ca3c
+                Uint8 eventFlag = getEventFlag01xx(SDL_MAX_UINT8);
+
+                // CoMPare A with #$00
+                // Branch to next if Not Equals
+                if (eventFlag == 0) {
+                    // Jump to SubRoutine RandomBattle
+                    randomBattle();
+
+                    // Jump to SubRoutine ReloadMap
+                    reloadMap();
+
+                    // JuMP to FieldLoop
+                    return;
+                }
+            }
+
+            // [LBL] STore Zero to $55
+            addr_7e0055 = 0;
+
+            // Jump to SubRoutine _c032ab
+            updateObjects();
+
+            // Jump to SubRoutine CheckPlayerMoveSub
+            checkPlayerMovementSub();
+
+            // LoaD $6e to A
+            // Branch to next if EQuals
+            if (addr_7e006e) {
+                // Jump to SubRoutine LoadMap
+                loadMap();
+
+                // JuMP to FieldLoop
+                return;
+            }
+
+            // [LBL] loop if an event is running
+            // LoaD $58 to A
+            // Branch to next if EQuals
+            if (addr_7e0058) {
+                // STore Zero to $58
+                addr_7e0058 = 0;
+
+                // JuMP to FieldLoop
+                return;
+            }
+
+            // [LBL] do updates if no events are running
+            // Jump to SubRoutine _c01ae4
+            func_c01ae4();
+
+            // Jump to SubRoutine _c03bac
+            updateObjectPositions();
+
+            // Jump to SubRoutine ResetSprites
+            resetSprites();
+
+            // Jump to SubRoutine _c04834
+            func_c04834();
+
+            // Jump to SubRoutine DrawPlayerSprite
+            drawPlayerSprite();
+
+            // Jump to SubRoutine DrawObjSprites
+            drawObjectSprites();
+
+            // Jump to SubRoutine DrawOverlaySprites
+            drawOverlaySprites();
+
+            // Jump to SubRoutine _c0420a
+            func_c0420a();
+
+            // JuMP to FieldLoop
+            // Return to SubRoutine (unused step)
+            return;
+        }
+        
+        // World Map
         // check if boarding or landing a vehicle
             // Jump to SubRoutine CheckVehicle
+        checkVehicle();
+
             // LoaD $58 to A
             // Branch to next label if EQuals
+        if (addr_7e0058) {
             // STore Zero to $58
+            addr_7e0058 = 0;
+
             // JuMP to FieldLoop
+            return;
+        }
 
         // check events
             // [LBL] LoaD $61 to A
             // AND A with #$1f (31)
+        const Uint8 CMP = 31;
+
             // Branch to [NoWorldEvent] if Not Equals
             // LoaD $63 to A
             // AND A with #$1f (31)
             // Branch to [NoWorldEvent] if Not Equals
+        Uint8 event_i = 0;
+        if (addr_7e0061 != CMP && addr_7e0063 != 31) {
             // LoaD $0ad6 (map index) to A
             // CoMPare A with #$01
             // Branch to next label if Not Equals
+            if (addr_7e0ad6 != 1 &&
+            
             // LoaD $0ad9 to A
             // CoMPare A with #$a1
             // Branch to next label if Not Equals
+                    addr_7e0ad9 != 0xA1 &&
+            
             // LoaD $0ad8 to A
-            // CoMPare A with #$9f (#159)
+            // CoMPare A with #$9f
             // Branch to next label if Carry Clear
-            // CoMPare A with #$a2 (#162)
+                    addr_7e0ad8 >= 0x9F &&
+
+            // CoMPare A with #$a2
             // Branch to next label if Carry Set
-            // LoaD #$0012 (#18) to X
-            // BRAnch to [DoWorldEvent]
+                    addr_7e0ad8 < 0xA2) {
+                // LoaD #$0012 to X
+                event_i = 0x12;
+                
+                // BRAnch to [DoWorldEvent]
 
             // [LBL] LoaD $0ad6 (map index) to A
             // Branch to next label if Not Equals
+        } else if (addr_7e0ad6 == 0 &&
+
             // LoaD $0adc to A
             // CoMPare A with #$06
             // Branch to next label if Not Equals
+                addr_7e0adc == 6 &&
+
             // LoaD $0ad8 to A
-            // CoMPare A with #$3d (#61)
+            // CoMPare A with #$3d
             // Branch to next label if Carry Clear
+                addr_7e0ad8 >= 0x3D &&
+
             // CoMPare A with #$43
             // Branch to next label if Carry Set
+                addr_7e0ad8 < 0x43 &&
+            
             // LoaD $0ad9 to A
             // CoMPare A with #$9e
             // Branch to next if Carry Clear
+                addr_7e0ad9 >= 0x9e &&
+
             // CoMPare A with #$a5
             // Branch to next if Carry Set
-            // LoaD #$0020 to X
-            // BRAnch to [DoWorldEvent]
+                addr_7e0ad9 < 0xA5) {
+                // LoaD #$0020 to X
+            event_i = 0x20;
+
+                // BRAnch to [DoWorldEvent]
 
             // [LBL] LoaD $0ad6 (map index) to A
             // CoMPare A with #$02
             // Branch to next if Not Equals
+        } else if (addr_7e0ad6 == 2 &&
+
             // LoaD $0adc to A
             // CoMPare A with #$05
             // Branch to next if Carry Clear
+                addr_7e0adc >= 5 &&
+
             // LoaD $0ad8 to A
             // CoMPare A with #$b6
             // Branch to next if Carry Clear
+                addr_7e0ad8 >= 0xb6 &&
+
             // CoMPare A with #$ba
             // Branch to next if Carry Set
+                addr_7e0ad8 < 0xBA &&
+
             // LoaD $0ad9 to A
             // CoMPare A with #$87
             // Branch to next if Carry Clear
+                addr_7e0ad9 >= 0x87 &&
+
             // CoMPare A with #$8b
             // Branch to next if Carry Set
-            // LoaD #$0018 to X
-
-            // [DoWorldEvent]
+                addr_7e0ad9 < 0x8B) {
+            
+                // LoaD #$0018 to X
+                event_i = 0x18;
+            }
+        }
+        
+        // [DoWorldEvent]
             // Jump to SubRoutine ExecTriggerScript
+        execTriggerScript(event_i);
+            
             // LoaD $58 to A
             // Branch to next if EQuals
-            // STore Zero to $58
-            // JuMP to FieldLoop
+        if (addr_7e0058) {
 
+            // STore Zero to $58
+            addr_7e0058 = 0;
+
+            // JuMP to FieldLoop
+            return;
+        }
+        
         // check random battle
-            // [NoWorldEvent] Jump to SubRoutine _c0cb11
+            // [NoWorldEvent]
+            // Jump to SubRoutine _c0cb11
+        checkRandomBattlesWorld();
+
             // LoaD $55 to A
             // Branch to next if EQuals
             // LoaD #$ff to A
             // Jump to SubRoutine _c0ca3c (get event flag $01xx)
             // CoMPare A with #$00
             // Branch to next if Not Equals
+        if (addr_7e0055 && getEventFlag01xx(SDL_MAX_UINT8) == 0) {
+            
             // Jump to SubRoutine RandomBattle
+            randomBattle();
+
             // LoaD $0ad8 to A
             // STore A to $1088
+            addr_7e1088 = addr_7e0ad8;
+
             // LoaD $0ad9 to A
             // STore A to $1089
+            addr_7e1089 = addr_7e0ad9;
+
             // Jump to SubRoutine ReloadMap
+            reloadMap();
+
             // JuMP to FieldLoop
+            return;
+        }
         
         // check minimap
             // [LBL] STore Zero to $55
+        addr_7e0055 = 0;
+
             // LoaD $03 to A
             // AND A with #>JOY_Y
             // Branch to next if EQuals
@@ -877,79 +1154,53 @@ static void fieldLoop(void) {
             // Jump to SubRoutine _c0ca3c
             // CoMPare A with #$00
             // Branch to next if EQuals
+        if (addr_7e0003 & 16384 && getEventFlag01xx(0xFB)) {
+
             // Jump to SubRoutine ShowMinimap
+            showMiniMap();
+
             // LoaD $0ad8 to A
             // STore A to $1088
+            addr_7e1088 = addr_7e0ad8;
+
             // LoaD $0ad9 to A
             // STore A to $1089
+            addr_7e1089 = addr_7e0ad9;
+
             // Jump to SubRoutine ReloadMap
+            reloadMap();
+
             // JuMP to FieldLoop
+            return;
+        }
             
-            // [LBL] Jump to SubRoutine CheckPlayerMoveWorld
-            // Jump to SubRoutine _c01a1d
-            // Jump to SubRoutine ResetSprites
-            // Jump to SubRoutine _c02137
-            // Jump to SubRoutine _c0612b
-            // Jump to SubRoutine _c01ec5
-            // Jump to SubRoutine _c01e64
-            // Jump to SubRoutine _c0420a
-            // JuMP to FieldLoop
-            // Reutrn to Subroutine (unused step)
+        // [LBL] Jump to SubRoutine CheckPlayerMoveWorld
+        checkPlayerMovementWorld();
 
-    // [SubMapLoop]
-        // check activated NPCs and treasures
-            // Jump to SubRoutine _c00d3d
-            // LoaD $58 to A
-            // Branch to next if EQuals
-            // STore Zero to $58
-            // JuMP to FieldLoop
+        // Jump to SubRoutine _c01a1d
+        func_c01a1d();
 
-        // [LBL] check map exit
-            // LoaD $10fb (tile properties byte 2) to A
-            // CoMPare A with #$00
-            // Branch to next if Not Equals (if not exit)
-            // Jump to SubRoutine LoadParentMap
-            // LoaD #$001c to X
-            // Jump to SubRoutine ExecTriggerScript
-            // JuMP to FieldLoop
+        // Jump to SubRoutine ResetSprites
+        resetSprites();
 
-        // [LBL] check random battles
-            // Jump to SubRoutine _c0ca69
-            // LoaD $55 to A
-            // Branch to next if EQuals
-            // LoaD #$ff to A
-            // Jump to SubRoutine _c0ca3c
-            // CoMPare A with #$00
-            // Branch to next if Not Equals
-            // Jump to SubRoutine RandomBattle
-            // Jump to SubRoutine ReloadMap
-            // JuMP to FieldLoop
+        // Jump to SubRoutine _c02137
+        func_c02137();
 
-            // [LBL] STore Zero to $55
-            // Jump to SubRoutine _c032ab (update objects)
-            // Jump to SubRoutine CheckPlayerMoveSub
-            // LoaD $6e to A
-            // Branch to next if EQuals
-            // Jump to SubRoutine LoadMap
-            // JuMP to FieldLoop
+        // Jump to SubRoutine _c0612b
+        func_c0612b();
 
-        // [LBL] loop if an event is running
-            // LoaD $58 to A
-            // Branch to next if EQuals
-            // STore Zero to $58
-            // JuMP to FieldLoop
+        // Jump to SubRoutine _c01ec5
+        func_c01ec5();
 
-        // [LBL] do updates if no events are running
-            // Jump to SubRoutine _c01ae4
-            // Jump to SubRoutine _c03bac
-            // Jump to SubRoutine ResetSprites
-            // Jump to SubRoutine _c04834
-            // Jump to SubRoutine DrawPlayerSprite
-            // Jump to SubRoutine DrawObjSprites
-            // Jump to SubRoutine DrawOverlaySprites
-            // Jump to SubRoutine _c0420a
-            // JuMP to FieldLoop
-            // Return to SubRoutine (unused step)
+        // Jump to SubRoutine _c01e64
+        func_c01e64();
+
+        // Jump to SubRoutine _c0420a
+        func_c0420a();
+
+        // JuMP to FieldLoop
+        // Reutrn to Subroutine (unused step)
+    }
 }
 
 static void fieldNMI(void) {}
@@ -958,7 +1209,7 @@ static void fieldIRQ(void) {}
 
 // execute trigger script
 // +X: trigger script index * 2
-static void execTriggerScript(void) {}
+static void execTriggerScript(Uint8 index) {}
 
 // Address: _061a
 static void checkTriggers(void) {}
@@ -1383,7 +1634,7 @@ static void loadOverlayGfx(void) {}
 
 static void loadOverlayProp(void) {}
 
-static void loadOverlaySprites(void) {}
+static void drawOverlaySprites(void) {}
 
 static void updateOverlay(void) {}
 
@@ -2619,7 +2870,7 @@ static void setTreasureFlag(void) {}
 static void getEventFlag00xx(void) {}
 
 // Address: _ca3c
-static void setEventFlag01xx(void) {}
+static Uint8 getEventFlag01xx(Uint8 val) {return 0;}
 
 // Address: _ca49
 static void getFlagIndex(void) {}
