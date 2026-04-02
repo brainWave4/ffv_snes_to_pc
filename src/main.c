@@ -40,7 +40,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     *appstate = state;
 
     // Setup
-    //start();
+    start();
 
     return SDL_APP_CONTINUE;
 }

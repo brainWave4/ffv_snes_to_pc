@@ -655,7 +655,7 @@ void start(void) {
         addr_7e0059 = 0;
 
         // JuMP to FieldLoop
-        //  - To be called outside branch
+        //  - To be called at App Iterate
     } else {
         // (restore saved game)
 
@@ -692,10 +692,8 @@ void start(void) {
         loadMapNoFade();
         
         // Jump to FieldLoop
-        //  - To be called outside branch
+        //  - To be called at App Iterate
     }
-
-    fieldLoop();
 }
 
 // Field Main Loop
