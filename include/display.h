@@ -21,6 +21,9 @@ BgLayer[4] bgLayers;
 // Address: _2100
 Uint8 inidisp;
 
+// Address: _2101-2104
+// Concerns Object Sprites
+
 // Address: _2105
 Uint8 bgMode;
 
@@ -55,4 +58,55 @@ Uint8 mode7_y;
 // which stores the palette.
 SDL_Palette palette;
 
+// Address: _2123
+Uint8 w12sel;
+
+// Address: _2124
+Uint8 w34sel;
+
+// Address: _2125
+Uint8 wObjSel;
+
+// Address: _2126
+// Window 1 left position
+Uint8 wh0;
+
+// Address: _2127
+// Window 1 right position
+Uint8 wh1;
+
+// Address: _2128
+// Window 2 left position
+Uint8 wh2;
+
+// Address: _2129
+// Window 2 right position
+Uint8 wh3;
+
+// Address: _212A
+Uint8 bgMask;
+
+// Address: _212B
+Uint8 objMask;
+
+// Address: _212C
+Uint8 enableMain;
+
+// Address: _212D
+Uint8 enableSub;
+
+// Address: _212E
+Uint8 enableMainWindow;
+
+// Address: _212F
+Uint8 enableSubWindow;
+
+// Address: _2130
+Uint8 cgWSel;
+
+// Address: _2132
+Uint8 colData;
+
+// Address: _2133
+Uint8 setIni;
 #endif

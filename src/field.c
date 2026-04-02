@@ -165,7 +165,7 @@ static void tfrPallets(void); // Incomplete
 static void func_c04d8e(void); // Incomplete
 static void waitVblank(void); // Incomplete
 static void initInterrupts(void); // Incomplete
-static void initHardware(void); // Incomplete
+static void initHardware(void);
 static void generateRandom(void); // Incomplete
 static void crystalShatterAnim(void); // Incomplete
 static void loadMap(void); // Incomplete
@@ -536,6 +536,16 @@ static Uint8 addr_7e16aa;
 
 // Address: _4200
 static Uint8 h_nmitimen;
+// Address: _4201
+static Uint8 h_wrio;
+// Address: _4207
+static Uint8 h_htimel;
+// Address: _4208
+static Uint8 h_htimeh;
+// Address: _4209
+static Uint8 h_vtimel;
+// Address: _420a
+static Uint8 h_vtimeh;
 // Address: _420b
 static Uint8 h_mdmaen;
 // Address: _420c
@@ -1870,7 +1880,146 @@ static void waitVblank(void) {
 
 static void initInterrupts(void) {}
 
-static void initHardware(void) {}
+static void initHardware(void) {
+    // LoaD #$80 to A
+    // STore A to hINIDISP
+    inidisp = 0x80;
+
+    // LoaD #0 to A
+    // STore A to hNMITIMEN
+    h_nmitimen = 0;
+
+    // STore Zero to hMDMAEN
+    h_mdmaen = 0;
+
+    // STore Zero to hHDMAEN
+    // LoaD #3 to A
+    // STore A to hOBJSEL
+    // STore Zero to hOAMADDL
+    // STore Zero to hOAMADDH
+
+    // LoaD #$09 to A
+    // STore A to hBGMODE
+    bgMode = 9;
+
+    // STore Zero to hMOSAIC
+    mosaic = 0;
+
+    // LoaD #$00 to A
+    // STore A to hBG12NBA
+    // LoaD #$04 to A
+    // STore A to hBG34NBA
+    // LoaD #$80 to A
+    // STore A to hVMAINC
+
+    // STore Zero to hM7SEL
+    mode7_settings = 0;
+
+    // STore Zero to hM7A
+    // LoaD #$08 to A
+    // STore A to hM7A
+    mode7_a = 8;
+
+    // STore Zero to hM7B twice
+    mode7_b = 0;
+
+    // STore Zero to hM7C twice
+    mode7_c = 0;
+
+    // STore Zero to hM7D
+    // LoaD #$08 to A
+    // STore A to hM7D
+    mode7_d = 8;
+
+    // LoaD #$80 to A
+    // STore A to hM7X twice
+    mode7_x = 0x80;
+
+    // STore A to hM7Y twice
+    mode7_y = 0x80;
+
+    // STore A to hCGADD
+    // LoaD #$bf to A
+    // STore A to hW12SEL
+    w12sel = 0xBF;
+
+    // LoaD #$0b to A
+    // STore A to hW34SEL
+    w34sel = 0x0B;
+
+    // LoaD #$bb to A
+    // STore A to hWOBJSEL
+    wObjSel = 0xBB;
+
+    // LoaD #$08 to A
+    // STore A to hWHO
+    wh0 = 8;
+
+    // LoaD #$f7 to A
+    // STore A to hWH1
+    wh1 = 0xF7;
+
+    // LoaD #$ff to A
+    // STore A to hWH2
+    wh2 = 0xFF;
+
+    // LoaD #$00 to A
+    // STore A to hWH3
+    wh3 = 0;
+
+    // LoaD #$01 to A
+    // STore A to hWBGLOG
+    bgMask = 1;
+
+    // LoaD #$00 to A
+    // STore A to hWOBJLOG
+    objMask = 0;
+
+    // LoaD #$13 to A
+    // STore A to hTM
+    enableMain = 0x13;
+
+    // LoaD #$04 to A
+    // STore A to hTS
+    enableSub = 4;
+
+    // LoaD #$17 to A
+    // STore A to hTMW
+    enableMainWindow = 0x17;
+
+    // STore Zero to hTSW
+    enableSubWindow = 0;
+
+    // LoaD #$22 to A
+    // STore A to hCGSWSEL
+    cgWSel = 0x22;
+
+    // LoaD #$e0 to A
+    // STore A to hCOLDATA
+    colData = 0xE0;
+
+    // LoaD #$00 to A
+    // STore A to hSETINI
+    setIni = 0;
+
+    // LoaD #$ff to A
+    // STore A to hWRIO
+    h_wrio = 0xFF;
+
+    // STore Zero to hHTIMEL
+    h_htimel = 0;
+
+    // STore Zero to hHTIMEH
+    h_htimeh = 0;
+
+    // STore Zero to hVTIMEL
+    h_vtimel = 0;
+
+    // STore Zero to hVTIMEH
+    h_vtimeh = 0;
+
+    // Return to SubRoutine
+}
 
 static void generateRandom(void) {}
 
