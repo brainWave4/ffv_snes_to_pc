@@ -802,10 +802,10 @@ static void fieldLoop(void) {
                 // CoMPare A with #$f0
                 // Branch to next label if Not Equals
                     // if not tent
-            Uint8 x;
+            Uint8 event_i;
             if (addr_7e0139 == 0xF0) {
                     // LoaD #$0022 to X
-                x = 0x22;
+                event_i = 0x22;
                     // BRAnch to [DoMenuEvent]
             }
                 // [LBL] CoMPare A with #$f1
@@ -813,19 +813,19 @@ static void fieldLoop(void) {
                     // if not cabin
             if (addr_7e0139 == 0xF1) {
                     // LoaD #$0024 to X
-                x = 0x24;
+                event_i = 0x24;
                     // BRAnch to [DoMenuEvent]
             }
                 // CoMPare A with #$3e (judgement staff???)
                 // Branch to next label if Not Equals
             if (addr_7e0139 == 0x3E) {
                     // LoaD #$0032 to X
-                x = 0x32;
+                event_i = 0x32;
             }
             
             // [DoMenuEvent]
                 // Jump to SubRoutine ExecTriggerScript
-            execTriggerScript();
+            execTriggerScript(event_i);
 
                 // [LBL] STore Zero to $16aa
             addr_7e16aa = 0;
