@@ -170,13 +170,15 @@ static void generateRandom(void); // Incomplete
 static void crystalShatterAnim(void); // Incomplete
 static void loadMap(void); // Incomplete
 static void loadMapNoFade(void); // Incomplete
-static void reloadMap(void); // Incomplete
-static void loadParentMap(void); // Incomplete
+static void reloadMap(void);
+static void loadParentMap(void);
 static void func_c054a7(void); // Incomplete
 static void func_c054f6(void); // Incomplete
 static void loadWorldMap(void); // Incomplete
+static void reloadWorldMap(void); // Incomplete
 static void loadWorldMapPalette(void); // Incomplete
 static void loadSubMap(void); // Incomplete
+static void reloadSubMap(void); // Incomplete
 static void func_c057f9(void); // Incomplete
 static void initAutoScroll(void); // Incomplete
 static void loadMapLayout(void); // Incomplete
@@ -524,6 +526,9 @@ static Uint8 addr_7e0ad6;
 static Uint8 addr_7e0ad8;
 static Uint8 addr_7e0ad9;
 static Uint8 addr_7e0adc;
+static Uint8 addr_7e0af5;
+static Uint8 addr_7e0af7;
+static Uint8 addr_7e0af8;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
@@ -2029,10 +2034,57 @@ static void loadMap(void) {}
 
 static void loadMapNoFade(void) {}
 
-static void reloadMap(void) {}
+static void reloadMap(void) {
+    // LoaD $0ad6 from X
+    // ComPare X with #$0005
+    // Branch to next if Carry Set
+    if (addr_7e0ad6 < 5) {
+        // (World Map)
+        // Jump to SubRoutine ReloadWorldMap
+        reloadWorldMap();
+
+        // Jump to SubRoutine FadeInMap
+        fadeInMap();
+
+        // Return To Subroutine
+
+    // [LBL] Sub-Map
+    } else {
+        // Jump to SubRoutine ReloadSubMap
+        reloadSubMap();
+
+        // Jump to SubRoutine FadeInMap
+        fadeInMap();
+        
+        // Jump to SubRoutine ShowMapTitle
+        showMapTitle();
+        
+        // Return To Subroutine
+    }
+}
 
 // Address: _548f
-static void loadParentMap(void) {}
+static void loadParentMap(void) {
+    // LoaD $0af5 to X
+    // STore $0ad6 to X
+    addr_7e0ad6 = addr_7e0af5;
+
+    // LoaD $0af7 to A
+    // STore $1088 to XA
+    addr_7e1088 = addr_7e0af7;
+
+    // LoaD $0af8 to A
+    // STore $1089 to A
+    addr_7e1089 = addr_7e0af8;
+
+    // INCrement $6e
+    addr_7e006e ++;
+
+    // Jump to SubRoutine LoadMap
+    loadMap();
+
+    // Return to Subroutine
+}
 
 static void func_c054a7(void) {}
 
@@ -2040,9 +2092,13 @@ static void func_c054f6(void) {}
 
 static void loadWorldMap(void) {}
 
+static void reloadWorldMap(void) {}
+
 static void loadWorldMapPalette(void) {}
 
 static void loadSubMap(void) {}
+
+static void reloadSubMap(void) {}
 
 static void func_c057f9(void) {}
 
