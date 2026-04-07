@@ -27,13 +27,13 @@ static void execTriggerScript(Uint8 index); // Incomplete
 static void checkTriggers(void); // Incomplete
 static void checkVehicle(void); // Incomplete
 static void func_c00853(void); // Incomplete
-static void boardChoco(void); // Incomplete
-static void landChoco(void); // Incomplete
+static void boardChoco(void);
+static void landChoco(void);
 static void boardBlkChoco(void); // Incomplete
 static void boardHiryuu(void); // Incomplete
 static void landBlkChoco(void); // Incomplete
 static void landHiryuu(void); // Incomplete
-static void boardSub(void); // Incomplete
+static void boardSub(void);
 static void landSub(void); // Incomplete
 static void func_c009c6(void); // Incomplete
 static void func_c009f7(void); // Incomplete
@@ -500,6 +500,8 @@ static Uint8 addr_7e0002;
 static Uint8 addr_7e0003;
 static Uint8 addr_7e0006;
 static Uint8 addr_7e0008;
+static Uint8 addr_7e003d;
+static Uint8 addr_7e0040;
 static Uint8 addr_7e0053;
 static Uint8 addr_7e0055;
 static Uint8 addr_7e0058;
@@ -1218,7 +1220,34 @@ static void fieldLoop(void) {
 
 static void fieldNMI(void) {}
 
-static void fieldIRQ(void) {}
+static void fieldIRQ(void) {
+    // PusH Processor stack register
+    // Lengthen A
+    // PusH A
+    // PusH X
+    // PusH Y
+    // PusH Bank data
+    // PusH Direct Page
+    // LoaD #$0 to A
+    // Shorten A
+    // LoaD #$0b00 to X
+    // PusH X
+    // PulL Direct Page
+    // LoaD #$0 to A
+    // PulL Bank data
+    // LoaD hTIMEUP to A
+    // INCrement $40
+    addr_7e0040 ++;
+
+    // Lengthen A
+    // PulL Direct Page
+    // PulL Bank data
+    // PulL Y
+    // PulL X
+    // PulL A
+    // PulL Processor stack register
+    // ReTurn from Interrupt
+}
 
 // execute trigger script
 // +X: trigger script index * 2
@@ -1231,21 +1260,108 @@ static void checkTriggers(void) {}
 static void checkVehicle(void) {}
 
 // Address: _0853
-static void func_c00853(void) {}
+static void func_c00853(void) {
+    // LoaD $169c to Y
+    // LoaD $0ad8 to A
+    // STore A to ($0adf + Y)
+    
+    // LoaD $0ad9 to A
+    // STore A to ($0ae0 + Y)
 
-static void boardChoco(void) {}
+    // LoaD ($0ade + Y) to A
+    // AND A with #$7f
+    // STore A to ($0ade + Y)
 
-static void landChoco(void) {}
+    // LoaD $0ad6 to A
+    // A Shift Left x5
+    // STore A to $08
+    addr_7e0008 = addr_7e0ad6 << 5;
 
-static void boardBlkChoco(void) {}
+    // Load ($0add + Y) to A
+    // AND A with #$1f
+    // OR A with $08
+    // STore A to ($0add + Y)
 
-static void boardHiryuu(void) {}
+    // LoaD #$02 to A
+    // STore A to $c0
+    addr_7e00c0 = 2;
+
+    // Jump to SubRoutine _c04583
+    func_c04583();
+
+    // LoaD $57 to A
+    // Branch to [_088f] if Not Equals
+    if (addr_7e0057 == 0) {
+        // LoaD #$0240 to X
+        // Jump to SubRoutine ExecTriggerScript
+        execTriggerScript(0x240);
+    }
+
+    // [_088f] Return to Subroutine
+}
+
+static void boardChoco(void) {
+    // Return to Subroutine
+}
+
+static void landChoco(void) {
+    // STore Zero to $0adc
+    addr_7e0adc = 0;
+
+    // JuMP to _c00853
+    func_c00853();
+}
+
+static void boardBlkChoco(void) {
+    // LoaD #$00 to A
+    // STore A to $3d
+    addr_7e003d = 0;
+
+    // [LBL] Jump to SubRoutine WaitVBlank
+    waitVblank();
+
+    // Jump to SubRoutine ResetSprites
+    resetSprites();
+
+    // LoaD $169c to Y
+    // LoaD $3d to A
+    // Transfer A to X
+    // Load (f:_c00c4f,x) to A
+    // OR A with #$80
+    // STore A to ($0ade + Y) (Vehicle Height)
+
+    // Jump to SubRoutine _c02137
+    func_c02137();
+
+    // Jump to SubRoutine _c0612b
+    func_c0612b();
+
+    // Jump to SubRoutine _c01ec5
+    func_c01ec5();
+
+    // Jump to SubRoutine _c01e64
+    func_c01e64();
+
+    // INCrement $3d
+    addr_7e003d ++;
+
+    // LoaD $3d to A
+    // CoMPare A with #$40
+    // Branch to previous label if Not Equals
+
+    // Return To Subroutine
+}
+
+static void boardHiryuu(void) {
+}
 
 static void landBlkChoco(void) {}
 
 static void landHiryuu(void) {}
 
-static void boardSub(void) {}
+static void boardSub(void) {
+    // Return To SubRoutine
+}
 
 static void landSub(void) {}
 
