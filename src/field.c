@@ -493,7 +493,6 @@ static void reset(void); // Incomplete
 
 // These adresses are called before
 // having any value stored first
-static Uint8 addr_7e0139 = 0;
 static Uint8 addr_7e0af9 = 0;
 
 static Uint8 addr_7e0002;
@@ -524,9 +523,13 @@ static Uint8 addr_7e00ce;
 static Uint8 addr_7e0134;
 static Uint8 addr_7e0135;
 static Uint8 addr_7e0139;
-static Uint8 addr_7e0ad6;
+
+// Address: _0ad6
+static Uint8 map_i;
+
 static Uint8 addr_7e0ad8;
 static Uint8 addr_7e0ad9;
+static Uint8 addr_7e0adb;
 static Uint8 addr_7e0adc;
 static Uint8 addr_7e0af5;
 static Uint8 addr_7e0af7;
@@ -537,8 +540,10 @@ static Uint8 addr_7e0b63;
 static Uint8 addr_7e0b5f;
 static Uint8 addr_7e1088;
 static Uint8 addr_7e1089;
+static Uint8 addr_7e10fa;
 static Uint8 addr_7e10fb;
 static Uint8 addr_7e110f;
+static Uint8 addr_7e169b;
 static Uint8 addr_7e16aa;
 
 // Address: _4200
@@ -751,7 +756,7 @@ static void fieldLoop(void) {
                 // ComPare X with #$0005
                 // Branch to [EnableSave] if Carry Clear
                     // if not on a world map
-                if (addr_7e0ad6 >= 5) {
+                if (map_i >= 5) {
                     // LoaD #$fd to A
                     // Jump to SubRoutine _c0ca3c
                         // get event flag $01xx
@@ -883,7 +888,7 @@ static void fieldLoop(void) {
         // [LBL] LoaD $0ad6 (map index) to X
         // ComPare X to #$0005
         // Jump to [SubMapLoop] if Carry Set
-        if (addr_7e0ad6 >= 5) {
+        if (map_i >= 5) {
             // [SubMapLoop] check activated NPCs and treasures
             // Jump to SubRoutine _c00d3d
             func_c00d3d();
@@ -1028,7 +1033,7 @@ static void fieldLoop(void) {
             // LoaD $0ad6 (map index) to A
             // CoMPare A with #$01
             // Branch to next label if Not Equals
-            if (addr_7e0ad6 != 1 &&
+            if (map_i != 1 &&
             
             // LoaD $0ad9 to A
             // CoMPare A with #$a1
@@ -1050,7 +1055,7 @@ static void fieldLoop(void) {
 
             // [LBL] LoaD $0ad6 (map index) to A
             // Branch to next label if Not Equals
-        } else if (addr_7e0ad6 == 0 &&
+        } else if (map_i == 0 &&
 
             // LoaD $0adc to A
             // CoMPare A with #$06
@@ -1082,7 +1087,7 @@ static void fieldLoop(void) {
             // [LBL] LoaD $0ad6 (map index) to A
             // CoMPare A with #$02
             // Branch to next if Not Equals
-        } else if (addr_7e0ad6 == 2 &&
+        } else if (map_i == 2 &&
 
             // LoaD $0adc to A
             // CoMPare A with #$05
@@ -1275,7 +1280,7 @@ static void func_c00853(void) {
     // LoaD $0ad6 to A
     // A Shift Left x5
     // STore A to $08
-    addr_7e0008 = addr_7e0ad6 << 5;
+    addr_7e0008 = map_i << 5;
 
     // Load ($0add + Y) to A
     // AND A with #$1f
@@ -1353,17 +1358,72 @@ static void boardBlkChoco(void) {
 }
 
 static void boardHiryuu(void) {
+    // Essentially the same as BoardBlackChoco
+    boardBlkChoco();
 }
 
 static void landBlkChoco(void) {}
 
-static void landHiryuu(void) {}
+static void landHiryuu(void) {
+    // Essentially the same as LandBlackChoco
+    landBlkChoco();
+}
 
 static void boardSub(void) {
     // Return To SubRoutine
 }
 
-static void landSub(void) {}
+static void landSub(void) {
+    // LoaD #$03 to A
+    // STore A to $0adb
+    addr_7e0adb = 3;
+
+    // LoaD $0ad6 to X
+    // ComPare X to #$0003
+    // Branch to next label if Carry Clear
+    if (map_i >= 3) {
+        // LoaD $10fa to A
+        // Branch to [Done] if PLus
+        if (addr_7e10fa <= 0) {
+            
+            // Jump to Subroutine _c009c6
+            func_c009c6();
+
+            // LoaD #$002a to X
+            // Jump to SubRoutine ExecTriggerScript
+            execTriggerScript(0x2A);
+
+            // Jump to SubRoutine InitFadeIn
+            initFadeIn();
+
+            // LoaD #$01 to A
+            // STore A to $bd
+            addr_7e00bd = 1;
+
+            // Load #$28 to A
+            // STore A to $169b
+            addr_7e169b = 0x28;
+            
+            // Jump to SubRoutine _c022fb
+            func_c022fb();
+        }
+        
+        // [Done] Return To Subroutine
+    }
+
+    // (not underwater)
+    // [LBL] Jump to SubRoutine _c009f7
+    func_c009f7();
+
+    // LoaD #$0028 to X
+    // Jump to SubRoutine ExecTriggerScript
+    execTriggerScript(0x28);
+
+    // Jump to SubRoutine _c00a11
+    func_c00a11();
+
+    // Return To Subroutine
+}
 
 static void func_c009c6(void) {}
 
@@ -2154,7 +2214,7 @@ static void reloadMap(void) {
     // LoaD $0ad6 from X
     // ComPare X with #$0005
     // Branch to next if Carry Set
-    if (addr_7e0ad6 < 5) {
+    if (map_i < 5) {
         // (World Map)
         // Jump to SubRoutine ReloadWorldMap
         reloadWorldMap();
@@ -2183,7 +2243,7 @@ static void reloadMap(void) {
 static void loadParentMap(void) {
     // LoaD $0af5 to X
     // STore $0ad6 to X
-    addr_7e0ad6 = addr_7e0af5;
+    map_i = addr_7e0af5;
 
     // LoaD $0af7 to A
     // STore $1088 to XA
