@@ -45,26 +45,26 @@ static void landAirship(void); // Incomplete
 static void func_c00c9f(void); // Incomplete
 static void func_c00d3d(void); // Incomplete
 static void checkTresure(void); // Incomplete
-static void giveGil(void); // Incomplete
+static void giveGil(void);
 static void calcGil(void); // Incomplete
 static void checkPlayerMovementWorld(void); // Incomplete
-static void func_c0103a(void); // Incomplete
-static void func_c0104a(void); // Incomplete
+static void func_c0103a(void);
+static void func_c0104a(void);
 static void func_c01055(void); // Incomplete
 static void func_c010c8(void); // Incomplete
 static void func_c0112d(void); // Incomplete
-static void getWorldTileTransparantUnderwater(void); // Incomplete
+static void getWorldTileTransparantUnderwater(Uint8 offset); // Incomplete
 static void checkPlayerMovementSub(void); // Incomplete
 static void updateDestZLevel(void); // Incomplete
-static void updateCurZLevel(void); // Incomplete
+static void updateCurZLevel(void);
 static void doTileDamage(void); // Incomplete
 static void doPoisonDamage(void); // Incomplete
 static void poisonMosaic(void); // Incomplete
-static void updateCurPriority(void); // Incomplete
+static void updateCurPriority(void);
 static void updateDestPriority(void); // Incomplete
 static void checkDoor(void); // Incomplete
 static void checkFindPits(void); // Incomplete
-static void calcParallaxScroll(void); // Incomplete
+static Uint8 calcParallaxScroll(Uint8 a);
 static void checkPartyCanMove(void); // Incomplete
 static void func_c016b7(void); // Incomplete
 static void func_c016da(void); // Incomplete
@@ -73,7 +73,7 @@ static void updateLocalTilesNorm(void); // Incomplete
 static void getTilePropertiesCur(void); // Incomplete
 static void func_c01a1d(void); // Incomplete
 static void func_c01ae4(void); // Incomplete
-static void updateTopChar(void); // Incomplete
+static void updateTopChar(void);
 static void updatePlayerGfx(void); // Incomplete
 static void copyPlayerGfx(void); // Incomplete
 static void copyAltGfx(void); // Incomplete
@@ -81,9 +81,9 @@ static void func_c01e64(void); // Incomplete
 static void func_c01ec5(void); // Incomplete
 static void func_c01f57(void); // Incomplete
 static void func_c01fb4(void); // Incomplete
-static void func_c01fff(void); // Incomplete
-static void func_c0201f(void); // Incomplete
-static void func_c0203f(void); // Incomplete
+static void func_c01fff(void);
+static Uint8 func_c0201f(Uint16 asperagus);
+static Uint8 func_c0203f(Uint16 apple);
 static void func_c02137(void); // Incomplete
 static void func_c022fb(void); // Incomplete
 static void drawPlayerSprite(void); // Incomplete
@@ -491,6 +491,8 @@ static void battleBlur(void); // Incomplete
 static void randomBattle(void); // Incomplete
 static void reset(void); // Incomplete
 
+static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6}
+
 // These adresses are called before
 // having any value stored first
 static Uint8 addr_7e0af9 = 0;
@@ -499,6 +501,13 @@ static Uint8 addr_7e0002;
 static Uint8 addr_7e0003;
 static Uint8 addr_7e0006;
 static Uint8 addr_7e0008;
+static Uint8 addr_7e000d;
+static Uint8 addr_7e000f;
+static Uint8 addr_7e0013;
+static Uint8 addr_7e0015;
+static Uint8 addr_7e0037;
+static Uint8 addr_7e0038;
+static Uint8 addr_7e0039;
 static Uint8 addr_7e003d;
 static Uint8 addr_7e0040;
 static Uint8 addr_7e0053;
@@ -517,18 +526,42 @@ static Uint8 addr_7e00a6;
 static Uint8 addr_7e00b4;
 static Uint8 addr_7e00b5;
 static Uint8 addr_7e00b9;
+static Uint8 addr_7e00ba;
 static Uint8 addr_7e00bc;
 static Uint8 addr_7e00bd;
+static Uint8 addr_7e00c2;
+static Uint8 addr_7e00c3;
+static Uint8 addr_7e00c7;
+static Uint8 addr_7e00ca;
+static Uint8 addr_7e00cb;
 static Uint8 addr_7e00ce;
 static Uint8 addr_7e0134;
 static Uint8 addr_7e0135;
 static Uint8 addr_7e0139;
+static Uint8 addr_7e0280;
+static Uint8 addr_7e0281;
+static Uint8 addr_7e0282;
+static Uint8 addr_7e0284;
+static Uint8 addr_7e0285;
+static Uint8 addr_7e0286;
+static Uint16 addr_7e0288;
+static Uint16 addr_7e028a;
+static Uint16 addr_7e028c;
+static Uint16 addr_7e028e;
+static Uint16 addr_7e0290;
+static Uint16 addr_7e0292;
+static Uint16 addr_7e0294;
+static Uint16 addr_7e0296;
+static Uint8 addr_7e0947;
+static Uint8 addr_7e0948;
+static Uint8 addr_7e0949;
 
 // Address: _0ad6
 static Uint8 map_i;
 
 static Uint8 addr_7e0ad8;
 static Uint8 addr_7e0ad9;
+static Uint8 addr_7e0ada;
 static Uint8 addr_7e0adb;
 static Uint8 addr_7e0adc;
 static Uint8 addr_7e0af5;
@@ -1446,15 +1479,130 @@ static void func_c00d3d(void) {}
 static void checkTresure(void) {}
 
 // Address: _0efe
-static void giveGil(void) {}
+static void giveGil(void) {
+    // LoaD $0947 to A
+    // CLear Carry flag
+    // ADd $37 to A with Carry
+    // STore A to $0947
+    addr_7e0947 += addr_7e0037;
 
-static void calcGil(void) {}
+    // Load $0948 to A
+    // ADd $38 to A with Carry
+    // STore A to $0948
+    addr_7e0948 += addr_7e0038;
+
+    // Load $0949 to A
+    // ADd $39 to A with Carry
+    // STore A to $0949
+    addr_7e0949 += addr_7e0039;
+
+    // CoMPare #$98 with A
+    const Uint8 CMP = 0x98;
+
+    // Branch to [_0f1f] if EQuals
+    if (addr_7e0949 >= CMP) {
+        if (addr_7e0949 == CMP) {
+
+            // [_0f1f] LoaD $0948 to A
+            // CoMPare A with #$96
+            const Uint8 CMPB = 0x96;
+
+            // Branch to [_0f2a] if Equals
+            if (addr_7e0948 == CMPB) {
+                
+                // [_0f2a] LoaD $0947 to A
+                // CoMPare A with #$7F
+                // Branch to [_0f3c] if Carry Clear
+                if (addr_7e0947 < 0x7F) return;
+
+            // Branch to [_0f3c] if Carry Clear
+            } else if (addr_7e0948 < CMPB) return;
+
+            // Branch to [_0f31] if Carry Set
+        }
+
+        // Branch to [_0f3c] if Carry Clear
+        // Branch to [_0f31] if Carry Set
+        
+        // [_0f31] LoaD #$9896 to X
+        // STore X to $0948
+        addr_7e0948 = 0x9896;
+
+        // LoaD #$7f to A
+        // STore A to $0947
+        addr_7e0947 = 0x7F;
+    }
+
+    // [_0f3c] Return to SubRoutine
+}
+
+static void calcGil(void) {
+    // STore Zero to $39
+    addr_7e0039 = 0;
+
+    // LoaD $11 to A
+    // AND A with #$07
+    // A Shift Left
+    // Teansfer A to X
+
+    // LoaD $12 to A
+    // STore A to hWRMPYA
+
+    // LoaD (f:Pow10Tbl,x) to A
+    // STore A to hWRMPYB
+
+    // No OPeration x4
+
+    // LoaD hRDMPYL to Y
+    // STore Y to $37
+
+    // LoaD $12 to A
+    // STore A to hWRMPYA
+
+    // LoaD (f:Pow10Tbl+1,x) to A
+    // STore A to hWRMPYB
+
+    // No OPeration x3
+
+    // Lengthen A
+    // LoaD hRDMPYL to A
+    // CLear Carry flag
+    // ADd $38 to A with Carry
+    // STore A to $38
+
+    // LoaD $06 to A
+    // Shorten A
+    // Return To Subroutine
+}
 
 static void checkPlayerMovementWorld(void) {}
 
-static void func_c0103a(void) {}
+static void func_c0103a(void) {
+    // LoaD $ca to A
+    // Branch to next label if EQuals
+    if (addr_7e00ca) {
+        // LoaD $ba to A
+        // Transfer A to X
+        // Load (f:_c011b8,x) to A
+        // Transfer A to X
+        // Jump to SubRoutine _c0119a
+        getWorldTileTransparantUnderwater(data_c011b8[addr_7e00ba]);
+    }
 
-static void func_c0104a(void) {}
+    // [LBL] Return To Subroutine
+}
+
+static void func_c0104a(void) {
+    // LoaD $ca to A
+    // Branch to next of Not Equals
+    if (addr_7e00ca == 0) {
+        // LoaD #$0008 to X
+        // Jump to SubRoutine _c0119a
+        getWorldTileTransparantUnderwater(8);
+    }
+
+    // [LBL] Return To Subroutine
+}
 
 static void func_c01055(void) {}
 
@@ -1466,15 +1614,55 @@ static void func_c010c8(void) {}
 static void func_c0112d(void) {}
 
 // Address: _119a
-static void getWorldTileTransparantUnderwater(void) {}
+static void getWorldTileTransparantUnderwater(Uint8 offset) {}
 
 static void checkPlayerMovementSub(void) {}
 
-// update party z-level (destination tile)
+// Update party z-level (destination tile)
 static void updateDestZLevel(void) {}
 
-// update party z-level (current tile)
-static void updateCurZLevel(void) {}
+// Update party z-level (current tile)
+static void updateCurZLevel(void) {
+    // LoaD $10fa to A
+    // AND A with #$03
+    // OR A with #$04
+    // STore A to $c2
+    addr_7e00c2 = addr_7e10fa & 3 | 4;
+
+    // LoaD $ca to A
+    // Branch to next if Equals
+    if (addr_7e00ca) {
+        // LoaD $10fa to A
+        // AND A with #$0c
+        // STore A to $ca
+        addr_7e00ca = addr_7e10fa & 0xC;
+    }
+
+    // [LBL] LoaD $cb to A
+    // Branch to [Done] if Not Equals
+    if (addr_7e00cb) return;
+
+    // LoaD $10fa to A
+    // AND A with #$10
+    // Branch to [Done] if Equals
+    if (addr_7e10fa & 10 == 0) return;
+
+    // LoaD $10fa to A
+    // AND A with #$04
+    // Branch to next if EQuals
+    if (addr_7e10fa & 4) {
+        // LoaD $c3 to A
+        // AND A with #$01
+        // Branch to [Done] if Not Equals
+        if (addr_7e00c3 & 1) return;
+    }
+
+    // [LBL] Load #$01 to A
+    // STore A to $cb
+    addr_7e00cb = 1;
+
+    // [Done] Return To Subroutine
+}
 
 static void doTileDamage(void) {}
 
@@ -1482,25 +1670,108 @@ static void doPoisonDamage(void) {}
 
 static void poisonMosaic(void) {}
 
-// update party sprite priority (current tile)
-static void updateCurPriority(void) {}
+// Update party sprite priority (current tile)
+static void updateCurPriority(void) {
+    // LoaD $c7 to X
+    // CoMPare X to #$01e8
+    // Branch to [Done] if Not Equals
+    if (addr_7e00c7 != 0x1E8) return;
 
-// update party sprite priority (destination tile)
+    // LoaD $10fa to A
+    // AND A with #$40
+    // Branch to [Done] if Not Equals
+    if (addr_7e10fa & 0x40) return;
+
+    // LoaD $10fa to A
+    // AND A with #$04
+    // Branch to [Done] if Not Equals
+    if (addr_7e10fa & 4) return;
+
+    // LoaD #$0110 to X
+    // STore X to $c7
+    addr_7e00c7 = 0x110;
+
+    // [Done] Return To Subroutine
+}
+
+// Update party sprite priority (destination tile)
 static void updateDestPriority(void) {}
 
 static void checkDoor(void) {}
 
 static void checkFindPits(void) {}
 
-// 0 = return $c0 (1x)
-// 1 = return $c0 >> 1 (0.5x)
-// 2 = return $c0 << 1 (2x)
-// 3 = return zero (no scroll)
-static void calcParallaxScroll(void) {}
+// Outputs:
+    // 0 = return $c0 (1x)
+    // 1 = return $c0 >> 1 (0.5x)
+    // 2 = return $c0 << 1 (2x)
+    // 3 = return zero (no scroll)
+static Uint8 calcParallaxScroll(Uint8 a) {
+    // AND A with #%11 (#3)
+    // Branch to next label if Not Equals
+    switch (a & 3) {
+        case 0:
+            // LoaD $c0 to A
+            // Branch to [Done]
+            // ...
+            // [Done] Return To Subroutine
+            return addr_7e00c0;
+        
+        // DECrement A
+        // Branch to next label if Not Equals
+        case 1:
+            // LoaD $c0 to A
+            // Logical Shift Right
+            // Branch to [Done]
+            return addr_7e00c0 > 1;
+        
+        // DECrement A
+        // Branch to next label if Not Equals
+        case 2:
+            // LoaD $c0 to A
+            // A Shift Left
+            // Branch to [Done]
+            return addr_7e00c0 < 1;
+        
+        // LoaD $06 to A
+        default:
+            return addr_7e0006;
+    }
+}
 
 static void checkPartyCanMove(void) {}
 
-static void func_c016b7(void) {}
+static void func_c016b7(void) {
+    // LoaD $10fa to A
+    // AND A with #$04
+    // Branch to next label if EQuals
+    if (addr_7e10fa & 4) {
+        // LoaD $c3 to A
+        // CoMPare A with #$01
+        // Branch to [Done] if Not Equals
+        if (addr_7e00c3 != 1) {
+            // ...
+            // [Done] Return To Subroutine
+            return;
+        }
+    }
+
+    // LoaD $0ad8 to A
+    // STore A to $75
+    addr_7e0075 = addr_7e0ad8;
+
+    // LoaD $0ad9 to A
+    // STore A to $76
+    addr_7e0076 = addr_7e0ad9;
+
+    // PusH X
+    // Jump to SubRoutine _c03cbb
+    getPointerToObjLayout();
+
+    // LoaD #$00 to A
+    // STore A to ($7f3000 + X)
+    // Pull X
+}
 
 static void func_c016da(void) {}
 
@@ -1785,7 +2056,18 @@ static void func_c01ae4(void) {
 }
 
 // Address: _1cd7
-static void updateTopChar(void) {}
+static void updateTopChar(void) {
+    // LoaD $0ada to A
+    // CoMPare A to #$07
+    // Branch to [_1ce1] if Carry Set
+        // if vehicle
+    if (addr_7e0ada < 7) {
+        // Jump to SubRoutine UpdatePlayerGfx
+        updatePlayerGfx();
+    }
+
+    // [_1ce1] Return to Subroutine
+}
 
 // Address: _1ce2
 static void updatePlayerGfx(void) {}
@@ -1806,15 +2088,155 @@ static void func_c01f57(void) {}
 
 static void func_c01fb4(void) {}
 
-static void func_c01fff(void) {}
+static void func_c01fff(void) {
+    // Load $13 to A
+    // STore A to $0284
+    addr_7e0284 = addr_7e0013;
 
-static void func_c0201f(void) {}
+    // SEt Carry flag
+    // SuBtract #$08 from A
+    // STore A to $0280
+    addr_7e0280 = addr_7e0284 - 8;
 
-static void func_c0203f(void) {}
+    // LoaD $15 to A
+    // SEt Carry flag
+    // SuBtract #$03 from A
+    // STore A to $0281
+    addr_7e0281 = addr_7e0015 - 3;
+
+    // STore A to $0285
+    addr_7e0285 = addr_7e0281;
+
+    // LoaD #$0038 to X
+    // STore X to $0282
+    addr_7e0282 = 0x38;
+
+    // STore X to $0286
+    addr_7e0286 = addr_7e0282;
+
+    // Return to Subroutine
+}
+
+static Uint8 func_c0201f(Uint16 asperagus) {
+    // Lengthen A
+    // A Shift Left x4
+    // CLear Carry flag
+    // ADd #$0008 to A with Carry
+    // STore A to $0d
+    addr_7e000d = (asperagus << 4) + 8;
+
+    // LoaD $61 to A
+    // AND A with #$001f
+    // Logical Shift A Right
+    // STore A to $0f
+    addr_7e000f = (addr_7e0061 & 0x1F) >> 1;
+
+    // LoaD $0d to A
+    // SEt Carry flag
+    // SuBtract $0f from A
+    // STore A to $13
+    addr_7e0013 = addr_7e000d - addr_7e000f;
+
+    // LoaD $06 to A
+    // Shorten A
+    // Return to Subroutine
+    return addr_7e0006;
+}
+
+static Uint8 func_c0203f(Uint16 apple) {
+    // Lengthen A
+    // A Shift Left x4
+    // CLear Carry flag
+    // ADd #$0008 to A with Carry
+    // STore A to $0d
+    addr_7e000d = (apple << 4) + 8;
+
+    // LoaD $63 to A
+    // AND A with #$001f
+    // Logical Shift A Right
+    // STore A to $0f
+    addr_7e000f = (addr_7e0063 & 0x1F) >> 1;
+
+    // LoaD $0d to A
+    // SEt Carry flag
+    // SuBtract $0f from A
+    // STore A to $15
+    addr_7e0015 = addr_7e000d - addr_7e000f;
+
+    // LoaD $06 to A
+    // Shorten A
+    // Return to Subroutine
+    return addr_7e0006;
+}
 
 static void func_c02137(void) {}
 
-static void func_c022fb(void) {}
+static void func_c022fb(void) {
+    // Store Zero to $3e
+    addr_7e003e = 0;
+
+    // [_22fd] Jump to SubRoutine WaitVBlank
+    do {
+        waitVblank();
+
+        // Jump to SubRoutine ResetSprites
+        resetSprites();
+
+        // Jump to SubRoutine _c047f7
+        func_c047f7();
+
+        // LoaD $3e to A
+        // AND A with #$18
+        // Logical Shift Right x2
+        // CLear Carry
+        // ADd $169b to A with Carry
+        // Transfer A to X
+        Uint8 x == addr_7e003e;
+        x &= 0x18;
+        x >>= 2;
+        x += addr_7e169b;
+
+        // Lengthen A
+        // LoaD #$6d70 to A
+        // STore A to $0288
+        addr_7e0288 = 0x6D70;
+
+        // LoaD #$6d78 to A
+        // STore A to $028c
+        addr_7e028c = 0x6D78;
+
+        // LoaD #$7570 to A
+        // STore A to $0290
+        addr_7e0290 = 0x7570;
+
+        // LoaD #$7578 to A
+        // STore A to $0294
+        addr_7e0294 = 0x7578;
+
+        // Load (f:_c0234c,x) to A
+        // STore A to $028a
+
+        // INCrement A
+        // STore A to $028e
+
+        // INCrement A
+        // STore A to $0292
+
+        // INCrement A
+        // STore A to $0296
+
+        // LoaD $06 to A
+        // Shorten A
+        // Jump to SubRoutine _c01ec5
+        func_c01ec5();
+
+        // LoaD $3e to A
+        // CoMPare A with #$1f
+        // Branch to [_22fd] if Not Equals
+    } while (addr_7e003e != 0x1F)
+
+    // Return To Subroutine
+}
 
 // update party sprite
 static void drawPlayerSprite(void) {}
