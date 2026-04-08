@@ -15,10 +15,10 @@ A RAM is where the game stores variable for future use. It is mapped at Bank 7E-
 |7E/0047||Index|Attacker's|
 |7E/0048||Index|Target's|
 |7E/0049||Integer|Target Offset|
-|7E/004b||Integer|AI Offset|
-|7E/004d||Bitwise|Attack Element (From Lowest: Fire, Ice, Lightning, Poison, Holy, Earth, Wind and Water)|
-|7E/004e||Integer|Hit Percent|
-|7E/004f||Integer|Evade Percent|
+|7E/004B||Integer|AI Offset|
+|7E/004D||Bitwise|Attack Element (From Lowest: Fire, Ice, Lightning, Poison, Holy, Earth, Wind and Water)|
+|7E/004E||Integer|Hit Percent|
+|7E/004F||Integer|Evade Percent|
 |7E/0050|7E/0051|Integer|Attack|
 |7E/0052|7E/0053|Integer|Attack Multiplier|
 |7E/0054|7E/0055|Integer|Defence|
@@ -254,3 +254,9 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0AFE|7E/0AFF|Integer|Timed Events End|
 
 All Vehicles (Black Chocobo, Hiryuu, Submarine, Steamship and Airship) are structured the same as Chocobo.
+
+# Music
+
+|From|To|Type|Section|
+|---|---|---|---|
+|7E/1D00||Integer|Music Data|
