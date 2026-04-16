@@ -279,7 +279,7 @@ static void showGPWindow(void); // Incomplete
 static void func_c091ed(void); // Incomplete
 static void showMapTitle(void); // Incomplete
 static void initMapTitle(void); // Incomplete
-static void drawMapTitleWindow(void); // Incomplete
+static void drawMapTitleWindow(void);
 static void hideMapTitleWindow(void); // Incomplete
 static void func_c09440(void); // Incomplete
 static void func_c094a8(void); // Incomplete
@@ -578,6 +578,9 @@ static Uint8 addr_7e10fb;
 static Uint8 addr_7e110f;
 static Uint8 addr_7e169b;
 static Uint8 addr_7e16aa;
+
+static Uint8 addrange_7e16f3[];
+static Uint8 addrange_7e1733[];
 
 // Address: _4200
 static Uint8 h_nmitimen;
@@ -2973,7 +2976,7 @@ static void drawMapTitleWindow(void) {
     // LoaD $b5 to A
     // CoMPare A with #$02
     // Branch to [@9351] if Not Equals
-    for (addr_7e00b5 = 0; addr_7e00b5 < 2; addr_7e00b5++) {
+    for (addr_7e00b5 = 0; addr_7e00b5 < 2; addr_7e00b5 ++) {
         // [@9351] Jump to SubRoutine WaitVBlank
         waitVblank();
 
@@ -2990,33 +2993,47 @@ static void drawMapTitleWindow(void) {
         // eXchange high Bytes in A with lower
         // Logical Shift A Right x2
         // Transfer A to X
-        Uint8 x = addr_7e00b5;
-        x %= 0x10;
-        x *= 0x100000;
+        Uint16 x = addr_7e00b5;
+        x *= 0x100;
+        x >>= 2;
 
         // LoaD $06 to A
         // Shorten A
+            
+            // Tile data for map window
+                // _c09399:
+                    // .byte   $d1,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7
+                    // .byte   $d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d2,$00,$00,$00,$00
+        const Uint8 DATA_c09399[32] = {0xD1, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7,
+                0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD7, 0xD2, 0, 0, 0};
+
+                // _c093b9:
+                    // .byte   $d5,$00,$02,$04,$06,$08,$0a,$0c,$0e,$10,$12,$14,$16,$18,$1a,$1c
+                    // .byte   $1e,$20,$22,$24,$26,$28,$2a,$2c,$2e,$30,$32,$d6,$00,$00,$00,$00
+        const Uint8 DATA_c093b9[32] = {0xD5, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28,
+                30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 0xD6, 0, 0, 0, 0};
 
         // LoaD #$0004 to Y
         // ...
         // INcrement Y by 2
         // ComPare Y with #$003c (#60)
         // Branch to [@936c] if Not Equals
-        for (Uint8 y = 4; y < 60; y+=2) {
+        for (Uint8 y = 4; y < 60; y += 2) {
             // [@936c] LoaD f:_c09399,x to A
-                // _c09399:
-                    // .byte   $d1,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7
-                    // .byte   $d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d7,$d2,$00,$00,$00,$00
             // STore A to ($16f3 + y)
+            addrange_7e16f3[y] = DATA_c09399[x];
 
             // LoaD #$03 to A
             // STore A to ($16f4 + y)
+            addrange_7e16f3[y + 1] = 3;
 
             // LoaD (f:_c093b9 + x) to A
             // STore A to ($1733 + y)
+            addrange_7e1733[y] = DATA_c093b9[x];
             
             // LoaD #$03 to A
             // STore A to ($1734 + y)
+            addrange_7e1733[y + 1] = 3;
 
             // INcrement X
             x ++;
