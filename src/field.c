@@ -505,6 +505,7 @@ static Uint8 addr_7e000d;
 static Uint8 addr_7e000f;
 static Uint8 addr_7e0013;
 static Uint8 addr_7e0015;
+static Uint16 addr_7e002c;
 static Uint8 addr_7e0037;
 static Uint8 addr_7e0038;
 static Uint8 addr_7e0039;
@@ -524,6 +525,7 @@ static Uint8 addr_7e0088;
 static Uint8 addr_7e0089;
 static Uint8 addr_7e00a5;
 static Uint8 addr_7e00a6;
+static Uint8 addr_7e00ab;
 static Uint8 addr_7e00b4;
 static Uint8 addr_7e00b5;
 static Uint8 addr_7e00b9;
@@ -2975,7 +2977,113 @@ static void showMapTitle(void) {
     // [DONE] Return To Subroutine
 }
 
-static void initMapTitle(void) {}
+// Address: _928c
+static void initMapTitle(void) {
+    // Jump to SubRoutine _c08f54
+    func_c08f54();
+
+    // LoaD $57 to A
+    // Branch to [@929d] if EQuals
+    if (addr_7e0057 == 0) {
+        // ...
+        // [@929d] LoaD $110e to A
+        // Branch to [@92a3] if Not Equals
+        // [@92a2] Return To Subroutine
+        if (addr_7e110e) return;
+    }
+
+    // LoaD $16a0 to A
+    // Branch to [@92a2] if EQuals
+    if (addr_7e16a0 == 0) return;
+
+    // LoaD $110e to A
+    // BRAnch to [@92a3]
+    // ...
+    // [@92a3] Lengthen A
+    // A Shift Left
+    // Transfer A to X
+    // LoaD (f:MapTitlePtrs+2,x) to A
+    // SEt Carry
+    // SuBtract (f:MapTitlePtrs,x) from A with Carry
+    // STore A to $2c
+    // LoaD (f:MapTitlePtrs,x) to A
+    // Transfer A to X
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $06 to Y
+    
+    // [@92bd] LoaD (f:MapTitle,x) to A
+    do {
+        // CoMPare A with #$1e
+        // Branch to [@92cc] if Not Equals
+        // LoaD #$01 to A
+        // STore A to (wDlgDakutenBuf,y)
+        // BRAnch to [@92d5]
+        // [@92cc] CoMPare A to #$1f
+        // Branch to [@92e2] if Not Equals
+        // LoaD @#02 to A
+        // STore A to (wDlgDakutenBuf,y)
+        // [@92d5] INcrement X
+        // DECrement $2c
+        // LoaD (f:MapTitle,x) to A
+        // STore A to (wDlgBuf,y)
+        // INcrement Y
+        // BRAnch to [@92e6]
+        // [@92e2] STore A to (wDlgBuf,y)
+        // INcrement Y
+        // [@92e6] INcrement X
+        // DECrement $2c
+        
+    // Branch to [@92bd] if Not Equals
+    } 
+
+    // Transfer Y to A
+    // STore A to hWRMPYA
+    // LoaD #$06 to A
+    // STore A to hWRMPYB
+    // No Operations x4
+    // LoaD #$60 to A
+    // SEt Carry flag
+    // SuBtract hRDMPYL from A with Carry
+    // STore A to hWRDIVL
+    // STore Zero to hWRDIVH
+    // LoaD #$10 to A
+    // STore A to hWRDIVB
+    // No Operations x8
+    // LoaD hRDMPYL to A
+    // STore A to $a8
+    // Lengthen A
+    // LoaD hRDDIVL to A
+    // A Shift Left x6
+    // CLear Carry flag
+    // ADd #$3000 to A with Carry
+    // STore A to $a9
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD #$10 to A
+    Uint8 aang = 0x10;
+
+    // LoaD $06 to Y
+    // STore Y to $ab
+    addr_7e00ab = addr_7e0006;
+
+    // [@9331] PusH A
+    do {
+        // Jump to SubRoutine _c08d3b
+        func_c08d3b();
+
+        // Jump to SubRoutine _c08e23
+        func_c08e23();
+
+        // PulL A
+        // DECrement A
+        aang --;
+
+    // Branch to [@9331] if Not Equals
+    } while (aang);
+
+    // Return to Subroutine
+}
 
 // Address: _933d
 // Output: X?
