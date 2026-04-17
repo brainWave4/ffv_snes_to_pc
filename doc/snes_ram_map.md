@@ -1,61 +1,70 @@
+# About
 A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F. It is also mirrored at Bank 00-3F and 80-BF, both by $0000 - $1FFFF, making the addresses interchangable for ease of access.
 
-# Battle
-|From|To|Type|Section|
-|---|---|---|---|
-|7E/0020||Integer|Temproary Attached Spell|
-|7E/0021||Integer|Temproary Indicator to Skip Name|
-|7E/0022||Integer|Temproary Party Targets, Monster AI when Charmed|
-|7E/0023||Integer|Temproary Monster Targets|
-|7E/0032|7E/0033|Integer|Attacker Offset|
-|7E/0034|7E/0035|Integer|Spell Offset|
-|7E/0036|7E/0037|Integer|Timer Offset|
-|7E/0039||Integer|Attacker Offset 2|
-|7E/003A|7E/003B|Integers|RNG|
-|7E/0047||Index|Attacker's|
-|7E/0048||Index|Target's|
-|7E/0049||Integer|Target Offset|
-|7E/004B||Integer|AI Offset|
-|7E/004D||Bitwise|Attack Element (From Lowest: Fire, Ice, Lightning, Poison, Holy, Earth, Wind and Water)|
-|7E/004E||Integer|Hit Percent|
-|7E/004F||Integer|Evade Percent|
-|7E/0050|7E/0051|Integer|Attack|
-|7E/0052|7E/0053|Integer|Attack Multiplier|
-|7E/0054|7E/0055|Integer|Defence|
-|7E/0056|7E/0057|Flag|Attack Missed|
-|7E/0057|7E/0059|Integers|Parameters for Various Purposes|
-|7E/005A||Integer|Sword Block|
-|7E/005B||Integer|Knife Block|
-|7E/005C||Integer|Elf Cape|
-|7E/005D||Integer|Shield Block|
-|7E/005E||Integer|Blade Grasp|
-|7E/005F||Integer|Critical Hit|
-|7E/0060||Flag|Buffed by Spellblade|
-|7E/0061||Flag|Is Target Killed|
-|7E/0062||Flag|Does Attack Heal Instead|
-|7E/0063||Flag|Targets Attacker|
-|7E/0065||Integer|Monster Targets|
-|7E/0066||Integer|Party Targets|
-|7E/013B|7E/0142|IDs|Field Items Won|
-|7E/04F0|7E/04F1|ID|Encounter Index|
-|7E/04F2||ID|Terrain Type|
+# List
+## 0xxx
+### 0xx
+|From|To|Type|Module|Content|
+|---|---|---|---|---|
+|7E/0020||Value|Battle|Temproary Attached Spell|
+|7E/0021||Value|Battle|Temproary Indicator to Skip Name|
+|7E/0022||Value|Battle|Temproary Party Targets; Monster AI when Charmed|
+|7E/0023||Value|Battle|Temproary Monster Targets|
+|7E/0032|7E/0033|Value|Battle|Attacker Offset|
+|7E/0034|7E/0035|Value|Battle|Spell Offset|
+|7E/0036|7E/0037|Value|Battle|Timer Offset|
+|7E/0039||Value|Battle|Attacker Offset 2|
+|7E/003A|7E/003B|Value|Battle|RNG (1 byte each)|
+|7E/0047||Index|Battle|Attacker's|
+|7E/0048||Index|Battle|Target's|
+|7E/0049||Value|Battle|Target Offset|
+|7E/004B||Value|Battle|AI Offset|
+|7E/004D||Bitwise|Battle|Attack Element|
+|7E/004E||Value|Battle|Hit Percent|
+|7E/004F||Value|Battle|Evade Percent|
+|7E/0050|7E/0051|Value|Battle|Attack|
+|7E/0052|7E/0053|Value|Battle|Attack Multiplier|
+|7E/0054|7E/0055|Value|Battle|Defence|
+|7E/0056|7E/0057|Flag|Battle|Attack Missed|
+|7E/0057|7E/0059|Value|Battle|Parameters (1 byte each) for Various Purposes|
+|7E/005A||Value|Battle|Sword Block|
+|7E/005B||Value|Battle|Knife Block|
+|7E/005C||Value|Battle|Elf Cape|
+|7E/005D||Value|Battle|Shield Block|
+|7E/005E||Value|Battle|Blade Grasp|
+|7E/005F||Value|Battle|Critical Hit|
+|7E/0060||Flag|Battle|Buffed by Spellblade|
+|7E/0061||Flag|Battle|Is Target Killed|
+|7E/0062||Flag|Battle|Does Attack Heal Instead|
+|7E/0063||Flag|Battle|Targets Attacker|
+|7E/0065||Value|Battle|Monster Targets|
+|7E/0066||Value|Battle|Party Targets|
+### 1xx
+|From|To|Type|Module|Content|
+|---|---|---|---|---|
+|7E/013B|7E/0142|ID|Battle|Field Items Won|
 
-# Menu
-# For Saving
-These range of addresses are to be stored in a save slot address when saving the game.
+### 4xx
+|From|To|Type|Module|Content|
+|---|---|---|---|---|
+|7E/04F0|7E/04F1|ID|Battle|Encounter Index|
+|7E/04F2||ID|Battle|Terrain Type|
 
-## Character Stats
+### 5xx - Axx
+These range of addresses are to be stored in a save slot address when saving the game. As the result, they are all to be put into the Menu Module.
+
+#### Character Stats
 For Character 1:
 |From|To|Type|Section|
 |---|---|---|---|
-|7E/0500||Bitwise|ID, Gender, In party, Row|
+|7E/0500||Combinations|ID, Gender, In party, Row|
 |7E/0501||ID|Job|
-|7E/0502||Integer|Level|
-|7E/0503|7E/0505|Integer|Exp|
-|7E/0506|7E/0507|Integer|Current HP|
-|7E/0508|7E/0509|Integer|Max HP|
-|7E/050A|7E/050B|Integer|Current MP|
-|7E/050C|7E/050D|Integer|Max MP|
+|7E/0502||Value|Level|
+|7E/0503|7E/0505|Value|Exp|
+|7E/0506|7E/0507|Value|Current HP|
+|7E/0508|7E/0509|Value|Max HP|
+|7E/050A|7E/050B|Value|Current MP|
+|7E/050C|7E/050D|Value|Max MP|
 |7E/050E||ID|Head Equipment|
 |7E/050F||ID|Body Equipment|
 |7E/0510||ID|Accessory Equipment|
@@ -76,19 +85,19 @@ For Character 1:
 |7E/051F||Bitwise|Damage Modifier|
 |7E/0520|7E/0521|Bitwise|Innate Abilities|
 |7E/0522||Bitwise|Equipment Elements|
-|7E/0523||Integer|Equipment Weight|
-|7E/0524||Integer|Base Strength|
-|7E/0525||Integer|Base Agility|
-|7E/0526||Integer|Base Stamina|
-|7E/0527||Integer|Base Magic|
-|7E/0528||Integer|Current Strength|
-|7E/0529||Integer|Current Agility|
-|7E/052A||Integer|Current Stamina|
-|7E/052B||Integer|Current Magic|
-|7E/052C||Integer|Evade Chance|
-|7E/052D||Integer|Defense|
-|7E/052E||Integer|Magic Evade Chance|
-|7E/052F||Integer|Magic Defense|
+|7E/0523||Value|Equipment Weight|
+|7E/0524||Value|Base Strength|
+|7E/0525||Value|Base Agility|
+|7E/0526||Value|Base Stamina|
+|7E/0527||Value|Base Magic|
+|7E/0528||Value|Current Strength|
+|7E/0529||Value|Current Agility|
+|7E/052A||Value|Current Stamina|
+|7E/052B||Value|Current Magic|
+|7E/052C||Value|Evade Chance|
+|7E/052D||Value|Defense|
+|7E/052E||Value|Magic Evade Chance|
+|7E/052F||Value|Magic Defense|
 |7E/0530||Bitwise|Elemental Absorb|
 |7E/0531||Bitwise|Elemental Evasion|
 |7E/0532||Bitwise|Elemental Immunity|
@@ -99,19 +108,19 @@ For Character 1:
 |7E/0537||Bitwise|Status Resistance 3|
 |7E/0538||Bitwise|Weapon Properties|
 |7E/0539||Bitwise|Equipment Properties|
-|7E/053A||Integer|Job Level|
-|7E/053B|7E/053C|Integer|ABP|
+|7E/053A||Value|Job Level|
+|7E/053B|7E/053C|Value|ABP|
 |7E/053D|7E/053F|Bitwise|Magic Level Progression|
 |7E/0540|7E/0543|Bitwise|Equipment Category|
-|7E/0544|7E/0545|Integer|Attack|
+|7E/0544|7E/0545|Value|Attack|
 |7E/0546||Bitwise|Previous Command|
 |7E/0546||Bitwise|Previous Attack|
 |7E/0546||Bitwise|Previous Item|
 |7E/0546||Bitwise|Previous Element|
-|7E/054A||Integer|Freelancer Strength|
-|7E/054B||Integer|Freelancer Agility|
-|7E/054C||Integer|Freelancer Stamina|
-|7E/054D||Integer|Freelancer Magic|
+|7E/054A||Value|Freelancer Strength|
+|7E/054B||Value|Freelancer Agility|
+|7E/054C||Value|Freelancer Stamina|
+|7E/054D||Value|Freelancer Magic|
 |7E/054E|7E/054F|Bitwise|Freelancer Innate Abilities|
 
 For the rest:
@@ -123,45 +132,45 @@ For the rest:
 
 They are structured the same as Character 1.
 
-## Items
+#### Items
 |From|To|Type|Section|
 |---|---|---|---|
-|7E/0640|7E/073F|IDs|Up to 256 kinds of Items|
-|7E/0740|7E/038F|Integers|Number of said Items|
+|7E/0640|7E/073F|ID|Up to 256 kinds of Items|
+|7E/0740|7E/038F|Value|Number of said Items|
 
-## Job Progression
+#### Job Progression
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0840|7E/0843|Bitwise|Jobs Unlocked|
-|7E/0843|7E/0844|Integer|Character 1's Knight Lv, ABP|
-|7E/0845|7E/0846|Integer|Character 1's Monk Lv, ABP|
-|7E/0847|7E/0848|Integer|Character 1's Theif Lv, ABP|
-|7E/0849|7E/084A|Integer|Character 1's Dragoon Lv, ABP|
-|7E/084B|7E/084C|Integer|Character 1's Ninja Lv, ABP|
-|7E/084D|7E/084E|Integer|Character 1's Samurai Lv, ABP|
-|7E/084F|7E/0850|Integer|Character 1's Berserker Lv, ABP|
-|7E/0851|7E/0852|Integer|Character 1's Ranger Lv, ABP|
-|7E/0853|7E/0854|Integer|Character 1's Mystic Knight Lv, ABP|
-|7E/0855|7E/0856|Integer|Character 1's White Mage Lv, ABP|
-|7E/0857|7E/0858|Integer|Character 1's Black Mage Lv, ABP|
-|7E/0859|7E/085A|Integer|Character 1's Time Mage Lv, ABP|
-|7E/085B|7E/085C|Integer|Character 1's Summoner Lv, ABP|
-|7E/085D|7E/085E|Integer|Character 1's Blue Mage Lv, ABP|
-|7E/085F|7E/0860|Integer|Character 1's Red Mage Lv, ABP|
-|7E/0861|7E/0862|Integer|Character 1's Beastmaster Lv, ABP|
-|7E/0863|7E/0864|Integer|Character 1's Chemist Lv, ABP|
-|7E/0865|7E/0866|Integer|Character 1's Geomancer Lv, ABP|
-|7E/0867|7E/0868|Integer|Character 1's Bard Lv, ABP|
-|7E/0869|7E/086A|Integer|Character 1's Dancer Lv, ABP|
-|7E/086B|7E/086C|Integer|Character 1's Mime Lv, ABP|
-|7E/086D|7E/086E|Integer|Character 1's Freelancer Lv, ABP (useless)|
-|7E/086F|7E/089A|Integers|Character 2's Jobs Lv, ABP|
-|7E/089B|7E/08C6|Integers|Character 3's Jobs Lv, ABP|
-|7E/08C7|7E/08F2|Integers|Character 4's Jobs Lv, ABP|
-|7E/08F3||Integer|Bart's Number of Abilities|
-|7E/08F4||Integer|Lenna's Number of Abilities|
-|7E/08F5||Integer|Galuf/Krile's Number of Abilities|
-|7E/08F6||Integer|Faris's Number of Abilities|
+|7E/0843|7E/0844|Combinations|Character 1's Knight Lv, ABP|
+|7E/0845|7E/0846|Combinations|Character 1's Monk Lv, ABP|
+|7E/0847|7E/0848|Combinations|Character 1's Theif Lv, ABP|
+|7E/0849|7E/084A|Combinations|Character 1's Dragoon Lv, ABP|
+|7E/084B|7E/084C|Combinations|Character 1's Ninja Lv, ABP|
+|7E/084D|7E/084E|Combinations|Character 1's Samurai Lv, ABP|
+|7E/084F|7E/0850|Combinations|Character 1's Berserker Lv, ABP|
+|7E/0851|7E/0852|Combinations|Character 1's Ranger Lv, ABP|
+|7E/0853|7E/0854|Combinations|Character 1's Mystic Knight Lv, ABP|
+|7E/0855|7E/0856|Combinations|Character 1's White Mage Lv, ABP|
+|7E/0857|7E/0858|Combinations|Character 1's Black Mage Lv, ABP|
+|7E/0859|7E/085A|Combinations|Character 1's Time Mage Lv, ABP|
+|7E/085B|7E/085C|Combinations|Character 1's Summoner Lv, ABP|
+|7E/085D|7E/085E|Combinations|Character 1's Blue Mage Lv, ABP|
+|7E/085F|7E/0860|Combinations|Character 1's Red Mage Lv, ABP|
+|7E/0861|7E/0862|Combinations|Character 1's Beastmaster Lv, ABP|
+|7E/0863|7E/0864|Combinations|Character 1's Chemist Lv, ABP|
+|7E/0865|7E/0866|Combinations|Character 1's Geomancer Lv, ABP|
+|7E/0867|7E/0868|Combinations|Character 1's Bard Lv, ABP|
+|7E/0869|7E/086A|Combinations|Character 1's Dancer Lv, ABP|
+|7E/086B|7E/086C|Combinations|Character 1's Mime Lv, ABP|
+|7E/086D|7E/086E|Combinations|Character 1's Freelancer Lv, ABP (useless)|
+|7E/086F|7E/089A|Combinations|Character 2's Jobs Lv, ABP|
+|7E/089B|7E/08C6|Combinations|Character 3's Jobs Lv, ABP|
+|7E/08C7|7E/08F2|Combinations|Character 4's Jobs Lv, ABP|
+|7E/08F3||Value|Bart's Number of Abilities|
+|7E/08F4||Value|Lenna's Number of Abilities|
+|7E/08F5||Value|Galuf/Krile's Number of Abilities|
+|7E/08F6||Value|Faris's Number of Abilities|
 |7E/08F7|7E/090A|Bitwise|Bart's Unlocked Abilities|
 |7E/090B|7E/091E|Bitwise|Lenna's Unlocked Abilities|
 |7E/091F|7E/0932|Bitwise|Galuf/Krile's Unlocked Abilities|
@@ -171,21 +180,21 @@ For an integer used for a Job's Lv and ABP, the highest 4 bits are used for the 
 
 Jobs Lv and ABP for the rest of the characters are ordered the same as Character 1's.
 
-## Game Progression
+#### Game Progression
 |From|To|Type|Section|
 |---|---|---|---|
-|7E/0947|7E/0949|Integer|Gil
-|7E/094A|7E/094D|Integer|Time Played (in Frames)
-|7E/094E|7E/094F|Integer|Number of Enemies Defeated
-|7E/0950|7E/096F|Integer|Magic Unlocked
+|7E/0947|7E/0949|Value|Gil
+|7E/094A|7E/094D|Value|Time Played (in Frames)
+|7E/094E|7E/094F|Value|Number of Enemies Defeated
+|7E/0950|7E/096F|Value|Magic Unlocked
 
-## Config
+#### Config
 |From|To|Type|Section|
 |---|---|---|---|
-|7E/0970||Integer|Command Set, Message Speed, Battle Mode, Battle Speed|
-|7E/0971|7E/0972|Integer|Window Color (in 555 RBG)|
+|7E/0970||Combinations|Command Set, Message Speed, Battle Mode, Battle Speed|
+|7E/0971|7E/0972|555 RGB|Window Color|
 |7E/0973||Bitwise|Re-Equip, Sound, Cursor, Gauge Display|
-|7E/0974||Bitwise|Controller(Normal/Custom, Single/Multi)|
+|7E/0974||Bitwise|Controller (Normal/Custom, Single/Multi)|
 |7E/0975||Bitwise|Button Configure A|
 |7E/0976||Bitwise|Button Configure B|
 |7E/0977||Bitwise|Button Configure X|
@@ -202,7 +211,7 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0982||Bitwise|Character 3 Shortcut Commands Placement|
 |7E/0983||Bitwise|Character 4 Shortcut Commands Placement|
 
-## Names
+#### Names
 |From|To|Type|Section|
 |---|---|---|---|
 |7E/0990|7E/0995|Text|Bartz's|
@@ -211,18 +220,18 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/09A2|7E/09A7|Text|Faris's|
 |7E/09A8|7E/09B3|Text|Krile's|
 
-## Battle Progression
+#### Battle Progression
 |From|To|Type|Section|
 |---|---|---|---|
-|7E/09B4||Integer|Magic Lamp|
-|7E/09B5||Integer|Number of Escapes|
-|7E/09B6||Integer|Wonder Rod Magic|
-|7E/09C0|7E/09C1|Integer|Total Number of Battles|
-|7E/09C2|7E/09C3|Integer|Total Times Saves|
-|7E/09C4||Integer|Battle Results|
-|7E/09C5|7E/09D3|Bitwises|Battle Events|
+|7E/09B4||Value|Magic Lamp|
+|7E/09B5||Value|Number of Escapes|
+|7E/09B6||Value|Wonder Rod Magic|
+|7E/09C0|7E/09C1|Value|Total Number of Battles|
+|7E/09C2|7E/09C3|Value|Total Times Saves|
+|7E/09C4||Value|Battle Results|
+|7E/09C5|7E/09D3|Bitwise|Battle Events|
 
-## Field
+#### Field
 
 |From|To|Type|Section|
 |---|---|---|---|
@@ -230,33 +239,33 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 |7E/0A14|7E/0AD3|Bitwises|Events Cleared|
 |7E/0AD4|7E/0AD5|ID|Current Town/Dungeon|
 |7E/0AD6|7E/0AD7|ID|Current World|
-|7E/0AD8||Integer|Player's X Position|
-|7E/0AD9||Integer|Player's Y Position|
-|7E/0ADA||Integer|Character Representing Player|
-|7E/0ADB||Integer|Player's Facing Direction|
-|7E/0ADC||Integer|Current Vehicle|
+|7E/0AD8||Value|Player's X Position|
+|7E/0AD9||Value|Player's Y Position|
+|7E/0ADA||Value|Character Representing Player|
+|7E/0ADB||Value|Player's Facing Direction|
+|7E/0ADC||Value|Current Vehicle|
 |7E/0ADD||ID|Chocobo Settings|
-|7E/0ADE||Integer|Chocobo's Height (highest bit toggles visibility)|
-|7E/0ADF||Integer|Chocobo's X Position|
-|7E/0AE0||Integer|Chocobo's Y Position|
-|7E/0AE1|7E/0AE4|Integers|Black Chocobo|
-|7E/0AE5|7E/0AE8|Integers|Hiryuu|
-|7E/0AE9|7E/0AEC|Integers|Submarine|
-|7E/0AED|7E/0AF0|Integers|Steamship|
-|7E/0AF1|7E/0AF4|Integers|Airship|
+|7E/0ADE||Value|Chocobo's Height (highest bit toggles visibility)|
+|7E/0ADF||Value|Chocobo's X Position|
+|7E/0AE0||Value|Chocobo's Y Position|
+|7E/0AE1|7E/0AE4|Values|Black Chocobo|
+|7E/0AE5|7E/0AE8|Values|Hiryuu|
+|7E/0AE9|7E/0AEC|Values|Submarine|
+|7E/0AED|7E/0AF0|Values|Steamship|
+|7E/0AF1|7E/0AF4|Values|Airship|
 |7E/0AF5|7E/0AF6|ID|Teleport Map|
-|7E/0AF7||Integer|Teleport Map X|
-|7E/0AF8||Integer|Teleport Map Y|
-|7E/0AF9||Integer|Random Number Seed|
-|7E/0AFA||Integer|Walking Speed|
-|7E/0AFB||Integer|Enable Timer|
-|7E/0AFC|7E/0AFD|Integer|Timed Events Timer|
-|7E/0AFE|7E/0AFF|Integer|Timed Events End|
+|7E/0AF7||Value|Teleport Map X|
+|7E/0AF8||Value|Teleport Map Y|
+|7E/0AF9||Value|Random Number Seed|
+|7E/0AFA||Value|Walking Speed|
+|7E/0AFB||Value|Enable Timer|
+|7E/0AFC|7E/0AFD|Value|Timed Events Timer|
+|7E/0AFE|7E/0AFF|Value|Timed Events End|
 
 All Vehicles (Black Chocobo, Hiryuu, Submarine, Steamship and Airship) are structured the same as Chocobo.
 
-# Music
+## 1xxx
 
-|From|To|Type|Section|
-|---|---|---|---|
-|7E/1D00||Integer|Music Data|
+|From|To|Type|Module|Section|
+|---|---|---|---|---
+|7E/1D00||Value|Sound|Music Data|
