@@ -277,7 +277,7 @@ static void showYesNoWindow(void); // Incomplete
 static void func_c090ad(void); // Incomplete
 static void showGPWindow(void); // Incomplete
 static void func_c091ed(void); // Incomplete
-static void showMapTitle(void); // Incomplete
+static void showMapTitle(void);
 static void initMapTitle(void); // Incomplete
 static void drawMapTitleWindow(void);
 static void hideMapTitleWindow(void); // Incomplete
@@ -522,6 +522,7 @@ static Uint8 addr_7e0075;
 static Uint8 addr_7e0076;
 static Uint8 addr_7e0088;
 static Uint8 addr_7e0089;
+static Uint8 addr_7e00a5;
 static Uint8 addr_7e00a6;
 static Uint8 addr_7e00b4;
 static Uint8 addr_7e00b5;
@@ -567,16 +568,19 @@ static Uint8 addr_7e0adc;
 static Uint8 addr_7e0af5;
 static Uint8 addr_7e0af7;
 static Uint8 addr_7e0af8;
+static Uint8 addr_7e0b53;
+static Uint8 addr_7e0b5f;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
-static Uint8 addr_7e0b5f;
 static Uint8 addr_7e1088;
 static Uint8 addr_7e1089;
+static Uint8 addr_7e10b8;
 static Uint8 addr_7e10fa;
 static Uint8 addr_7e10fb;
 static Uint8 addr_7e110f;
 static Uint8 addr_7e169b;
+static Uint8 addr_7e16a0;
 static Uint8 addr_7e16aa;
 
 static Uint8 addrange_7e16f3[];
@@ -2934,22 +2938,39 @@ static void func_c091ed(void) {}
 static void showMapTitle(void) {
     // LoaD $0b53 to A
     // Branch to [DONE] if EQuals
+    if (addr_7e0b53) {
     
-    // LoaD $16a0 to A
-    // Branch to next label if EQuals (if map title is disabled)
-    
-    // LoaD #$01 to A
-    // STore A to $b4
+        // LoaD $16a0 to A
+        // Branch to next label if EQuals (if map title is disabled)
+        if (addr_7e16a0) {
+        
+            // LoaD #$01 to A
+            // STore A to $b4
+            addr_7e00b4 = 1;
 
-    // Jump to SubRoutine DrawMapTitleWindow
-    // Jump to SubRoutine _c04ac1 (wait for keypress)
-    // Jump to SubRoutine HideMapTitleWindow
-    // [LBL] STore Zero to $16a0
-    // INCrement $a5
-    // Jump to SubRoutine WaitVBlank
-    
-    // LoaD #$01 A
-    // STore A to $10b8
+            // Jump to SubRoutine DrawMapTitleWindow
+            drawMapTitleWindow();
+
+            // Jump to SubRoutine _c04ac1 (wait for keypress)
+            waitForKeypress();
+
+            // Jump to SubRoutine HideMapTitleWindow
+            hideMapTitleWindow();
+        }
+
+        // [LBL] STore Zero to $16a0
+        addr_7e16a0 = 0;
+
+        // INCrement $a5
+        addr_7e00a5 ++;
+
+        // Jump to SubRoutine WaitVBlank
+        waitVblank();
+        
+        // LoaD #$01 A
+        // STore A to $10b8
+        addr_7e10b8 = 1;
+    }
 
     // [DONE] Return To Subroutine
 }
@@ -3059,23 +3080,39 @@ static void hideMapTitleWindow(void) {
     // CLear Carry flag
     // ADd #$01 to A with Carry
     // STore A to $76
+    addr_7e0076 = addr_7e00b4 + addr_7e0ad9 + 1;
 
     // LoaD $0ad8 to A
     // STore A to $75
+    addr_7e0075 = addr_7e0ad8;
 
-    // [LBL] Jump to SubRoutine WaitVBlank
-    // LoaD #$01 to A
+    do {
+        // [LBL] Jump to SubRoutine WaitVBlank
+        waitVblank();
 
-    // LoaD $06 to X
-    // STore X to $71
+        // LoaD #$01 to A
 
-    // Jump to SubRoutine _c0707d
-    // INCrement $a6
-    // DECrement $76
-    // DECrement $b5
+        // LoaD $06 to X
+        // STore X to $71
+        addr_7e0071 = addr_7e0006;
+
+        // Jump to SubRoutine _c0707d
+            // Input: A?
+        func_c0707d();
+
+        // INCrement $a6
+        addr_7e00a6 ++;
+
+        // DECrement $76
+        addr_7e0076 --;
+
+        // DECrement $b5
+        addr_7e00b5 --;
 
     // LoaD $b5 to A
     // Branch to previous label if Not Equals
+    } while (addr_7e00b5);
+
     // Return to SubRoutine
 }
 
