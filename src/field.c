@@ -168,8 +168,8 @@ static void initInterrupts(void); // Incomplete
 static void initHardware(void);
 static void generateRandom(void); // Incomplete
 static void crystalShatterAnim(void); // Incomplete
-static void loadMap(void); // Incomplete
-static void loadMapNoFade(void); // Incomplete
+static void loadMap(void);
+static void loadMapNoFade(void);
 static void reloadMap(void);
 static void loadParentMap(void);
 static void func_c054a7(void); // Incomplete
@@ -2637,9 +2637,43 @@ static void generateRandom(void) {}
 
 static void crystalShatterAnim(void) {}
 
-static void loadMap(void) {}
+static void loadMap(void) {
+    // Jump to SubRoutine FadeOutMap
+    fadeOutMap();
 
-static void loadMapNoFade(void) {}
+    // ::LoadMapNoFade:
+    loadMapNoFade();
+}
+
+static void loadMapNoFade(void) {
+    // LoaD $0ad6 (map index) to X
+    // ComPare X with #$0005
+    // Branch to next label if Carry Set
+    if (map_i < 5) {
+
+        // (World Map)
+        // Jump to SubRoutine LoadWorldMap
+        loadWorldMap();
+
+        // Jump to SubRoutine FadeInMap
+        fadeInMap();
+
+        // Return to SubRoutine
+        return;
+    }
+
+    // (Sub Map)
+    // [LBL] Jump to SubRoutine LoadSubMap
+    loadSubMap();
+
+    // Jump to SubRoutine FadeInMap
+    fadeInMap();
+
+    // Jump to SubRoutine ShowMapTitle
+    showMapTitle();
+
+    // Return to SubRoutine
+}
 
 static void reloadMap(void) {
     // LoaD $0ad6 from X
