@@ -50,7 +50,7 @@ A RAM is where the game stores variable for future use. It is mapped at Bank 7E-
 |7E/04F0|7E/04F1|ID|Battle|Encounter Index|
 |7E/04F2||ID|Battle|Terrain Type|
 
-### 5xx - Axx
+### 5xx - Bxx For Saving
 These range of addresses are to be stored in a save slot address when saving the game. As the result, they are all to be put into the Menu Module.
 
 #### Character Stats
