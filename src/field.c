@@ -174,12 +174,12 @@ static void reloadMap(void);
 static void loadParentMap(void);
 static void func_c054a7(void); // Incomplete
 static void func_c054f6(void); // Incomplete
-static void loadWorldMap(void); // Incomplete
+static void loadWorldMap(void);
 static void reloadWorldMap(void); // Incomplete
 static void loadWorldMapPalette(void); // Incomplete
-static void loadSubMap(void); // Incomplete
-static void reloadSubMap(void); // Incomplete
-static void func_c057f9(void); // Incomplete
+static void loadSubMap(void);
+static void reloadSubMap(void);
+static void func_c057f9(void);
 static void initAutoScroll(void); // Incomplete
 static void loadMapLayout(void); // Incomplete
 static void loadMapPalette(void); // Incomplete
@@ -515,6 +515,7 @@ static Uint8 addr_7e0053;
 static Uint8 addr_7e0055;
 static Uint8 addr_7e0058;
 static Uint8 addr_7e005d;
+static Uint8 addr_7e005e;
 static Uint8 addr_7e0061;
 static Uint8 addr_7e0063;
 static Uint8 addr_7e006e;
@@ -532,6 +533,7 @@ static Uint8 addr_7e00b9;
 static Uint8 addr_7e00ba;
 static Uint8 addr_7e00bc;
 static Uint8 addr_7e00bd;
+static Uint8 addr_7e00bf;
 static Uint8 addr_7e00c2;
 static Uint8 addr_7e00c3;
 static Uint8 addr_7e00c7;
@@ -558,6 +560,7 @@ static Uint16 addr_7e0296;
 static Uint8 addr_7e0947;
 static Uint8 addr_7e0948;
 static Uint8 addr_7e0949;
+static Uint8 addr_7e0971;
 
 // Address: _0ad6
 static Uint8 map_i;
@@ -575,13 +578,17 @@ static Uint8 addr_7e0b5f;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
+static Uint8 addr_7e0c02;
+static Uint8 addr_7e100f;
 static Uint8 addr_7e1088;
 static Uint8 addr_7e1089;
 static Uint8 addr_7e10b8;
 static Uint8 addr_7e10fa;
 static Uint8 addr_7e10fb;
 static Uint8 addr_7e110f;
+static Uint8 addr_7e1125;
 static Uint8 addr_7e169b;
+static Uint8 addr_7e169f;
 static Uint8 addr_7e16a0;
 static Uint8 addr_7e16aa;
 
@@ -2731,17 +2738,225 @@ static void func_c054a7(void) {}
 
 static void func_c054f6(void) {}
 
-static void loadWorldMap(void) {}
+// Address: _5528
+static void loadWorldMap(void) {
+    // LoaD $0adc to A
+    // Branch to ReloadWorldMap if EQuals
+        // no vehicle
+    if (addr_7e0adc) {
+        // LoaD #$03 to A
+        // STore A to $0adb
+        addr_7e0adb = 3;
+    }
 
+    // ::ReloadWorldMap:
+    reloadWorldMap();
+}
+
+// Address: _5532
 static void reloadWorldMap(void) {}
 
 static void loadWorldMapPalette(void) {}
 
-static void loadSubMap(void) {}
+static void loadSubMap(void) {
+    // LoaD #$01 to A
+    // STore A to $53
+    addr_7e0053 = 1;
 
-static void reloadSubMap(void) {}
+    // STore Zero to $169f
+        // clear hiryuu flag
+    addr_7e169f = 0;
 
-static void func_c057f9(void) {}
+    // LoaD $b9 to A
+    // STore A to $0adb
+    addr_7e0adb = addr_7e00b9;
+
+    // INCrement A
+    // STore A to $bf
+    addr_7e00bf = addr_7e00b9 + 1;
+
+    // Jump to SubRoutine _c054a7
+    func_c054a7();
+
+    // Jump to SubRoutine _c05af6
+    loadMapProps();
+
+    // Jump to SubRoutine _c05adb
+    func_c05adb();
+
+    // Jump to SubRoutine _c03eaa
+    loadNPCs();
+
+    // Jump to SubRoutine LoadSubTileset
+    loadSubTileset();
+
+    // Jump to SubRoutine _c05875
+    loadMapLayout();
+
+    // Jump to SubRoutine _c058db
+    loadMapPalette();
+
+    // Jump to SubRoutine _c05cbd
+    loadTreasureChests();
+
+    // Jump to SubRoutine _c063d4
+    func_c063d4();
+
+    // Jump to SubRoutine _c0580e
+    initAutoScroll();
+
+    // Jump to SubRoutine _c057f9
+    func_c057f9();
+
+    // ::ReloadSubMap:
+    reloadSubMap();
+}
+
+static void reloadSubMap(void) {
+    // Jump to SubRoutine _c054f6
+    func_c054f6();
+
+    // LoaD $0971 to X
+    // STore X to $0c02
+        // set window color
+    addr_7e0c02 = addr_7e0971;
+
+    // Jump to SubRoutine _c0591a
+    loadMapGfx();
+
+    // LoaD $55 to A
+    // Branch to [@5792] if EQuals
+    if (addr_7e0055) {
+        
+        // Jump to SubRoutine _c05adb
+        func_c05adb();
+
+        // Jump to SubRoutine _c03d28
+        loadNPCGfx();
+    }
+
+    // [@5792] STore Zero to $ba
+    addr_7e00ba = 0;
+
+    // LoaD #$0002 to X
+    // STore X to $c0
+    addr_7e00c0 = 2;
+
+    // Jump to SubRoutine _c05b2d
+    initMapColorMathSettings();
+
+    // Jump to SubRoutine LoadSubTileset
+    loadSubTileset();
+
+    // Jump to SubRoutine _c06d0c
+    func_c06d0c();
+
+    // Jump to SubRoutine _c06c6a
+    func_c06c6a();
+
+    // Jump to SubRoutine _c08c92
+    func_c08c92();
+
+    // Jump to SubRoutine _c08c2e
+    func_c08c2e();
+
+    // Jump to SubRoutine _c08d0e
+    func_c08d0e();
+
+    // Jump to SubRoutine _c08b53
+    func_c08b53();
+
+    // Jump to SubRoutine _c09a96
+    initMapAnim();
+
+    // Jump to SubRoutine _c05d30
+    updateWindowMaskCircle();
+
+    // Jump to SubRoutine LoadOverlayProp
+    loadOverlayProp();
+
+    // Jump to SubRoutine _c0928c
+    initMapTitle();
+
+    // LoaD #$fe to A
+    // Jump to SubRoutine _c0ca3c
+    // CoMPare A with #$00
+    // Branch to [@57cc] if Not Equals
+    if (getEventFlag01xx(0xFE) == 0) {
+
+        // LoaD $1125 (song) to A
+        // Jump to SubRoutine PlaySong
+        playSong(addr_7e1125);
+    }
+
+    // [@57cc] Jump to SubRoutine _c017e8
+    updateLocalTilesNorm();
+
+    // Jump to SubRoutine UpdateDestZLevel
+    updateDestZLevel();
+
+    // Jump to SubRoutine UpdateCurrZLevel
+    updateCurZLevel();
+
+    // Jump to SubRoutine DrawPlayerSprite
+    drawPlayerSprite();
+
+    // Jump to SubRoutine DrawObjSprites
+    drawObjectSprites();
+
+    // Jump to SubRoutine UpdateOverlay
+    updateOverlay();
+
+    // Jump to SubRoutine DrawOverlaySprites
+    drawOverlaySprites();
+
+    // LoaD $100f to A
+    // Logical Shift Right x5
+    // AND A with #$03
+    // Transfer A to X
+    const Uint8 XINDEX = (addr_7e100f >> 5) & 3;
+
+    // LoaD (f:MapHDMAEnableTbl, X) to A
+        // MapHDMAEnableTbl:
+            // .byte   $06,$46,$7e,$06
+    // STore A to $5e
+    addr_7e005e = [6, 0x46, 0x7E, 6][XINDEX];
+
+    // STore Zero to $55
+    addr_7e0055 = 0;
+
+    // Return To Subroutine
+}
+
+static void func_c057f9(void) {
+    // LoaD $110f to A
+    // AND A with #$0c
+    Uint8 andoperate = addr_7e110f & 0x0C;
+
+    // Branch to [@580a] if EQuals
+    if (andoperate) {
+        
+        // AND A with #$08
+        // Branch to [@5808] if Not Equals
+        if (andoperate & 8) {
+
+            // ...
+            // [@5808] Load #$3f to A
+            andoperate = 0x3F;
+        } else {
+            
+            // LoaD #$10 to A
+            // BRAnch to [@580a]
+            // ...
+            andoperate = 0x10;
+        }
+    }
+
+    // [@580a] STore A to $169a
+    addr_7e169a = andoperate;
+    
+    // Return To Subroutine
+}
 
 // Address: _580e
 static void initAutoScroll(void) {}
