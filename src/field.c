@@ -578,7 +578,10 @@ static Uint8 addr_7e0b5f;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
+static Uint8 addr_7e0c00;
 static Uint8 addr_7e0c02;
+static Uint8 addr_7e0c04;
+static Uint8 addr_7e0c06;
 static Uint8 addr_7e100f;
 static Uint8 addr_7e1088;
 static Uint8 addr_7e1089;
@@ -586,6 +589,7 @@ static Uint8 addr_7e10b8;
 static Uint8 addr_7e10fa;
 static Uint8 addr_7e10fb;
 static Uint8 addr_7e110f;
+static Uint8 addr_7e1122;
 static Uint8 addr_7e1125;
 static Uint8 addr_7e169b;
 static Uint8 addr_7e169f;
@@ -2483,7 +2487,31 @@ static void fillVram(void) {
 
 static void tfrSprites(void) {}
 
-static void tfrPallets(void) {}
+static void tfrPallets(void) {
+    // STore Zero to hMDMAEN
+    // STore Zero to hCGADD
+
+    // LoaD #$02 to A
+    // STore A to hDMA0::CTRL
+
+    // LoaD #<hCGDATA to A
+    // STore A to hDMA0::HREG
+
+    // LoaD #$00 to A
+    // STore A to hDMA0::ADDR_B
+
+    // LoaD #$0c00 to X
+        // source = 00/0c00
+    // STore X to hDMA0::ADDR
+
+    // LoaD #$0200 to X
+    // STore X to hDMA0::SIZE
+
+    // LoaD #$01 to A
+    // STore A to hMDMAEN
+
+    // Return To Subroutine
+}
 
 static void func_c04d8e(void) {}
 
@@ -2756,7 +2784,33 @@ static void loadWorldMap(void) {
 // Address: _5532
 static void reloadWorldMap(void) {}
 
-static void loadWorldMapPalette(void) {}
+static void loadWorldMapPalette(void) {
+    // LoaD $0ad6 (map index) to A
+    // Transfer A to X
+
+    // LoaD (f:WorldTilesetTbl,x) to A
+    // Lengthen A
+    // eXchange higher Byte in A with lower
+    // Transfer A to X
+    Uint16 xurkitree = {0, 1, 0, 2, 2}[map_i] * 0x100;
+
+    // LoaD $06 to Y
+    Uint16 yodolehiho = addr_7e0006;
+
+        // [LBL] LoaD (f:WorldPal,x) to A
+    do {
+        // STore A to ($0c00,y)
+        
+        // INcrement X by 2
+        xurkitree += 2;
+
+        // INcrement Y by 2
+        yodolehiho += 2;
+
+    // ComPare Y with #$0100
+    // Branch to previous label if not equals
+    } while (yodolehiho != 0x100);
+}
 
 static void loadSubMap(void) {
     // LoaD #$01 to A
@@ -2965,7 +3019,62 @@ static void initAutoScroll(void) {}
 static void loadMapLayout(void) {}
 
 // Address: _58db
-static void loadMapPalette(void) {}
+static void loadMapPalette(void) {
+    // Load $1122 (map palette index) to A
+    // Lengthen A
+    // eXchange lower Byte in A with higher
+    // Transfer A to X
+        // X is index of map palette
+    Uint16 mapPalI = addr_7e1122 * 0x100;
+
+    // LoaD $06 to A
+    // Transfer A to Y
+    // Shorten A
+    Uint8 addr_7e0cXX = addr_7e0006;
+
+    // [@58e7] Load (f:MapPal,x)
+    // STore A to ($0c00, Y)
+    do {
+        
+    // INcrement X
+    mapPalI ++;
+
+    // INcrement Y
+    addr_7e0cXX ++;
+
+    // ComPare Y with #$0100
+    // Branch to [@58e7] if Not Equals
+    } while (addr_7e0cXX != 0x100);
+
+    // LoaD $06 to X
+    // STore X to $0c00
+    addr_7e0c00 = addr_7e0006;
+
+    // LoaD #$318c to X
+    // STore X to $0c04
+    addr_7e0c04 = 0x318C;
+
+    // LoaD #$7fff to X
+    // STore X to $0c06
+    addr_7e0c06 = 0x7FFF;
+
+    // LoaD #$0080 to X
+    // [@5909] LoaD (f:MapSpritePal-1,x) to A
+    // STore A to ($0cff,x)
+    for (Uint8 x = 0x80; x > 0; x --) {
+
+        // STore A to ($0d7f,x)
+
+        // DEcrement X
+        // Branch to [@5909] if Not Equals
+            // Both already part of for loop
+    }
+
+    // Jump to SubRoutine TfrPal
+    tfrPallets();
+
+    // Return To Subroutine
+}
 
 // Address: _591a
 static void loadMapGfx(void) {}
