@@ -264,6 +264,12 @@ Jobs Lv and ABP for the rest of the characters are ordered the same as Character
 
 All Vehicles (Black Chocobo, Hiryuu, Submarine, Steamship and Airship) are structured the same as Chocobo.
 
+### Cxx - Dxx Graphic Palette
+This range of addresses is used for storing color. The data are then  to be transferred to CGRAM at a later point.
+|From|To|Type|Module|Content
+|---|---|---|---|---
+|7E/0C00|7E/0DFF|Color|Field|Palette (2 bytes each)
+
 ## 1xxx
 
 |From|To|Type|Module|Section|

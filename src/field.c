@@ -534,6 +534,7 @@ static Uint8 addr_7e00ba;
 static Uint8 addr_7e00bc;
 static Uint8 addr_7e00bd;
 static Uint8 addr_7e00bf;
+static Uint16 addr_7e00c0;
 static Uint8 addr_7e00c2;
 static Uint8 addr_7e00c3;
 static Uint8 addr_7e00c7;
@@ -560,7 +561,6 @@ static Uint16 addr_7e0296;
 static Uint8 addr_7e0947;
 static Uint8 addr_7e0948;
 static Uint8 addr_7e0949;
-static Uint8 addr_7e0971;
 
 // Address: _0ad6
 static Uint8 map_i;
@@ -578,10 +578,9 @@ static Uint8 addr_7e0b5f;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
-static Uint8 addr_7e0c00;
-static Uint8 addr_7e0c02;
-static Uint8 addr_7e0c04;
-static Uint8 addr_7e0c06;
+
+static Uint16 addrange_7e0c00[0x100];
+
 static Uint8 addr_7e100f;
 static Uint8 addr_7e1088;
 static Uint8 addr_7e1089;
@@ -2873,7 +2872,7 @@ static void reloadSubMap(void) {
     // LoaD $0971 to X
     // STore X to $0c02
         // set window color
-    addr_7e0c02 = addr_7e0971;
+    addrange_7e0c00[1] = currentSave.windowColor;
 
     // Jump to SubRoutine _c0591a
     loadMapGfx();
@@ -3036,27 +3035,27 @@ static void loadMapPalette(void) {
     // STore A to ($0c00, Y)
     do {
         
-    // INcrement X
-    mapPalI ++;
+        // INcrement X
+        mapPalI ++;
 
-    // INcrement Y
-    addr_7e0cXX ++;
+        // INcrement Y
+        addr_7e0cXX ++;
 
-    // ComPare Y with #$0100
-    // Branch to [@58e7] if Not Equals
+        // ComPare Y with #$0100
+        // Branch to [@58e7] if Not Equals
     } while (addr_7e0cXX != 0x100);
 
     // LoaD $06 to X
     // STore X to $0c00
-    addr_7e0c00 = addr_7e0006;
+    addrange_7e0c00[0] = addr_7e0006;
 
     // LoaD #$318c to X
     // STore X to $0c04
-    addr_7e0c04 = 0x318C;
+    addrange_7e0c00[2] = 0x318C;
 
     // LoaD #$7fff to X
     // STore X to $0c06
-    addr_7e0c06 = 0x7FFF;
+    addrange_7e0c00[3] = 0x7FFF;
 
     // LoaD #$0080 to X
     // [@5909] LoaD (f:MapSpritePal-1,x) to A
