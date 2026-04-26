@@ -11,8 +11,30 @@ static SDL_Rect *layers_rect[8][][];
 static Uint8 *layers_rect_count[8][];
 
 void setupDisplay(void) {
-    palette = SDL_CreatePalette(256);
+    palette = SDL_CreatePalette(PALETTE_SIZE);
     SDL_SetPaletteColors(palette, SDL_Color(0, 0, 0, SDL_ALPHAOPAQUE), 0, 1);
+}
+
+void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]) {
+    for (Uint8 i = 0; i < PALETTE_SIZE; i ++) {
+        if (arr_pal[i] && 0x80) palette[i] = SDL_Color(0, 0, 0, 0);
+        else {
+            Uint16 color = arr_pal[i];
+
+            Uint8 red = color & 0x1F;
+            red *= 8;
+            
+            color >> 5;
+            Uint8 green = color & 0x1F;
+            green *= 8;
+            
+            color >> 5;
+            Uint8 blue = color;
+            blue *= 8;
+
+            palette[i] = SDL_Color(red, green, blue, SDL_ALPHAOPAQUE);
+        }
+    }
 }
 
 void draw(SDL_Renderer *renderer) {

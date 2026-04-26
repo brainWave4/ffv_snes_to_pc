@@ -3,6 +3,8 @@
 
 #include <SDL3/SDL.h>
 
+const Uint8 PALETTE_SIZE = 256;
+
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
     SDL_Rect *high_rect[], *low_rect[];
@@ -109,4 +111,6 @@ Uint8 colData;
 
 // Address: _2133
 Uint8 setIni;
+
+void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]);
 #endif

@@ -161,7 +161,7 @@ static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
 static void fillVram(void); // Incomplete
 static void tfrSprites(void); // Incomplete
-static void tfrPallets(void); // Incomplete
+static void tfrPalettes(void); // Incomplete
 static void func_c04d8e(void); // Incomplete
 static void waitVblank(void); // Incomplete
 static void initInterrupts(void); // Incomplete
@@ -2486,30 +2486,27 @@ static void fillVram(void) {
 
 static void tfrSprites(void) {}
 
-static void tfrPallets(void) {
+static void tfrPalettes(void) {
     // STore Zero to hMDMAEN
     // STore Zero to hCGADD
-
     // LoaD #$02 to A
     // STore A to hDMA0::CTRL
-
     // LoaD #<hCGDATA to A
     // STore A to hDMA0::HREG
-
     // LoaD #$00 to A
     // STore A to hDMA0::ADDR_B
-
     // LoaD #$0c00 to X
         // source = 00/0c00
     // STore X to hDMA0::ADDR
-
     // LoaD #$0200 to X
     // STore X to hDMA0::SIZE
-
     // LoaD #$01 to A
     // STore A to hMDMAEN
-
     // Return To Subroutine
+
+    // Essentially, transfer all palette data
+    // from here to display.
+    updateWholePalette(addrange_7e0c00);
 }
 
 static void func_c04d8e(void) {}
@@ -3070,7 +3067,7 @@ static void loadMapPalette(void) {
     }
 
     // Jump to SubRoutine TfrPal
-    tfrPallets();
+    tfrPalettes();
 
     // Return To Subroutine
 }
