@@ -3,7 +3,7 @@
 
 #include <SDL3/SDL.h>
 
-const Uint8 PALETTE_SIZE = 256;
+#define PALETTE_SIZE = 256
 
 typedef struct {
     SDL_Texture *high_texture, *low_texture;

@@ -579,7 +579,7 @@ static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
 
-static Uint16 addrange_7e0c00[0x100];
+static Uint16 addrange_7e0c00[PALETTE_SIZE];
 
 static Uint8 addr_7e100f;
 static Uint8 addr_7e1088;
