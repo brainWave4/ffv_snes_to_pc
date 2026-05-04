@@ -119,7 +119,7 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
     for i in range(item_count):
         final_name = filename
 
-        final_name += f"{i:03d}"
+        final_name += i
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
 
@@ -239,12 +239,12 @@ def palette(rommap):
 
     for d in [
         {DICT_FILE: "window", DICT_ADDR: 0xd340, DICT_ITEMS: 1, DICT_BYTES: 0x40},
-        {DICT_FILE: "map", DICT_ADDR: 0x3bb00, DICT_ITEMS: 256, DICT_BYTES: 44},
+        {DICT_FILE: "map", DICT_ADDR: 0x3bb00, DICT_ITEMS: 44, DICT_BYTES: 256},
         {DICT_FILE: "monster", DICT_ADDR: 0xed000, DICT_ITEMS: 1, DICT_BYTES: 0x2270},
         {DICT_FILE: "world", DICT_ADDR: 0xffcc0, DICT_ITEMS: 3, DICT_BYTES: 256},
-        {DICT_FILE: "attack", DICT_ADDR: 0x11a3a0, DICT_ITEMS: 16, DICT_BYTES: 128},
-        {DICT_FILE: "battle_char", DICT_ADDR: 0x14a3c0, DICT_ITEMS: 32, DICT_BYTES: 110},
-        {DICT_FILE: "battle_bg", DICT_ADDR: 0x14bb31, DICT_ITEMS: 32, DICT_BYTES: 84},
+        {DICT_FILE: "attack", DICT_ADDR: 0x11a3a0, DICT_ITEMS: 128, DICT_BYTES: 16},
+        {DICT_FILE: "battle_char", DICT_ADDR: 0x14a3c0, DICT_ITEMS: 110, DICT_BYTES: 32},
+        {DICT_FILE: "battle_bg", DICT_ADDR: 0x14bb31, DICT_ITEMS: 84, DICT_BYTES: 32},
         {DICT_FILE: "attack_target", DICT_ADDR: 0x199655, DICT_ITEMS: 1, DICT_BYTES: 0x1f0},
         {DICT_FILE: "map_sprites", DICT_ADDR: 0x1ffc00, DICT_ITEMS: 32, DICT_BYTES: 32}
     ]:
