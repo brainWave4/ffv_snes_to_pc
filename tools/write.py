@@ -241,7 +241,7 @@ def palette(rommap):
         {DICT_FILE: "window", DICT_ADDR: 0xd340, DICT_ITEMS: 1, DICT_BYTES: 0x40},
         {DICT_FILE: "map", DICT_ADDR: 0x3bb00, DICT_ITEMS: 256, DICT_BYTES: 44},
         {DICT_FILE: "monster", DICT_ADDR: 0xed000, DICT_ITEMS: 1, DICT_BYTES: 0x2270},
-        {DICT_FILE: "world", DICT_ADDR: 0xffcc0, DICT_ITEMS: 256, DICT_BYTES: 3},
+        {DICT_FILE: "world", DICT_ADDR: 0xffcc0, DICT_ITEMS: 3, DICT_BYTES: 256},
         {DICT_FILE: "attack", DICT_ADDR: 0x11a3a0, DICT_ITEMS: 16, DICT_BYTES: 128},
         {DICT_FILE: "battle_char", DICT_ADDR: 0x14a3c0, DICT_ITEMS: 32, DICT_BYTES: 110},
         {DICT_FILE: "battle_bg", DICT_ADDR: 0x14bb31, DICT_ITEMS: 32, DICT_BYTES: 84},

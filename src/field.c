@@ -491,7 +491,10 @@ static void battleBlur(void); // Incomplete
 static void randomBattle(void); // Incomplete
 static void reset(void); // Incomplete
 
-static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6}
+static const FOLDER_PAL = "assets/pal/";
+static const EXT_PAL = ".pal";
+
+static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6};
 
 // These adresses are called before
 // having any value stored first
@@ -3021,26 +3024,21 @@ static void loadMapPalette(void) {
     // eXchange lower Byte in A with higher
     // Transfer A to X
         // X is index of map palette
-    Uint16 mapPalI = addr_7e1122 * 0x100;
-
     // LoaD $06 to A
     // Transfer A to Y
     // Shorten A
-    Uint8 addr_7e0cXX = addr_7e0006;
-
+        // Ultimately, Y is not needed
     // [@58e7] Load (f:MapPal,x)
     // STore A to ($0c00, Y)
-    do {
-        
-        // INcrement X
-        mapPalI ++;
-
-        // INcrement Y
-        addr_7e0cXX ++;
-
-        // ComPare Y with #$0100
-        // Branch to [@58e7] if Not Equals
-    } while (addr_7e0cXX != 0x100);
+    // INcrement X
+    // INcrement Y
+    // ComPare Y with #$0100
+    // Branch to [@58e7] if Not Equals
+        // Essentially, load palette from data section and
+        // store them to RAM.
+    FILE *fptr;
+    fptr = open(FOLDER_PAL + "world" + addr_7e1122 + EXT_PAL, "rb");
+    fread(addrange_7e0c00, 2, PAL_LENGTH, fptr);
 
     // LoaD $06 to X
     // STore X to $0c00
