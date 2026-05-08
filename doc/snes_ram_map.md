@@ -274,4 +274,5 @@ This range of addresses is used for storing color. The data are then  to be tran
 
 |From|To|Type|Module|Section|
 |---|---|---|---|---
+|7E/1873|7E/1972|Value|Field|World Tile Attributes|
 |7E/1D00||Value|Sound|Music Data|

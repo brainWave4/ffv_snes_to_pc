@@ -491,10 +491,15 @@ static void battleBlur(void); // Incomplete
 static void randomBattle(void); // Incomplete
 static void reset(void); // Incomplete
 
+static const FOLDER_DATA = "assets/data/";
 static const FOLDER_PAL = "assets/pal/";
+static const EXT_BIN = ".bin";
 static const EXT_PAL = ".pal";
 
 static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6};
+
+// Address: _5739
+static const Uint8 worldTilesetTbl[5] = {0, 1, 0, 2, 2};
 
 // These adresses are called before
 // having any value stored first
@@ -508,6 +513,8 @@ static Uint8 addr_7e000d;
 static Uint8 addr_7e000f;
 static Uint8 addr_7e0013;
 static Uint8 addr_7e0015;
+static Uint8 addr_7e0023;
+static Uint8 addr_7e0024;
 static Uint16 addr_7e002c;
 static Uint8 addr_7e0037;
 static Uint8 addr_7e0038;
@@ -600,6 +607,7 @@ static Uint8 addr_7e16aa;
 
 static Uint8 addrange_7e16f3[];
 static Uint8 addrange_7e1733[];
+static Uint8 addrange_7e1873[0x100];
 
 // Address: _4200
 static Uint8 h_nmitimen;
@@ -2439,7 +2447,62 @@ static void waitForKeypress(void) {}
 //  $35: tile count
 static void tfrVehicleGfx(void) {}
 
-static void tfrWorldGfx(void) {}
+// Indexes semm to be 16-bits long
+static void tfrWorldGfx(void) {
+    // LoaD #$80 to A
+    // STore A to hVMAINC
+    // LoaD $06 to X
+    // STore X to hVMADDL
+
+    // LoaD $0ad6 to A
+    // Transfer A to X
+    // LoaD f:WorldTileAttrTbl,x to A
+        // WorldTileAttrTbl is identical to WorldTilesetTbl
+    // STore A to $24
+    addr_7e0024 = worldTilesetTbl[map_i];
+
+    // STore Zero to $23
+    // LoaD $23 to X
+    // LoaD $06 to Y
+    // [LBL] LoaD f:WorldTileAttr,x to A
+    // STore A to $1873,y
+    // INcrement X
+    // INcrement Y
+    // ComPare Y with #$0100
+    // Branch to previous label if Not Equals
+    FILE *fptr;
+    fptr = open(FOLDER_DATA + "world_tile_attr" + addr_7e0024 + EXT_BIN, "rb");
+    fread(addrange_7e1873, 1, 0x100, fptr);
+    
+    // LoaD $0ad6 to A
+    // Transfer A to X
+    // LoaD f:WorldTileAttrTbl,x to A
+    // A Shift Left x5
+    // STore A to $24
+    addr_7e0024 = worldTilesetTbl[map_i] << 5;
+
+    // STore Zero to $23
+
+    // LoaD $23 to X
+    // LoaD #$0000 to Y
+    // [Loop] LoaD f:WorldGfx,x to A
+    // STore $0a to A
+    // INcrement X
+    // AND A with #$0f
+    // OR A with $1873,y
+    // STore A to hVMDATAH
+    // LoaD $0a to A
+    // Logical Shift A Right x4
+    // OR A with $1873,y
+    // STore A to hVMDATAH
+    // Transfer X to A
+    // AND A with #$1f
+    // Branch to [Loop] if Not Equals
+    // INcrement Y
+    // ComPare Y with #$0100
+    // Branch to [Loop] if Not Equals
+    // Return To Subroutine
+}
 
 // Address: _4bc0
 static void updateScrollingRegisters(void) {}
