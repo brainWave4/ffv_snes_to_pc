@@ -115,5 +115,7 @@ Uint8 colData;
 // Address: _2133
 Uint8 setIni;
 
+void updateTilesetFromFilePath(Uint8 i, char[] filepath);
+
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]);
 #endif

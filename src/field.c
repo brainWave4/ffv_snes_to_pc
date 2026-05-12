@@ -2504,9 +2504,7 @@ static void tfrWorldGfx(void) {
     // INcrement Y
     // ComPare Y with #$0100
     // Branch to [Loop] if Not Equals
-    fptr = open(FOLDER_TEXTURE + "world_gfx" + addr_7e0024 + EXT_BPP4, "rb");
-    SDL_UpdateTexture(bgLayers[0].tileset, NULL, &fptr, 384);
-    fclose(fptr);
+    updateTilesetFromFilePath(0, FOLDER_TEXTURE + "world_gfx" + addr_7e0024 + EXT_BPP4);
 
     // Return To Subroutine
 }

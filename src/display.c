@@ -20,6 +20,12 @@ void setupDisplay(SDL_Renderer *renderer) {
     palette = SDL_CreatePalette(PALETTE_SIZE);
 }
 
+void updateTilesetFromFilePath(Uint8 i, char[] filepath) {
+    FILE *fptr = open(filepath, "rb");
+    SDL_UpdateTexture(bgLayers[0].tileset, NULL, &fptr, 384);
+    fclose(fptr);
+}
+
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]) {
     SDL_Color color[PALETTE_SIZE];
 
