@@ -493,7 +493,9 @@ static void reset(void); // Incomplete
 
 static const FOLDER_DATA = "assets/data/";
 static const FOLDER_PAL = "assets/pal/";
+static const FOLDER_TEXTURE = "assets/textures/";
 static const EXT_BIN = ".bin";
+static const EXT_BPP4 = ".4bpp";
 static const EXT_PAL = ".pal";
 
 static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6};
@@ -2473,6 +2475,7 @@ static void tfrWorldGfx(void) {
     FILE *fptr;
     fptr = open(FOLDER_DATA + "world_tile_attr" + addr_7e0024 + EXT_BIN, "rb");
     fread(addrange_7e1873, 1, 0x100, fptr);
+    fclose(fptr);
     
     // LoaD $0ad6 to A
     // Transfer A to X
@@ -2482,15 +2485,15 @@ static void tfrWorldGfx(void) {
     addr_7e0024 = worldTilesetTbl[map_i] << 5;
 
     // STore Zero to $23
-
     // LoaD $23 to X
     // LoaD #$0000 to Y
     // [Loop] LoaD f:WorldGfx,x to A
-    // STore $0a to A
+    // STore A to $0a
     // INcrement X
     // AND A with #$0f
     // OR A with $1873,y
     // STore A to hVMDATAH
+        // hVMDATAH is where a data is stored to be written to an address.
     // LoaD $0a to A
     // Logical Shift A Right x4
     // OR A with $1873,y
@@ -2501,6 +2504,10 @@ static void tfrWorldGfx(void) {
     // INcrement Y
     // ComPare Y with #$0100
     // Branch to [Loop] if Not Equals
+    fptr = open(FOLDER_TEXTURE + "world_gfx" + addr_7e0024 + EXT_BPP4, "rb");
+    SDL_UpdateTexture(bgLayers[0].tileset, NULL, &fptr, 384);
+    fclose(fptr);
+
     // Return To Subroutine
 }
 

@@ -4,7 +4,7 @@
 
 #include "<SDL3/SDL.h>"
 
-static const SDL_PixelFormatDetails *SNES_FORMAT = SDL_GetPixelFormatDetails(SDL_PixelForm.SDL_PIXELFORMAT_ARGB1555);
+static const SDL_PixelFormatDetails *SNES_FORMAT = SDL_GetPixelFormatDetails(SDL_PIXELFORMAT_ARGB1555);
 
 static const Uint8 BGLAYER_COUNTS[8] = {4, 3, 2, 2, 2, 2, 1, 1};
 static const Uint8 LAYER_COUNTS[8] = {12, 10, 8, 8, 8, 8, 6, 7};
@@ -12,7 +12,11 @@ static SDL_Texture *layers_texture[8][];
 static SDL_Rect *layers_rect[8][][];
 static Uint8 *layers_rect_count[8][];
 
-void setupDisplay(void) {
+void setupDisplay(SDL_Renderer *renderer) {
+    for (Uint8 i = 0; i < TOTAL_BG_COUNT; i ++) {
+        bgLayers[i].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX1LSB, SDL_TEXTUREACCESS_STREAMING, 128, 128);
+    }
+
     palette = SDL_CreatePalette(PALETTE_SIZE);
 }
 

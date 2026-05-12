@@ -3,11 +3,14 @@
 
 #include <SDL3/SDL.h>
 
+#define TOTAL_BG_COUNT = 4
 #define PALETTE_SIZE = 256
 
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
     SDL_Rect *high_rect[], *low_rect[];
+
+    SDL_Texture *tileset;
 
     SDL_Rect tilemap[1024];
 
@@ -18,7 +21,7 @@ typedef struct {
     Uint8 vScroll;
 } BgLayer;
 
-BgLayer[4] bgLayers;
+BgLayer[TOTAL_BG_COUNT] bgLayers;
 
 // Address: _2100
 Uint8 inidisp;
