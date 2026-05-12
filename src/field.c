@@ -2614,7 +2614,7 @@ static void initHardware(void) {
 
     // LoaD #$09 to A
     // STore A to hBGMODE
-    bgMode = 9;
+    setBgMode(9);
 
     // STore Zero to hMOSAIC
     mosaic = 0;

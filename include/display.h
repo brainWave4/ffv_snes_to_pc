@@ -117,5 +117,7 @@ Uint8 setIni;
 
 void updateTilesetFromFilePath(Uint8 i, char[] filepath);
 
+void setBgMode(Uint8 val);
+
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]);
 #endif
