@@ -3107,6 +3107,7 @@ static void loadMapPalette(void) {
     FILE *fptr;
     fptr = open(FOLDER_PAL + "world" + addr_7e1122 + EXT_PAL, "rb");
     fread(addrange_7e0c00, 2, PAL_LENGTH, fptr);
+    fclose(fptr);
 
     // LoaD $06 to X
     // STore X to $0c00
