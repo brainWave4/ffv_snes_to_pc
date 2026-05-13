@@ -14,8 +14,6 @@ SDL_Renderer *renderer;
 
 static Uint8 layer_count;
 static SDL_Texture *layers_texture[];
-static SDL_Rect *layers_rect[8][][];
-static Uint8 *layers_rect_count[8][];
 
 static SDL_Texture *sprite_texture[4];
 
