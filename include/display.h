@@ -29,8 +29,13 @@ Uint8 inidisp;
 // Address: _2101-2104
 // Concerns Object Sprites
 
-// Address: _2105
-Uint8 bgMode;
+// Address: _2105 is bgMode, which covers:
+//  - Char size for each Bg Layer
+//  - Bg Layer 3 High's placement
+//  - Bg Mode
+// Is made private in favor of setting it
+//      via function, as it affects other
+//      properties in the process.
 
 // Address: _2106
 Uint8 mosaic;

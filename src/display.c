@@ -15,6 +15,8 @@ static const Uint8 BGLAYER_COUNTS[8] = {4, 3, 2, 2, 2, 2, 1, 1};
 
 SDL_Renderer *renderer;
 
+static Uint8 bgMode;
+
 static Uint8 layerCount;
 static SDL_Texture *layersTexture[];
 static Uint8 tilesetWidthsBits[4];
