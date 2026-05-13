@@ -16,7 +16,7 @@ static void initMenuSettings(void); // Incomplete
 static void tutorial(void); // Incomplete
 static void galufToKrile(void); // Incomplete
 static void nameChange(void); // Incomplete
-static void showMenu(void); // Incomplete
+static void showMenu(Uint8 newState); // Incomplete
 static void dma(void); // Incomplete
 static void waitForVblank(void); // Incomplete
 static void initMenu(void); // Incomplete
@@ -493,6 +493,7 @@ static Save[4] saves;
 
 static Uint16 addr_7e008e;
 static Uint16 addr_7e2100;
+static Uint8 addr_7e0043;
 static Uint8 addr_7e0044;
 static Uint8 addr_7e0045;
 static Uint8 addr_7e0046;
@@ -689,9 +690,10 @@ static void nameChange(void) {
 
 // Address: _a06b
 // Input: Uint8 (previously stored in A)
-static void showMenu(void) {
+static void showMenu(Uint8 newState) {
     // Shorten A
     // Store A to $43 (Menu State)
+    addr_7e0043 = newState;
 
     // Load #$7e to A
     // PusH A
@@ -699,18 +701,30 @@ static void showMenu(void) {
     // Lengthen A
 
     // Jump to SubRoutine _c2c16a
-    //  - func_c2c16a(..)
+    func_c2c16a();
+
     // Jump to SubRoutine _c2a16e
-    //  - resetSpriteData(..)
+    resetSpriteData()
 
     // Load $43 (Menu State) to A
+    Uint16 menuI = addr_7e0043;
+
     // AND A with #$00ff
+    menuI &= 0xFF;
+
     // DECrement A
+    menuI --;
+
     // A Shift Left
+    menuI <<= 1;
+
     // Transfer A to X
     // Load ($c0e60e + X) to A
-    //  - $c0e60e is within Shape Mask Section
+    //  - c0/e60e is within Segment "Menu Data"
     // STore A to $c7
+        // $c7 probably stores adress to function
+    // addr_7e00c7 = {menuState_main, ...}[menuI];
+
     // Push (E) Relative addr [@a08f]-1
     // JuMP to ($01c7)
     //  - the address stored in $7e01c7
