@@ -644,10 +644,10 @@ void start(void) {
     // STore Zero to hHDMAEN
     h_hdmaen = 0;
     // LoaD #$8f (143) to A
-    // Store A to hINIDISP
+    // STore A to hINIDISP
     inidisp = 143;
     // LoaD #0 to A
-    // Store A to hNMITIMEN
+    // STore A to hNMITIMEN
     h_nmitimen = 0;
 
     // LoaD #0 to A
@@ -713,32 +713,32 @@ void start(void) {
         initVehicles();
         
         // Load #1 to A
-        // Store A to $bd
+        // STore A to $bd
         addr_7e00bd = 1;
-        // Store A to $bc
+        // STore A to $bc
         addr_7e00bc = 1;
 
         // Load #$0010 to X
-        // Store X to $ce
+        // STore X to $ce
         addr_7e00ce = 16;
 
         // Load #1 to A
-        // Store A to $57
+        // STore A to $57
         addr_7e0057 = 1;
 
         // Load #$81 to A
-        // Store A to hNMITIMEN
+        // STore A to hNMITIMEN
         h_nmitimen = 129;
 
         // CLear Interrupt flag
         // Jump to SubRoutine ExecEvent
         execEvent();
 
-        // Store Zero to $57
+        // STore Zero to $57
         addr_7e0057 = 0;
-        // Store Zero to $58
+        // STore Zero to $58
         addr_7e0058 = 0;
-        // Store Zero to $59
+        // STore Zero to $59
         addr_7e0059 = 0;
 
         // JuMP to FieldLoop
@@ -750,29 +750,29 @@ void start(void) {
         resetRam_0B00_to_1D00();
 
         // LoaD $0af9 to A
-        // Store A to $0b60
+        // STore A to $0b60
         addr_7e0b60 = addr_7e0af9;
 
         // Shift Right A
-        // Store A to $0b5f
+        // STore A to $0b5f
         addr_7e0b5f = addr_7e0b60 >> 1;
 
         // Load #1 to A
-        // Store A to $bd (show party sprite)
+        // STore A to $bd (show party sprite)
         addr_7e00bd = 1;
-        // Store A to $bc (senable walking animation)
+        // STore A to $bc (senable walking animation)
         addr_7e00bc = 1;
 
         // INCrement A
-        // Store A to $b9
+        // STore A to $b9
         addr_7e00b9 = 2;
 
         // Load $0ad8 to A (x position)
-        // Store A to $1088
+        // STore A to $1088
         addr_7e1088 = addr_7e0ad8;
 
         // Load $0ad9 to A (y position)
-        // Store A to $1089
+        // STore A to $1089
         addr_7e1089 = addr_7e0ad9;
 
         // Jump to subroutine LoadMapNoFade
@@ -2204,7 +2204,7 @@ static Uint8 func_c0203f(Uint16 apple) {
 static void func_c02137(void) {}
 
 static void func_c022fb(void) {
-    // Store Zero to $3e
+    // STore Zero to $3e
     addr_7e003e = 0;
 
     // [_22fd] Jump to SubRoutine WaitVBlank
@@ -3140,7 +3140,228 @@ static void loadMapPalette(void) {
 }
 
 // Address: _591a
-static void loadMapGfx(void) {}
+static void loadMapGfx(void) {
+    // Lengthen A
+    // Load $1114 (map graphics 1) to A
+    // AND A with #$3f00
+    // eXchange high Bytes in A with low
+    // A Shift Left x2
+    // Transfer A to X
+    // Load f:MapGfxPtrs,x to A
+    // CLear Carry flag
+    // ADd #.loword(MapGfx) to A with Carry
+    // STore A to $23
+    // LoaD #.hiword(MapGfx) to A
+    // ADd f:MapGfxPtrs+2,x to A with Carry
+    // AND A with #$00ff
+    // Shorten A
+    // STore A to $25
+    // Lengthen A
+    // LoaD $06 to A
+    // SEt Carry
+    // SuBtract $23 from A with Carry
+    // CoMpare A with #$2000
+    // Branch to [@5955] if Carry Clear
+    // LoaD #$2000 to A
+    // STore A to $2c
+    addr_7e002c = 0x2000;
+
+    // LoaD $06 to A
+    // STore A to $0d
+    addr_7e000d = addr_7e0006;
+
+    // BRAnch to [@595f]
+
+    // [@5955] STore A to $2c
+    // LoaD $23 to A
+    // CLear Carry flag
+    // ADd #$2000 to A with Carry
+    // STore $0d to A
+
+    // [@595f] LoaD $06 to A
+    // Shorten A
+    // LoaD $06 to X
+    // STore $2e to X
+    // Jump to SubRoutine TfrVRAM
+    // Lengthen A
+    // LoaD $2c to A
+    // Logical Shift A Right
+    // STore A to $2e
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $0d to X
+    // Branch to [@5984] if EQuals
+    // STore X to $2c
+    // LoaD $06 to X
+    // STore X to $23
+    // INCrement $25
+    // Jump to SubRoutine TfrVRAM
+
+    // [@5984] Lengthen A
+    // LoaD $1115 (map graphics 2) to A
+    // AND A with #$0fc0
+    // A Shift Left x2
+    // eXchange high Bytes in A with low
+    // A Shift Left x2
+    // Transfer A to X
+    // LoaD f:MapGfxPtrs,x to A
+    // CLear Carry flag
+    // ADd #.loword(MapGfx) to A with Carry
+    // STore A to $23
+    // LoaD #.hiword(MapGfx) to A
+    // ADd f:MapGfxPtrs+2,x to A with Carry
+    // AND A with #$00ff
+    // Shorten A
+    // STore A to $25
+    // Lengthen A
+    // LoaD $06 to A
+    // SEt Carry
+    // SuBtract $23 from A with Carry
+    // CoMpare A with #$2000
+    // Branch to [@59c1] if Carry Clear
+    // LoaD #$2000 to A
+    // STore A to $2c
+    // LoaD $06 to A
+    // STore A to $0d
+    // BRAnch to [@59cb]
+
+    // [@59c1] STore A to $2c
+    // LoaD $23 to A
+    // CLear Carry flag
+    // ADd #$2000 to A with Carry
+    // STore A to $0d
+
+    // [@59cb] LoaD $06 to A
+    // Shorten A
+    // LoaD #$1000 to X
+    // STore X to $2e
+    // Jump to SubRoutine TfrVRAM
+    // Lengthen A
+    // LoaD $2c to A
+    // Logical Shift A Right
+    // CLear Carry flag
+    // ADd #$1000 to A with Carry
+    // STore A to $2e
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $0d to X
+    // Branch to [@59f5] if EQuals
+    // STore X to $2c
+    // LoaD $06 to X
+    // STore X to $23
+    // INCrement $25
+    // Jump to SubRoutine TfrVRAM
+
+    // [@59f5] Lengthen A
+    // LoaD $1116 (map graphics 3) to A
+    // AND A with #$03f0
+    // A Shift Left x2
+    // Transfer A to X
+    // LoaD f:MapGfxPtrs,x to A
+    // CLear Carry flag
+    // ADd #.loword(MapGfx) to A with Carry
+    // STore A to $23
+    // LoaD #.hiword(MapGfx) to A
+    // ADd f:MapGfxPtrs+2,x to A with Carry
+    // AND A with #$00ff
+    // Shorten A
+    // STore A to $25
+    // Lengthen A
+    // LoaD $06 to A
+    // SEt Carry
+    // SuBtract $23 from A with Carry
+    // CoMpare A with #$2000
+    // Branch to [@5a2f] if Carry Clear
+    // LoaD #$2000 to A
+    // STore A to $2c
+    // LoaD $06 to A
+    // STore A to $0d
+    // BRAnch to [@5a39]
+
+    // [@5a2f] STore A to $2c
+    // LoaD $23 to A
+    // CLear Carry flag
+    // ADd #$2000 to A with Carry
+    // STore A to $0d
+
+    // [@5a39] LoaD $06 to A
+    // Shorten A
+    // LoaD #$2000 to X
+    // STore X to $2e
+    // Jump to SubRoutine TfrVRAM
+    // Lengthen A
+    // LoaD $2c to A
+    // Logical Shift A Right
+    // CLear Carry flag
+    // ADd #$2000 to A with Carry
+    // STore A to $2e
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $0d to X
+    // Branch to [@5a63] if EQuals
+    // STore X to $2c
+    // LoaD $06 to X
+    // STore X to $23
+    // INCrement $25
+    // Jump to SubRoutine TfrVRAM
+
+    // [@5a63] Lengthen A
+    // LoaD $1116 to A
+    // AND A to #$fc00
+    // Logical Shift Right
+    // eXchange high Bytes in A with low
+    // Transfer A to X
+    // LoaD f:MapBG3GfxPtrs,x to A
+    // CLear Carry flag
+    // ADd (#near MapBG3Gfx) to A with Carry
+    // STore A to $23
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD #^MapBG3Gfx to A
+    // STore A to $25
+    // LoaD #$4000 to X
+    // STore X to $2e
+    // LoaD #$1000 to X
+    // STore X to $2c
+    // Jump to SubRoutine TfrVRAM
+    // Jump to SubRoutine TfrPartyGfx
+    // Jump to SubRoutine _c01e14
+    // LoaD #$3d00 to X
+    // STore X to $2e
+    // LoaD #$0600 to X
+    // STore X to $2c
+    // LoaD (#near WindowGfx) to X
+    // STore X to $23
+    // LoaD #^WindowGfx to A
+    // STore A to $25
+    // Jump to SubRoutine TfrVRAM
+    // Jump to SubRoutine LoadOverlayGfx
+    // LoaD $06 to X
+
+    // [@5aae] LoaD $0500,x to A
+    // AND A with #$40
+    // Branch to [@5abc] if Not Equals
+    // LoaD $0520,x to A
+    // AND A with #$01
+    // Branch to [@5ada] if Not Equals
+
+    // [@5abc] Lengthen A
+    // Transfer X to A
+    // CLear Carry flag
+    // ADd #$0050 to A with Carry
+    // Transfer A to X
+    // LoaD $06 to A
+    // Shorten A
+    // ComPare X with #$0140
+    // Branch to [@5aae] if Not Equals
+    // STore Zero to $0b6d
+    // LoaD #$0020 to X
+    // STore X to $2e
+    // STore X to $2c
+    // Jump to SubRoutine FillVRAM
+
+    // [@5ada] Return to Subroutine
+}
 
 static void func_c05adb(void) {}
 
