@@ -64,7 +64,7 @@ static void updateCurPriority(void);
 static void updateDestPriority(void); // Incomplete
 static void checkDoor(void); // Incomplete
 static void checkFindPits(void); // Incomplete
-static Uint8 calcParallaxScroll(Uint8 a);
+static Uint16 calcParallaxScroll(Uint16 august);
 static void checkPartyCanMove(void); // Incomplete
 static void func_c016b7(void); // Incomplete
 static void func_c016da(void); // Incomplete
@@ -509,9 +509,9 @@ static Uint8 addr_7e0af9 = 0;
 
 static Uint8 addr_7e0002;
 static Uint8 addr_7e0003;
-static Uint8 addr_7e0006;
+static Uint16 addr_7e0006;
 static Uint8 addr_7e0008;
-static Uint8 addr_7e000d;
+static Uint16 addr_7e000d;
 static Uint8 addr_7e000f;
 static Uint8 addr_7e0013;
 static Uint8 addr_7e0015;
@@ -531,7 +531,7 @@ static Uint8 addr_7e005e;
 static Uint8 addr_7e0061;
 static Uint8 addr_7e0063;
 static Uint8 addr_7e006e;
-static Uint8 addr_7e0071;
+static Uint16 addr_7e0071;
 static Uint8 addr_7e0075;
 static Uint8 addr_7e0076;
 static Uint8 addr_7e0088;
@@ -1738,10 +1738,10 @@ static void checkFindPits(void) {}
     // 1 = return $c0 >> 1 (0.5x)
     // 2 = return $c0 << 1 (2x)
     // 3 = return zero (no scroll)
-static Uint8 calcParallaxScroll(Uint8 a) {
+static Uint16 calcParallaxScroll(Uint16 august) {
     // AND A with #%11 (#3)
     // Branch to next label if Not Equals
-    switch (a & 3) {
+    switch (august & 3) {
         case 0:
             // LoaD $c0 to A
             // Branch to [Done]
@@ -1755,7 +1755,7 @@ static Uint8 calcParallaxScroll(Uint8 a) {
             // LoaD $c0 to A
             // Logical Shift Right
             // Branch to [Done]
-            return addr_7e00c0 > 1;
+            return addr_7e00c0 >> 1;
         
         // DECrement A
         // Branch to next label if Not Equals
@@ -1763,7 +1763,7 @@ static Uint8 calcParallaxScroll(Uint8 a) {
             // LoaD $c0 to A
             // A Shift Left
             // Branch to [Done]
-            return addr_7e00c0 < 1;
+            return addr_7e00c0 << 1;
         
         // LoaD $06 to A
         default:
