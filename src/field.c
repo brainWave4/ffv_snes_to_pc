@@ -517,7 +517,9 @@ static Uint8 addr_7e0013;
 static Uint8 addr_7e0015;
 static Uint8 addr_7e0023;
 static Uint8 addr_7e0024;
+static Uint8 addr_7e0025;
 static Uint16 addr_7e002c;
+static Uint16 addr_7e002e;
 static Uint8 addr_7e0037;
 static Uint8 addr_7e0038;
 static Uint8 addr_7e0039;
@@ -590,6 +592,7 @@ static Uint8 addr_7e0b5f;
 static Uint8 addr_7e0b60;
 static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
+static Uint8 addr_7e0b6d;
 
 static Uint16 addrange_7e0c00[PALETTE_SIZE];
 
@@ -3156,46 +3159,72 @@ static void loadMapGfx(void) {
     // AND A with #$00ff
     // Shorten A
     // STore A to $25
+
     // Lengthen A
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
+    Uint16 diff1 = addr_7e0006 - addr_7e0023;
+
     // CoMpare A with #$2000
     // Branch to [@5955] if Carry Clear
-    // LoaD #$2000 to A
-    // STore A to $2c
-    addr_7e002c = 0x2000;
+    if (diff1 >= 0x2000) {
 
-    // LoaD $06 to A
-    // STore A to $0d
-    addr_7e000d = addr_7e0006;
+        // LoaD #$2000 to A
+        // STore A to $2c
+        addr_7e002c = 0x2000;
+
+        // LoaD $06 to A
+        // STore A to $0d
+        addr_7e000d = addr_7e0006;
 
     // BRAnch to [@595f]
+    } else {
 
-    // [@5955] STore A to $2c
-    // LoaD $23 to A
-    // CLear Carry flag
-    // ADd #$2000 to A with Carry
-    // STore $0d to A
+        // [@5955] STore A to $2c
+        addr_7e002c = diff1;
+
+        // LoaD $23 to A
+        // CLear Carry flag
+        // ADd #$2000 to A with Carry
+        // STore $0d to A
+        addr_7e000d = addr_7e0023 + 0x2000;
+    }
 
     // [@595f] LoaD $06 to A
     // Shorten A
     // LoaD $06 to X
     // STore $2e to X
+    addr_7e002e = addr_7e0006;
+
     // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
     // Lengthen A
     // LoaD $2c to A
     // Logical Shift A Right
     // STore A to $2e
+    addr_7e002e = addr_7e002c >> 1;
+
     // LoaD $06 to A
     // Shorten A
     // LoaD $0d to X
     // Branch to [@5984] if EQuals
-    // STore X to $2c
-    // LoaD $06 to X
-    // STore X to $23
-    // INCrement $25
-    // Jump to SubRoutine TfrVRAM
+    if (addr_7e0006 & 0xFF) {
+
+        // STore X to $2c
+        addr_7e002c = addr_7e000d;
+
+        // LoaD $06 to X
+        // STore X to $23
+        addr_7e0023 = addr_7e0006;
+
+        // INCrement $25
+        addr_7e0025 ++;
+
+        // Jump to SubRoutine TfrVRAM
+        tfrVram();
+    }
 
     // [@5984] Lengthen A
     // LoaD $1115 (map graphics 2) to A
@@ -3213,44 +3242,74 @@ static void loadMapGfx(void) {
     // AND A with #$00ff
     // Shorten A
     // STore A to $25
+
     // Lengthen A
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
+    Uint diff2 = addr_7e0006 - addr_7e0023;
+
     // CoMpare A with #$2000
     // Branch to [@59c1] if Carry Clear
-    // LoaD #$2000 to A
-    // STore A to $2c
-    // LoaD $06 to A
-    // STore A to $0d
-    // BRAnch to [@59cb]
+    if (diff2 >= 0x2000) {
 
-    // [@59c1] STore A to $2c
-    // LoaD $23 to A
-    // CLear Carry flag
-    // ADd #$2000 to A with Carry
-    // STore A to $0d
+        // LoaD #$2000 to A
+        // STore A to $2c
+        addr_7e002c = 0x2000;
+
+        // LoaD $06 to A
+        // STore A to $0d
+        addr_7e000d = addr_7e0006;
+
+    // BRAnch to [@59cb]
+    } else {
+
+        // [@59c1] STore A to $2c
+        addr_7e002c = diff2;
+
+        // LoaD $23 to A
+        // CLear Carry flag
+        // ADd #$2000 to A with Carry
+        // STore A to $0d
+        addr_7e000d = addr_7e0023 + 0x2000;
+    }
 
     // [@59cb] LoaD $06 to A
     // Shorten A
     // LoaD #$1000 to X
     // STore X to $2e
+    addr_7e002e = 0x1000;
+
     // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
     // Lengthen A
     // LoaD $2c to A
     // Logical Shift A Right
     // CLear Carry flag
     // ADd #$1000 to A with Carry
     // STore A to $2e
+    addr_7e002e = (addr_7e002c >> 1) + 0x1000;
+
     // LoaD $06 to A
     // Shorten A
     // LoaD $0d to X
     // Branch to [@59f5] if EQuals
-    // STore X to $2c
-    // LoaD $06 to X
-    // STore X to $23
-    // INCrement $25
-    // Jump to SubRoutine TfrVRAM
+    if (addr_7e0006 & 0xFF) {
+
+        // STore X to $2c
+        addr_7e002c = addr_7e000d;
+
+        // LoaD $06 to X
+        // STore X to $23
+        addr_7e0023 = addr_7e0006;
+
+        // INCrement $25
+        addr_7e0025 ++;
+
+        // Jump to SubRoutine TfrVRAM
+        tfrVram();
+    }
 
     // [@59f5] Lengthen A
     // LoaD $1116 (map graphics 3) to A
@@ -3266,44 +3325,74 @@ static void loadMapGfx(void) {
     // AND A with #$00ff
     // Shorten A
     // STore A to $25
+
     // Lengthen A
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
+    Uint diff3 = addr_7e0006 - addr_7e0023;
+
     // CoMpare A with #$2000
     // Branch to [@5a2f] if Carry Clear
-    // LoaD #$2000 to A
-    // STore A to $2c
-    // LoaD $06 to A
-    // STore A to $0d
-    // BRAnch to [@5a39]
+    if (diff3 >= 0x2000) {
+    
+        // LoaD #$2000 to A
+        // STore A to $2c
+        addr_7e002c = 0x2000;
 
-    // [@5a2f] STore A to $2c
-    // LoaD $23 to A
-    // CLear Carry flag
-    // ADd #$2000 to A with Carry
-    // STore A to $0d
+        // LoaD $06 to A
+        // STore A to $0d
+        addr_7e000d = addr_7e0006;
+    
+    // BRAnch to [@5a39]
+    } else {
+
+        // [@5a2f] STore A to $2c
+        addr_7e002c = diff3;
+
+        // LoaD $23 to A
+        // CLear Carry flag
+        // ADd #$2000 to A with Carry
+        // STore A to $0d
+        addr_7e000d = addr_7e0023 + 0x2000;
+    }
 
     // [@5a39] LoaD $06 to A
     // Shorten A
     // LoaD #$2000 to X
     // STore X to $2e
+    addr_7e002e = 0x2000;
+
     // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
     // Lengthen A
     // LoaD $2c to A
     // Logical Shift A Right
     // CLear Carry flag
     // ADd #$2000 to A with Carry
     // STore A to $2e
+    addr_7e002e = (addr_7e002c >> 1) + 0x2000;
+
     // LoaD $06 to A
     // Shorten A
     // LoaD $0d to X
     // Branch to [@5a63] if EQuals
-    // STore X to $2c
-    // LoaD $06 to X
-    // STore X to $23
-    // INCrement $25
-    // Jump to SubRoutine TfrVRAM
+    if (addr_7e0006 & 0xFF) {
+
+        // STore X to $2c
+        addr_7e002c = addr_7e000d;
+
+        // LoaD $06 to X
+        // STore X to $23
+        addr_7e0023 = addr_7e0006;
+
+        // INCrement $25
+        addr_7e0025 ++;
+
+        // Jump to SubRoutine TfrVRAM
+        tfrVram();
+    }
 
     // [@5a63] Lengthen A
     // LoaD $1116 to A
@@ -3319,32 +3408,50 @@ static void loadMapGfx(void) {
     // Shorten A
     // LoaD #^MapBG3Gfx to A
     // STore A to $25
+
     // LoaD #$4000 to X
     // STore X to $2e
+    addr_7e002e = 0x4000;
+
     // LoaD #$1000 to X
     // STore X to $2c
+    addr_7e002c = 0x1000;
+
     // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
     // Jump to SubRoutine TfrPartyGfx
+    TfrPartyGfx();
+
     // Jump to SubRoutine _c01e14
+    copyAltGfx();
+
     // LoaD #$3d00 to X
     // STore X to $2e
+    addr_7e002e = 0x3d00;
+
     // LoaD #$0600 to X
     // STore X to $2c
+    addr_7e002c = 0x600;
+
     // LoaD (#near WindowGfx) to X
     // STore X to $23
     // LoaD #^WindowGfx to A
     // STore A to $25
-    // Jump to SubRoutine TfrVRAM
-    // Jump to SubRoutine LoadOverlayGfx
-    // LoaD $06 to X
 
+    // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
+    // Jump to SubRoutine LoadOverlayGfx
+    loadOverlayGfx();
+
+    // LoaD $06 to X
     // [@5aae] LoaD $0500,x to A
     // AND A with #$40
     // Branch to [@5abc] if Not Equals
     // LoaD $0520,x to A
     // AND A with #$01
     // Branch to [@5ada] if Not Equals
-
     // [@5abc] Lengthen A
     // Transfer X to A
     // CLear Carry flag
@@ -3354,11 +3461,19 @@ static void loadMapGfx(void) {
     // Shorten A
     // ComPare X with #$0140
     // Branch to [@5aae] if Not Equals
+
     // STore Zero to $0b6d
+    addr_7e0b6d = 0;
+
     // LoaD #$0020 to X
     // STore X to $2e
+    addr_7e002e = 0x20;
+
     // STore X to $2c
+    addr_7e002c = 0x20;
+
     // Jump to SubRoutine FillVRAM
+    fillVram();
 
     // [@5ada] Return to Subroutine
 }
