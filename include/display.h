@@ -4,7 +4,7 @@
 #include <SDL3/SDL.h>
 
 #define TOTAL_BG_COUNT = 4
-#define PALETTE_SIZE = 256
+#define PALETTE_SIZE_8BIT = 256
 
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
@@ -66,7 +66,8 @@ Uint8 mode7_y;
 
 // Addresses _2121-2122 are for CGRAM,
 // which stores the palette.
-SDL_Palette palette;
+SDL_Palette palette_4bit[8];
+SDL_Palette palette_8bit;
 
 // Address: _2123
 Uint8 w12sel;
@@ -124,5 +125,5 @@ void updateTilesetFromFilePath(Uint8 i, char[] filepath);
 
 void setBgMode(Uint8 val);
 
-void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]);
+void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]);
 #endif

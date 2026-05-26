@@ -4,6 +4,9 @@
 
 #include "<SDL3/SDL.h>"
 
+#define PALETTE_COUNT_4BIT = 8
+#define PALETTE_SIZE_4BIT = 16
+
 // Tileset Width = 8 pixels x 16 tiles x Bit count
 #define TILESET_WIDTH_1BIT = 128
 #define TILESET_WIDTH_2BIT = 256
@@ -41,7 +44,11 @@ void setupDisplay(SDL_Renderer *new_renderer) {
         bgLayers[i].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH_1BIT, TILESET_HEIGHT_1BIT);
     }
 
-    palette = SDL_CreatePalette(PALETTE_SIZE);
+    palette_8bit = SDL_CreatePalette(PALETTE_SIZE_8BIT);
+    for (Uint8 i = 0; i < PALETTE_COUNT_4BIT; i ++) {
+        Uint8 start = PALETTE_SIZE_4BIT * i;
+        palette_4bit[i] = createSubPalette(palette_8bit, PALETTE_SIZE_4BIT, start);
+    }
 }
 
 void updateTilesetFromFilePath(Uint8 i, char[] filepath) {
@@ -199,22 +206,32 @@ void setBgMode(Uint8 val) {
     }
 }
 
-void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE]) {
-    SDL_Color color[PALETTE_SIZE];
+void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]) {
+    SDL_Color color[PALETTE_SIZE_8BIT];
 
-    for (Uint8 i = 0; i < PALETTE_SIZE; i ++) {
+    for (Uint8 i = 0; i < PALETTE_SIZE_8BIT; i ++) {
         color[i] = {0, 0, 0, 0};
         SDL_GetRGBA(arr_pal[i], *SNES_FORMAT, NULL, &color[i]->r, &color[i]->g, &color[i]->b, &color[i]->a);
     }
 
-    SDL_SetPaletteColors(palette, &color, 0, PALETTE_SIZE);
+    SDL_SetPaletteColors(palette_8bit, &color, 0, PALETTE_SIZE_8BIT);
+}
+
+SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start) {
+    SDL_Color *colors[size];
+
+    for (Uint8 i = 0; i < size; i ++) {
+        colors[i] = base.colors[start + i];
+    }
+
+    return {size, *colors};
 }
 
 void draw(SDL_Renderer *renderer) {
     for (Uint8 i = 0; i < layerCount; i++) {
         SDL_SetRenderTarget(renderer, layer);
 
-        if (i == 0) SDL_SetRenderDrawColor(renderer, palette->colors[0]->r, palette->colors[0]->g, palette->colors[0]->b, SDL_ALPHAOPAQUE);
+        if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0]->r, palette_8bit->colors[0]->g, palette_8bit->colors[0]->b, SDL_ALPHAOPAQUE);
         else SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHATRANSPARENT);
         SDL_RenderClear(renderer);
 
