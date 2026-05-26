@@ -38,11 +38,7 @@ static SDL_Texture *sprite_texture[4];
 void setupDisplay(SDL_Renderer *new_renderer) {
     renderer = new_renderer;
 
-    for (Uint8 i = 0; i < TOTAL_BG_COUNT; i ++) {
-        bgLayers[i].high_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH_1BIT, TILESET_HEIGHT_1BIT);
-        bgLayers[i].low_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH_1BIT, TILESET_HEIGHT_1BIT);
-        bgLayers[i].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH_1BIT, TILESET_HEIGHT_1BIT);
-    }
+    setBgMode(0);
 
     palette_8bit = SDL_CreatePalette(PALETTE_SIZE_8BIT);
     for (Uint8 i = 0; i < PALETTE_COUNT_4BIT; i ++) {
@@ -57,15 +53,20 @@ void updateTilesetFromFilePath(Uint8 i, char[] filepath) {
     fclose(fptr);
 }
 
-// When bgMode is set, it also affects
-// BG depths
-void setBgMode(Uint8 val) {
+// Before setting bgMode, textures must be removed first
+void changeBgMode(Uint8 val) {
     for (Uint8 i = 0; i < BGLAYER_COUNTS[bgMode & 7]; i ++) {
         SDL_DestroyTexture(bgLayers[i].high_texture);
         SDL_DestroyTexture(bgLayers[i].low_texture);
         SDL_DestroyTexture(bgLayers[i].tileset);
     }
 
+    setBgMode(val);
+}
+
+// When bgMode is set, it also affects:
+//  - BG depths
+void setBgMode(Uint8 val) {
     bgMode = val;
 
     switch (bgMode & 7) {
