@@ -47,13 +47,13 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     }
 }
 
-void updateTilesetFromFilePath(Uint8 i, char[] filepath) {
+void updateTilesetFromFilePath(Uint8 i, char[] filepath, SDL_Rect customRect = NULL) {
     FILE *fptr = open(filepath, "rb");
-    SDL_UpdateTexture(bgLayers[i].tileset, NULL, &fptr, tilesetWidthsBits[i]);
+    SDL_UpdateTexture(bgLayers[i].tileset, customRect, &fptr, tilesetWidthsBits[i]);
     fclose(fptr);
 }
 
-// Before setting bgMode, textures must be removed first
+// Before setting bgMode, textures must be destroyed first to change their bit depth
 void changeBgMode(Uint8 val) {
     for (Uint8 i = 0; i < BGLAYER_COUNTS[bgMode & 7]; i ++) {
         SDL_DestroyTexture(bgLayers[i].high_texture);
