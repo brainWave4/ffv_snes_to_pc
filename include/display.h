@@ -4,13 +4,13 @@
 #include <stdbool.h>
 #include <SDL3/SDL.h>
 
-#define BASE_GAME_WIDTH = 256
-#define BASE_GAME_HEIGHT = 224
+#define BASE_GAME_WIDTH 256
+#define BASE_GAME_HEIGHT 224
 
-#define TILEMAP_TILECOUNT = 1024
+#define TILEMAP_TILECOUNT 1024
 
-#define TOTAL_BG_COUNT = 4
-#define PALETTE_SIZE_8BIT = 256
+#define TOTAL_BG_COUNT 4
+#define PALETTE_SIZE_8BIT 256
 
 typedef struct {
     SDL_Texture *high_texture, *low_texture;

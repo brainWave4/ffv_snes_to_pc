@@ -4,30 +4,30 @@
 
 #include "<SDL3/SDL.h>"
 
-#define PALETTE_COUNT_4BIT = 8
-#define PALETTE_SIZE_4BIT = 16
+#define PALETTE_COUNT_4BIT 8
+#define PALETTE_SIZE_4BIT 16
 
-#define TILE_WIDTH = 8
-#define TILE_WIDTH_TWICE = 16
+#define TILE_WIDTH 8
+#define TILE_WIDTH_TWICE 16
 
-#define KEY_TILEISTWICE_BG1 = 0x10
-#define KEY_TILEISTWICE_BG2 = 0x20
-#define KEY_TILEISTWICE_BG3 = 0x40
-#define KEY_TILEISTWICE_BG4 = 0x80
+#define KEY_TILEISTWICE_BG1 0x10
+#define KEY_TILEISTWICE_BG2 0x20
+#define KEY_TILEISTWICE_BG3 0x40
+#define KEY_TILEISTWICE_BG4 0x80
 
 // Tileset Width = 8 pixels x 16 tiles x Bit count
-#define TILESET_WIDTH_1BIT = 128
-#define TILESET_WIDTH_2BIT = 256
-#define TILESET_WIDTH_4BIT = 512
-#define TILESET_WIDTH_8BIT = 1024
+#define TILESET_WIDTH_1BIT 128
+#define TILESET_WIDTH_2BIT 256
+#define TILESET_WIDTH_4BIT 512
+#define TILESET_WIDTH_8BIT 1024
 
 // Tileset has 1024 tiles total
 // Since it is 16 tiles in width, it is 64 tiles in height
 // Tileset Width = 8 pixels x 64 tiles x Bit count
-#define TILESET_HEIGHT_1BIT = 512
-#define TILESET_HEIGHT_2BIT = 1024
-#define TILESET_HEIGHT_4BIT = 2048
-#define TILESET_HEIGHT_8BIT = 4096
+#define TILESET_HEIGHT_1BIT 512
+#define TILESET_HEIGHT_2BIT 1024
+#define TILESET_HEIGHT_4BIT 2048
+#define TILESET_HEIGHT_8BIT 4096
 
 static const SDL_PixelFormatDetails *SNES_FORMAT = SDL_GetPixelFormatDetails(SDL_PIXELFORMAT_ARGB1555);
 
