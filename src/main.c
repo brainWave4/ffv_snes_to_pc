@@ -3,10 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "include/display.h"
 #include "include/field.h"
-
-#define BASE_GAME_WIDTH 256
-#define BASE_GAME_HEIGHT 224
 
 typedef struct {
     SDL_Window* window;
