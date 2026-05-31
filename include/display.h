@@ -7,6 +7,8 @@
 #define BASE_GAME_WIDTH 256
 #define BASE_GAME_HEIGHT 224
 
+#define BASEGAME_TILESTOTAL 957
+
 #define TILEMAP_TILECOUNT 1024
 
 #define TOTAL_BG_COUNT 4
@@ -14,16 +16,24 @@
 
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
-    SDL_Rect *high_rect[], *low_rect[];
 
     SDL_Texture *tileset;
 
-    bool tileIsTwice;
-    SDL_Rect tilemap[TILEMAP_TILECOUNT];
+    SDL_Texture tilemap[TILEMAP_TILECOUNT];
+
+    SDL_Texture queueHighmap[BASEGAME_TILESTOTAL];
+    SDL_FRect queueHighrect[BASEGAME_TILESTOTAL];
 
     Uint8 hScroll;
-
     Uint8 vScroll;
+
+    Uint8 key_rerendering;
+
+    Uint8 queueHighCounter;
+
+    bool tilemapIsHigh[TILEMAP_TILECOUNT];
+
+    bool tileIsTwice;
 } BgLayer;
 
 BgLayer[TOTAL_BG_COUNT] bgLayers;

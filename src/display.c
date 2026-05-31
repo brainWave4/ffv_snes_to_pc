@@ -29,6 +29,11 @@
 #define TILESET_HEIGHT_4BIT 2048
 #define TILESET_HEIGHT_8BIT 4096
 
+#define TILEMAP_TILEWIDTH 32
+
+#define BASEGAME_TILEWIDTH 32
+#define BASEGAME_TILEHEIGHT 28
+
 static const SDL_PixelFormatDetails *SNES_FORMAT = SDL_GetPixelFormatDetails(SDL_PIXELFORMAT_ARGB1555);
 
 static const Uint8 BGLAYER_COUNTS[8] = {4, 3, 2, 2, 2, 2, 1, 1};
@@ -36,6 +41,7 @@ static const Uint8 BGLAYER_COUNTS[8] = {4, 3, 2, 2, 2, 2, 1, 1};
 SDL_Renderer *renderer;
 
 static Uint8 bgMode;
+static Uint8 need_redrawing;
 
 static Uint8 layerCount;
 static SDL_Texture *layersTexture[];
@@ -47,10 +53,19 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     renderer = new_renderer;
 
     setBgMode(0);
+    need_redrawing = 0;
 
     for (Uint8 i = 0; i < TOTAL_BG_COUNT; i ++) {
         bgLayers[i].high_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR1555, SDL_TEXTUREACCESS_TARGET, BASE_GAME_WIDTH, BASE_GAME_HEIGHT);
         bgLayers[i].low_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR1555, SDL_TEXTUREACCESS_TARGET, BASE_GAME_WIDTH, BASE_GAME_HEIGHT);
+        
+        bgLayers[i].key_redrawing = 1 << i;
+        
+        bgLayers[i].queueHighCounter = 0;
+
+        for (Uint8 j = 0; j < TILEMAP_TILECOUNT; j ++) {
+            bgLayers[i].tilemapIsHigh[j] = false;
+        }
     }
 
     palette_8bit = SDL_CreatePalette(PALETTE_SIZE_8BIT);
@@ -287,17 +302,71 @@ SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start) {
     return {size, *colors};
 }
 
-void draw(SDL_Renderer *renderer) {
-    for (Uint8 i = 0; i < layerCount; i++) {
-        SDL_SetRenderTarget(renderer, layer);
+void drawLayerLower(BgLayer *layer) {
+    SDL_SetRenderTarget(renderer, layer.low_texture);
+    SDL_RenderClear(renderer);
 
-        if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0]->r, palette_8bit->colors[0]->g, palette_8bit->colors[0]->b, SDL_ALPHAOPAQUE);
-        else SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHATRANSPARENT);
-        SDL_RenderClear(renderer);
+    if (need_redrawing & layer.key_redrawing) {
+        Uint8 tileWidth = layer.tileIsTwice ? TILE_WIDTH_TWICE : TILE_WIDTH
 
-        SDL_SetRenderTarget(renderer, NULL);
-        SDL_RenderTexture(renderer, layersTexture[i], NULL, NULL);
+        Uint8 startI = layer.hScroll / tileWidth;
+        Sint16 x = layer.hScroll % tileWidth;
+        Uint8 gameWidth = BASEGAME_TILEWIDTH;
+        if (x) {
+            x -= tileWidth;
+            gameWidth ++;
+        }
+        
+        Uint8 startJ = layer.vScroll / tileWidth;
+        Sint16 startY = layer.vScroll % tileWidth;
+        Uint8 gameHeight = BASEGAME_TILEHEIGHT;
+        if (startY) {
+            startY -= tileWidth;
+            gameHeight ++;
+        }
+        for (Uint8 i = startI; i < gameWidth; i ++) {
+            Uint8 loopI = i;
+            if (loopI >= TILEMAP_TILEWIDTH) loopI -= TILEMAP_TILEWIDTH;
+            Uint8 tileI = loopI * TILEMAP_TILEWIDTH
+            
+            Uint8 y = startY;
+            for (Uint8 j = startJ; j < gameHeight; j ++) {
+                Uint8 loopJ = j;
+                if (loopJ >= TILEMAP_TILEWIDTH) loopJ -= TILEMAP_TILEWIDTH;
+
+                Uint8 tileJ = tileI + loopJ;
+                SDL_FRect dest = {x, y, tileWidth, tileWidth};
+
+                if (layer.tilemapIsHigh[tileJ]) {
+                    layer.queueHighrect[layer.queueCounter] = dest;
+                    layer.queueHighmap[layer.queueCounter] = layer.tilemap[tileJ];
+                    layer.queueHighCounter ++;
+                }
+                else {
+                    SDL_RenderTexture(renderer, layer.tilemap[tileJ], NULL, &dest);
+                }
+
+                y += tileWidth;
+            }
+
+            x += tileWidth;
+        }
     }
+    
+    SDL_SetRenderTarget(renderer, NULL);
+    SDL_RenderTexture(renderer, layer.low_texture, NULL, NULL);
+}
 
-    SDL_RenderPresent(renderer);
+void draw(SDL_Renderer *renderer) {
+    if (need_redrawing) {
+        for (Uint8 i = 0; i < layerCount; i++) {
+            if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0]->r, palette_8bit->colors[0]->g, palette_8bit->colors[0]->b, SDL_ALPHAOPAQUE);
+            // draw layers here
+            if (i == 0) SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHATRANSPARENT);
+        }
+
+        SDL_RenderPresent(renderer);
+
+        need_redrawing = 0;
+    }
 }
