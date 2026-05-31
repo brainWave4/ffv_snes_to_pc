@@ -81,6 +81,7 @@ void changeBgMode(Uint8 val) {
 
 // When bgMode is set, it also affects:
 //  - BG depths
+//  - Whether tilemaps are double the size
 void setBgMode(Uint8 val) {
     bgMode = val;
 
