@@ -44,7 +44,7 @@ static Uint8 bgMode;
 static Uint8 need_redrawing;
 
 static Uint8 layerCount;
-static SDL_Texture *layersTexture[];
+static void (*drawLayers[])(void);
 static Uint8 tilesetWidthsBits[4];
 
 static SDL_Texture *sprite_texture[4];
@@ -117,10 +117,10 @@ void setBgMode(Uint8 val) {
             }
 
             layerCount = 12;
-            layersTexture = {bgLayers[3].low_texture, bgLayers[2].low_texture, sprite_texture[0],
-                    bgLayers[3].high_texture, bgLayers[2].high_texture, sprite_texture[1],
-                    bgLayers[1].low_texture, bgLayers[0].low_texture, sprite_texture[2],
-                    bgLayers[1].high_texture, bgLayers[0].high_texture, sprite_texture[3]
+            drawLayers = {drawBg4Low, drawBg3Low, drawSprites0,
+                    drawBg4High, drawBg3High, drawSprites1,
+                    drawBg2Low, drawBg1Low, drawSprites2,
+                    drawBg2High, drawBg1High, drawSprites3
                 };
             
             break;
@@ -144,15 +144,15 @@ void setBgMode(Uint8 val) {
             }
 
             layerCount = 10;
-            if (bgMode & 8) layersTexture = {bgLayers[2].low_texture, sprite_texture[0], sprite_texture[1],
-                    bgLayers[1].low_texture, bgLayers[0].low_texture, sprite_texture[2],
-                    bgLayers[1].high_texture, bgLayers[0].high_texture, sprite_texture[3],
-                    bgLayers[2].high_texture
+            if (bgMode & 8) drawLayers = {drawBg3Low, drawSprites0, drawSprites1,
+                    drawBg2Low, drawBg1Low, drawSprites2,
+                    drawBg2High, drawBg1High, drawSprites3,
+                    drawBg3High
                 };
-            else layersTexture = {bgLayers[2].low_texture, sprite_texture[0],
-                    bgLayers[2].high_texture, sprite_texture[1],
-                    bgLayers[1].low_texture, bgLayers[0].low_texture, sprite_texture[2],
-                    bgLayers[1].high_texture, bgLayers[0].high_texture, sprite_texture[3]
+            else drawLayers = {drawBg3Low, drawSprites0,
+                    drawBg3High, drawSprites1,
+                    drawBg2Low, drawBg1Low, drawSprites2,
+                    drawBg2High, drawBg1High, drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_4BIT, TILESET_WIDTH_4BIT, TILESET_WIDTH_2BIT, 0};
             
@@ -170,10 +170,10 @@ void setBgMode(Uint8 val) {
             }
 
             layerCount = 8;
-            layersTexture = {bgLayers[1].low_texture, sprite_texture[0],
-                    bgLayers[0].low_texture, sprite_texture[1],
-                    bgLayers[1].high_texture, sprite_texture[2],
-                    bgLayers[0].high_texture, sprite_texture[3]
+            drawLayers = {drawBg2Low, drawSprites0,
+                    drawBg1Low, drawSprites1,
+                    drawBg2High, drawSprites2,
+                    drawBg1High, drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_4BIT, TILESET_WIDTH_4BIT, 0, 0};
             
@@ -194,10 +194,10 @@ void setBgMode(Uint8 val) {
             }
 
             layerCount = 8;
-            layersTexture = {bgLayers[1].low_texture, sprite_texture[0],
-                    bgLayers[0].low_texture, sprite_texture[1],
-                    bgLayers[1].high_texture, sprite_texture[2],
-                    bgLayers[0].high_texture, sprite_texture[3]
+            drawLayers = {drawBg2Low, drawSprites0,
+                    drawBg1Low, drawSprites1,
+                    drawBg2High, drawSprites2,
+                    drawBg1High, drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_8BIT, TILESET_WIDTH_4BIT, 0, 0};
             
@@ -218,10 +218,10 @@ void setBgMode(Uint8 val) {
             }
             
             layerCount = 8;
-            layersTexture = {bgLayers[1].low_texture, sprite_texture[0],
-                    bgLayers[0].low_texture, sprite_texture[1],
-                    bgLayers[1].high_texture, sprite_texture[2],
-                    bgLayers[0].high_texture, sprite_texture[3]
+            drawLayers = {drawBg2Low, drawSprites0,
+                    drawBg1Low, drawSprites1,
+                    drawBg2High, drawSprites2,
+                    drawBg1High, drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_8BIT, TILESET_WIDTH_2BIT, 0, 0};
             
@@ -238,10 +238,10 @@ void setBgMode(Uint8 val) {
             }
 
             layerCount = 8;
-            layersTexture = {bgLayers[1].low_texture, sprite_texture[0],
-                    bgLayers[0].low_texture, sprite_texture[1],
-                    bgLayers[1].high_texture, sprite_texture[2],
-                    bgLayers[0].high_texture, sprite_texture[3]
+            drawLayers = {drawBg2Low, drawSprites0,
+                    drawBg1Low, drawSprites1,
+                    drawBg2High, drawSprites2,
+                    drawBg1High, drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_4BIT, TILESET_WIDTH_2BIT, 0, 0};
             
@@ -255,10 +255,10 @@ void setBgMode(Uint8 val) {
             }
             
             layerCount = 6;
-            layersTexture = {sprite_texture[0],
-                    bgLayers[0].low_texture, sprite_texture[1],
-                    sprite_texture[2],
-                    bgLayers[0].high_texture, sprite_texture[3]
+            drawLayers = {drawSprites0,
+                    drawBg1Low, drawSprites1,
+                    drawSprites2,
+                    drawBg1High, drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_4BIT, 0, 0, 0};
             
@@ -272,10 +272,10 @@ void setBgMode(Uint8 val) {
             }
             
             layerCount = 7;
-            layersTexture = {sprite_texture[0],
-                    bgLayers[0].low_texture, sprite_texture[1],
-                    sprite_texture[2],
-                    sprite_texture[3]
+            drawLayers = {drawSprites0,
+                    drawBg1Low, drawSprites1,
+                    drawSprites2,
+                    drawSprites3
                 };
             tilesetWidthsBits = {TILESET_WIDTH_8BIT, TILESET_WIDTH_8BIT, 0, 0};
     }
@@ -409,11 +409,19 @@ void drawBg4High() {
     drawLayerHigh(bgLayers[3]);
 }
 
+void drawSprites0() {}
+
+void drawSprites1() {}
+
+void drawSprites2() {}
+
+void drawSprites3() {}
+
 void draw(SDL_Renderer *renderer) {
     if (need_redrawing) {
         for (Uint8 i = 0; i < layerCount; i++) {
             if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0]->r, palette_8bit->colors[0]->g, palette_8bit->colors[0]->b, SDL_ALPHA_OPAQUE);
-            // draw layers here
+            drawLayers[i]();
             if (i == 0) SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
         }
 
