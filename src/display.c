@@ -66,7 +66,8 @@ void updateTilesetFromFilePath(Uint8 i, char[] filepath, SDL_Rect customRect = N
     fclose(fptr);
 }
 
-// Before setting bgMode, textures must be destroyed first to change their bit depth
+// Before setting bgMode, textures must be destroyed first to change
+// their bit depth and tilemap size
 void changeBgMode(Uint8 val) {
     for (Uint8 i = 0; i < BGLAYER_COUNTS[bgMode & 7]; i ++) {
         SDL_DestroyTexture(bgLayers[i].tileset);
