@@ -60,7 +60,7 @@ void setupDisplay(SDL_Renderer *new_renderer) {
         bgLayers[i].low_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR1555, SDL_TEXTUREACCESS_TARGET, BASE_GAME_WIDTH, BASE_GAME_HEIGHT);
         
         bgLayers[i].key_redrawing = 1 << i;
-        
+
         bgLayers[i].queueHighCounter = 0;
 
         for (Uint8 j = 0; j < TILEMAP_TILECOUNT; j ++) {
@@ -302,7 +302,7 @@ SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start) {
     return {size, *colors};
 }
 
-void drawLayerLower(BgLayer *layer) {
+void drawLayerLow(BgLayer *layer) {
     SDL_SetRenderTarget(renderer, layer.low_texture);
     SDL_RenderClear(renderer);
 
@@ -357,12 +357,32 @@ void drawLayerLower(BgLayer *layer) {
     SDL_RenderTexture(renderer, layer.low_texture, NULL, NULL);
 }
 
+void drawLayerHigh(BgLayer *layer) {
+    SDL_SetRenderTarget(renderer, layer.high_texture);
+    SDL_RenderClear(renderer);
+
+    if (need_redrawing & layer.key_redrawing) {
+        while(layer.queueHighCounter > 0) {
+            SDL_RenderTexture(renderer, layer.queueHighmap[layer.queueCounter], NULL, layer.queueHighrect[layer.queueCounter]);
+            layer.queueHighmap[layer.queueCounter] = NULL;
+            
+            free(layer.queueHighrect[layer.queueCounter]);
+            layer.queueHighrect[layer.queueCounter] = NULL;
+
+            layer.queueHighCounter --;
+        }
+    }
+
+    SDL_SetRenderTarget(renderer, NULL);
+    SDL_RenderTexture(renderer, layer.high_texture, NULL, NULL);
+}
+
 void draw(SDL_Renderer *renderer) {
     if (need_redrawing) {
         for (Uint8 i = 0; i < layerCount; i++) {
-            if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0]->r, palette_8bit->colors[0]->g, palette_8bit->colors[0]->b, SDL_ALPHAOPAQUE);
+            if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0]->r, palette_8bit->colors[0]->g, palette_8bit->colors[0]->b, SDL_ALPHA_OPAQUE);
             // draw layers here
-            if (i == 0) SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHATRANSPARENT);
+            if (i == 0) SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
         }
 
         SDL_RenderPresent(renderer);

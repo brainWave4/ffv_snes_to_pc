@@ -21,8 +21,8 @@ typedef struct {
 
     SDL_Texture tilemap[TILEMAP_TILECOUNT];
 
-    SDL_Texture queueHighmap[BASEGAME_TILESTOTAL];
-    SDL_FRect queueHighrect[BASEGAME_TILESTOTAL];
+    SDL_Texture *queueHighmap[BASEGAME_TILESTOTAL];
+    SDL_FRect *queueHighrect[BASEGAME_TILESTOTAL];
 
     Uint8 hScroll;
     Uint8 vScroll;
