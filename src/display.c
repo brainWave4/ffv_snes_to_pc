@@ -357,6 +357,22 @@ void drawLayerLow(BgLayer *layer) {
     SDL_RenderTexture(renderer, layer.low_texture, NULL, NULL);
 }
 
+void drawBg1Low() {
+    drawLayerLow(bgLayers[0]);
+}
+
+void drawBg2Low() {
+    drawLayerLow(bgLayers[1]);
+}
+
+void drawBg3Low() {
+    drawLayerLow(bgLayers[2]);
+}
+
+void drawBg4Low() {
+    drawLayerLow(bgLayers[3]);
+}
+
 void drawLayerHigh(BgLayer *layer) {
     SDL_SetRenderTarget(renderer, layer.high_texture);
     SDL_RenderClear(renderer);
@@ -375,6 +391,22 @@ void drawLayerHigh(BgLayer *layer) {
 
     SDL_SetRenderTarget(renderer, NULL);
     SDL_RenderTexture(renderer, layer.high_texture, NULL, NULL);
+}
+
+void drawBg1High() {
+    drawLayerHigh(bgLayers[0]);
+}
+
+void drawBg2High() {
+    drawLayerHigh(bgLayers[1]);
+}
+
+void drawBg3High() {
+    drawLayerHigh(bgLayers[2]);
+}
+
+void drawBg4High() {
+    drawLayerHigh(bgLayers[3]);
 }
 
 void draw(SDL_Renderer *renderer) {
