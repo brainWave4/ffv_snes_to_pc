@@ -2522,7 +2522,30 @@ static void resetSprites(void) {}
 // Address: _4cad
 static void hideSpritesInCutscenes(void) {}
 
-static void tfrVram(void) {}
+// Copy data to VRAM
+//   ++$23: Source Address
+//    +$2c: Size
+//    +$2e: Destination Address (in VRAM)
+static void tfrVram(void) {
+    // LoaD #$80 to A
+    // STore A to hVMAINC
+    // STore Zero to hMDMAEN
+    // LoaD #$01 to A
+    // STore A to hDMA0::CTRL
+    // LoaD #<hVMDATAL to A
+    // STore A to hDMA0::HREG
+    // LoaD $25 to A
+    // STore A to hDMA0::ADDR_B
+    // LoaD $2e to X
+    // STore X to hVMADDL
+    // LoaD $23 to X
+    // STore X to hDMA0::ADDR
+    // LoaD $2c to X
+    // STore X to hDMA0::SIZE
+    // LoaD #$01 to A
+    // STore A to hMDMAEN
+    // Return to Subroutine
+}
 
 static void disableInterrupts(void) {}
 
