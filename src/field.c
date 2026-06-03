@@ -3458,12 +3458,12 @@ static void loadMapGfx(void) {
     // LoaD #$3d00 to X
     // STore X to $2e
     //  $2e stores destination address
-    addr_7e002e = 0x3d00;
+    addr_7e002e = 0x3D00;
 
     // LoaD #$0600 to X
     // STore X to $2c
     //  $2c stores size
-    SDL_Rect windowRect = {0, 0x1d00, TILESET_WIDTH, 12};
+    SDL_Rect windowRect = {0, 0x1D00, TILESET_WIDTH, 12};
 
     // LoaD (#near WindowGfx) to X
     // STore X to $23
