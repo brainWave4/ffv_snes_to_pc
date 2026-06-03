@@ -155,7 +155,7 @@ static void updateScrollingRegisters(void); // Incomplete
 static void updateCtrl(void); // Incomplete
 static void resetSprites(void); // Incomplete
 static void hideSpritesInCutscenes(void); // Incomplete
-static void tfrVram(void); // Incomplete
+static void tfrVram(char[] filepath, Uint8 destI, SDL_Rect *customRect = NULL); // Incomplete
 static void disableInterrupts(void); // Incomplete
 static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
@@ -2526,7 +2526,11 @@ static void hideSpritesInCutscenes(void) {}
 //   ++$23: Source Address
 //    +$2c: Size
 //    +$2e: Destination Address (in VRAM)
-static void tfrVram(void) {
+// Equilivent inputs:
+//   - Source filepath
+//   - Custom size
+//   - Destination Tileset
+static void tfrVram(char[] filepath, Uint8 destI, SDL_Rect *customRect = NULL) {
     // LoaD #$80 to A
     // STore A to hVMAINC
     // STore Zero to hMDMAEN
@@ -2545,6 +2549,8 @@ static void tfrVram(void) {
     // LoaD #$01 to A
     // STore A to hMDMAEN
     // Return to Subroutine
+
+    updateTilesetFromFilePath(destI, filepath, customRect);
 }
 
 static void disableInterrupts(void) {}
@@ -3221,7 +3227,7 @@ static void loadMapGfx(void) {
     addr_7e002e = addr_7e0006;
 
     // Jump to SubRoutine TfrVRAM
-    tfrVram();
+    // tfrVram();
 
     // Lengthen A
     // LoaD $2c to A
@@ -3246,7 +3252,7 @@ static void loadMapGfx(void) {
         addr_7e0025 ++;
 
         // Jump to SubRoutine TfrVRAM
-        tfrVram();
+        // tfrVram();
     }
 
     // [@5984] Lengthen A
@@ -3304,7 +3310,7 @@ static void loadMapGfx(void) {
     addr_7e002e = 0x1000;
 
     // Jump to SubRoutine TfrVRAM
-    tfrVram();
+    // tfrVram();
 
     // Lengthen A
     // LoaD $2c to A
@@ -3331,7 +3337,7 @@ static void loadMapGfx(void) {
         addr_7e0025 ++;
 
         // Jump to SubRoutine TfrVRAM
-        tfrVram();
+        // tfrVram();
     }
 
     // [@59f5] Lengthen A
@@ -3387,7 +3393,7 @@ static void loadMapGfx(void) {
     addr_7e002e = 0x2000;
 
     // Jump to SubRoutine TfrVRAM
-    tfrVram();
+    // tfrVram();
 
     // Lengthen A
     // LoaD $2c to A
@@ -3414,7 +3420,7 @@ static void loadMapGfx(void) {
         addr_7e0025 ++;
 
         // Jump to SubRoutine TfrVRAM
-        tfrVram();
+        // tfrVram();
     }
 
     // [@5a63] Lengthen A
@@ -3441,7 +3447,7 @@ static void loadMapGfx(void) {
     addr_7e002c = 0x1000;
 
     // Jump to SubRoutine TfrVRAM
-    tfrVram();
+    // tfrVram();
 
     // Jump to SubRoutine TfrPartyGfx
     TfrPartyGfx();
@@ -3451,19 +3457,22 @@ static void loadMapGfx(void) {
 
     // LoaD #$3d00 to X
     // STore X to $2e
+    //  $2e stores destination address
     addr_7e002e = 0x3d00;
 
     // LoaD #$0600 to X
     // STore X to $2c
-    addr_7e002c = 0x600;
+    //  $2c stores size
+    SDL_Rect windowRect = {0, 0x1d00, TILESET_WIDTH, 12};
 
     // LoaD (#near WindowGfx) to X
     // STore X to $23
     // LoaD #^WindowGfx to A
     // STore A to $25
+    //  $23-25 stores source address
 
     // Jump to SubRoutine TfrVRAM
-    tfrVram();
+    tfrVram("window", 2, windowRect);
 
     // Jump to SubRoutine LoadOverlayGfx
     loadOverlayGfx();
@@ -3496,7 +3505,7 @@ static void loadMapGfx(void) {
     addr_7e002c = 0x20;
 
     // Jump to SubRoutine FillVRAM
-    fillVram();
+    // fillVram();
 
     // [@5ada] Return to Subroutine
 }
