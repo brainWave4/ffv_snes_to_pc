@@ -155,7 +155,7 @@ static void updateScrollingRegisters(void); // Incomplete
 static void updateCtrl(void); // Incomplete
 static void resetSprites(void); // Incomplete
 static void hideSpritesInCutscenes(void); // Incomplete
-static void tfrVram(char[] filepath, Uint8 destI, SDL_Rect *customRect = NULL); // Incomplete
+static void tfrVram(char[] filename, Uint8 destI, SDL_Rect *customRect = NULL); // Incomplete
 static void disableInterrupts(void); // Incomplete
 static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
@@ -2527,10 +2527,10 @@ static void hideSpritesInCutscenes(void) {}
 //    +$2c: Size
 //    +$2e: Destination Address (in VRAM)
 // Equilivent inputs:
-//   - Source filepath
+//   - Source file name
 //   - Custom size
 //   - Destination Tileset
-static void tfrVram(char[] filepath, Uint8 destI, SDL_Rect *customRect = NULL) {
+static void tfrVram(char[] filename, Uint8 destI, SDL_Rect *customRect = NULL) {
     // LoaD #$80 to A
     // STore A to hVMAINC
     // STore Zero to hMDMAEN
@@ -2549,8 +2549,8 @@ static void tfrVram(char[] filepath, Uint8 destI, SDL_Rect *customRect = NULL) {
     // LoaD #$01 to A
     // STore A to hMDMAEN
     // Return to Subroutine
-
-    updateTilesetFromFilePath(destI, filepath, customRect);
+    char[] full_filepath = FOLDER_TEXTURE + filename + EXT_BPP4;
+    updateTilesetFromFilePath(destI, full_filepath, customRect);
 }
 
 static void disableInterrupts(void) {}
@@ -3463,7 +3463,7 @@ static void loadMapGfx(void) {
     // LoaD #$0600 to X
     // STore X to $2c
     //  $2c stores size
-    SDL_Rect windowRect = {0, 0x1D00, TILESET_WIDTH, 12};
+    SDL_Rect windowRect = {0, 58, TILESET_WIDTH, 12};
 
     // LoaD (#near WindowGfx) to X
     // STore X to $23
@@ -3472,7 +3472,7 @@ static void loadMapGfx(void) {
     //  $23-25 stores source address
 
     // Jump to SubRoutine TfrVRAM
-    tfrVram("window", 2, windowRect);
+    tfrVram("window", 0, windowRect);
 
     // Jump to SubRoutine LoadOverlayGfx
     loadOverlayGfx();
