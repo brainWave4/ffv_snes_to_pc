@@ -3458,19 +3458,22 @@ static void loadMapGfx(void) {
     // LoaD #$3d00 to X
     // STore X to $2e
     //  $2e stores destination address
-    addr_7e002e = 0x3D00;
-
+    //  Y Offset = 0x1D00 (from nearest tileset)
+    //           / 4 bits
+    //           / 16 tiles in width
     // LoaD #$0600 to X
     // STore X to $2c
     //  $2c stores size
-    SDL_Rect windowRect = {0, 0x1D00, TILESET_WIDTH, 12};
+    //  Height = 0x600
+    //         / 4 bits
+    //         / 16 tiles in width
+    SDL_Rect windowRect = {0, 0x74, TILESET_WIDTH, 0x18};
 
     // LoaD (#near WindowGfx) to X
     // STore X to $23
     // LoaD #^WindowGfx to A
     // STore A to $25
     //  $23-25 stores source address
-
     // Jump to SubRoutine TfrVRAM
     tfrVram("window", 0, windowRect);
 
