@@ -4,8 +4,8 @@ This is a reverse engineer of Final Fantasy V, porting from SNES/Super Famicon t
 
 ## Dependencies
 
+* [CMake](https://cmake.org/) for easy compilation with a lot of files to embed.
 * [Python 3](https://www.python.org/) for extracting assets.
-* You also need to be able to compile C Projects.
 
 ## Compiling the Game
 
@@ -20,6 +20,12 @@ python3 'tools/extract_assets.py' '.../ffv.sfc'
 Where `'.../ffv.sfc'` is the full filepath to the FFV ROM. This arguement is optional; if left out, the program will search for a FFV ROM in `base_rom` folder.
 
 ### Compilation
+
+Finally, to compile to an executable, open Command Prompt or Terminal on the project folder and type:
+```
+cmake --build build
+```
+Be sure that the project folder has `build` folder, though.
 
 ## Other Usage
 For those who are porting SNES games to the PC, you may want to check out the following:
