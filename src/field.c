@@ -1,24 +1,24 @@
 // Bank Range: C0
-#include "include/field.h"
+#include "includes/field.h"
 
 #include <SDL3/SDL.h>
 
-#include "include/display.h"
+#include "includes/display.h"
 
 //.import _c10003, _c10006
-#include "include/btlgfx.h"
+#include "includes/btlgfx.h"
 
 //.import ExecBattle_ext
-#include "include/battle.h"
+#include "includes/battle.h"
 
 //.import ExecMenu_ext, _c2a008
-#include "include/menu.h"
+#include "includes/menu.h"
 
 //.import ShowCutscene_ext, Decomp_ext
-#include "include/cutscene.h"
+#include "includes/cutscene.h"
 
 //.import InitSound_ext, ExecSound_ext
-#include "include/sound.h"
+#include "includes/sound.h"
 
 static void fieldLoop(void);
 static void fieldNMI(void); // Incomplete

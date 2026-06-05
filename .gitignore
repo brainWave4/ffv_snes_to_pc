@@ -1053,3 +1053,6 @@ dkms.conf
 # ROMs
 *.sfc
 *.gba
+
+# Exceptions
+!CMakeLists.txt

@@ -1,13 +1,13 @@
 // Bank Range: C2/A000 - C2/FFFF, D0
-#include "include/menu.h"
+#include "includes/menu.h"
 
 #include <SDL3/SDL.h>
 
 // for subroute _c10009
-#include "include/btlgfx.h"
+#include "includes/btlgfx.h"
 
 // for ExecSound_ext
-#include "include/sound.h"
+#include "includes/sound.h"
 
 static void mainMenu(void); // Incomplete
 static void collectItemsAfterBattle(void); // Incomplete

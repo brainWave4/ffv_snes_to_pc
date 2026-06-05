@@ -1,15 +1,15 @@
 // Bank Range: C2/0000 - C2/9FFF
-#include "include/battle.h"
+#include "includes/battle.h"
 
 #include <SDL3/SDL.h>
 
-#include "include/menu.h"
+#include "includes/menu.h"
 
 // for ExecBtlGfx_ext
-#include "include/btlgfx.h"
+#include "includes/btlgfx.h"
 
 // for ExecSound_ext
-#include "include/sound.h"
+#include "includes/sound.h"
 
 // TODO: import RNGTbl (from field), AttackMessageTbl
 

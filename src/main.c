@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "include/display.h"
-#include "include/field.h"
+#include "includes/display.h"
+#include "includes/field.h"
 
 typedef struct {
     SDL_Window* window;
