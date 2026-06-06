@@ -6,6 +6,7 @@ This is a reverse engineer of Final Fantasy V, porting from SNES/Super Famicon t
 
 * [CMake](https://cmake.org/) for easy compilation with a lot of files to embed.
 * [Python 3](https://www.python.org/) for extracting assets.
+* You also need to be able to compile C Projects, such as with GCC.
 
 ## Compiling the Game
 
