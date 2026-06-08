@@ -119,7 +119,7 @@ def writeFilesTimesItems(item_count, filename, file_info, byLoop, inner_f, romma
     for i in range(item_count):
         final_name = filename
 
-        final_name += i
+        final_name += str(i)
         
         writeToFile(final_name, file_info, byLoop, inner_f, rommap, addr)
 
@@ -211,7 +211,7 @@ def texture(rommap):
         {DICT_FILE: "map_sprite", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1a0000, DICT_END: 0x1b3a00, DICT_DEPTH: 4},
         {DICT_FILE: "vehicle", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1b3a00, DICT_END: 0x1b4d80, DICT_DEPTH: 4},
         {DICT_FILE: "world_sprite", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1b4d80, DICT_END: 0x1b8000, DICT_DEPTH: 4},
-        {DICT_FILE: "world_gfx", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1b8000, DICT_BYTES: 0x2000, DICT_ITEMS: 3, DICT_DEPTH: 4},
+        {DICT_FILE: "world_gfx", DICT_FUNC: byBytes, DICT_ADDR: 0x1b8000, DICT_BYTES: 0x2000, DICT_ITEMS: 3, DICT_DEPTH: 4},
         {DICT_FILE: "kanji", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1bd000, DICT_END: 0x1bf800, DICT_DEPTH: 1},
         {DICT_FILE: "map_anim", DICT_FUNC: byAddrRange, DICT_ADDR: 0x1f9b00, DICT_END: 0x1ffc00, DICT_DEPTH: 4}
     ]:
