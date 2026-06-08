@@ -24,6 +24,10 @@ Where `'.../ffv.sfc'` is the full filepath to the FFV ROM. This arguement is opt
 
 Finally, to compile to an executable, open Command Prompt or Terminal on the project folder and type:
 ```
+# For first-time only
+cmake .
+
+# Always
 cmake --build build
 ```
 Be sure that the project folder has `build` folder, though.
