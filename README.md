@@ -22,15 +22,16 @@ Where `'.../ffv.sfc'` is the full filepath to the FFV ROM. This arguement is opt
 
 ### Compilation
 
-Finally, to compile to an executable, open Command Prompt or Terminal on the project folder and type:
+If this is your first time compiling, create a new folder `build`, open Command Prompt or Terminal there and type:
 ```
-# For first-time only
-cmake .
+cmake ..
+```
+This is for generating makefiles. You may need to do it again, depending on the changes made in `CMakeLists.txt`.
 
-# Always
+Finally, to compile to an executable, open Command Prompt or Terminal on the root folder and type:
+```
 cmake --build build
 ```
-Be sure that the project folder has `build` folder, though.
 
 ## Other Usage
 For those who are porting SNES games to the PC, you may want to check out the following:
