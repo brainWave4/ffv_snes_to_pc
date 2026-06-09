@@ -21,7 +21,7 @@ typedef struct {
 
     SDL_Texture *tileset;
 
-    SDL_Texture tilemap[TILEMAP_TILECOUNT];
+    SDL_Texture *tilemap[TILEMAP_TILECOUNT];
 
     SDL_Texture *queueHighmap[BASEGAME_TILESTOTAL];
     SDL_FRect *queueHighrect[BASEGAME_TILESTOTAL];
@@ -38,7 +38,7 @@ typedef struct {
     bool tileIsTwice;
 } BgLayer;
 
-BgLayer bgLayers[TOTAL_BG_COUNT];
+BgLayer *bgLayers[TOTAL_BG_COUNT];
 
 // Address: _2100
 Uint8 inidisp;
