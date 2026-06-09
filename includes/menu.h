@@ -42,8 +42,8 @@ typedef struct {
     Uint8 weaponIdRight;
     Uint8 weaponIdLeft;
     Uint8 caughtMonsterID;
-    Uint8[4] commandID;
-    Uint8[4] status;
+    Uint8 commandID[4];
+    Uint8 status[4];
     Uint8 actions;
     Uint8 damageModifiers;
     Uint8 equipmentElements;
@@ -57,11 +57,11 @@ typedef struct {
     Uint8 elementalImmunity;
     Uint8 elementalResistance;
     Uint8 elementalWeakness;
-    Uint8[3] statusResistance;
+    Uint8 statusResistance[3];
     Uint8 weaponProperties;
     Uint8 equipProperties;
     Uint8 jobLevel;
-    Uint8[3] magicLevel;
+    Uint8 magicLevel[3];
     Uint8 headEquipType;
     Uint8 bodyEquipType;
     Uint8 accEquipType;
@@ -81,14 +81,14 @@ typedef struct {
 } Vehicle;
 
 typedef struct {
-    Character[4] party;
+    Character party[4];
 
-    Vehicle[6] vehicle;
+    Vehicle vehicle[6];
 
     Uint32 gil;
     Uint32 playTime;
 
-    wchar_t[5][6] names;
+    wchar_t names[5][6];
 
     Uint16 enemiesDefeated;
     Uint16 windowColor;
@@ -104,14 +104,14 @@ typedef struct {
     Uint16 timerEventProgress;
     Uint16 timerEventEnd;
 
-    Uint8[256] itemId;
-    Uint8[256] itemAmount;
+    Uint8 itemId[256];
+    Uint8 itemAmount[256];
 
-    Uint8[4][12] jobProgression;
-    Uint8[4] abilityCount;
-    Uint8[4][20] unlockedAbilities;
+    Uint8 jobProgression[4][12];
+    Uint8 abilityCount[4];
+    Uint8 unlockedAbilities[4][20];
 
-    Uint8[32] unlockedMagic;
+    Uint8 unlockedMagic[32];
 
     Uint8 config;
     Uint8 config2;
@@ -125,17 +125,17 @@ typedef struct {
     Uint8 buttonConfigureR;
     Uint8 buttonConfigureSelect;
 
-    Uint8[4] playerNumber;
-    Uint8[4] shortcutPlacement;
+    Uint8 playerNumber[4];
+    Uint8 shortcutPlacement[4];
 
     Uint8 magicLamp;
     Uint8 timesEscaped;
     Uint8 wonderRod;
     Uint8 battleResult;
 
-    Uint8[32] treasuresOpened;
-    Uint8[32] eventsCleared;
-    Uint8[32] npcStatus;
+    Uint8 treasuresOpened[32];
+    Uint8 eventsCleared[32];
+    Uint8 npcStatus[32];
 
     Uint8 playerX;
     Uint8 playerY;

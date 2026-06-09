@@ -650,10 +650,11 @@ static Uint16 defence = 0;
 // Address: $56
 static Uint16 attackMissed = 0;
 
+// Addresses: $57 - $59
 // Parameters to be stored for various purposes
-static Uint8 *param1 = &addr_7e0057;
-static Uint8 *param2 = &addr_7e0058;
-static Uint8 *param3 = &addr_7e0059;
+static Uint8 param1;
+static Uint8 param2;
+static Uint8 param3;
 
 // Address: $5a
 static Uint8 swordBlock = 0;
@@ -4618,7 +4619,7 @@ static void setupCreditsDemo(void) {
 // Returns >0 if
 // character has a status that
 // prevents them from taking Action
-static void checkDisablingStatus(void) (
+static void checkDisablingStatus(void) {
     // LoaD AttackerOffset to X
     // LoaD CharStruct::Status1,X to A
     // OR A with CharStruct::AlwaysStatus1,X
@@ -4636,7 +4637,7 @@ static void checkDisablingStatus(void) (
     // Branch to [Ret] if Not Equals
     // Transfer Direct page to aCcumulator
     // [Ret] Return to SubRoutine
-)
+}
 
 // Address: _1C9A
 // Make Berserk ability have Berserk Status
