@@ -1,8 +1,8 @@
 // Bank Range: C3
-#include "includes/cutscene.h"
+#include "cutscene.h"
 
 // for ExecSound_ext
-#include "includes/sound.h"
+#include "sound.h"
 
 static void initDecomp(void); // Incomplete
 static void decomp(void); // Incomplete

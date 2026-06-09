@@ -5,14 +5,27 @@ project(FFV LANGUAGES C)
 set(CMAKE_C_STANDARD 23)
 
 set(INCLUDING_FOLDERS
-    "assets"
-    "includes"
-    "src"
+    assets/data
+    assets/pal
+    assets/textures
+    assets/txt/jp
+    includes
+)
+
+set(INCLUDING_SRC
+    src/main.c
+    src/battle.c
+    src/btlgfx.c
+    src/cutscene.c
+    src/display.c
+    src/field.c
+    src/menu.c
+    src/sound.c
 )
 
 find_package(SDL3 REQUIRED)
 
-add_executable(${PROJECT_NAME} src/main.c)
+add_executable(${PROJECT_NAME} ${INCLUDING_SRC})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3)
 

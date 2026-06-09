@@ -1,6 +1,6 @@
 // Simulates the PPU chip of the SNES.
 
-#include "includes/display.h"
+#include "display.h"
 
 #include "<SDL3/SDL.h>"
 

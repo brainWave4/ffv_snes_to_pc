@@ -1,14 +1,14 @@
 // Bank Range: C1, D9
-#include "includes/btlgfx.h"
+#include "btlgfx.h"
 
 // for _c2a006
-#include "includes/menu.h"
+#include "menu.h"
 
 // for Decomp_ext
-#include "includes/cutscene.h"
+#include "cutscene.h"
 
 // for ExecSound_ext
-#include "includes/sound.h"
+#include "sound.h"
 
 static void func_c1003f(void); // Incomplete
 static void func_c10092(void); // Incomplete
