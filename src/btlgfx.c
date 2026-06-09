@@ -137,7 +137,7 @@ static void bigTextEscapeCode(void); // Incomplete
 static void bartzName(void); // Incomplete
 static void battleCommandName(void); // Incomplete
 static void jobName(void); // Incomplete
-static void attackName(void); // Incomplete
+static void jobAttackName(void); // Incomplete
 static void func_c12af9(void); // Incomplete
 static void charName(void); // Incomplete
 static void func_c12b35(void); // Incomplete
@@ -199,7 +199,6 @@ static void func_c1327b(void); // Incomplete
 static void func_c132a5(void); // Incomplete
 static void func_c132bc(void); // Incomplete
 static void func_c132cb(void); // Incomplete
-static void func_c13231(void); // Incomplete
 static void func_c132da(void); // Incomplete
 static void func_c132ed(void); // Incomplete
 static void func_c132f0(void); // Incomplete
@@ -605,7 +604,6 @@ static void getGfxScriptParam3(void); // Incomplete
 static void getGfxScriptParam2(void); // Incomplete
 static void getGfxScriptParam4(void); // Incomplete
 static void getGfxScriptParam1(void); // Incomplete
-static void getGfxScriptParam3(void); // Incomplete
 static void abilityAnim(void); // Incomplete
 static void func_c18d74(void); // Incomplete
 static void abilityAnimCredits_Knight(void); // Incomplete
@@ -1531,7 +1529,7 @@ static void battleCommandName(void) {}
 static void jobName(void) {}
 
 // Address: _2a90
-static void attackName(void) {}
+static void jobAttackName(void) {}
 
 static void func_c12af9(void) {}
 
@@ -1685,8 +1683,6 @@ static void func_c132a5(void) {}
 static void func_c132bc(void) {}
 
 static void func_c132cb(void) {}
-
-static void func_c13231(void) {}
 
 static void func_c132da(void) {}
 
@@ -2620,9 +2616,6 @@ static void getGfxScriptParam4(void) {}
 
 // Address: _8d59
 static void getGfxScriptParam1(void) {}
-
-// Address: _8d47
-static void getGfxScriptParam3(void) {}
 
 // Address: _8d5f
 static void abilityAnim(void) {}
