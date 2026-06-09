@@ -5,9 +5,9 @@ project(FFV LANGUAGES C)
 set(CMAKE_C_STANDARD 23)
 
 set(INCLUDING_FOLDERS
-    assets
-    includes
-    src
+    "assets"
+    "includes"
+    "src"
 )
 
 add_executable(${PROJECT_NAME} src/main.c)

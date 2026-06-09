@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "includes/display.h"
-#include "includes/field.h"
+#include "display.h"
+#include "field.h"
 
 typedef struct {
     SDL_Window* window;
@@ -14,8 +14,8 @@ typedef struct {
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     // Initializing Window
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENT) > 0) {
-        SDL_Log("SDL_Init Error: %s", SDL_GetError())
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) > 0) {
+        SDL_Log("SDL_Init Error: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
     
@@ -24,13 +24,13 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
 
     state->window = SDL_CreateWindow("FFV", BASE_GAME_WIDTH, BASE_GAME_HEIGHT, 0);
     if (state->window == NULL) {
-        SDL_Log("SDL_CreateWindow Error: %s", SDL_GetError())
+        SDL_Log("SDL_CreateWindow Error: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    state->renderer = SDL_CreateRenderer(window, NULL, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNCH);
+    state->renderer = SDL_CreateRenderer(state->window, NULL);
     if (state->renderer == NULL) {
-        SDL_Log("SDL_CreateRenderer Error: %s", SDL_GetError())
+        SDL_Log("SDL_CreateRenderer Error: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
@@ -71,6 +71,6 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result) {
         AppState* state = (AppState*)appstate;
         if (state->renderer) SDL_DestroyRenderer(state->renderer);
         if (state->window) SDL_DestroyWindow(state->window);
-        SDL_Free(state);
+        SDL_free(state);
     }
 }

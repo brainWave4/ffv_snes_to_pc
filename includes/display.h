@@ -38,7 +38,7 @@ typedef struct {
     bool tileIsTwice;
 } BgLayer;
 
-BgLayer[TOTAL_BG_COUNT] bgLayers;
+BgLayer bgLayers[TOTAL_BG_COUNT];
 
 // Address: _2100
 Uint8 inidisp;
@@ -138,7 +138,7 @@ Uint8 colData;
 // Address: _2133
 Uint8 setIni;
 
-void updateTilesetFromFilePath(Uint8 i, char[] filepath);
+void updateTilesetFromFilePath(Uint8 i, char filepath[]);
 
 void changeBgMode(Uint8 val);
 
