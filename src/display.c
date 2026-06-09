@@ -2,7 +2,7 @@
 
 #include "display.h"
 
-#include "<SDL3/SDL.h>"
+#include <SDL3/SDL.h>
 
 #define PALETTE_COUNT_4BIT 8
 #define PALETTE_SIZE_4BIT 16

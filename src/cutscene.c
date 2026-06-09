@@ -1,6 +1,8 @@
 // Bank Range: C3
 #include "cutscene.h"
 
+#include <SDL3/SDL.h>
+
 // for ExecSound_ext
 #include "sound.h"
 
@@ -212,7 +214,7 @@ void decompExt(void) {}
 
 // Address: _000f
 // A: cutscene id
-void showCutscene(uint8_t id) {}
+void showCutscene(Uint8 id) {}
 
 // Address: _003d
 static void initDecomp(void) {}
