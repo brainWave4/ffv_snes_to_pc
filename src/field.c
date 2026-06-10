@@ -21,12 +21,12 @@
 //.import InitSound_ext, ExecSound_ext
 #include "sound.h"
 
- #define FOLDER_DATA "assets/data/"
- #define FOLDER_PAL "assets/pal/"
- #define FOLDER_TEXTURE "assets/textures/"
- #define EXT_BIN ".bin"
- #define EXT_BPP4 ".4bpp"
- #define EXT_PAL ".pal"
+#define FOLDER_DATA "assets/data/"
+#define FOLDER_PAL "assets/pal/"
+#define FOLDER_TEXTURE "assets/textures/"
+#define EXT_BIN ".bin"
+#define EXT_BPP4 ".4bpp"
+#define EXT_PAL ".pal"
 
 static void fieldLoop(void);
 static void fieldNMI(void); // Incomplete
