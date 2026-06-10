@@ -21,6 +21,13 @@
 //.import InitSound_ext, ExecSound_ext
 #include "sound.h"
 
+ #define FOLDER_DATA "assets/data/"
+ #define FOLDER_PAL "assets/pal/"
+ #define FOLDER_TEXTURE "assets/textures/"
+ #define EXT_BIN ".bin"
+ #define EXT_BPP4 ".4bpp"
+ #define EXT_PAL ".pal"
+
 static void fieldLoop(void);
 static void fieldNMI(void); // Incomplete
 static void fieldIRQ(void); // Incomplete
@@ -491,13 +498,6 @@ static void battleBlurWorld(void); // Incomplete
 static void battleBlur(void); // Incomplete
 static void randomBattle(void); // Incomplete
 static void reset(void); // Incomplete
-
-static const char FOLDER_DATA[] = "assets/data/";
-static const char FOLDER_PAL[] = "assets/pal/";
-static const char FOLDER_TEXTURE[] = "assets/textures/";
-static const char EXT_BIN[] = ".bin";
-static const char EXT_BPP4[] = ".4bpp";
-static const char EXT_PAL[] = ".pal";
 
 static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6};
 
