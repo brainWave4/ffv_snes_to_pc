@@ -163,7 +163,7 @@ static void updateScrollingRegisters(void); // Incomplete
 static void updateCtrl(void); // Incomplete
 static void resetSprites(void); // Incomplete
 static void hideSpritesInCutscenes(void); // Incomplete
-static void tfrVram(char filename[], Uint8 destI, SDL_Rect customRect); // Incomplete
+static void tfrVram(char filename[], Uint8 destI, SDL_Rect *customRect); // Incomplete
 static void disableInterrupts(void); // Incomplete
 static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
@@ -2538,7 +2538,7 @@ static void hideSpritesInCutscenes(void) {}
 //   - Source file name
 //   - Custom size
 //   - Destination Tileset
-static void tfrVram(char filename[], Uint8 destI, SDL_Rect customRect) {
+static void tfrVram(char filename[], Uint8 destI, SDL_Rect *customRect) {
     // LoaD #$80 to A
     // STore A to hVMAINC
     // STore Zero to hMDMAEN
@@ -3478,7 +3478,7 @@ static void loadMapGfx(void) {
     //  Height = 0x600
     //         / 4 bits
     //         / 16 tiles in width
-    SDL_Rect windowRect = {0, 0x74, TILESET_WIDTH, 0x18};
+    SDL_Rect *windowRect = {0, 0x74, TILESET_WIDTH, 0x18};
 
     // LoaD (#near WindowGfx) to X
     // STore X to $23

@@ -140,7 +140,7 @@ Uint8 setIni;
 
 void setupDisplay(SDL_Renderer *new_renderer);
 
-void updateTilesetFromFilePath(Uint8 i, char filepath[], SDL_Rect customRect);
+void updateTilesetFromFilePath(Uint8 i, char filepath[], SDL_Rect *customRect);
 
 void changeBgMode(Uint8 val);
 
