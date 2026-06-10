@@ -1,6 +1,7 @@
 // Bank Range: C0
 #include "field.h"
 
+#include <stdio.h>
 #include <SDL3/SDL.h>
 
 #include "display.h"
@@ -23,7 +24,7 @@
 static void fieldLoop(void);
 static void fieldNMI(void); // Incomplete
 static void fieldIRQ(void); // Incomplete
-static void execTriggerScript(Uint8 index); // Incomplete
+static void execTriggerScript(Uint16 index); // Incomplete
 static void checkTriggers(void); // Incomplete
 static void checkVehicle(void); // Incomplete
 static void func_c00853(void); // Incomplete
@@ -124,7 +125,7 @@ static void initCharNames(void); // Incomplete
 static void openMenu(void); // Incomplete
 static void func_c0456b(void); // Incomplete
 static void func_c04583(void); // Incomplete
-static void playSong(void); // Incomplete
+static void playSong(Uint8 id); // Incomplete
 static void playSound(void); // Incomplete
 static void playSfx(void); // Incomplete
 static void updateScreenMosaic(void); // Incomplete
@@ -155,7 +156,7 @@ static void updateScrollingRegisters(void); // Incomplete
 static void updateCtrl(void); // Incomplete
 static void resetSprites(void); // Incomplete
 static void hideSpritesInCutscenes(void); // Incomplete
-static void tfrVram(char[] filename, Uint8 destI, SDL_Rect *customRect = NULL); // Incomplete
+static void tfrVram(char filename[], Uint8 destI, SDL_Rect customRect); // Incomplete
 static void disableInterrupts(void); // Incomplete
 static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
@@ -491,12 +492,12 @@ static void battleBlur(void); // Incomplete
 static void randomBattle(void); // Incomplete
 static void reset(void); // Incomplete
 
-static const FOLDER_DATA = "assets/data/";
-static const FOLDER_PAL = "assets/pal/";
-static const FOLDER_TEXTURE = "assets/textures/";
-static const EXT_BIN = ".bin";
-static const EXT_BPP4 = ".4bpp";
-static const EXT_PAL = ".pal";
+static const char FOLDER_DATA[] = "assets/data/";
+static const char FOLDER_PAL[] = "assets/pal/";
+static const char FOLDER_TEXTURE[] = "assets/textures/";
+static const char EXT_BIN[] = ".bin";
+static const char EXT_BPP4[] = ".4bpp";
+static const char EXT_PAL[] = ".pal";
 
 static const Uint8 data_c011b8[5] = {0, 2, 10, 14, 6};
 
@@ -524,10 +525,10 @@ static Uint8 addr_7e0037;
 static Uint8 addr_7e0038;
 static Uint8 addr_7e0039;
 static Uint8 addr_7e003d;
+static Uint8 addr_7e003e;
 static Uint8 addr_7e0040;
 static Uint8 addr_7e0053;
 static Uint8 addr_7e0055;
-static Uint8 addr_7e0058;
 static Uint8 addr_7e005d;
 static Uint8 addr_7e005e;
 static Uint8 addr_7e0061;
@@ -551,7 +552,7 @@ static Uint8 addr_7e00bf;
 static Uint16 addr_7e00c0;
 static Uint8 addr_7e00c2;
 static Uint8 addr_7e00c3;
-static Uint8 addr_7e00c7;
+static Uint16 addr_7e00c7;
 static Uint8 addr_7e00ca;
 static Uint8 addr_7e00cb;
 static Uint8 addr_7e00ce;
@@ -594,7 +595,7 @@ static Uint8 addr_7e0b61;
 static Uint8 addr_7e0b63;
 static Uint8 addr_7e0b6d;
 
-static Uint16 addrange_7e0c00[PALETTE_SIZE];
+static Uint16 addrange_7e0c00[PALETTE_SIZE_8BIT];
 
 static Uint8 addr_7e100f;
 static Uint8 addr_7e1088;
@@ -602,9 +603,11 @@ static Uint8 addr_7e1089;
 static Uint8 addr_7e10b8;
 static Uint8 addr_7e10fa;
 static Uint8 addr_7e10fb;
+static Uint8 addr_7e110e;
 static Uint8 addr_7e110f;
 static Uint8 addr_7e1122;
 static Uint8 addr_7e1125;
+static Uint8 addr_7e169a;
 static Uint8 addr_7e169b;
 static Uint8 addr_7e169f;
 static Uint8 addr_7e16a0;
@@ -1324,7 +1327,7 @@ static void fieldIRQ(void) {
 
 // execute trigger script
 // +X: trigger script index * 2
-static void execTriggerScript(Uint8 index) {}
+static void execTriggerScript(Uint16 index) {}
 
 // Address: _061a
 static void checkTriggers(void) {}
@@ -1561,7 +1564,8 @@ static void giveGil(void) {
         
         // [_0f31] LoaD #$9896 to X
         // STore X to $0948
-        addr_7e0948 = 0x9896;
+        addr_7e0948 = 0x98;
+        addr_7e0949 = 0x96;
 
         // LoaD #$7f to A
         // STore A to $0947
@@ -2226,7 +2230,7 @@ static void func_c022fb(void) {
         // CLear Carry
         // ADd $169b to A with Carry
         // Transfer A to X
-        Uint8 x == addr_7e003e;
+        Uint8 x = addr_7e003e;
         x &= 0x18;
         x >>= 2;
         x += addr_7e169b;
@@ -2268,7 +2272,7 @@ static void func_c022fb(void) {
         // LoaD $3e to A
         // CoMPare A with #$1f
         // Branch to [_22fd] if Not Equals
-    } while (addr_7e003e != 0x1F)
+    } while (addr_7e003e != 0x1F);
 
     // Return To Subroutine
 }
@@ -2377,7 +2381,7 @@ static void func_c0456b(void) {}
 
 static void func_c04583(void) {}
 
-static void playSong(void) {}
+static void playSong(Uint8 id) {}
 
 // Address: _4635
 static void playSound(void) {}
@@ -2476,7 +2480,7 @@ static void tfrWorldGfx(void) {
     // ComPare Y with #$0100
     // Branch to previous label if Not Equals
     FILE *fptr;
-    fptr = open(FOLDER_DATA + "world_tile_attr" + addr_7e0024 + EXT_BIN, "rb");
+    fptr = fopen(FOLDER_DATA + "world_tile_attr" + addr_7e0024 + EXT_BIN, "rb");
     fread(addrange_7e1873, 1, 0x100, fptr);
     fclose(fptr);
     
@@ -2507,7 +2511,7 @@ static void tfrWorldGfx(void) {
     // INcrement Y
     // ComPare Y with #$0100
     // Branch to [Loop] if Not Equals
-    updateTilesetFromFilePath(0, FOLDER_TEXTURE + "world_gfx" + addr_7e0024 + EXT_BPP4);
+    updateTilesetFromFilePath(0, FOLDER_TEXTURE + "world_gfx" + addr_7e0024 + EXT_BPP4, NULL);
 
     // Return To Subroutine
 }
@@ -2530,7 +2534,7 @@ static void hideSpritesInCutscenes(void) {}
 //   - Source file name
 //   - Custom size
 //   - Destination Tileset
-static void tfrVram(char[] filename, Uint8 destI, SDL_Rect *customRect = NULL) {
+static void tfrVram(char filename[], Uint8 destI, SDL_Rect customRect) {
     // LoaD #$80 to A
     // STore A to hVMAINC
     // STore Zero to hMDMAEN
@@ -2549,7 +2553,7 @@ static void tfrVram(char[] filename, Uint8 destI, SDL_Rect *customRect = NULL) {
     // LoaD #$01 to A
     // STore A to hMDMAEN
     // Return to Subroutine
-    char[] full_filepath = FOLDER_TEXTURE + filename + EXT_BPP4;
+    char full_filepath[] = FOLDER_TEXTURE + filename + EXT_BPP4;
     updateTilesetFromFilePath(destI, full_filepath, customRect);
 }
 
@@ -3137,8 +3141,8 @@ static void loadMapPalette(void) {
         // Essentially, load palette from data section and
         // store them to RAM.
     FILE *fptr;
-    fptr = open(FOLDER_PAL + "world" + addr_7e1122 + EXT_PAL, "rb");
-    fread(addrange_7e0c00, 2, PAL_LENGTH, fptr);
+    fptr = fopen(FOLDER_PAL + "world" + addr_7e1122 + EXT_PAL, "rb");
+    fread(addrange_7e0c00, 2, PALETTE_SIZE_8BIT, fptr);
     fclose(fptr);
 
     // LoaD $06 to X
@@ -3276,7 +3280,7 @@ static void loadMapGfx(void) {
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
-    Uint diff2 = addr_7e0006 - addr_7e0023;
+    Uint8 diff2 = addr_7e0006 - addr_7e0023;
 
     // CoMpare A with #$2000
     // Branch to [@59c1] if Carry Clear
@@ -3359,7 +3363,7 @@ static void loadMapGfx(void) {
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
-    Uint diff3 = addr_7e0006 - addr_7e0023;
+    Uint8 diff3 = addr_7e0006 - addr_7e0023;
 
     // CoMpare A with #$2000
     // Branch to [@5a2f] if Carry Clear
@@ -3450,7 +3454,7 @@ static void loadMapGfx(void) {
     // tfrVram();
 
     // Jump to SubRoutine TfrPartyGfx
-    TfrPartyGfx();
+    // tfrPartyGfx();
 
     // Jump to SubRoutine _c01e14
     copyAltGfx();
@@ -3805,7 +3809,6 @@ static void initMapTitle(void) {
     // LoaD $06 to Y
     
     // [@92bd] LoaD (f:MapTitle,x) to A
-    do {
         // CoMPare A with #$1e
         // Branch to [@92cc] if Not Equals
         // LoaD #$01 to A
@@ -3825,9 +3828,7 @@ static void initMapTitle(void) {
         // INcrement Y
         // [@92e6] INcrement X
         // DECrement $2c
-        
     // Branch to [@92bd] if Not Equals
-    } 
 
     // Transfer Y to A
     // STore A to hWRMPYA

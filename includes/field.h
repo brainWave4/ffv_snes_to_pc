@@ -1,10 +1,12 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+#include <SDL3/SDL.h>
+
 void start(void);
 
-uint8_t addr_7e0057;
-uint8_t addr_7e0058;
-uint8_t addr_7e0059;
+Uint8 addr_7e0057;
+Uint8 addr_7e0058;
+Uint8 addr_7e0059;
 
 #endif
