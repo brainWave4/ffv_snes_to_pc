@@ -2900,7 +2900,8 @@ static void loadWorldMapPalette(void) {
     // Lengthen A
     // eXchange higher Byte in A with lower
     // Transfer A to X
-    Uint16 xurkitree = {0, 1, 0, 2, 2}[map_i] * 0x100;
+    const Uint8 WORLD_TILESET[5] = {0, 1, 0, 2, 2};
+    Uint16 xurkitree = WORLD_TILESET[map_i] * 0x100;
 
     // LoaD $06 to Y
     Uint16 yodolehiho = addr_7e0006;
@@ -3082,7 +3083,8 @@ static void reloadSubMap(void) {
         // MapHDMAEnableTbl:
             // .byte   $06,$46,$7e,$06
     // STore A to $5e
-    addr_7e005e = [6, 0x46, 0x7E, 6][XINDEX];
+    const Uint8 MAP_HDMA_ENABLE[4] = {6, 0x46, 0x7E, 6};
+    addr_7e005e = MAP_HDMA_ENABLE[XINDEX];
 
     // STore Zero to $55
     addr_7e0055 = 0;
@@ -3478,7 +3480,7 @@ static void loadMapGfx(void) {
     //  Height = 0x600
     //         / 4 bits
     //         / 16 tiles in width
-    SDL_Rect *windowRect = {0, 0x74, TILESET_WIDTH, 0x18};
+    SDL_Rect windowRect = {0, 0x74, TILESET_WIDTH, 0x18};
 
     // LoaD (#near WindowGfx) to X
     // STore X to $23
@@ -3486,7 +3488,7 @@ static void loadMapGfx(void) {
     // STore A to $25
     //  $23-25 stores source address
     // Jump to SubRoutine TfrVRAM
-    tfrVram("window", 0, windowRect);
+    tfrVram("window", 0, &windowRect);
 
     // Jump to SubRoutine LoadOverlayGfx
     loadOverlayGfx();
