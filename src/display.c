@@ -100,7 +100,7 @@ void setupDisplay(SDL_Renderer *new_renderer) {
 }
 
 void updateTilesetFromFilePath(Uint8 i, char filepath[], SDL_Rect customRect) {
-    FILE *fptr = open(filepath, "rb");
+    FILE *fptr = fopen(filepath, "rb");
     SDL_UpdateTexture(bgLayers[i].tileset, &customRect, &fptr, tilesetWidthsBits[i]);
     fclose(fptr);
 }
