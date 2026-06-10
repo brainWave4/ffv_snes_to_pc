@@ -84,7 +84,7 @@ Uint8 mode7_y;
 // Addresses _2121-2122 are for CGRAM,
 // which stores the palette.
 SDL_Palette palette_4bit[8];
-SDL_Palette palette_8bit;
+SDL_Palette *palette_8bit;
 
 // Address: _2123
 Uint8 w12sel;

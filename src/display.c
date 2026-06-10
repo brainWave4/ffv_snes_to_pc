@@ -95,7 +95,7 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     palette_8bit = SDL_CreatePalette(PALETTE_SIZE_8BIT);
     for (Uint8 i = 0; i < PALETTE_COUNT_4BIT; i ++) {
         Uint8 start = PALETTE_SIZE_4BIT * i;
-        palette_4bit[i] = createSubPalette(palette_8bit, PALETTE_SIZE_4BIT, start);
+        palette_4bit[i] = createSubPalette(*palette_8bit, PALETTE_SIZE_4BIT, start);
     }
 }
 
@@ -372,7 +372,7 @@ void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]) {
         SDL_GetRGBA(arr_pal[i], SNES_FORMAT, NULL, &color[i].r, &color[i].g, &color[i].b, &color[i].a);
     }
 
-    SDL_SetPaletteColors(&palette_8bit, &color[0], 0, PALETTE_SIZE_8BIT);
+    SDL_SetPaletteColors(palette_8bit, &color[0], 0, PALETTE_SIZE_8BIT);
 }
 
 static SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start) {
@@ -502,7 +502,7 @@ static void drawSprites3() {}
 static void draw(SDL_Renderer *renderer) {
     if (need_redrawing) {
         for (Uint8 i = 0; i < layerCount; i++) {
-            if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit.colors[0].r, palette_8bit.colors[0].g, palette_8bit.colors[0].b, SDL_ALPHA_OPAQUE);
+            if (i == 0) SDL_SetRenderDrawColor(renderer, palette_8bit->colors[0].r, palette_8bit->colors[0].g, palette_8bit->colors[0].b, SDL_ALPHA_OPAQUE);
             drawLayers[i]();
             if (i == 0) SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_TRANSPARENT);
         }
