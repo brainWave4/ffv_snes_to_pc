@@ -489,7 +489,7 @@ static void func_c2ffc2(void); // Incomplete
 static Uint16 addr_7e0034 = 0;
 
 // Address: $306000 - $307bff
-static Save[4] saves;
+static Save saves[4];
 
 static Uint16 addr_7e008e;
 static Uint16 addr_7e2100;
@@ -704,7 +704,7 @@ static void showMenu(Uint8 newState) {
     func_c2c16a();
 
     // Jump to SubRoutine _c2a16e
-    resetSpriteData()
+    resetSpriteData();
 
     // Load $43 (Menu State) to A
     Uint16 menuI = addr_7e0043;
@@ -989,7 +989,7 @@ static void func_c2a18a(void) {
     // Decrement Index Register X
     // Branch to [LBL alac], if not equal
     //  - loop back if X, after decrement, is not zero
-    for(uint x = 8; x > 0; x--){
+    for(Uint8 x = 8; x > 0; x--){
 
     }
 
