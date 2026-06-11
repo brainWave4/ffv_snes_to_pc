@@ -156,4 +156,6 @@ void func_a00f(void); // Incomplete
 void execMenu(void); // Incomplete
 void updateJoypadConfig(void); // Incomplete
 
+extern Save currentSave;
+
 #endif

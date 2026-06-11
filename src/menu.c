@@ -511,7 +511,7 @@ static Uint8 addr_7e420b;
 static Uint16 addr_7e420c;
 
 // Address: $7e0500 - $7e0aff
-static Save currentSave;
+Save currentSave;
 
 // _a000 is ExecMenu_ext
 // Branches to _a016 execMenu(..)
