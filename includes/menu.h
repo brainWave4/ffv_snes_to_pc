@@ -156,7 +156,4 @@ void func_a00f(void); // Incomplete
 void execMenu(void); // Incomplete
 void updateJoypadConfig(void); // Incomplete
 
-// Address: $7e0500 - $7e0aff
-Save currentSave;
-
 #endif

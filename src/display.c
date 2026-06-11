@@ -42,7 +42,105 @@ static const Uint8 BGLAYER_COUNTS[8] = {4, 3, 2, 2, 2, 2, 1, 1};
 
 SDL_Renderer *renderer;
 
+static BgLayer bgLayers[TOTAL_BG_COUNT];
+
+// Address: _2100
+static Uint8 inidisp;
+
+// Address: _2101-2104
+// Concerns Object Sprites
+
+// Address: _2105 is bgMode
+// Covers:
+//  - Char size for each Bg Layer
+//  - Bg Layer 3 High's placement
+//  - Bg Mode
 static Uint8 bgMode;
+
+// Address: _2106
+static Uint8 mosaic;
+
+// Addresses _2115-2119 are for VRAM,
+// which stores tilesets and tilemaps.
+
+// Address: _211A
+static Uint8 mode7_settings;
+
+// Address: _211B
+static Uint8 mode7_a;
+
+// Address: _211C
+static Uint8 mode7_b;
+
+// Address: _211D
+static Uint8 mode7_c;
+
+// Address: _211E
+static Uint8 mode7_d;
+
+// Address: _211F
+static Uint8 mode7_x;
+
+// Address: _2120
+static Uint8 mode7_y;
+
+// Addresses _2121-2122 are for CGRAM,
+// which stores the palette.
+static SDL_Palette palette_4bit[8];
+static SDL_Palette *palette_8bit;
+
+// Address: _2123
+static Uint8 w12sel;
+
+// Address: _2124
+static Uint8 w34sel;
+
+// Address: _2125
+static Uint8 wObjSel;
+
+// Address: _2126
+// Window 1 left position
+static Uint8 wh0;
+
+// Address: _2127
+// Window 1 right position
+static Uint8 wh1;
+
+// Address: _2128
+// Window 2 left position
+static Uint8 wh2;
+
+// Address: _2129
+// Window 2 right position
+static Uint8 wh3;
+
+// Address: _212A
+static Uint8 bgMask;
+
+// Address: _212B
+static Uint8 objMask;
+
+// Address: _212C
+static Uint8 enableMain;
+
+// Address: _212D
+static Uint8 enableSub;
+
+// Address: _212E
+static Uint8 enableMainWindow;
+
+// Address: _212F
+static Uint8 enableSubWindow;
+
+// Address: _2130
+static Uint8 cgWSel;
+
+// Address: _2132
+static Uint8 colData;
+
+// Address: _2133
+static Uint8 setIni;
+
 static Uint8 need_redrawing;
 
 static Uint8 layerCount;
