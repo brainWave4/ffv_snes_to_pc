@@ -38,6 +38,32 @@ typedef struct {
     bool tileIsTwice;
 } BgLayer;
 
+extern Uint8 inidisp;
+extern Uint8 mosaic;
+extern Uint8 mode7_settings;
+extern Uint8 mode7_a;
+extern Uint8 mode7_b;
+extern Uint8 mode7_c;
+extern Uint8 mode7_d;
+extern Uint8 mode7_x;
+extern Uint8 mode7_y;
+extern Uint8 w12sel;
+extern Uint8 w34sel;
+extern Uint8 wObjSel;
+extern Uint8 wh0;
+extern Uint8 wh1;
+extern Uint8 wh2;
+extern Uint8 wh3;
+extern Uint8 bgMask;
+extern Uint8 objMask;
+extern Uint8 enableMain;
+extern Uint8 enableSub;
+extern Uint8 enableMainWindow;
+extern Uint8 enableSubWindow;
+extern Uint8 cgWSel;
+extern Uint8 colData;
+extern Uint8 setIni;
+
 void setupDisplay(SDL_Renderer *new_renderer);
 
 void updateTilesetFromFilePath(Uint8 i, char filepath[], SDL_Rect *customRect);
