@@ -15,7 +15,7 @@ typedef struct {
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     // Initializing Window
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) > 0) {
+    if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
         SDL_Log("SDL_Init Error: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
