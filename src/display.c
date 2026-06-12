@@ -182,7 +182,7 @@ void setupDisplay(SDL_Renderer *new_renderer) {
 
         bgLayers[i].queueHighCounter = 0;
 
-        for (Uint8 j = 0; j < TILEMAP_TILECOUNT; j ++) {
+        for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j ++) {
             bgLayers[i].tilemapIsHigh[j] = false;
         }
     }
@@ -209,7 +209,7 @@ void changeBgMode(Uint8 val) {
     for (Uint8 i = 0; i < BGLAYER_COUNTS[bgMode & 7]; i ++) {
         SDL_DestroyTexture(bgLayers[i].tileset);
         
-        for (Uint8 j = 0; j < TILEMAP_TILECOUNT; j++) {
+        for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j++) {
             SDL_DestroyTexture(bgLayers[i].tilemap[j]);
         }
     }
@@ -231,7 +231,7 @@ static void setBgMode(Uint8 val) {
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
 
                 Uint8 tileSize = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE: TILE_WIDTH;
-                for (Uint8 j = 0; j < TILEMAP_TILECOUNT; j++) {
+                for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j++) {
                     bgLayers[i].tilemap[j] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, tileSize, tileSize);
                 }
                 
@@ -267,7 +267,7 @@ static void setBgMode(Uint8 val) {
             for (Uint8 i = 0; i < 2; i++) {
                 tileSizes[i] = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE : TILE_WIDTH;
             }
-            for (Uint8 i = 0; i < TILEMAP_TILECOUNT; i++) {
+            for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, tileSizes[0], tileSizes[0]);
                 bgLayers[1].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, tileSizes[1], tileSizes[1]);
                 bgLayers[2].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, tileSizes[2], tileSizes[2]);
@@ -309,7 +309,7 @@ static void setBgMode(Uint8 val) {
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
 
                 Uint8 tileSize = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE: TILE_WIDTH;
-                for (Uint8 j = 0; j < TILEMAP_TILECOUNT; j++) {
+                for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j++) {
                     bgLayers[i].tilemap[j] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, tileSize, tileSize);
                 }
             }
@@ -340,7 +340,7 @@ static void setBgMode(Uint8 val) {
             for (Uint8 i = 0; i < 2; i++) {
                 tileSizes[i] = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE : TILE_WIDTH;
             }
-            for (Uint8 i = 0; i < TILEMAP_TILECOUNT; i++) {
+            for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, tileSizes[0], tileSizes[0]);
                 bgLayers[1].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, tileSizes[1], tileSizes[1]);
             }
@@ -371,7 +371,7 @@ static void setBgMode(Uint8 val) {
             for (Uint8 i = 0; i < 2; i++) {
                 tileSizes[i] = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE : TILE_WIDTH;
             }
-            for (Uint8 i = 0; i < TILEMAP_TILECOUNT; i++) {
+            for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, tileSizes[0], tileSizes[0]);
                 bgLayers[1].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, tileSizes[1], tileSizes[1]);
             }
@@ -398,7 +398,7 @@ static void setBgMode(Uint8 val) {
             bgLayers[1].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[1].tileIsTwice = true;
                 
-            for (Uint8 i = 0; i < TILEMAP_TILECOUNT; i++) {
+            for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH_TWICE, TILE_WIDTH_TWICE);
                 bgLayers[1].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH_TWICE, TILE_WIDTH_TWICE);
             }
@@ -423,7 +423,7 @@ static void setBgMode(Uint8 val) {
             bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = true;
                 
-            for (Uint8 i = 0; i < TILEMAP_TILECOUNT; i++) {
+            for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH_TWICE, TILE_WIDTH_TWICE);
             }
             
@@ -445,7 +445,7 @@ static void setBgMode(Uint8 val) {
             bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = false;
                 
-            for (Uint8 i = 0; i < TILEMAP_TILECOUNT; i++) {
+            for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH, TILE_WIDTH);
             }
             

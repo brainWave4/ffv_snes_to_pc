@@ -39,6 +39,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     *appstate = state;
 
     // Setup
+    setupDisplay(state->renderer);
     start();
 
     return SDL_APP_CONTINUE;
