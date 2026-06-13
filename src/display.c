@@ -60,6 +60,9 @@ static Uint8 bgMode;
 // Address: _2106
 Uint8 mosaic;
 
+// Addresses _2107-2114 stores data
+// for Background Layers
+
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
 
