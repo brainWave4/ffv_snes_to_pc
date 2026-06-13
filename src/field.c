@@ -21,6 +21,8 @@
 //.import InitSound_ext, ExecSound_ext
 #include "sound.h"
 
+#define MAX_SIZEOF_FILEPATH 64
+
 #define FOLDER_DATA "assets/data/"
 #define FOLDER_PAL "assets/pal/"
 #define FOLDER_TEXTURE "assets/textures/"
@@ -2483,7 +2485,7 @@ static void tfrWorldGfx(void) {
     // ComPare Y with #$0100
     // Branch to previous label if Not Equals
     FILE *fptr;
-    char filepath[256];
+    char filepath[MAX_SIZEOF_FILEPATH];
     snprintf(filepath, sizeof(filepath), "%s%s%d%s", FOLDER_DATA, "world_tile_attr", addr_7e0024, EXT_BIN);
     fptr = fopen(filepath, "rb");
     fread(addrange_7e1873, 1, 0x100, fptr);
@@ -2516,7 +2518,7 @@ static void tfrWorldGfx(void) {
     // INcrement Y
     // ComPare Y with #$0100
     // Branch to [Loop] if Not Equals
-    char filepath2[256];
+    char filepath2[MAX_SIZEOF_FILEPATH];
     snprintf(filepath2, sizeof(filepath2), "%s%s%d%s", FOLDER_TEXTURE, "world_gfx", addr_7e0024, EXT_BPP4);
     updateTilesetFromFilePath(0, filepath2, NULL);
 
@@ -2560,7 +2562,7 @@ static void tfrVram(char filename[], Uint8 destI, SDL_Rect *customRect) {
     // LoaD #$01 to A
     // STore A to hMDMAEN
     // Return to Subroutine
-    char full_filepath[256];
+    char full_filepath[MAX_SIZEOF_FILEPATH];
     snprintf(full_filepath, sizeof(full_filepath), "%s%s%s", FOLDER_TEXTURE, filename, EXT_BPP4);
     updateTilesetFromFilePath(destI, full_filepath, customRect);
 }
@@ -3151,7 +3153,7 @@ static void loadMapPalette(void) {
         // Essentially, load palette from data section and
         // store them to RAM.
     FILE *fptr;
-    char filepath[256];
+    char filepath[MAX_SIZEOF_FILEPATH];
     snprintf(filepath, sizeof(filepath), "%s%s%d%s", FOLDER_PAL, "world", addr_7e1122, EXT_PAL);
     fptr = fopen(filepath, "rb");
     fread(addrange_7e0c00, 2, PALETTE_SIZE_8BIT, fptr);
