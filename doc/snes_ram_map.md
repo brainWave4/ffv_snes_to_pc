@@ -1,6 +1,8 @@
 # About
 A RAM is where the game stores variable for future use. It is mapped at Bank 7E-7F. It is also mirrored at Bank 00-3F and 80-BF, both by $0000 - $1FFFF, making the addresses interchangable for ease of access.
 
+Strikethroughs are variables that won't be implimented, usually because they can be parsed through an arguement.
+
 # List
 ## 0xxx
 ### 0xx
@@ -9,7 +11,10 @@ A RAM is where the game stores variable for future use. It is mapped at Bank 7E-
 |7E/0020||Value|Battle|Temproary Attached Spell|
 |7E/0021||Value|Battle|Temproary Indicator to Skip Name|
 |7E/0022||Value|Battle|Temproary Party Targets; Monster AI when Charmed|
+|7E/0023|7E/0025|Value|Field|~~Source Address for Copying data to VRAM~~|
 |7E/0023||Value|Battle|Temproary Monster Targets|
+|7E/002C||Value|Field|~~Data Size for Copying data to VRAM~~|
+|7E/002E||Value|Field|~~Destination Address for Copying data to VRAM~~|
 |7E/0032|7E/0033|Value|Battle|Attacker Offset|
 |7E/0034|7E/0035|Value|Battle|Spell Offset|
 |7E/0036|7E/0037|Value|Battle|Timer Offset|
