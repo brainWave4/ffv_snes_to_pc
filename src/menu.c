@@ -595,7 +595,8 @@ void execMenu(void) {
     addr_7e00c7 <<= 1;
 
     // Shorten Accumulator to 8-bit
-    // Jump to ($01c7)
+    // Jump to ($c7 in $01)
+    //  $c7 is a 16-bit value containing a link address
 }
 
 // CommonReturn
