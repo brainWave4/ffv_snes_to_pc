@@ -47,6 +47,7 @@ Strikethroughs are variables that won't be implimented, usually because they can
 ### 1xx
 |From|To|Type|Module|Content|
 |---|---|---|---|---|
+|7E/0139||ID|Field|Menu Results? ($01: Loading file, $3E: Teleport, $F0: Tent, $F1: Cottage)|
 |7E/013B|7E/0142|ID|Battle|Field Items Won|
 
 ### 4xx
