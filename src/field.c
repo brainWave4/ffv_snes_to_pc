@@ -523,12 +523,19 @@ static Uint8 addr_7e0024;
 static Uint8 addr_7e0025;
 static Uint16 addr_7e002c;
 static Uint16 addr_7e002e;
+static Uint16 addr_7e0030;
+static Uint16 addr_7e0033;
+static Uint16 addr_7e0035;
 static Uint8 addr_7e0037;
 static Uint8 addr_7e0038;
 static Uint8 addr_7e0039;
 static Uint8 addr_7e003d;
 static Uint8 addr_7e003e;
 static Uint8 addr_7e0040;
+static Uint8 addr_7e0047;
+static Uint8 addr_7e0048;
+static Uint8 addr_7e0049;
+static Uint8 addr_7e004a;
 static Uint8 addr_7e0053;
 static Uint8 addr_7e0055;
 static Uint8 addr_7e0057;
@@ -2895,7 +2902,343 @@ static void loadWorldMap(void) {
 }
 
 // Address: _5532
-static void reloadWorldMap(void) {}
+static void reloadWorldMap(void) {
+    // Store Zero to $53
+    addr_7e0053 = 0;
+    
+    // STore Zero to $169a
+    addr_7e169a = 0;
+
+    // Jump to SubRoutine _c054a7
+    func_c054a7();
+
+    // LoaD #00 to A
+    // STore A to hBG1SC
+        // Would have set the address of VRAM
+        // for Bg Layer 1 to use
+
+    // LoaD #$10 to A
+    // STore A to $49
+    addr_7e0049 = 0x10;
+
+    // STore A to $4a
+    addr_7e004a = 0x10;
+
+    // LoaD $0ad6 (map index) to X
+    // ComPare X to #$0003
+    // Branch to [@5551] if Carry Clear
+    // LoaD #$c1 to A
+    // Branch to [@5553]
+    // [@5551] LoaD #$41 to A
+    // [@5553] STore A to $48
+    addr_7e0048 = (map_i >= 3) ? 0xC1 : 0x41;
+
+    // LoaD $44 to A
+    // Branch to [@555d] if Not Equals
+    if (addr_7e0044 == 0) {
+        // LoaD $48 to A
+        // STore A to $47
+        addr_7e0047 = addr_7e0048;
+    }
+
+    // [@555d] Jump to SubRoutine TfrWorldGfx
+    tfrWorldGfx();
+
+    // Jump to SubRoutine TfrPartyGfx
+    tfrPartyGfx();
+
+    // Jump to SubRoutine _c01e14
+    copyAltGfx();
+
+    // LoaD #$6100 to X
+    // STore X to $2e
+    addr_7e002e = 0x6100;
+
+    // LoaD #$0200 to X
+    // STore X to $2c
+    addr_7e002c = 0x0200;
+
+    // LoaD #$6c00 to X
+    // STore X to $23
+    addr_7e0023 = 0x6C00;
+
+    // LoaD #$da to A
+    // STore A to $25
+    addr_7e0025 = 0xDA;
+
+    // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
+    // LoaD #$6200 to X
+    // STore X to $2e
+    addr_7e002e = 0x6200;
+
+    // LoaD #$0400 to X
+    // STore X to $2c
+    addr_7e002c = 0x0400;
+
+    // LoaD #$c000 to X
+    // STore X to $23
+    addr_7e0023 = 0xC000;
+
+    // LoaD #$da to A
+    // STore A to $25
+    addr_7e0025 = 0xDA;
+
+    // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
+    // LoaD #$6440 to X
+    // STore X to $33
+    addr_7e0033 = 0x6440;
+
+    // LoaD #$000c to X
+    // STore X to $35
+    addr_7e0035 = 0x000C;
+
+    // LoaD #$3ac0 to X
+    // STore X to $30
+    addr_7e0030 = 0x3AC0;
+
+    // Jump to SubRoutine TfrVehicleGfx
+    tfrVehicleGfx();
+
+    // LoaD #$6540 to X
+    // STore X to $33
+    addr_7e0033 = 0x6540;
+
+    // LoaD #$00f0 to X
+    // STore X to $35
+    addr_7e0035 = 0x00F0;
+
+    // LoaD #$3b80 to X
+    // STore X to $30
+    addr_7e0030 = 0x3B80;
+
+    // Jump to SubRoutine TfrVehicleGfx
+    tfrVehicleGfx();
+
+    // LoaD #$6400 to X
+    // STore X to $2e
+    addr_7e002e = 0x6400;
+
+    // LoaD #$0080 to X
+    // STore X to $2c
+    addr_7e002c = 0x0080;
+
+    // LoaD #$1f00 to X
+    // STore X to $23
+    addr_7e0023 = 0x1F00;
+
+    // LoaD #$da to A
+    // STore A to $25
+        // da/1f00 (gradient graphics 1)
+    addr_7e0025 = 0xDA;
+
+    // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
+    // LoaD #$6500 to X
+    // STore X to $2e
+    addr_7e002e = 0x6500;
+
+    // LoaD #$0080 to X
+    // STore X to $2c
+    addr_7e002c = 0x0080;
+
+    // LoaD #$1f80 to X
+    // STore X to $23
+    addr_7e0023 = 0x1F80;
+
+    // LoaD #$da to A
+    // STore A to $25
+        // da/1f80 (gradient graphics 2)
+    addr_7e0025 = 0xDA;
+
+    // Jump to SubRoutine TfrVRAM
+    tfrVram();
+
+    // Jump to SubRoutine LoadWorldPal
+    loadWorldMapPalette();
+
+    // LoaD #$0080 to X
+    // [@55e8] LoaD f:MapSpritePal_8-1,x to A
+    // STore A to ($0cff,x)
+    // DEcrement X
+    // Branch to [@55e8] is Not Equals
+
+    // LoaD #$0040 to X
+    // [@55f5] LoaD f:MapSpritePal_8,x to A
+    // STore A to ($0cff,x)
+    // DEcrement X
+    // Branch to [@55f5] is Not Equals
+
+    // LoaD $0ad6 (map index) to X
+    // ComPare X to #$0003
+    // Branch to [@560c] if Carry Clear
+    // LoaD #$0020 to X
+    // BRAnch to [@560e]
+    // [@560c] LoaD $06 to X
+    // [@560e] LoaD $06 to Y
+
+    // [@5610] LoaD (f:WindowPal,x) to A
+    // STore A to ($0d80,y)
+    // INcerment X
+    // INcrement Y
+    // ComPare Y to #$0020
+    // Branch to [@5610] if Not Equals
+
+    // Jump to SubRoutine TfrPal
+    tfrPalettes();
+
+    // Jump to SubRoutine ResetSprites
+    resetSprites();
+
+    // Jump to SubRoutine TfrSprites
+    tfrSprites();
+
+    // LoaD $0ad6 (map index) to A
+    // Transfer A to X
+    // LoaD (f:WorldTilesetTbl,x) to A
+    // Lengthen A
+    // eXchange higher Byte in A with lower
+    // Logical Shift A Right x2
+    // STore A to $0d
+
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $0ad6 (map index) to A
+    // Transfer A to X
+    // LoaD (f:WorldTilesetTbl,x) to A
+    // Lengthen A
+    // eXchange higher Byte in A with lower
+    // A Shift Left
+    // CLear Carry flag
+    // ADd $0d to A with Carry
+    // Transfer A to X
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $06 to Y
+
+    // [@5650] LoaD (f:WorldTileProp,x) to A
+    // STore A to ($1186,y)
+    // INcrement X
+    // INcrement Y
+    // ComPare Y to #$0240
+    // Branch to [@5650]
+
+    // LoaD #$01 to A
+    // STore A to $ba
+    addr_7e00ba = 1;
+
+    // LoaD $0ad6 (map index) to A
+    // Transfer A to X
+    // LoaD (f:WorldTilesetTbl,x) to A
+    // A Shift Left
+    // CLear Carry flag
+    // ADd (f:WorldTilesetTbl,x) to A with Carry
+    // Lengthen A
+    // eXchange higher Byte in A with lower
+    // CLear Carry flag
+    // ADd (#near WorldTileset) to A
+    // Transfer A to Y
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD (#^WorldTileset) to A
+    // Jump to SubRoutine LoadWorldTileset
+    loadWorldTileset();
+
+    // Jump to SubRoutine _c06c4a
+    func_c06c4a();
+
+    // Jump to SubRoutine _c04583
+    func_c04583();
+
+    // Jump to SubRoutine _c04798
+    func_c04798();
+
+    // Jump to SubRoutine _c08c92
+    func_c08c92();
+
+    // Jump to SubRoutine _c08c2e
+        // init hdma #1 (window 2 position)
+    func_c08c2e();
+
+    // STore Zero to $6f
+    addr_7e006f = 0;
+
+    // LoaD $0ad6 (map index) to X
+    // ComPare X to #$0003
+    // Branch to [@56b1] if Carry Set
+    // LoaD $0adc to A
+    // Branch to [@56b5] if EQuals
+    // CoMPare A with #$06
+    // Branch to [@56b5] if Not Equals
+    // LoaD $0af1 to A
+    // AND A with #$03
+    // Branch to [@56b5] if Not Equals
+    // LoaD $0af2 to A
+    // AND A with #$7f
+    // Branch to [@56b5] if EQuals
+
+    // [@56b1] LoaD #$0f to A
+    // STore A to $6f
+    addr_7e006f = 0x0F;
+
+    // [@56b5] Jump to SubRoutine _c05bf8
+    func_c05bf8();
+
+    // Jump to SubRoutine _c01733
+    updateLocalTilesWorld();
+
+    // Jump to SubRoutine _c0104a
+    func_c0104a();
+
+    // Jump to SubRoutine _c0612b
+    func_c0612b();
+
+    // Jump to SubRoutine _c02137
+    func_c02137();
+
+    // Jump to SubRoutine _c01e64
+    func_c01e64();
+
+    // Jump to SubRoutine _c01ec5
+    func_c01ec5();
+
+    // Jump to SubRoutine _c061d7
+    func_c061d7();
+
+    // LoaD #$07 to A
+    // STore A to hBGMODE
+    changeBgMode(7);
+
+    // Jump to SubRoutine _c0630a
+    func_c0630a();
+
+    // Store Zero to $ba
+    addr_7e00ba = 0;
+
+    // LoaD $0adc to A
+    // Branch to [@56e7] if EQuals
+    // DECrement A
+    // A Shift Left x2
+    // Transfer A to Y
+    // LoaD ($0add,y) to A
+    // AND A with #$1c
+    // Logical Shift A Right x2
+    // [@56e7] A Shift Left
+    // Transfer A to X
+    // Lengthen A
+    // LoaD (f:WorldMoveSpeed,x) to A
+    // STore A to $c0
+    // LoaD $06 to A
+    // Shorten A
+    // STore Zero to $55
+    addr_7e0055 = 0;
+
+    // Return to Subroutine
+}
 
 static void loadWorldMapPalette(void) {
     // LoaD $0ad6 (map index) to A
