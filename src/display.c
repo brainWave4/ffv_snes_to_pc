@@ -65,6 +65,7 @@ Uint8 mosaic;
 
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
+static Uint8 vram[65536] = {0};
 
 // Address: _211A
 Uint8 mode7_settings;
@@ -200,9 +201,14 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     }
 }
 
-void updateTilesetFromFilePath(Uint8 i, char filepath[], SDL_Rect *customRect) {
+void addToVram(Uint8 i, char filepath[]) {
     FILE *fptr = fopen(filepath, "rb");
-    SDL_UpdateTexture(bgLayers[i].tileset, customRect, &fptr, tilesetWidthsBits[i]);
+
+    fseek(fptr, 0, SEEK_END);
+    long fileSize = ftell(fptr);
+    fseek(fptr, 0, SEEK_SET);
+
+    fread(&(vram + i), 1, fileSize, fptr);
     fclose(fptr);
 }
 

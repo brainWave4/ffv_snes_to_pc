@@ -165,7 +165,7 @@ static void updateScrollingRegisters(void); // Incomplete
 static void updateCtrl(void); // Incomplete
 static void resetSprites(void); // Incomplete
 static void hideSpritesInCutscenes(void); // Incomplete
-static void tfrVram(char filename[], Uint8 destI, SDL_Rect *customRect); // Incomplete
+static void tfrVram(char filename[], Uint8 destI); // Incomplete
 static void disableInterrupts(void); // Incomplete
 static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
@@ -2527,7 +2527,7 @@ static void tfrWorldGfx(void) {
     // Branch to [Loop] if Not Equals
     char filepath2[MAX_SIZEOF_FILEPATH];
     snprintf(filepath2, sizeof(filepath2), "%s%s%d%s", FOLDER_TEXTURE, "world_gfx", addr_7e0024, EXT_BPP4);
-    updateTilesetFromFilePath(0, filepath2, NULL);
+    addToVram(0, filepath2);
 
     // Return To Subroutine
 }
@@ -2550,7 +2550,7 @@ static void hideSpritesInCutscenes(void) {}
 //   - Source file name
 //   - Custom size
 //   - Destination Tileset
-static void tfrVram(char filename[], Uint8 destI, SDL_Rect *customRect) {
+static void tfrVram(char filename[], Uint8 destI) {
     // LoaD #$80 to A
     // STore A to hVMAINC
     // STore Zero to hMDMAEN
@@ -2571,7 +2571,7 @@ static void tfrVram(char filename[], Uint8 destI, SDL_Rect *customRect) {
     // Return to Subroutine
     char full_filepath[MAX_SIZEOF_FILEPATH];
     snprintf(full_filepath, sizeof(full_filepath), "%s%s%s", FOLDER_TEXTURE, filename, EXT_BPP4);
-    updateTilesetFromFilePath(destI, full_filepath, customRect);
+    addToVram(destI, full_filepath);
 }
 
 static void disableInterrupts(void) {}
@@ -3836,7 +3836,7 @@ static void loadMapGfx(void) {
     // STore A to $25
     //  $23-25 stores source address
     // Jump to SubRoutine TfrVRAM
-    tfrVram("window", 0, &windowRect);
+    tfrVram("window", 0);
 
     // Jump to SubRoutine LoadOverlayGfx
     loadOverlayGfx();
