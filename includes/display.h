@@ -66,7 +66,7 @@ extern Uint8 setIni;
 
 void setupDisplay(SDL_Renderer *new_renderer);
 
-void addToVram(Uint8 i, char filepath[]);
+void addToVram(Uint16 dest, char filepath[], Uint16 size);
 
 void changeBgMode(Uint8 val);
 

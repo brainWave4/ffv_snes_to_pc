@@ -165,7 +165,7 @@ static void updateScrollingRegisters(void); // Incomplete
 static void updateCtrl(void); // Incomplete
 static void resetSprites(void); // Incomplete
 static void hideSpritesInCutscenes(void); // Incomplete
-static void tfrVram(char filename[], Uint8 destI); // Incomplete
+static void tfrVram(); // Incomplete
 static void disableInterrupts(void); // Incomplete
 static void enableInterrupts(void); // Incomplete
 static void clearVramForCutscenes(void); // Incomplete
@@ -521,8 +521,13 @@ static Uint8 addr_7e0015;
 static Uint8 addr_7e0023;
 static Uint8 addr_7e0024;
 static Uint8 addr_7e0025;
-static Uint16 addr_7e002c;
-static Uint16 addr_7e002e;
+
+// Address Range: _002c - _002d
+static Uint16 fileSize;
+
+// Address Range: _002e - _002f
+static Uint16 destVram;
+
 static Uint16 addr_7e0030;
 static Uint16 addr_7e0033;
 static Uint16 addr_7e0035;
@@ -2550,7 +2555,7 @@ static void hideSpritesInCutscenes(void) {}
 //   - Source file name
 //   - Custom size
 //   - Destination Tileset
-static void tfrVram(char filename[], Uint8 destI) {
+static void tfrVram() {
     // LoaD #$80 to A
     // STore A to hVMAINC
     // STore Zero to hMDMAEN
@@ -2571,7 +2576,7 @@ static void tfrVram(char filename[], Uint8 destI) {
     // Return to Subroutine
     char full_filepath[MAX_SIZEOF_FILEPATH];
     snprintf(full_filepath, sizeof(full_filepath), "%s%s%s", FOLDER_TEXTURE, filename, EXT_BPP4);
-    addToVram(destI, full_filepath);
+    addToVram(destVram, full_filepath, fileSize);
 }
 
 static void disableInterrupts(void) {}
@@ -2952,11 +2957,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$6100 to X
     // STore X to $2e
-    addr_7e002e = 0x6100;
+    destVram = 0x6100;
 
     // LoaD #$0200 to X
     // STore X to $2c
-    addr_7e002c = 0x0200;
+    fileSize = 0x0200;
 
     // LoaD #$6c00 to X
     // STore X to $23
@@ -2971,11 +2976,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$6200 to X
     // STore X to $2e
-    addr_7e002e = 0x6200;
+    destVram = 0x6200;
 
     // LoaD #$0400 to X
     // STore X to $2c
-    addr_7e002c = 0x0400;
+    fileSize = 0x0400;
 
     // LoaD #$c000 to X
     // STore X to $23
@@ -3020,11 +3025,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$6400 to X
     // STore X to $2e
-    addr_7e002e = 0x6400;
+    destVram = 0x6400;
 
     // LoaD #$0080 to X
     // STore X to $2c
-    addr_7e002c = 0x0080;
+    fileSize = 0x0080;
 
     // LoaD #$1f00 to X
     // STore X to $23
@@ -3040,11 +3045,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$6500 to X
     // STore X to $2e
-    addr_7e002e = 0x6500;
+    destVram = 0x6500;
 
     // LoaD #$0080 to X
     // STore X to $2c
-    addr_7e002c = 0x0080;
+    fileSize = 0x0080;
 
     // LoaD #$1f80 to X
     // STore X to $23
@@ -3562,7 +3567,7 @@ static void loadMapGfx(void) {
 
         // LoaD #$2000 to A
         // STore A to $2c
-        addr_7e002c = 0x2000;
+        fileSize = 0x2000;
 
         // LoaD $06 to A
         // STore A to $0d
@@ -3572,7 +3577,7 @@ static void loadMapGfx(void) {
     } else {
 
         // [@5955] STore A to $2c
-        addr_7e002c = diff1;
+        fileSize = diff1;
 
         // LoaD $23 to A
         // CLear Carry flag
@@ -3585,7 +3590,7 @@ static void loadMapGfx(void) {
     // Shorten A
     // LoaD $06 to X
     // STore $2e to X
-    addr_7e002e = addr_7e0006;
+    destVram = addr_7e0006;
 
     // Jump to SubRoutine TfrVRAM
     // tfrVram();
@@ -3594,7 +3599,7 @@ static void loadMapGfx(void) {
     // LoaD $2c to A
     // Logical Shift A Right
     // STore A to $2e
-    addr_7e002e = addr_7e002c >> 1;
+    destVram = fileSize >> 1;
 
     // LoaD $06 to A
     // Shorten A
@@ -3603,7 +3608,7 @@ static void loadMapGfx(void) {
     if (addr_7e0006 & 0xFF) {
 
         // STore X to $2c
-        addr_7e002c = addr_7e000d;
+        fileSize = addr_7e000d;
 
         // LoaD $06 to X
         // STore X to $23
@@ -3645,7 +3650,7 @@ static void loadMapGfx(void) {
 
         // LoaD #$2000 to A
         // STore A to $2c
-        addr_7e002c = 0x2000;
+        fileSize = 0x2000;
 
         // LoaD $06 to A
         // STore A to $0d
@@ -3655,7 +3660,7 @@ static void loadMapGfx(void) {
     } else {
 
         // [@59c1] STore A to $2c
-        addr_7e002c = diff2;
+        fileSize = diff2;
 
         // LoaD $23 to A
         // CLear Carry flag
@@ -3668,7 +3673,7 @@ static void loadMapGfx(void) {
     // Shorten A
     // LoaD #$1000 to X
     // STore X to $2e
-    addr_7e002e = 0x1000;
+    destVram = 0x1000;
 
     // Jump to SubRoutine TfrVRAM
     // tfrVram();
@@ -3679,7 +3684,7 @@ static void loadMapGfx(void) {
     // CLear Carry flag
     // ADd #$1000 to A with Carry
     // STore A to $2e
-    addr_7e002e = (addr_7e002c >> 1) + 0x1000;
+    destVram = (fileSize >> 1) + 0x1000;
 
     // LoaD $06 to A
     // Shorten A
@@ -3688,7 +3693,7 @@ static void loadMapGfx(void) {
     if (addr_7e0006 & 0xFF) {
 
         // STore X to $2c
-        addr_7e002c = addr_7e000d;
+        fileSize = addr_7e000d;
 
         // LoaD $06 to X
         // STore X to $23
@@ -3728,7 +3733,7 @@ static void loadMapGfx(void) {
     
         // LoaD #$2000 to A
         // STore A to $2c
-        addr_7e002c = 0x2000;
+        fileSize = 0x2000;
 
         // LoaD $06 to A
         // STore A to $0d
@@ -3738,7 +3743,7 @@ static void loadMapGfx(void) {
     } else {
 
         // [@5a2f] STore A to $2c
-        addr_7e002c = diff3;
+        fileSize = diff3;
 
         // LoaD $23 to A
         // CLear Carry flag
@@ -3751,7 +3756,7 @@ static void loadMapGfx(void) {
     // Shorten A
     // LoaD #$2000 to X
     // STore X to $2e
-    addr_7e002e = 0x2000;
+    destVram = 0x2000;
 
     // Jump to SubRoutine TfrVRAM
     // tfrVram();
@@ -3762,7 +3767,7 @@ static void loadMapGfx(void) {
     // CLear Carry flag
     // ADd #$2000 to A with Carry
     // STore A to $2e
-    addr_7e002e = (addr_7e002c >> 1) + 0x2000;
+    destVram = (fileSize >> 1) + 0x2000;
 
     // LoaD $06 to A
     // Shorten A
@@ -3771,7 +3776,7 @@ static void loadMapGfx(void) {
     if (addr_7e0006 & 0xFF) {
 
         // STore X to $2c
-        addr_7e002c = addr_7e000d;
+        fileSize = addr_7e000d;
 
         // LoaD $06 to X
         // STore X to $23
@@ -3801,11 +3806,11 @@ static void loadMapGfx(void) {
 
     // LoaD #$4000 to X
     // STore X to $2e
-    addr_7e002e = 0x4000;
+    destVram = 0x4000;
 
     // LoaD #$1000 to X
     // STore X to $2c
-    addr_7e002c = 0x1000;
+    fileSize = 0x1000;
 
     // Jump to SubRoutine TfrVRAM
     // tfrVram();
@@ -3863,10 +3868,10 @@ static void loadMapGfx(void) {
 
     // LoaD #$0020 to X
     // STore X to $2e
-    addr_7e002e = 0x20;
+    destVram = 0x20;
 
     // STore X to $2c
-    addr_7e002c = 0x20;
+    fileSize = 0x20;
 
     // Jump to SubRoutine FillVRAM
     // fillVram();
