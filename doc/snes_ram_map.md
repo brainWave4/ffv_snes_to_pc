@@ -13,8 +13,8 @@ Strikethroughs are variables that won't be implimented, usually because they can
 |7E/0022||Value|Battle|Temproary Party Targets; Monster AI when Charmed|
 |7E/0023|7E/0025|Value|Field|~~Source Address for Copying data to VRAM~~|
 |7E/0023||Value|Battle|Temproary Monster Targets|
-|7E/002C||Value|Field|~~Data Size for Copying data to VRAM~~|
-|7E/002E||Value|Field|~~Destination Address for Copying data to VRAM~~|
+|7E/002C||Value|Field|Data Size for Copying data to VRAM|
+|7E/002E||Value|Field|Destination Address for Copying data to VRAM|
 |7E/0032|7E/0033|Value|Battle|Attacker Offset|
 |7E/0034|7E/0035|Value|Battle|Spell Offset|
 |7E/0036|7E/0037|Value|Battle|Timer Offset|
