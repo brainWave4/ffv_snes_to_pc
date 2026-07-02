@@ -2988,11 +2988,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$c000 to X
     // STore X to $23
-    addr_7e0023 = 0xC000;
-
     // LoaD #$da to A
     // STore A to $25
-    addr_7e0025 = 0xDA;
+        // Source Address: da/c000
+    sourceFilename = "map_sprite";
+    sourceOffest = 0xC000;
 
     // Jump to SubRoutine TfrVRAM
     tfrVram();
@@ -3037,12 +3037,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$1f00 to X
     // STore X to $23
-    addr_7e0023 = 0x1F00;
-
     // LoaD #$da to A
     // STore A to $25
         // da/1f00 (gradient graphics 1)
-    addr_7e0025 = 0xDA;
+    sourceFilename = "map_sprite";
+    sourceOffest = 0x1F00;
 
     // Jump to SubRoutine TfrVRAM
     tfrVram();
@@ -3057,12 +3056,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$1f80 to X
     // STore X to $23
-    addr_7e0023 = 0x1F80;
-
     // LoaD #$da to A
     // STore A to $25
         // da/1f80 (gradient graphics 2)
-    addr_7e0025 = 0xDA;
+    sourceFilename = "map_sprite";
+    sourceOffest = 0x1F80;
 
     // Jump to SubRoutine TfrVRAM
     tfrVram();
