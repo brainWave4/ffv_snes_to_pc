@@ -3595,7 +3595,7 @@ static void loadMapGfx(void) {
     destVram = addr_7e0006;
 
     // Jump to SubRoutine TfrVRAM
-    // tfrVram();
+    tfrVram();
 
     // Lengthen A
     // LoaD $2c to A
@@ -3620,7 +3620,7 @@ static void loadMapGfx(void) {
         addr_7e0025 ++;
 
         // Jump to SubRoutine TfrVRAM
-        // tfrVram();
+        tfrVram();
     }
 
     // [@5984] Lengthen A
@@ -3678,7 +3678,7 @@ static void loadMapGfx(void) {
     destVram = 0x1000;
 
     // Jump to SubRoutine TfrVRAM
-    // tfrVram();
+    tfrVram();
 
     // Lengthen A
     // LoaD $2c to A
@@ -3705,7 +3705,7 @@ static void loadMapGfx(void) {
         addr_7e0025 ++;
 
         // Jump to SubRoutine TfrVRAM
-        // tfrVram();
+        tfrVram();
     }
 
     // [@59f5] Lengthen A
@@ -3761,7 +3761,7 @@ static void loadMapGfx(void) {
     destVram = 0x2000;
 
     // Jump to SubRoutine TfrVRAM
-    // tfrVram();
+    tfrVram();
 
     // Lengthen A
     // LoaD $2c to A
@@ -3788,7 +3788,7 @@ static void loadMapGfx(void) {
         addr_7e0025 ++;
 
         // Jump to SubRoutine TfrVRAM
-        // tfrVram();
+        tfrVram();
     }
 
     // [@5a63] Lengthen A
@@ -3815,7 +3815,7 @@ static void loadMapGfx(void) {
     fileSize = 0x1000;
 
     // Jump to SubRoutine TfrVRAM
-    // tfrVram();
+    tfrVram();
 
     // Jump to SubRoutine TfrPartyGfx
     // tfrPartyGfx();
