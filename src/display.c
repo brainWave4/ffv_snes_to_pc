@@ -201,8 +201,11 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     }
 }
 
-void addToVram(Uint16 dest, char filepath[], Uint16 size) {
+void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
     FILE *fptr = fopen(filepath, "rb");
+
+    if (offset) fseek(fptr, offset, SEEK_SET);
+
     fread(&(vram + dest), 1, size, fptr);
     fclose(fptr);
 }

@@ -518,9 +518,13 @@ static Uint16 addr_7e000d;
 static Uint8 addr_7e000f;
 static Uint8 addr_7e0013;
 static Uint8 addr_7e0015;
+
+// Address Range: _0023 - _0025
 static Uint8 addr_7e0023;
 static Uint8 addr_7e0024;
 static Uint8 addr_7e0025;
+static char sourceFilename[16];
+static Uint16 sourceOffest;
 
 // Address Range: _002c - _002d
 static Uint16 fileSize;
@@ -2532,7 +2536,7 @@ static void tfrWorldGfx(void) {
     // Branch to [Loop] if Not Equals
     char filepath2[MAX_SIZEOF_FILEPATH];
     snprintf(filepath2, sizeof(filepath2), "%s%s%d%s", FOLDER_TEXTURE, "world_gfx", addr_7e0024, EXT_BPP4);
-    addToVram(0, filepath2);
+    //addToVram(0, filepath2);
 
     // Return To Subroutine
 }
@@ -2575,8 +2579,8 @@ static void tfrVram() {
     // STore A to hMDMAEN
     // Return to Subroutine
     char full_filepath[MAX_SIZEOF_FILEPATH];
-    snprintf(full_filepath, sizeof(full_filepath), "%s%s%s", FOLDER_TEXTURE, filename, EXT_BPP4);
-    addToVram(destVram, full_filepath, fileSize);
+    snprintf(full_filepath, sizeof(full_filepath), "%s%s%s", FOLDER_TEXTURE, sourceFilename, EXT_BPP4);
+    addToVram(destVram, full_filepath, sourceOffest, fileSize);
 }
 
 static void disableInterrupts(void) {}
@@ -2965,11 +2969,11 @@ static void reloadWorldMap(void) {
 
     // LoaD #$6c00 to X
     // STore X to $23
-    addr_7e0023 = 0x6C00;
-
     // LoaD #$da to A
     // STore A to $25
-    addr_7e0025 = 0xDA;
+        // Source Address is da/6c00
+    sourceFilename = "map_sprite";
+    sourceOffest = 0x6C00;
 
     // Jump to SubRoutine TfrVRAM
     tfrVram();
