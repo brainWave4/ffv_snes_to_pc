@@ -520,10 +520,9 @@ static Uint8 addr_7e0013;
 static Uint8 addr_7e0015;
 
 // Address Range: _0023 - _0025
-static Uint8 addr_7e0023;
-static Uint8 addr_7e0024;
 static Uint8 addr_7e0025;
 static char sourceFilename[16];
+static Uint8 sourceFileIndex;
 static Uint16 sourceOffest;
 
 // Address Range: _002c - _002d
@@ -2489,7 +2488,7 @@ static void tfrWorldGfx(void) {
     // LoaD f:WorldTileAttrTbl,x to A
         // WorldTileAttrTbl is identical to WorldTilesetTbl
     // STore A to $24
-    addr_7e0024 = worldTilesetTbl[map_i];
+    sourceFileIndex = worldTilesetTbl[map_i];
 
     // STore Zero to $23
     // LoaD $23 to X
@@ -2502,7 +2501,7 @@ static void tfrWorldGfx(void) {
     // Branch to previous label if Not Equals
     FILE *fptr;
     char filepath[MAX_SIZEOF_FILEPATH];
-    snprintf(filepath, sizeof(filepath), "%s%s%d%s", FOLDER_DATA, "world_tile_attr", addr_7e0024, EXT_BIN);
+    snprintf(filepath, sizeof(filepath), "%s%s%d%s", FOLDER_DATA, "world_tile_attr", sourceFileIndex, EXT_BIN);
     fptr = fopen(filepath, "rb");
     fread(addrange_7e1873, 1, 0x100, fptr);
     fclose(fptr);
@@ -2512,7 +2511,7 @@ static void tfrWorldGfx(void) {
     // LoaD f:WorldTileAttrTbl,x to A
     // A Shift Left x5
     // STore A to $24
-    addr_7e0024 = worldTilesetTbl[map_i] << 5;
+    sourceFileIndex = worldTilesetTbl[map_i] << 5;
 
     // STore Zero to $23
     // LoaD $23 to X
@@ -2535,7 +2534,7 @@ static void tfrWorldGfx(void) {
     // ComPare Y with #$0100
     // Branch to [Loop] if Not Equals
     char filepath2[MAX_SIZEOF_FILEPATH];
-    snprintf(filepath2, sizeof(filepath2), "%s%s%d%s", FOLDER_TEXTURE, "world_gfx", addr_7e0024, EXT_BPP4);
+    snprintf(filepath2, sizeof(filepath2), "%s%s%d%s", FOLDER_TEXTURE, "world_gfx", sourceFileIndex, EXT_BPP4);
     //addToVram(0, filepath2);
 
     // Return To Subroutine
@@ -3561,7 +3560,7 @@ static void loadMapGfx(void) {
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
-    Uint16 diff1 = addr_7e0006 - addr_7e0023;
+    Uint16 diff1 = addr_7e0006 - sourceOffest;
 
     // CoMpare A with #$2000
     // Branch to [@5955] if Carry Clear
@@ -3585,7 +3584,7 @@ static void loadMapGfx(void) {
         // CLear Carry flag
         // ADd #$2000 to A with Carry
         // STore $0d to A
-        addr_7e000d = addr_7e0023 + 0x2000;
+        addr_7e000d = sourceOffest + 0x2000;
     }
 
     // [@595f] LoaD $06 to A
@@ -3614,7 +3613,7 @@ static void loadMapGfx(void) {
 
         // LoaD $06 to X
         // STore X to $23
-        addr_7e0023 = addr_7e0006;
+        sourceOffest = addr_7e0006;
 
         // INCrement $25
         addr_7e0025 ++;
@@ -3644,7 +3643,7 @@ static void loadMapGfx(void) {
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
-    Uint8 diff2 = addr_7e0006 - addr_7e0023;
+    Uint8 diff2 = addr_7e0006 - sourceOffest;
 
     // CoMpare A with #$2000
     // Branch to [@59c1] if Carry Clear
@@ -3668,7 +3667,7 @@ static void loadMapGfx(void) {
         // CLear Carry flag
         // ADd #$2000 to A with Carry
         // STore A to $0d
-        addr_7e000d = addr_7e0023 + 0x2000;
+        addr_7e000d = sourceOffest + 0x2000;
     }
 
     // [@59cb] LoaD $06 to A
@@ -3699,7 +3698,7 @@ static void loadMapGfx(void) {
 
         // LoaD $06 to X
         // STore X to $23
-        addr_7e0023 = addr_7e0006;
+        sourceOffest = addr_7e0006;
 
         // INCrement $25
         addr_7e0025 ++;
@@ -3727,7 +3726,7 @@ static void loadMapGfx(void) {
     // LoaD $06 to A
     // SEt Carry
     // SuBtract $23 from A with Carry
-    Uint8 diff3 = addr_7e0006 - addr_7e0023;
+    Uint8 diff3 = addr_7e0006 - sourceOffest;
 
     // CoMpare A with #$2000
     // Branch to [@5a2f] if Carry Clear
@@ -3751,7 +3750,7 @@ static void loadMapGfx(void) {
         // CLear Carry flag
         // ADd #$2000 to A with Carry
         // STore A to $0d
-        addr_7e000d = addr_7e0023 + 0x2000;
+        addr_7e000d = sourceOffest + 0x2000;
     }
 
     // [@5a39] LoaD $06 to A
@@ -3782,7 +3781,7 @@ static void loadMapGfx(void) {
 
         // LoaD $06 to X
         // STore X to $23
-        addr_7e0023 = addr_7e0006;
+        sourceOffest = addr_7e0006;
 
         // INCrement $25
         addr_7e0025 ++;
