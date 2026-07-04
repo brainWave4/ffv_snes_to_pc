@@ -62,6 +62,8 @@ Uint8 mosaic;
 
 // Addresses _2107-2114 stores data
 // for Background Layers
+Uint8 bg12nba = 0;
+Uint8 bg34nba = 0;
 
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
@@ -234,7 +236,6 @@ static void setBgMode(Uint8 val) {
         case 0: {
             Uint8 KEY_TILEISTWICE[TOTAL_BG_COUNT] = {KEY_TILEISTWICE_BG1, KEY_TILEISTWICE_BG2, KEY_TILEISTWICE_BG3, KEY_TILEISTWICE_BG4};
             for (Uint8 i = 0; i < TOTAL_BG_COUNT; i ++) {
-                bgLayers[i].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
 
                 Uint8 tileSize = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE: TILE_WIDTH;
@@ -264,10 +265,8 @@ static void setBgMode(Uint8 val) {
         case 1: {
             Uint8 KEY_TILEISTWICE[2] = {KEY_TILEISTWICE_BG1, KEY_TILEISTWICE_BG2};
             for (Uint8 i = 0; i < 2; i ++) {
-                bgLayers[i].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
             }
-            bgLayers[2].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[2].tileIsTwice = bgMode & KEY_TILEISTWICE_BG3;
             
             Uint8 tileSizes[3];
@@ -312,7 +311,6 @@ static void setBgMode(Uint8 val) {
         case 2: {
             Uint8 KEY_TILEISTWICE[2] = {KEY_TILEISTWICE_BG1, KEY_TILEISTWICE_BG2};
             for (Uint8 i = 0; i < 2; i ++) {
-                bgLayers[i].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
 
                 Uint8 tileSize = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE: TILE_WIDTH;
@@ -338,9 +336,7 @@ static void setBgMode(Uint8 val) {
             break;
         }
         case 3: {
-            bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = bgMode & KEY_TILEISTWICE_BG1;
-            bgLayers[1].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[1].tileIsTwice = bgMode & KEY_TILEISTWICE_BG2;
             
             Uint8 tileSizes[2];
@@ -369,9 +365,7 @@ static void setBgMode(Uint8 val) {
             break;
         }
         case 4: {
-            bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = bgMode & KEY_TILEISTWICE_BG1;
-            bgLayers[1].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[1].tileIsTwice = bgMode & KEY_TILEISTWICE_BG2;
             
             Uint8 tileSizes[2];
@@ -400,9 +394,7 @@ static void setBgMode(Uint8 val) {
             break;
         }
         case 5: {
-            bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = true;
-            bgLayers[1].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[1].tileIsTwice = true;
                 
             for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
@@ -427,7 +419,6 @@ static void setBgMode(Uint8 val) {
             break;
         }
         case 6: {
-            bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = true;
                 
             for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
@@ -449,7 +440,6 @@ static void setBgMode(Uint8 val) {
             break;
         }
         default: {
-            bgLayers[0].tileset = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, TILESET_WIDTH, TILESET_HEIGHT_1BIT);
             bgLayers[0].tileIsTwice = false;
                 
             for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
