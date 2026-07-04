@@ -3842,7 +3842,9 @@ static void loadMapGfx(void) {
     // STore A to $25
     //  $23-25 stores source address
     // Jump to SubRoutine TfrVRAM
-    tfrVram("window", 0);
+    sourceFilename = "window";
+    sourceOffest = 0;
+    tfrVram();
 
     // Jump to SubRoutine LoadOverlayGfx
     loadOverlayGfx();
