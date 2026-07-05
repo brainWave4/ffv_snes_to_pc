@@ -62,8 +62,8 @@ Uint8 mosaic;
 
 // Addresses _2107-2114 stores data
 // for Background Layers
-Uint8 bg12nba = 0;
-Uint8 bg34nba = 0;
+static Uint8 bg12nba = 0;
+static Uint8 bg34nba = 0;
 
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
@@ -184,6 +184,8 @@ void setupDisplay(SDL_Renderer *new_renderer) {
         bgLayers[i].high_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR1555, SDL_TEXTUREACCESS_TARGET, BASE_GAME_WIDTH, BASE_GAME_HEIGHT);
         bgLayers[i].low_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR1555, SDL_TEXTUREACCESS_TARGET, BASE_GAME_WIDTH, BASE_GAME_HEIGHT);
         
+        bgLayers[i].tilesetScroll = 0;
+
         bgLayers[i].key_rerendering = 1 << i;
 
         bgLayers[i].queueHighCounter = 0;
@@ -458,6 +460,20 @@ static void setBgMode(Uint8 val) {
             tilesetWidthsBits[3] = 0;
         }
     }
+}
+
+void setBg12nba(Uint8 val) {
+    bg12nba = val;
+
+    bgLayers[0].tilesetScroll = val % 0x10;
+    bgLayers[1].tilesetScroll = val >> 4;
+}
+
+void setBg34nba(Uint8 val) {
+    bg34nba = val;
+
+    bgLayers[2].tilesetScroll = val % 0x10;
+    bgLayers[3].tilesetScroll = val >> 4;
 }
 
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]) {

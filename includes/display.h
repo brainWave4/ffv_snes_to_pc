@@ -19,6 +19,8 @@
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
 
+    Uint8 tilesetScroll;
+
     Uint8 tilemapScroll;
     SDL_Texture *tilemap[TILEMAP_TILECOUNT];
 
@@ -68,6 +70,9 @@ void setupDisplay(SDL_Renderer *new_renderer);
 void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size);
 
 void changeBgMode(Uint8 val);
+
+void setBg12nba(Uint8 val);
+void setBg34nba(Uint8 val);
 
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]);
 #endif
