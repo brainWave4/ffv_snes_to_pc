@@ -12,24 +12,15 @@
 #define TILE_WIDTH 8
 #define TILE_WIDTH_TWICE 16
 
+#define TILE_WIDTH_BYTES_1BIT 1
+#define TILE_WIDTH_BYTES_2BIT 2
+#define TILE_WIDTH_BYTES_4BIT 4
+#define TILE_WIDTH_BYTES_8BIT 8
+
 #define KEY_TILEISTWICE_BG1 0x10
 #define KEY_TILEISTWICE_BG2 0x20
 #define KEY_TILEISTWICE_BG3 0x40
 #define KEY_TILEISTWICE_BG4 0x80
-
-// Tileset Width = 8 pixels x 16 tiles x Bit count
-#define TILESET_WIDTH_1BIT 128
-#define TILESET_WIDTH_2BIT 256
-#define TILESET_WIDTH_4BIT 512
-#define TILESET_WIDTH_8BIT 1024
-
-// Tileset has 1024 tiles total
-// Since it is 16 tiles in width, it is 64 tiles in height
-// Tileset Width = 8 pixels x 64 tiles x Bit count
-#define TILESET_HEIGHT_1BIT 512
-#define TILESET_HEIGHT_2BIT 1024
-#define TILESET_HEIGHT_4BIT 2048
-#define TILESET_HEIGHT_8BIT 4096
 
 #define TILEMAP_TILEWIDTH 32
 
@@ -151,7 +142,6 @@ static Uint8 need_redrawing;
 
 static Uint8 layerCount;
 static void (*drawLayers[12])(void);
-static Uint16 tilesetWidthsBits[4];
 
 static SDL_Texture *sprite_texture[4];
 
@@ -267,12 +257,12 @@ static void setBgMode(Uint8 val) {
             for (Uint8 i = 0; i < TOTAL_BG_COUNT; i ++) {
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
 
+                bgLayers[i].bytesPerWidth = TILE_WIDTH_BYTES_2BIT;
+
                 Uint8 tileSize = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE: TILE_WIDTH;
                 for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j++) {
                     bgLayers[i].tilemap[j] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX2LSB, SDL_TEXTUREACCESS_STREAMING, tileSize, tileSize);
                 }
-                
-                tilesetWidthsBits[i] = TILESET_WIDTH_2BIT;
             }
 
             layerCount = 12;
@@ -295,8 +285,10 @@ static void setBgMode(Uint8 val) {
             Uint8 KEY_TILEISTWICE[2] = {KEY_TILEISTWICE_BG1, KEY_TILEISTWICE_BG2};
             for (Uint8 i = 0; i < 2; i ++) {
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
+                bgLayers[i].bytesPerWidth = TILE_WIDTH_BYTES_4BIT;
             }
             bgLayers[2].tileIsTwice = bgMode & KEY_TILEISTWICE_BG3;
+            bgLayers[2].bytesPerWidth = TILE_WIDTH_BYTES_2BIT;
             
             Uint8 tileSizes[3];
             for (Uint8 i = 0; i < 2; i++) {
@@ -330,10 +322,6 @@ static void setBgMode(Uint8 val) {
                 drawLayers[8] = drawBg1High;
                 drawLayers[9] = drawSprites3;
             }
-            tilesetWidthsBits[0] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[1] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[2] = TILESET_WIDTH_2BIT;
-            tilesetWidthsBits[3] = 0;
             
             break;
         }
@@ -341,6 +329,7 @@ static void setBgMode(Uint8 val) {
             Uint8 KEY_TILEISTWICE[2] = {KEY_TILEISTWICE_BG1, KEY_TILEISTWICE_BG2};
             for (Uint8 i = 0; i < 2; i ++) {
                 bgLayers[i].tileIsTwice = bgMode & KEY_TILEISTWICE[i];
+                bgLayers[i].bytesPerWidth = TILE_WIDTH_BYTES_4BIT;
 
                 Uint8 tileSize = bgLayers[i].tileIsTwice ? TILE_WIDTH_TWICE: TILE_WIDTH;
                 for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j++) {
@@ -357,16 +346,14 @@ static void setBgMode(Uint8 val) {
             drawLayers[5] = drawSprites2;
             drawLayers[6] = drawBg1High;
             drawLayers[7] = drawSprites3;
-            tilesetWidthsBits[0] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[1] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[2] = 0;
-            tilesetWidthsBits[3] = 0;
             
             break;
         }
         case 3: {
             bgLayers[0].tileIsTwice = bgMode & KEY_TILEISTWICE_BG1;
+            bgLayers[0].bytesPerWidth = TILE_WIDTH_BYTES_8BIT;
             bgLayers[1].tileIsTwice = bgMode & KEY_TILEISTWICE_BG2;
+            bgLayers[1].bytesPerWidth = TILE_WIDTH_BYTES_4BIT;
             
             Uint8 tileSizes[2];
             for (Uint8 i = 0; i < 2; i++) {
@@ -386,16 +373,14 @@ static void setBgMode(Uint8 val) {
             drawLayers[5] = drawSprites2;
             drawLayers[6] = drawBg1High;
             drawLayers[7] = drawSprites3;
-            tilesetWidthsBits[0] = TILESET_WIDTH_8BIT;
-            tilesetWidthsBits[1] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[2] = 0;
-            tilesetWidthsBits[3] = 0;
             
             break;
         }
         case 4: {
             bgLayers[0].tileIsTwice = bgMode & KEY_TILEISTWICE_BG1;
+            bgLayers[0].bytesPerWidth = TILE_WIDTH_BYTES_8BIT;
             bgLayers[1].tileIsTwice = bgMode & KEY_TILEISTWICE_BG2;
+            bgLayers[1].bytesPerWidth = TILE_WIDTH_BYTES_2BIT;
             
             Uint8 tileSizes[2];
             for (Uint8 i = 0; i < 2; i++) {
@@ -415,16 +400,14 @@ static void setBgMode(Uint8 val) {
             drawLayers[5] = drawSprites2;
             drawLayers[6] = drawBg1High;
             drawLayers[7] = drawSprites3;
-            tilesetWidthsBits[0] = TILESET_WIDTH_8BIT;
-            tilesetWidthsBits[1] = TILESET_WIDTH_2BIT;
-            tilesetWidthsBits[2] = 0;
-            tilesetWidthsBits[3] = 0;
             
             break;
         }
         case 5: {
             bgLayers[0].tileIsTwice = true;
+            bgLayers[0].bytesPerWidth = TILE_WIDTH_BYTES_4BIT;
             bgLayers[1].tileIsTwice = true;
+            bgLayers[1].bytesPerWidth = TILE_WIDTH_BYTES_2BIT;
                 
             for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH_TWICE, TILE_WIDTH_TWICE);
@@ -440,15 +423,12 @@ static void setBgMode(Uint8 val) {
             drawLayers[5] = drawSprites2;
             drawLayers[6] = drawBg1High;
             drawLayers[7] = drawSprites3;
-            tilesetWidthsBits[0] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[1] = TILESET_WIDTH_2BIT;
-            tilesetWidthsBits[2] = 0;
-            tilesetWidthsBits[3] = 0;
             
             break;
         }
         case 6: {
             bgLayers[0].tileIsTwice = true;
+            bgLayers[0].bytesPerWidth = TILE_WIDTH_BYTES_4BIT;
                 
             for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX4LSB, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH_TWICE, TILE_WIDTH_TWICE);
@@ -461,15 +441,12 @@ static void setBgMode(Uint8 val) {
             drawLayers[3] = drawSprites2;
             drawLayers[4] = drawBg1High;
             drawLayers[5] = drawSprites3;
-            tilesetWidthsBits[0] = TILESET_WIDTH_4BIT;
-            tilesetWidthsBits[1] = 0;
-            tilesetWidthsBits[2] = 0;
-            tilesetWidthsBits[3] = 0;
             
             break;
         }
         default: {
             bgLayers[0].tileIsTwice = false;
+            bgLayers[0].bytesPerWidth = TILE_WIDTH_BYTES_8BIT;
                 
             for (Uint16 i = 0; i < TILEMAP_TILECOUNT; i++) {
                 bgLayers[0].tilemap[i] = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_INDEX8, SDL_TEXTUREACCESS_STREAMING, TILE_WIDTH, TILE_WIDTH);
@@ -481,10 +458,6 @@ static void setBgMode(Uint8 val) {
             drawLayers[2] = drawSprites1;
             drawLayers[3] = drawSprites2;
             drawLayers[4] = drawSprites3;
-            tilesetWidthsBits[0] = TILESET_WIDTH_8BIT;
-            tilesetWidthsBits[1] = TILESET_WIDTH_8BIT;
-            tilesetWidthsBits[2] = 0;
-            tilesetWidthsBits[3] = 0;
         }
     }
 }
