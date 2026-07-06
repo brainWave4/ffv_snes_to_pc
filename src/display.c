@@ -208,7 +208,11 @@ void setupDisplay(SDL_Renderer *new_renderer) {
 }
 
 static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
+    for (Uint8 i = startI; i < size; i ++) {
+        SDL_UpdateTexture(bgLayers[bgLayerI].tilemap[i], NULL, &(vram + bgLayers[bgLayerI].tilemapScroll), bgLayers[bgLayerI].bytesPerWidth);
+    }
 
+    need_redrawing |= bgLayers[bgLayerI].key_rerendering;
 }
 
 void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
@@ -224,8 +228,7 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
             if (dest == bgLayers[i].tilesetScroll) updateTilemap(i, 0, size);
             else if (dest < bgLayers[i].tilesetScroll && dest + size >= bgLayers[i].tilesetScroll) {
                 Uint8 startI = bgLayers[i].tilesetScroll - dest;
-                Uint8 newDiff = size - startI;
-                updateTilemap(i, startI, newDiff);
+                updateTilemap(i, startI, size);
             } else {
                 Uint16 tilesetScrollEnd = bgLayers[i].tilesetScroll + 0x100;
                 if (dest < tilesetScrollEnd) {

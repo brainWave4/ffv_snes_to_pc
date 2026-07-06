@@ -22,6 +22,7 @@ typedef struct {
     Uint8 tilesetScroll;
 
     Uint8 tilemapScroll;
+    Uint8 bytesPerWidth;
     SDL_Texture *tilemap[TILEMAP_TILECOUNT];
 
     SDL_Texture *queueHighmap[BASEGAME_TILESTOTAL];
