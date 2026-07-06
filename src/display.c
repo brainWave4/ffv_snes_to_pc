@@ -155,6 +155,8 @@ static Uint16 tilesetWidthsBits[4];
 
 static SDL_Texture *sprite_texture[4];
 
+static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size);
+
 static void setBgMode(Uint8 val);
 
 static SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start);
@@ -205,6 +207,10 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     }
 }
 
+static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
+
+}
+
 void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
     FILE *fptr = fopen(filepath, "rb");
 
@@ -212,14 +218,32 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
 
     fread(&(vram + dest), 1, size, fptr);
     fclose(fptr);
+
+    if (size < 0x100) {
+        for (Uint8 = 0; i < TOTAL_BG_COUNT; i ++) {
+            if (dest == bgLayers[i].tilesetScroll) updateTilemap(i, 0, size);
+            else if (dest < bgLayers[i].tilesetScroll && dest + size >= bgLayers[i].tilesetScroll) {
+                Uint8 startI = bgLayers[i].tilesetScroll - dest;
+                Uint8 newDiff = size - startI;
+                updateTilemap(i, startI, newDiff);
+            } else {
+                Uint16 tilesetScrollEnd = bgLayers[i].tilesetScroll + 0x100;
+                if (dest < tilesetScrollEnd) {
+                    if (dest + size > tilesetScrollEnd) {
+                        Uint8 newDiff = tilesetScrollEnd - dest;
+                        updateTilemap(i, 0, newDiff);
+                    }
+                    else updateTilemap(i, 0, size);
+                }
+            }
+        }
+    }
 }
 
 // Before setting bgMode, textures must be destroyed first to change
 // their bit depth and tilemap size
 void changeBgMode(Uint8 val) {
     for (Uint8 i = 0; i < BGLAYER_COUNTS[bgMode & 7]; i ++) {
-        SDL_DestroyTexture(bgLayers[i].tileset);
-        
         for (Uint16 j = 0; j < TILEMAP_TILECOUNT; j++) {
             SDL_DestroyTexture(bgLayers[i].tilemap[j]);
         }
