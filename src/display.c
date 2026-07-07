@@ -151,6 +151,7 @@ static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size);
 static void setBgMode(Uint8 val);
 
 static void setBaseTilemapScroll(Uint8 bgI, Uint8 val);
+static void setFromBgABnba(Uint8 i, Uint8 val);
 
 static SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start);
 
@@ -201,8 +202,29 @@ void setupDisplay(SDL_Renderer *new_renderer) {
 }
 
 static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
-    for (Uint8 i = startI; i < size; i ++) {
-        SDL_UpdateTexture(bgLayers[bgLayerI].tilemap[i], NULL, &(vram + bgLayers[bgLayerI].tilemapScroll), bgLayers[bgLayerI].bytesPerWidth);
+    for (Uint8 i = startI; i < size; i += 2) {
+        Uint8 *ptrMapByte = &(vram + bgLayers[bgLayerI].tilemapScroll);
+        Uint8 *ptrMapByte1 = ptrMapByte + 1;
+
+        Uint8 *ptrSet = &vram;
+        ptrSet += bgLayers[bgLayerI].tilesetScroll;
+        ptrSet += *ptrMapByte;
+        ptrSet += (*ptrMapByte1 & 3) * 0x100;
+
+        Uint8 j = i / 2;
+
+        SDL_UpdateTexture(bgLayers[bgLayerI].tilemap[j], NULL, *ptrSet, bgLayers[bgLayerI].bytesPerWidth);
+
+        Uint8 palI = *ptrMapByte1 >> 2;
+        palI &= 7;
+        SDL_SetTexturePalette(bgLayers[bgLayerI].tilemap[j], &palette_4bit[palI]);
+
+        if (*ptrMapByte1 & 0x20) bgLayers[bgLayerI].tilemapIsHigh[j] = true;
+
+        SDL_FlipMode flip = SDL_FLIP_NONE;
+        if (*ptrMapByte1 & 0x40) flip |= SDL_FLIP_HORIZONTAL;
+        if (*ptrMapByte1 & 0x80) flip |= SDL_FLIP_VERTICAL;
+        if (flip) SDL_RenderTextureRotated(*renderer, &bgLayers[bgLayerI], NULL, NULL, 0, NULL, flip);
     }
 
     need_redrawing |= bgLayers[bgLayerI].key_rerendering;
@@ -216,7 +238,7 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
     fread(&(vram + dest), 1, size, fptr);
     fclose(fptr);
 
-    if (size <= 0x100) {
+    if (size <= 0x800) {
         for (Uint8 = 0; i < TOTAL_BG_COUNT; i ++) {
             if (dest == bgLayers[i].tilemapScroll) updateTilemap(i, 0, size);
             else if (dest < bgLayers[i].tilemapScroll && dest + size >= bgLayers[i].tilemapScroll) {
@@ -491,22 +513,22 @@ void setBg4sc(Uint8 val) {
     setBaseTilemapScroll(3, val);
 }
 
+static void setFromBgABnba(Uint8 i, Uint8 val) {
+    bgLayers[i].tilesetScroll = val % 0x100;
+    bgLayers[i].tilesetScroll <<= 12;
+
+    bgLayers[i + 1].tilesetScroll = val & 0xFF00;
+    bgLayers[i + 1].tilesetScroll <<= 4;
+}
+
 void setBg12nba(Uint8 val) {
     bg12nba = val;
-
-    bgLayers[0].tilesetScroll = val % 0x100;
-    bgLayers[0].tilesetScroll <<= 8;
-
-    bgLayers[1].tilesetScroll = val & 0xFF00;
+    setFromBgABnba(0, val);
 }
 
 void setBg34nba(Uint8 val) {
     bg34nba = val;
-
-    bgLayers[2].tilesetScroll = val % 0x100;
-    bgLayers[2].tilesetScroll <<= 8;
-
-    bgLayers[3].tilesetScroll = val & 0xFF00;
+    setFromBgABnba(2, val);
 }
 
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]) {
