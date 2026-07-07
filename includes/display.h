@@ -19,7 +19,7 @@
 typedef struct {
     SDL_Texture *high_texture, *low_texture;
 
-    Uint8 tilesetScroll;
+    Uint16 tilesetScroll;
 
     Uint8 tilemapScroll;
     Uint8 bytesPerWidth;

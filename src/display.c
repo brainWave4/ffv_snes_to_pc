@@ -213,17 +213,17 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
     fread(&(vram + dest), 1, size, fptr);
     fclose(fptr);
 
-    if (size < 0x100) {
+    if (size <= 0x100) {
         for (Uint8 = 0; i < TOTAL_BG_COUNT; i ++) {
-            if (dest == bgLayers[i].tilesetScroll) updateTilemap(i, 0, size);
-            else if (dest < bgLayers[i].tilesetScroll && dest + size >= bgLayers[i].tilesetScroll) {
-                Uint8 startI = bgLayers[i].tilesetScroll - dest;
+            if (dest == bgLayers[i].tilemapScroll) updateTilemap(i, 0, size);
+            else if (dest < bgLayers[i].tilemapScroll && dest + size >= bgLayers[i].tilemapScroll) {
+                Uint8 startI = bgLayers[i].tilemapScroll - dest;
                 updateTilemap(i, startI, size);
             } else {
-                Uint16 tilesetScrollEnd = bgLayers[i].tilesetScroll + 0x100;
-                if (dest < tilesetScrollEnd) {
-                    if (dest + size > tilesetScrollEnd) {
-                        Uint8 newDiff = tilesetScrollEnd - dest;
+                Uint16 tilemapScrollEnd = bgLayers[i].tilemapScroll + 0x100;
+                if (dest < tilemapScrollEnd) {
+                    if (dest + size > tilemapScrollEnd) {
+                        Uint8 newDiff = tilemapScrollEnd - dest;
                         updateTilemap(i, 0, newDiff);
                     }
                     else updateTilemap(i, 0, size);
@@ -465,15 +465,19 @@ static void setBgMode(Uint8 val) {
 void setBg12nba(Uint8 val) {
     bg12nba = val;
 
-    bgLayers[0].tilesetScroll = val % 0x10;
-    bgLayers[1].tilesetScroll = val >> 4;
+    bgLayers[0].tilesetScroll = val % 0x100;
+    bgLayers[0].tilesetScroll <<= 8;
+
+    bgLayers[1].tilesetScroll = val & 0xFF00;
 }
 
 void setBg34nba(Uint8 val) {
     bg34nba = val;
 
-    bgLayers[2].tilesetScroll = val % 0x10;
-    bgLayers[3].tilesetScroll = val >> 4;
+    bgLayers[2].tilesetScroll = val % 0x100;
+    bgLayers[2].tilesetScroll <<= 8;
+
+    bgLayers[3].tilesetScroll = val & 0xFF00;
 }
 
 void updateWholePalette(Uint16 arr_pal[PALETTE_SIZE_8BIT]) {
