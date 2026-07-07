@@ -149,6 +149,8 @@ static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size);
 
 static void setBgMode(Uint8 val);
 
+static void setBaseTilemapScroll(Uint8 bgI, Uint8 val);
+
 static SDL_Palette createSubPalette(SDL_Palette base, Uint8 size, Uint8 start);
 
 static void drawLayerLow(BgLayer *layer);
