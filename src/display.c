@@ -462,6 +462,32 @@ static void setBgMode(Uint8 val) {
     }
 }
 
+static void setBaseTilemapScroll(Uint8 bgI, Uint8 val) {
+    bgLayers[bgI].baseTilemapScroll = val;
+
+    bgLayers[bgI].tilemapScroll = val & 0xFC;
+    bgLayers[bgI].tilemapScroll <<= 8;
+
+    bgLayers[bgI].tileMapIsTwiceX = val & 1;
+    bgLayers[bgI].tileMapIsTwiceY = val & 2;
+}
+
+void setBg1sc(Uint8 val) {
+    setBaseTilemapScroll(0, val);
+}
+
+void setBg2sc(Uint8 val) {
+    setBaseTilemapScroll(1, val);
+}
+
+void setBg3sc(Uint8 val) {
+    setBaseTilemapScroll(2, val);
+}
+
+void setBg4sc(Uint8 val) {
+    setBaseTilemapScroll(3, val);
+}
+
 void setBg12nba(Uint8 val) {
     bg12nba = val;
 

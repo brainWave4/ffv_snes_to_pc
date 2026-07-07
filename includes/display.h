@@ -21,7 +21,10 @@ typedef struct {
 
     Uint16 tilesetScroll;
 
-    Uint8 tilemapScroll;
+    Uint8 baseTilemapScroll;
+    Uint16 tilemapScroll;
+    bool tileMapIsTwiceX;
+    bool tileMapIsTwiceY;
     Uint8 bytesPerWidth;
     SDL_Texture *tilemap[TILEMAP_TILECOUNT];
 
@@ -71,6 +74,11 @@ void setupDisplay(SDL_Renderer *new_renderer);
 void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size);
 
 void changeBgMode(Uint8 val);
+
+void setBg1sc(Uint8 val);
+void setBg2sc(Uint8 val);
+void setBg3sc(Uint8 val);
+void setBg4sc(Uint8 val);
 
 void setBg12nba(Uint8 val);
 void setBg34nba(Uint8 val);
