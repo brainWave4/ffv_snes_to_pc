@@ -211,23 +211,25 @@ void setupDisplay(SDL_Renderer *new_renderer) {
 
 static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
     for (Uint8 i = startI; i < size; i += 2) {
-        Uint8 *ptrMapByte = &(vram + bgLayers[bgLayerI].tilemapScroll);
+        BgLayer *bgLayer = &bgLayers[bgLayerI];
+
+        Uint8 *ptrMapByte = &(vram + bgLayer->tilemapScroll);
         Uint8 *ptrMapByte1 = ptrMapByte + 1;
 
         Uint8 *ptrSet = &vram;
-        ptrSet += bgLayers[bgLayerI].tilesetScroll;
+        ptrSet += bgLayer->tilesetScroll;
         ptrSet += *ptrMapByte;
         ptrSet += (*ptrMapByte1 & 3) * 0x100;
 
         Uint8 j = i / 2;
 
-        SDL_UpdateTexture(bgLayers[bgLayerI].tilemap[j], NULL, *ptrSet, bgLayers[bgLayerI].bytesPerWidth);
+        SDL_UpdateTexture(bgLayer->tilemap[j], NULL, *ptrSet, bgLayer->bytesPerWidth);
 
         Uint8 palI = *ptrMapByte1 >> 2;
         palI &= 7;
-        SDL_SetTexturePalette(bgLayers[bgLayerI].tilemap[j], &palette_4bit[palI]);
+        SDL_SetTexturePalette(bgLayer->tilemap[j], &palette_4bit[palI]);
 
-        if (*ptrMapByte1 & 0x20) bgLayers[bgLayerI].tilemapIsHigh[j] = true;
+        if (*ptrMapByte1 & 0x20) bgLayer->tilemapIsHigh[j] = true;
 
         SDL_FlipMode flip = SDL_FLIP_NONE;
         if (*ptrMapByte1 & 0x40) flip |= SDL_FLIP_HORIZONTAL;
@@ -235,7 +237,7 @@ static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
         if (flip) SDL_RenderTextureRotated(*renderer, &bgLayers[bgLayerI], NULL, NULL, 0, NULL, flip);
     }
 
-    need_redrawing |= bgLayers[bgLayerI].key_rerendering;
+    need_redrawing |= bgLayer->key_rerendering;
 }
 
 void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
