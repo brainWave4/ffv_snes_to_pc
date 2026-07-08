@@ -7,7 +7,8 @@
 
 #include <SDL3/SDL.h>
 
-#define PALETTE_COUNT_4BIT 8
+#define PALETTE_COUNT 8
+#define PALETTE_SIZE_2BIT 4
 #define PALETTE_SIZE_4BIT 16
 
 #define TILE_WIDTH 8
@@ -84,7 +85,8 @@ Uint8 mode7_y;
 
 // Addresses _2121-2122 are for CGRAM,
 // which stores the palette.
-static SDL_Palette palette_4bit[8];
+static SDL_Palette palette_2bit[TOTAL_BG_COUNT][PALETTE_COUNT];
+static SDL_Palette palette_4bit[PALETTE_COUNT];
 static SDL_Palette *palette_8bit;
 
 // Address: _2123
@@ -195,7 +197,13 @@ void setupDisplay(SDL_Renderer *new_renderer) {
     need_redrawing = 0;
 
     palette_8bit = SDL_CreatePalette(PALETTE_SIZE_8BIT);
-    for (Uint8 i = 0; i < PALETTE_COUNT_4BIT; i ++) {
+    for (Uint8 i = 0; i < TOTAL_BG_COUNT; i ++) {
+        for (Uint8 j = 0; j < PALETTE_COUNT; j ++) {
+            Uint8 start = PALETTE_SIZE_2BIT * j + PALETTE_SIZE_2BIT * PALETTE_COUNT * i;
+            palette_2bit[i][j] = createSubPalette(*palette_8bit, PALETTE_SIZE_2BIT, start);
+        }
+    }
+    for (Uint8 i = 0; i < PALETTE_COUNT; i ++) {
         Uint8 start = PALETTE_SIZE_4BIT * i;
         palette_4bit[i] = createSubPalette(*palette_8bit, PALETTE_SIZE_4BIT, start);
     }
