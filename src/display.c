@@ -225,9 +225,15 @@ static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
 
         SDL_UpdateTexture(bgLayer->tilemap[j], NULL, *ptrSet, bgLayer->bytesPerWidth);
 
-        Uint8 palI = *ptrMapByte1 >> 2;
-        palI &= 7;
-        SDL_SetTexturePalette(bgLayer->tilemap[j], &palette_4bit[palI]);
+        Uint8 mode = bgMode & 7;
+        if (mode != 7 && !(bgLayerI == 0 && mode == 3 || mode == 4)) {
+            Uint8 palI = *ptrMapByte1 >> 2;
+            palI &= 7;
+            SDL_Palette *pal;
+            if (mode == 0 || mode == 1 && bgLayerI == 2 || bgLayerI == 1 && (mode == 4 || mode == 5)) *pal = &palette_2bit[bgLayerI];
+            else *pal = &palette_4bit;
+            SDL_SetTexturePalette(bgLayer->tilemap[j], pal + palI);
+        }
 
         if (*ptrMapByte1 & 0x20) bgLayer->tilemapIsHigh[j] = true;
 
