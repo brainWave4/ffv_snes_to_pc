@@ -255,7 +255,7 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
     fclose(fptr);
 
     if (size <= 0x800) {
-        for (Uint8 = 0; i < TOTAL_BG_COUNT; i ++) {
+        for (Uint8 = 0; i < BGLAYER_COUNTS[bgMode % TOTAL_BG_COUNT]; i ++) {
             if (dest == bgLayers[i].tilemapScroll) updateTilemap(i, 0, size);
             else if (dest < bgLayers[i].tilemapScroll && dest + size >= bgLayers[i].tilemapScroll) {
                 Uint8 startI = bgLayers[i].tilemapScroll - dest;
