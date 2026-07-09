@@ -256,10 +256,14 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
 
     if (size <= 0x800) {
         for (Uint8 = 0; i < BGLAYER_COUNTS[bgMode % TOTAL_BG_COUNT]; i ++) {
-            if (dest == bgLayers[i].tilemapScroll) updateTilemap(i, 0, size);
+            if (dest == bgLayers[i].tilemapScroll) {
+                updateTilemap(i, 0, size);
+                break;
+            }
             else if (dest < bgLayers[i].tilemapScroll && dest + size >= bgLayers[i].tilemapScroll) {
                 Uint8 startI = bgLayers[i].tilemapScroll - dest;
                 updateTilemap(i, startI, size);
+                break;
             } else {
                 Uint16 tilemapScrollEnd = bgLayers[i].tilemapScroll + 0x100;
                 if (dest < tilemapScrollEnd) {
@@ -268,6 +272,7 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
                         updateTilemap(i, 0, newDiff);
                     }
                     else updateTilemap(i, 0, size);
+                    break;
                 }
             }
         }
