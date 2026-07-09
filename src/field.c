@@ -2,6 +2,7 @@
 #include "field.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <SDL3/SDL.h>
 
 #include "display.h"
@@ -2971,7 +2972,7 @@ static void reloadWorldMap(void) {
     // LoaD #$da to A
     // STore A to $25
         // Source Address is da/6c00
-    sourceFilename = "map_sprite";
+    strcpy(sourceFilename, "map_sprite");
     sourceOffest = 0x6C00;
 
     // Jump to SubRoutine TfrVRAM
@@ -2990,7 +2991,7 @@ static void reloadWorldMap(void) {
     // LoaD #$da to A
     // STore A to $25
         // Source Address: da/c000
-    sourceFilename = "map_sprite";
+    strcpy(sourceFilename, "map_sprite");
     sourceOffest = 0xC000;
 
     // Jump to SubRoutine TfrVRAM
@@ -3039,7 +3040,7 @@ static void reloadWorldMap(void) {
     // LoaD #$da to A
     // STore A to $25
         // da/1f00 (gradient graphics 1)
-    sourceFilename = "map_sprite";
+    strcpy(sourceFilename, "map_sprite");
     sourceOffest = 0x1F00;
 
     // Jump to SubRoutine TfrVRAM
@@ -3058,7 +3059,7 @@ static void reloadWorldMap(void) {
     // LoaD #$da to A
     // STore A to $25
         // da/1f80 (gradient graphics 2)
-    sourceFilename = "map_sprite";
+    strcpy(sourceFilename, "map_sprite");
     sourceOffest = 0x1F80;
 
     // Jump to SubRoutine TfrVRAM
@@ -3842,7 +3843,7 @@ static void loadMapGfx(void) {
     // STore A to $25
     //  $23-25 stores source address
     // Jump to SubRoutine TfrVRAM
-    sourceFilename = "window";
+    strcpy(sourceFilename, "window");
     sourceOffest = 0;
     tfrVram();
 
