@@ -86,7 +86,7 @@ static void func_c01a1d(void); // Incomplete
 static void func_c01ae4(void); // Incomplete
 static void updateTopChar(void);
 static void updatePlayerGfx(void); // Incomplete
-static void copyPlayerGfx(void); // Incomplete
+static void tfrPartyGfx(void); // Incomplete
 static void copyAltGfx(void); // Incomplete
 static void func_c01e64(void); // Incomplete
 static void func_c01ec5(void); // Incomplete
@@ -541,6 +541,7 @@ static Uint8 addr_7e0039;
 static Uint8 addr_7e003d;
 static Uint8 addr_7e003e;
 static Uint8 addr_7e0040;
+static Uint8 addr_7e0044;
 static Uint8 addr_7e0047;
 static Uint8 addr_7e0048;
 static Uint8 addr_7e0049;
@@ -555,6 +556,7 @@ static Uint8 addr_7e005e;
 static Uint8 addr_7e0061;
 static Uint8 addr_7e0063;
 static Uint8 addr_7e006e;
+static Uint8 addr_7e006f;
 static Uint16 addr_7e0071;
 static Uint8 addr_7e0075;
 static Uint8 addr_7e0076;
@@ -2134,7 +2136,7 @@ static void updatePlayerGfx(void) {}
 
 // Address: _1d1e
 // copy to vram
-static void copyPlayerGfx(void) {}
+static void tfrPartyGfx(void) {}
 
 // Address: _1e14
 // copy to vram
@@ -3818,7 +3820,7 @@ static void loadMapGfx(void) {
     tfrVram();
 
     // Jump to SubRoutine TfrPartyGfx
-    // tfrPartyGfx();
+    tfrPartyGfx();
 
     // Jump to SubRoutine _c01e14
     copyAltGfx();
