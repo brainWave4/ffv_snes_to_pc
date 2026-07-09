@@ -210,29 +210,29 @@ void setupDisplay(SDL_Renderer *new_renderer) {
 }
 
 static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
+    BgLayer *bgLayer = &bgLayers[bgLayerI];
+    
     for (Uint8 i = startI; i < size; i += 2) {
-        BgLayer *bgLayer = &bgLayers[bgLayerI];
-
-        Uint8 *ptrMapByte = &(vram + bgLayer->tilemapScroll);
+        Uint8 *ptrMapByte = vram + bgLayer->tilemapScroll;
         Uint8 *ptrMapByte1 = ptrMapByte + 1;
 
-        Uint8 *ptrSet = &vram;
+        Uint8 *ptrSet = vram;
         ptrSet += bgLayer->tilesetScroll;
         ptrSet += *ptrMapByte;
         ptrSet += (*ptrMapByte1 & 3) * 0x100;
 
         Uint8 j = i / 2;
 
-        SDL_UpdateTexture(bgLayer->tilemap[j], NULL, *ptrSet, bgLayer->bytesPerWidth);
+        SDL_UpdateTexture(bgLayer->tilemap[j], NULL, ptrSet, bgLayer->bytesPerWidth);
 
         Uint8 mode = bgMode & 7;
         if (mode != 7 && !(bgLayerI == 0 && mode == 3 || mode == 4)) {
             Uint8 palI = *ptrMapByte1 >> 2;
             palI &= 7;
-            SDL_Palette *pal;
-            if (mode == 0 || mode == 1 && bgLayerI == 2 || bgLayerI == 1 && (mode == 4 || mode == 5)) *pal = &palette_2bit[bgLayerI];
-            else *pal = &palette_4bit;
-            SDL_SetTexturePalette(bgLayer->tilemap[j], pal + palI);
+            SDL_Palette *pals;
+            if (mode == 0 || mode == 1 && bgLayerI == 2 || bgLayerI == 1 && (mode == 4 || mode == 5)) pals = palette_2bit[bgLayerI];
+            else pals = palette_4bit;
+            SDL_SetTexturePalette(bgLayer->tilemap[j], pals[palI]);
         }
 
         if (*ptrMapByte1 & 0x20) bgLayer->tilemapIsHigh[j] = true;
@@ -240,7 +240,7 @@ static void updateTilemap(Uint8 bgLayerI, Uint8 startI, Uint8 size) {
         SDL_FlipMode flip = SDL_FLIP_NONE;
         if (*ptrMapByte1 & 0x40) flip |= SDL_FLIP_HORIZONTAL;
         if (*ptrMapByte1 & 0x80) flip |= SDL_FLIP_VERTICAL;
-        if (flip) SDL_RenderTextureRotated(*renderer, &bgLayers[bgLayerI], NULL, NULL, 0, NULL, flip);
+        if (flip) SDL_RenderTextureRotated(renderer, bgLayer->tilemap[j], NULL, NULL, 0, NULL, flip);
     }
 
     need_redrawing |= bgLayer->key_rerendering;
@@ -251,11 +251,11 @@ void addToVram(Uint16 dest, char filepath[], Uint16 offset, Uint16 size) {
 
     if (offset) fseek(fptr, offset, SEEK_SET);
 
-    fread(&(vram + dest), 1, size, fptr);
+    fread(&vram + dest, 1, size, fptr);
     fclose(fptr);
 
     if (size <= 0x800) {
-        for (Uint8 = 0; i < BGLAYER_COUNTS[bgMode % TOTAL_BG_COUNT]; i ++) {
+        for (Uint8 i = 0; i < BGLAYER_COUNTS[bgMode % TOTAL_BG_COUNT]; i ++) {
             if (dest == bgLayers[i].tilemapScroll) {
                 updateTilemap(i, 0, size);
                 break;
