@@ -55,8 +55,8 @@ Uint8 mosaic;
 
 // Addresses _2107-2114 stores data
 // for Background Layers
-static Uint8 bg12nba = 0;
-static Uint8 bg34nba = 0;
+static Uint8 bg12nba;
+static Uint8 bg34nba;
 
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
