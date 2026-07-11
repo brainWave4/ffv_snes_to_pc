@@ -2685,8 +2685,12 @@ static void initHardware(void) {
 
     // LoaD #$00 to A
     // STore A to hBG12NBA
+    setBg12nba(0);
+
     // LoaD #$04 to A
     // STore A to hBG34NBA
+    setBg34nba(4);
+
     // LoaD #$80 to A
     // STore A to hVMAINC
 
