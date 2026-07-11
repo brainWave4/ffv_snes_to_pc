@@ -129,7 +129,7 @@ static void func_c04107(void); // Incomplete
 static void func_c041f1(void); // Incomplete
 static void func_c0420a(void); // Incomplete
 static void showCutsceneFromField(Uint8 id); // Incomplete
-static void initMapBank(void); // Incomplete
+static void initMapBank(void);
 static void initVehicles(void); // Incomplete
 static void initCharNames(void); // Incomplete
 static void openMenu(void); // Incomplete
@@ -2390,7 +2390,39 @@ static void func_c0420a(void) {}
 static void showCutsceneFromField(Uint8 id) {}
 
 // Address: _44e3
-static void initMapBank(void) {}
+static void initMapBank(void) {
+    // Lengthen I
+    // Shorten A
+    // LoaD #$00 to A
+    // PusH A
+    // PulL Bank data
+    // LoaD #$0b00 to X
+    // PusH X
+    // PulL Direct page
+    // STore Zero to hMDMAEN
+    h_mdmaen = 0;
+
+    // STore Zero to hHDMAEN
+    h_hdmaen = 0;
+
+    // LoaD #$8f to A
+    // STore A to hINIDISP
+    inidisp = 0x8F;
+
+    // LoaD #$00 to A
+    // STore A to hNMITIMEN
+    h_nmitimen = 0;
+
+    // LoaD #$00 to A
+    // eXchange higher Byte in A with lower
+    // Jump to SubRoutine InitInterrupts
+    initInterrupts();
+
+    // Jump to SubRoutine InitHardware
+    initHardware();
+
+    // Return To Subroutine
+}
 
 // Address: _450a
 static void initVehicles(void) {}
