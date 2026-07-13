@@ -2303,7 +2303,94 @@ static void func_c022fb(void) {
 // update party sprite
 static void drawPlayerSprite(void) {}
 
-static void loadOverlayGfx(void) {}
+static void loadOverlayGfx(void) {
+    // LoaD #$80 to A
+    // STore A to hVMAINC
+    // LoaD $1114 to A
+    // Lengthen A
+    // A Shift Left x4
+    // STore A to $23
+
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $06 to X
+    // STore X to $11
+
+    // [Loop] Lengthen A
+    // LoaD #$7c00 to A
+        // copy to vram $7c00-$7dff (16 tiles)
+    // STore A to $2e
+    // LoaD $11 to A
+    // CoMPare A to #8
+    // Branch to next label if Clear Carry
+    // LoaD #$7d00 to A
+    // STore $2e to A
+
+    // [LBL] LoaD $11 to A
+    // A Shift Left x5
+    // CLear Carry flag
+    // ADd $2e to A with Carry
+    // STore A to hVMADDL
+    // CLear Carry flag
+    // ADd #$0100 to A with Carry
+    // STore A to $2e
+    // LoaD $06 to A
+    // Shorten A
+    // LoaD $23 to X
+    // LoaD f:OverlayTilesTbl,x to A
+    // Lengthen A
+    // A Shift Left 3
+    // Transfer A to X
+    // LoaD $06 to A
+    // Shorten A
+    // PusH X
+
+    // Top 2 8x8 Tiles
+        // .repeat 2
+            // LoaD #8 to Y
+            // [LBL] LoaD f:MapOverlayGfx,x to A
+            // STore Zero to hVMDATAL
+            // STore A to hVMDATAH
+            // INcrement X
+            // DEcrement Y
+            // Branch to previous label if Not Equals
+            // Jump to SubRoutine FixOverlayTileGfx
+        // .endrep
+        // LoaD $2e to Y
+        // STore Y to hVMADDL
+        // PulL X
+
+    // Bottom 2 8x8 Tiles
+        // .repeat 2
+            // LoaD #8 to Y
+            // [LBL] LoaD f:MapOverlayGfx+128,x to A
+            // STore Zero to hVMDATAL
+            // STore A to hVMDATAH
+            // INcrement X
+            // DEcrement Y
+            // Branch to previous label if Not Equals
+            // Jump to SubRoutine FixOverlayTileGfx
+        // .endrep
+    
+    // (Next 16x16 tile)
+    // LoaD $23 to X
+    // INcrement X
+    // STore X to $23
+    // INcrement $11
+    // LoaD $11 to A
+    // CoMPare A to #$10
+    // Jump to [Loop] if Not Equals
+    // Return to SubRoutine
+}
+
+// Clear high bits of overlay tile graphics
+static void fixOverlayTileGfx(void) {
+    // .repeat 8
+        // STore Zero to hVMDATAL
+        // STore Zero to hVMDATAH
+    // .endrep
+    // Return to SubRoutine
+}
 
 static void loadOverlayProp(void) {}
 
