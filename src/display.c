@@ -60,7 +60,7 @@ static Uint8 bg34nba;
 
 // Addresses _2115-2119 are for VRAM,
 // which stores tilesets and tilemaps.
-static Uint8 vram[65536] = {0};
+static unsigned char vram[65536];
 
 // Address: _211A
 Uint8 mode7_settings;
