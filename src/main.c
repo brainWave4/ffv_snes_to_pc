@@ -13,6 +13,13 @@ typedef struct {
     bool running;
 } AppState;
 
+static SDL_Thread* gameLoop;
+
+static int thrdFunc_gameLoop(void* data) {
+    fieldLoop();
+    return 42;
+}
+
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     // Initializing Window
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
@@ -41,14 +48,12 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
     // Setup
     setupDisplay(state->renderer);
     start();
+    //gameLoop = SDL_CreateThread(thrdFunc_gameLoop, "Game Loop", NULL);
 
     return SDL_APP_CONTINUE;
 }
 
 SDL_AppResult SDL_AppIterate(void *appstate) {
-    // Inner Logic Loop
-    //fieldLoop();
-
     AppState* state = (AppState*)appstate;
 
     // Rendering
@@ -70,6 +75,8 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result) {
     if (appstate != NULL) {
+        //SDL_DetachThread(gameLoop);
+        
         AppState* state = (AppState*)appstate;
         if (state->renderer) SDL_DestroyRenderer(state->renderer);
         if (state->window) SDL_DestroyWindow(state->window);
